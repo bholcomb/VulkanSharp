@@ -61,10 +61,12 @@ namespace Vulkan
 			{
 				_GetPhysicalDeviceQueueFamilyProperties(physicalDevice, out pQueueFamilyPropertyCount, IntPtr.Zero);
 			}
-
-			fixed (QueueFamilyProperties* ptr = pQueueFamilyProperties)
+			else
 			{
-				_GetPhysicalDeviceQueueFamilyProperties(physicalDevice, out pQueueFamilyPropertyCount, (IntPtr)ptr);
+				fixed (QueueFamilyProperties* ptr = pQueueFamilyProperties)
+				{
+					_GetPhysicalDeviceQueueFamilyProperties(physicalDevice, out pQueueFamilyPropertyCount, (IntPtr)ptr);
+				}
 			}
 		}
 
@@ -101,25 +103,81 @@ namespace Vulkan
 		public static extern void DestroyDevice(Device device, AllocationCallbacks pAllocator = null);
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkEnumerateInstanceLayerProperties", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern Result EnumerateInstanceLayerProperties(out UInt32 pPropertyCount, out LayerProperties[] pProperties);
+		static extern Result _EnumerateInstanceLayerProperties(out UInt32 pPropertyCount, IntPtr pProperties);
+		public unsafe static Result EnumerateInstanceLayerProperties(out UInt32 pPropertyCount, LayerProperties[] pProperties)
+		{
+			if(pProperties == null)
+			{
+				return _EnumerateInstanceLayerProperties(out pPropertyCount, IntPtr.Zero);
+			}
+			else
+			{
+				fixed (LayerProperties* ptr = pProperties)
+				{
+					return _EnumerateInstanceLayerProperties(out pPropertyCount, (IntPtr)ptr);
+				}
+			}
+		}
 
-		[DllImport(VulkanLibrary, EntryPoint = "vkEnumerateInstanceExtensionProperties", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern Result EnumerateInstanceExtensionProperties(string pLayerName, out UInt32 pPropertyCount, out ExtensionProperties[] pProperties);
+		[DllImport(VulkanLibrary, EntryPoint = "vkEnumerateInstanceExtensionProperties", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity]
+		static extern Result _EnumerateInstanceExtensionProperties(string pLayerName, out UInt32 pPropertyCount, IntPtr pProperties);
+		public unsafe static Result EnumerateInstanceExtensionProperties(string pLayerName, out UInt32 pPropertyCount, ExtensionProperties[] pProperties)
+		{
+			if (pProperties == null)
+			{
+				return _EnumerateInstanceExtensionProperties(pLayerName, out pPropertyCount, IntPtr.Zero);
+			}
+			else
+			{
+				fixed (ExtensionProperties* ptr = pProperties)
+				{
+					return _EnumerateInstanceExtensionProperties(pLayerName, out pPropertyCount, (IntPtr)ptr);
+				}
+			}
+		}
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkEnumerateDeviceLayerProperties", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern Result EnumerateDeviceLayerProperties(PhysicalDevice physicalDevice, out UInt32 pPropertyCount, out LayerProperties[] pProperties);
+		static extern Result _EnumerateDeviceLayerProperties(PhysicalDevice physicalDevice, out UInt32 pPropertyCount, IntPtr pProperties);
+		public unsafe static Result EnumerateDeviceLayerProperties(PhysicalDevice physicalDevice, out UInt32 pPropertyCount, LayerProperties[] pProperties)
+		{
+			if (pProperties == null)
+			{
+				return _EnumerateDeviceLayerProperties(physicalDevice, out pPropertyCount, IntPtr.Zero);
+			}
+			else
+			{
+				fixed (LayerProperties* ptr = pProperties)
+				{
+					return _EnumerateDeviceLayerProperties(physicalDevice, out pPropertyCount, (IntPtr)ptr);
+				}
+			}
+		}
 
-		[DllImport(VulkanLibrary, EntryPoint = "vkEnumerateDeviceExtensionProperties", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern Result EnumerateDeviceExtensionProperties(PhysicalDevice physicalDevice, string pLayerName, out UInt32 pPropertyCount, out ExtensionProperties pProperties);
+		[DllImport(VulkanLibrary, EntryPoint = "vkEnumerateDeviceExtensionProperties", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity]
+		static extern Result _EnumerateDeviceExtensionProperties(PhysicalDevice physicalDevice, string pLayerName, out UInt32 pPropertyCount, IntPtr pProperties);
+		public unsafe static Result EnumerateDeviceExtensionProperties(PhysicalDevice physicalDevice, string pLayerName, out UInt32 pPropertyCount, ExtensionProperties[] pProperties)
+		{
+			if(pProperties == null)
+			{
+				return _EnumerateDeviceExtensionProperties(physicalDevice, pLayerName, out pPropertyCount, IntPtr.Zero);
+			}
+			else
+			{
+				fixed (ExtensionProperties* ptr = pProperties)
+				{
+					return _EnumerateDeviceExtensionProperties(physicalDevice, pLayerName, out pPropertyCount, (IntPtr)ptr);
+				}
+			}
+		}
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkGetDeviceQueue", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
 		public static extern void GetDeviceQueue(Device device, UInt32 queueFamilyIndex, UInt32 queueIndex, out Queue pQueue);
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkQueueSubmit", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern Result QueueSubmit(IntPtr queue, UInt32 submitCount, ref SubmitInfo pSubmits, UInt64 fence);
+		public static extern Result QueueSubmit(Queue queue, UInt32 submitCount, ref SubmitInfo pSubmits, Fence fence);
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkQueueWaitIdle", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern Result QueueWaitIdle(IntPtr queue);
+		public static extern Result QueueWaitIdle(Queue queue);
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkDeviceWaitIdle", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
 		public static extern Result DeviceWaitIdle(Device device);

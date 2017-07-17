@@ -11,16 +11,85 @@ namespace VulkanTest
 		static PhysicalDevice physicalDevice;
 		static PhysicalDeviceFeatures supportedFeatures;
 		static Device device;
+		static Queue queue;
 
 		static void Main(String[] args)
 		{
+			enumerateInstanceLayers();
+			enumerateInstanceExtensions();
 			initVulkan();
 			getPhysicalDevice();
+			enumerateDeviceLayers();
+			enumerateDeviceExtensions();
 			getDevice();
+			getQueue();
 
 			destroyDevice();
 			destroyInstance();
 		}
+
+		static void enumerateInstanceLayers()
+		{
+			Console.WriteLine("Enumerating Instance Layer Properties");
+			UInt32 count = 0;
+			VK.EnumerateInstanceLayerProperties(out count, null);
+
+			LayerProperties[] props = new LayerProperties[count];
+			VK.EnumerateInstanceLayerProperties(out count, props);
+
+			for(int i=0; i<props.Length; i++)
+			{
+				Console.WriteLine("\tLayer Name: {0}", props[i].LayerName);
+				Console.WriteLine("\t\tDescription: {0}", props[i].Description);
+			}
+		}
+
+		static void enumerateInstanceExtensions()
+		{
+			Console.WriteLine("Enumerating Instance Extensions");
+			UInt32 count = 0;
+			VK.EnumerateInstanceExtensionProperties(null, out count, null);
+
+			ExtensionProperties[] props = new ExtensionProperties[count];
+			VK.EnumerateInstanceExtensionProperties(null, out count, props);
+
+			for (int i = 0; i < props.Length; i++)
+			{
+				Console.WriteLine("\tExtensions Name: {0}", props[i].ExtensionName);
+			}
+		}
+
+		static void enumerateDeviceLayers()
+		{
+			Console.WriteLine("Enumerating Device Layer Properties");
+			UInt32 count = 0;
+			VK.EnumerateDeviceLayerProperties(physicalDevice, out count, null);
+
+			LayerProperties[] props = new LayerProperties[count];
+			VK.EnumerateDeviceLayerProperties(physicalDevice, out count, props);
+
+			for (int i = 0; i < props.Length; i++)
+			{
+				Console.WriteLine("\tLayer Name: {0}", props[i].LayerName);
+				Console.WriteLine("\t\tDescription: {0}", props[i].Description);
+			}
+		}
+
+		static void enumerateDeviceExtensions()
+		{
+			Console.WriteLine("Enumerating Device Extensions");
+			UInt32 count = 0;
+			VK.EnumerateDeviceExtensionProperties(physicalDevice, null, out count, null);
+
+			ExtensionProperties[] props = new ExtensionProperties[count];
+			VK.EnumerateDeviceExtensionProperties(physicalDevice, null, out count, props);
+
+			for (int i = 0; i < props.Length; i++)
+			{
+				Console.WriteLine("\tExtensions Name: {0}", props[i].ExtensionName);
+			}
+		}
+
 
 		static void initVulkan()
 		{
@@ -41,7 +110,11 @@ namespace VulkanTest
 					ApiVersion = Vulkan.Version.Make(1, 0, 0)
 				},
 				EnabledLayerNames = new List<string>() { },
-				EnabledExtensionNames = new List<string>() { InstanceExtensions.VK_KHR_surface, InstanceExtensions.VK_KHR_win32_surface, InstanceExtensions.VK_EXT_debug_report }  
+				EnabledExtensionNames = new List<string>() {
+					InstanceExtensions.VK_KHR_surface,
+					InstanceExtensions.VK_KHR_win32_surface,
+					InstanceExtensions.VK_EXT_debug_report
+				}  
 			}; 
 
 			Result result = VK.CreateInstance(info, out instance);
@@ -69,6 +142,7 @@ namespace VulkanTest
 				VK.GetPhysicalDeviceProperties(physicalDevices[i], out props);
 
 				Console.WriteLine("\tFound Physical Device {0} of type {1}", props.DeviceName, props.DeviceType);
+				Console.WriteLine("\tWith Driver version {0}", Vulkan.Version.ToString(props.ApiVersion));
 
 				VK.GetPhysicalDeviceFeatures(physicalDevices[i], out supportedFeatures);
 
@@ -99,7 +173,7 @@ namespace VulkanTest
 
 		static void getDevice()
 		{
-			Console.WriteLine("Creating Logical Device...");
+			Console.Write("Creating Logical Device...");
 
 			DeviceCreateInfo info = new DeviceCreateInfo()
 			{
@@ -114,12 +188,15 @@ namespace VulkanTest
 						Next = IntPtr.Zero,
 						Flags = 0,
 						QueueFamilyIndex = 0,
-						QueueCount = 4,
-						QueuePriorities = new float[4] {1.0f, 1.0f, 1.0f, 1.0f}
+						QueueCount = 1,
+						QueuePriorities = new float[1] {1.0f}
 					}
 				},
 				EnabledFeatures = supportedFeatures,
-				EnabledExtensionNames = new List<string>() {DeviceExtensions.VK_KHR_swapchain },
+				EnabledExtensionNames = new List<string>()
+				{
+					DeviceExtensions.VK_KHR_swapchain
+				},
 				EnabledLayerNames = new List<string>() { }
 			};
 
@@ -131,14 +208,29 @@ namespace VulkanTest
 				Console.WriteLine("\tFailed");
 		}
 
+		static void getQueue()
+		{
+			VK.GetDeviceQueue(device, 0, 0, out queue);
+		}
+
+		static void createPresentationSurface()
+		{
+
+		}
+
 		static void destroyDevice()
 		{
+			Console.Write("Destroying Logical Device...");
+			VK.DeviceWaitIdle(device);
 			VK.DestroyDevice(device);
+			Console.WriteLine("Success!");
 		}
 
 		static void destroyInstance()
 		{
+			Console.Write("Destroying Instance...");
 			VK.DestroyInstance(instance);
+			Console.WriteLine("Success!");
 		}
 	}
 }

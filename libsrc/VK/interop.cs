@@ -23,13 +23,17 @@ namespace Vulkan
 			return ptr;
 		}
 
-		internal unsafe static IntPtr* alloc<T>(List<T> data) where T: struct
+		internal static IntPtr alloc<T>(List<T> data) where T: struct
 		{
-			IntPtr* ptr = (IntPtr*)Marshal.AllocHGlobal(Marshal.SizeOf(typeof(T)) * data.Count);
+			IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(T)) * data.Count);
+			Int64 addr = ptr.ToInt64();
 			for (int i = 0; i < data.Count; i++)
 			{
-				Marshal.StructureToPtr(data[i], ptr[i], false);
+				IntPtr anItem = new IntPtr(addr);
+				Marshal.StructureToPtr(data[i], anItem, false);
+				addr += Marshal.SizeOf(typeof(T));
 			}
+
 			return ptr;
 		}
 
@@ -116,7 +120,7 @@ namespace Vulkan
 				qArray.Add(new _DeviceQueueCreateInfo(info.QueueCreateInfos[i]));
 			}
 
-			QueueCreateInfos = Alloc.alloc(qArray);
+			QueueCreateInfos = (IntPtr*)Alloc.alloc(qArray);
 
 			enabledLayerCount = (UInt32)info.EnabledLayerNames.Count;
 			enabledExtensionCount = (UInt32)info.EnabledExtensionNames.Count;
@@ -131,7 +135,7 @@ namespace Vulkan
 		{
 			Alloc.free(enabledLayerNames, (int)enabledLayerCount);
 			Alloc.free(enabledExtensionNames, (int)enabledExtensionCount);
-			Alloc.free(QueueCreateInfos, (int)QueueCreateInfoCount);
+			Alloc.free(new IntPtr(QueueCreateInfos)); //since this is allocated as a large blob and should be freed as one
 			Alloc.free(EnabledFeatures);
 		}
 	}
