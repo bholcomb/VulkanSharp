@@ -6,10 +6,8 @@ namespace Vulkan
 {
 	public static partial class VK
 	{
-		public const string VulkanLibrary = "vulkan-1";
-
 		[DllImport(VulkanLibrary, EntryPoint = "vkCreateInstance", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		static extern Result _CreateInstance(ref _InstanceCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out Instance pInstance);
+		static unsafe extern Result _CreateInstance(ref _InstanceCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out Instance pInstance);
 		public static Result CreateInstance(InstanceCreateInfo createInfo, out Instance pInstance, AllocationCallbacks alloc = null)
 		{
 			//marshal to the internal structure
@@ -29,7 +27,22 @@ namespace Vulkan
 		public static extern void DestroyInstance(Instance instance, AllocationCallbacks pAllocator = null);
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkEnumeratePhysicalDevices", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern Result EnumeratePhysicalDevices(Instance instance, out int pPhysicalDeviceCount, out PhysicalDevice[] pPhysicalDevices);
+		static extern Result _EnumeratePhysicalDevices(Instance instance, out UInt32 pPhysicalDeviceCount, IntPtr pPhysicalDevices);
+		public unsafe static Result EnumeratePhysicalDevices(Instance instance, ref UInt32 pPhysicalDeviceCount, PhysicalDevice[] pPhysicalDevices)
+		{
+			if(pPhysicalDevices == null)
+			{
+				return _EnumeratePhysicalDevices(instance, out pPhysicalDeviceCount, IntPtr.Zero);
+			}
+
+			Result res;
+			fixed(PhysicalDevice* ptr = pPhysicalDevices)
+			{
+				res = _EnumeratePhysicalDevices(instance, out pPhysicalDeviceCount, (IntPtr)ptr);
+			}
+			
+			return res;
+		}
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkGetDeviceProcAddr", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
 		public static extern IntPtr GetDeviceProcAddr(Device device, string pName);
@@ -41,7 +54,19 @@ namespace Vulkan
 		public static extern void GetPhysicalDeviceProperties(PhysicalDevice physicalDevice, out PhysicalDeviceProperties pProperties);
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceQueueFamilyProperties", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern void GetPhysicalDeviceQueueFamilyProperties(PhysicalDevice physicalDevice, out UInt32 pQueueFamilyPropertyCount, out QueueFamilyProperties[] pQueueFamilyProperties);
+		static extern void _GetPhysicalDeviceQueueFamilyProperties(PhysicalDevice physicalDevice, out UInt32 pQueueFamilyPropertyCount, IntPtr pQueueFamilyProperties);
+		public unsafe static void GetPhysicalDeviceQueueFamilyProperties(PhysicalDevice physicalDevice, out UInt32 pQueueFamilyPropertyCount, QueueFamilyProperties[] pQueueFamilyProperties)
+		{
+			if (pQueueFamilyProperties == null)
+			{
+				_GetPhysicalDeviceQueueFamilyProperties(physicalDevice, out pQueueFamilyPropertyCount, IntPtr.Zero);
+			}
+
+			fixed (QueueFamilyProperties* ptr = pQueueFamilyProperties)
+			{
+				_GetPhysicalDeviceQueueFamilyProperties(physicalDevice, out pQueueFamilyPropertyCount, (IntPtr)ptr);
+			}
+		}
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceMemoryProperties", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
 		public static extern void GetPhysicalDeviceMemoryProperties(PhysicalDevice physicalDevice, out PhysicalDeviceMemoryProperties pMemoryProperties);
@@ -56,10 +81,20 @@ namespace Vulkan
 		public static extern Result GetPhysicalDeviceImageFormatProperties(PhysicalDevice physicalDevice, Format format, ImageType type, ImageTiling tiling, ImageUsageFlags usage, ImageCreateFlags flags, out ImageFormatProperties pImageFormatProperties);
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkCreateDevice", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		static extern Result _CreateDevice(PhysicalDevice physicalDevice, ref DeviceCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out Device pDevice);
-		public static Result CreateDevice(PhysicalDevice physicalDevice, ref DeviceCreateInfo pCreateInfo, out Device pDevice, AllocationCallbacks pAllocator = null)
+		static extern Result _CreateDevice(PhysicalDevice physicalDevice, ref _DeviceCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out Device pDevice);
+		public static Result CreateDevice(PhysicalDevice physicalDevice, DeviceCreateInfo pCreateInfo, out Device pDevice, AllocationCallbacks pAllocator = null)
 		{
-			return _CreateDevice(physicalDevice, ref pCreateInfo, pAllocator, out pDevice);
+			//marshal to the internal structure
+			_DeviceCreateInfo info = new _DeviceCreateInfo(pCreateInfo);
+
+			//call the native function
+			Result ret = _CreateDevice(physicalDevice, ref info, pAllocator, out pDevice);
+
+			//cleanup the marshaling memory
+			info.destroy();
+
+			//return
+			return ret;
 		}
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkDestroyDevice", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

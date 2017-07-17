@@ -313,7 +313,6 @@ namespace Vulkan
 		public MemoryHeap[] MemoryHeaps;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
 	public struct DeviceQueueCreateInfo
 	{
 		public StructureType SType;
