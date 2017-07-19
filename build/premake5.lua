@@ -20,15 +20,18 @@ project "VK"
 	files{"../libsrc/VK/**.cs"}
 	targetdir "../bin"
 	links("System")
-	namespace("VK")
+	namespace("Vulkan")
    clr "Unsafe"
+   framework("4.6.2")
    
 project "Test Vulkan"
 	language  "C#"
-	kind      "ConsoleApp"
+	kind "ConsoleApp"
 	location "testVK"
 	files     { "../libsrc/testVK/**.cs" }
 	vpaths { ["*"] = "../testVK" }
 	targetdir "../bin"
-	links     { "System", "VK"}
-	namespace("luaVK")
+	links     { "System", "VK", "System.Windows", "System.Windows.Forms", "System.Drawing"}
+	namespace("VulkanTest")
+   framework("4.6.2")
+   

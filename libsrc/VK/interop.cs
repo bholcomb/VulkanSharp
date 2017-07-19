@@ -4,6 +4,32 @@ using System.Runtime.InteropServices;
 
 namespace Vulkan
 {
+	internal static class ExternalFunction
+	{
+		internal static T getInstanceFunction<T>(Instance instance, string name)
+		{
+			IntPtr funcPtr = VK.GetInstanceProcAddr(instance, name);
+			if (funcPtr == IntPtr.Zero)
+			{
+				throw new Exception(String.Format("Instance function {0} not found, extension may not be present", name));
+			}
+
+			return Marshal.GetDelegateForFunctionPointer<T>(funcPtr);
+		}
+
+		internal static T getDeviceFunction<T>(Device device, string name)
+		{
+			IntPtr funcPtr = VK.GetDeviceProcAddr(device, name);
+			if (funcPtr == IntPtr.Zero)
+			{
+				throw new Exception(String.Format("Device function {0} not found, extension may not be present", name));
+			}
+
+			return Marshal.GetDelegateForFunctionPointer<T>(funcPtr);
+		}
+	}
+
+
 	internal static class Alloc
 	{
 		internal static IntPtr alloc<T>(T data) where T: struct

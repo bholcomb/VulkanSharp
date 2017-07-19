@@ -160,11 +160,6 @@ namespace Vulkan
 		public const string VK_NVX_device_generated_commands = "VK_NVX_device_generated_commands";
 		public const string VK_NVX_multiview_per_view_attributes = "VK_NVX_multiview_per_view_attributes";
 	}
-
-	public partial class DeviceLayers
-	{
-
-	}
 	#endregion
 
 	#region Helper classes

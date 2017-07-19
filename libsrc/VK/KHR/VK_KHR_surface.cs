@@ -60,29 +60,28 @@ namespace Vulkan
 	#endregion
 
 	#region structs
-	[StructLayout(LayoutKind.Sequential)]
-	public struct SurfaceKhr { public UInt64 native; }
+	[StructLayout(LayoutKind.Sequential)] public struct SurfaceKhr { public UInt64 native; }
 
 	[StructLayout(LayoutKind.Sequential)]
 	public struct SurfaceCapabilitiesKhr
 	{
-		UInt32 minImageCount;
-		UInt32 maxImageCount;
-		Extent2D currentExtent;
-		Extent2D minImageExtent;
-		Extent2D maxImageExtent;
-		UInt32 maxImageArrayLayers;
-		UInt32 supportedTransforms;
-		SurfaceTransformFlagsKhr currentTransform;
-		SurfaceTransformFlagsKhr supportedCompositeAlpha;
-		ImageUsageFlags supportedUsageFlags;
+		public UInt32 minImageCount;
+		public UInt32 maxImageCount;
+		public Extent2D currentExtent;
+		public Extent2D minImageExtent;
+		public Extent2D maxImageExtent;
+		public UInt32 maxImageArrayLayers;
+		public SurfaceTransformFlagsKhr supportedTransforms;
+		public SurfaceTransformFlagsKhr currentTransform;
+		public SurfaceTransformFlagsKhr supportedCompositeAlpha;
+		public ImageUsageFlags supportedUsageFlags;
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
 	public struct SurfaceFormatKhr
 	{
-		Format format;
-		ColorSpaceKhr colorSpace;
+		public Format format;
+		public ColorSpaceKhr colorSpace;
 	}
 
 	#endregion

@@ -633,7 +633,7 @@ namespace Vulkan
 		public StructureType SType;
 		public IntPtr Next;
 		public UInt32 Flags;
-		public UInt64 Image;
+		public Image image;
 		public ImageViewType ViewType;
 		public Format Format;
 		public ComponentMapping Components;
