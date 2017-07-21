@@ -381,18 +381,14 @@ namespace Vulkan
 		}
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
 	public struct SubmitInfo
 	{
 		public StructureType SType;
 		public IntPtr Next;
-		public UInt32 WaitSemaphoreCount;
-		public IntPtr WaitSemaphores;
-		public IntPtr WaitDstStageMask;
-		public UInt32 CommandBufferCount;
-		public IntPtr CommandBuffers;
-		public UInt32 SignalSemaphoreCount;
-		public IntPtr SignalSemaphores;
+		public List<Semaphore> WaitSemaphores;
+		public PipelineStageFlags WaitDstStageMask;
+		public List<CommandBuffer> CommandBuffers;
+		public List<Semaphore> SignalSemaphores;
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
@@ -501,21 +497,15 @@ namespace Vulkan
 		public IntPtr Binds;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
 	public struct BindSparseInfo
 	{
-		StructureType sType;
-		IntPtr pNext;
-		UInt32 waitSemaphoreCount;
-		Semaphore[] pWaitSemaphores;
-		UInt32 bufferBindCount;
-		SparseBufferMemoryBindInfo[] pBufferBinds;
-		UInt32 imageOpaqueBindCount;
-		SparseImageOpaqueMemoryBindInfo[] pImageOpaqueBinds;
-		UInt32 imageBindCount;
-		SparseImageMemoryBindInfo[] pImageBinds;
-		UInt32 signalSemaphoreCount;
-		Semaphore[] pSignalSemaphores;
+		public StructureType sType;
+		public IntPtr pNext;
+		public List<Semaphore> pWaitSemaphores;
+		public List<SparseBufferMemoryBindInfo> pBufferBinds;
+		public List<SparseImageOpaqueMemoryBindInfo> pImageOpaqueBinds;
+		public List<SparseImageMemoryBindInfo> pImageBinds;
+		public List<Semaphore> pSignalSemaphores;
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
@@ -1140,7 +1130,7 @@ namespace Vulkan
 	{
 		public StructureType SType;
 		public IntPtr Next;
-		public UInt64 CommandPool;
+		public CommandPool CommandPool;
 		public CommandBufferLevel Level;
 		public UInt32 CommandBufferCount;
 	}
@@ -1150,9 +1140,9 @@ namespace Vulkan
 	{
 		public StructureType SType;
 		public IntPtr Next;
-		public UInt64 RenderPass;
+		public RenderPass RenderPass;
 		public UInt32 Subpass;
-		public UInt64 Framebuffer;
+		public Framebuffer Framebuffer;
 		public Bool32 OcclusionQueryEnable;
 		public QueryControlFlags QueryFlags;
 		public QueryPipelineStatisticFlags PipelineStatistics;
@@ -1216,15 +1206,13 @@ namespace Vulkan
 		public Extent3D imageExtent;
 	}
 
-	[StructLayout(LayoutKind.Explicit)]
-	public unsafe struct ClearColorValue
+	[StructLayout(LayoutKind.Sequential)]
+	public struct ClearColorValue
 	{
-		[FieldOffset(0)]
-		public fixed float Float32[4];
-		[FieldOffset(0)]
-		public fixed Int32 Int32[4];
-		[FieldOffset(0)]
-		public fixed UInt32 Uint32[4];
+		public float r;
+		public float g;
+		public float b;
+		public float a;
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
@@ -1303,7 +1291,7 @@ namespace Vulkan
 		public ImageLayout NewLayout;
 		public UInt32 SrcQueueFamilyIndex;
 		public UInt32 DstQueueFamilyIndex;
-		public UInt64 Image;
+		public Image Image;
 		public ImageSubresourceRange SubresourceRange;
 	}
 

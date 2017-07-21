@@ -193,4 +193,83 @@ namespace Vulkan
 			Alloc.free(QueuePriorities);
 		}
 	}
+
+	[StructLayout(LayoutKind.Sequential)]
+	internal struct _BindSparseInfo
+	{
+		StructureType sType;
+		IntPtr pNext;
+		UInt32 waitSemaphoreCount;
+		IntPtr pWaitSemaphores;
+		UInt32 bufferBindCount;
+		IntPtr pBufferBinds;
+		UInt32 imageOpaqueBindCount;
+		IntPtr pImageOpaqueBinds;
+		UInt32 imageBindCount;
+		IntPtr pImageBinds;
+		UInt32 signalSemaphoreCount;
+		IntPtr pSignalSemaphores;
+
+		public _BindSparseInfo(BindSparseInfo info)
+		{
+			sType = info.sType;
+			pNext = info.pNext;
+			waitSemaphoreCount = (UInt32)info.pWaitSemaphores.Count;
+			bufferBindCount = (UInt32)info.pBufferBinds.Count;
+			imageOpaqueBindCount = (UInt32)info.pImageOpaqueBinds.Count;
+			imageBindCount = (UInt32)info.pImageBinds.Count;
+			signalSemaphoreCount = (UInt32)info.pSignalSemaphores.Count;
+
+			pWaitSemaphores = Alloc.alloc(info.pWaitSemaphores);
+			pBufferBinds = Alloc.alloc(info.pBufferBinds);
+			pImageOpaqueBinds = Alloc.alloc(info.pImageOpaqueBinds);
+			pImageBinds = Alloc.alloc(info.pImageBinds);
+			pSignalSemaphores = Alloc.alloc(info.pSignalSemaphores);
+		}
+
+		public void destroy()
+		{
+			Alloc.free(pWaitSemaphores);
+			Alloc.free(pBufferBinds);
+			Alloc.free(pImageOpaqueBinds);
+			Alloc.free(pImageBinds);
+			Alloc.free(pSignalSemaphores);
+		}
+	}
+
+	[StructLayout(LayoutKind.Sequential)]
+	internal struct _SubmitInfo
+	{
+		public StructureType SType;
+		public IntPtr Next;
+		public UInt32 WaitSemaphoreCount;
+		public IntPtr WaitSemaphores;
+		public IntPtr WaitDstStageMask;
+		public UInt32 CommandBufferCount;
+		public IntPtr CommandBuffers;
+		public UInt32 SignalSemaphoreCount;
+		public IntPtr SignalSemaphores;
+
+		public _SubmitInfo(SubmitInfo info)
+		{
+			SType = info.SType;
+			Next = info.Next;
+			WaitSemaphoreCount = (UInt32)info.WaitSemaphores.Count;
+			CommandBufferCount = (UInt32)info.CommandBuffers.Count;
+			SignalSemaphoreCount = (UInt32)info.SignalSemaphores.Count;
+
+			WaitDstStageMask = Alloc.alloc((UInt32)info.WaitDstStageMask);
+			WaitSemaphores = Alloc.alloc(info.WaitSemaphores);
+			CommandBuffers = Alloc.alloc(info.CommandBuffers);
+			SignalSemaphores = Alloc.alloc(info.SignalSemaphores);
+		}
+
+		public void destroy()
+		{
+			Alloc.free(WaitDstStageMask);
+			Alloc.free(WaitSemaphores);
+			Alloc.free(CommandBuffers);
+			Alloc.free(SignalSemaphores);
+		}
+	}
 }

@@ -42,17 +42,14 @@ namespace Vulkan
 		public SwapchainKhr OldSwapchain;
 	}
 
-	[StructLayout(LayoutKind.Sequential)]
 	public struct PresentInfoKhr
 	{
 		public StructureType SType;
 		public IntPtr Next;
-		public UInt32 WaitSemaphoreCount;
-		public IntPtr WaitSemaphores;
-		public UInt32 SwapchainCount;
-		public IntPtr Swapchains;
-		public IntPtr ImageIndices;
-		public IntPtr Results;
+		public List<Semaphore> WaitSemaphores;
+		public List<SwapchainKhr> Swapchains;
+		public List<UInt32> Indices;
+		public List<Result> Results;
 	}
 
 	#endregion
@@ -81,16 +78,9 @@ namespace Vulkan
 		static extern Result _GetSwapchainImagesKHR(Device device, SwapchainKhr swapchain, out UInt32 pSwapchainImageCount, IntPtr pSwapchainImages);
 		public unsafe static Result GetSwapchainImagesKHR(Device device, SwapchainKhr swapchain, out UInt32 pSwapchainImageCount, Image[] pSwapchainImages)
 		{
-			if (pSwapchainImages == null)
+			fixed (Image* ptr = pSwapchainImages)
 			{
-				return _GetSwapchainImagesKHR(device, swapchain, out pSwapchainImageCount, IntPtr.Zero);
-			}
-			else
-			{
-				fixed (Image* ptr = pSwapchainImages)
-				{
-					return _GetSwapchainImagesKHR(device, swapchain, out pSwapchainImageCount, (IntPtr)ptr);
-				}
+				return _GetSwapchainImagesKHR(device, swapchain, out pSwapchainImageCount, (IntPtr)ptr);
 			}
 		}
 
@@ -98,8 +88,24 @@ namespace Vulkan
 		public static extern Result AcquireNextImageKHR(Device device, SwapchainKhr swapchain, UInt64 timeout, Semaphore semaphore, Fence fence, out UInt32 pImageIndex);
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkQueuePresentKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern Result QueuePresentKHR(Device queue, ref PresentInfoKhr pPresentInfo);
+		static extern Result _QueuePresentKHR(Queue queue, ref _PresentInfoKhr pPresentInfo);
+		public unsafe static Result QueuePresentKHR(Queue queue, ref PresentInfoKhr pPresentInfo)
+		{
+			_PresentInfoKhr p = new _PresentInfoKhr(pPresentInfo);
 
+			int resultsCount = (pPresentInfo.Results == null || pPresentInfo.Results.Count == 0) ? 0 : pPresentInfo.Results.Count;
+
+			Result res = _QueuePresentKHR(queue, ref p);
+
+			if(resultsCount > 0)
+			{
+				pPresentInfo.Results =  p.getResults(resultsCount);
+			}
+
+			p.destroy();
+
+			return res;
+		}
 	}
 	#endregion
 
@@ -151,6 +157,64 @@ namespace Vulkan
 		public void destroy()
 		{
 			Alloc.free(QueueFamilyIndices);
+		}
+	}
+	
+	[StructLayout(LayoutKind.Sequential)]
+	internal struct _PresentInfoKhr
+	{
+		public StructureType SType;
+		public IntPtr Next;
+		public UInt32 WaitSemaphoreCount;
+		public IntPtr WaitSemaphores;
+		public UInt32 SwapchainCount;
+		public IntPtr Swapchains;
+		public IntPtr ImageIndices;
+		public IntPtr Results;
+
+		public _PresentInfoKhr(PresentInfoKhr info)
+		{
+			SType = info.SType;
+			Next = info.Next;
+			WaitSemaphoreCount = (UInt32)info.WaitSemaphores.Count;
+			SwapchainCount = (UInt32)info.Swapchains.Count;
+
+			WaitSemaphores = Alloc.alloc(info.WaitSemaphores);
+			Swapchains = Alloc.alloc(info.Swapchains);
+			ImageIndices = Alloc.alloc(info.Indices);
+
+			List<UInt32> res;
+			if (info.Results == null || info.Results.Count == 0)
+			{
+				Results = IntPtr.Zero;
+			}
+			else
+			{
+				res = new List<UInt32>(info.Results.Count);
+				Results = Alloc.alloc(res);
+			}
+		}
+
+		public List<Result> getResults(int count)
+		{
+			int[] vals = new int[count];
+			Marshal.Copy(Results, vals, 0, count);
+
+			List<Result> ret = new List<Result>(count);
+			foreach (int v in vals)
+			{
+				ret.Add((Result)v);
+			}
+
+			return ret;
+		}
+
+		public void destroy()
+		{
+			Alloc.free(WaitSemaphores);
+			Alloc.free(Swapchains);
+			Alloc.free(ImageIndices);
+			Alloc.free(Results);
 		}
 	}
 	#endregion

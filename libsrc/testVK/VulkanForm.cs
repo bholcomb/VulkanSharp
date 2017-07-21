@@ -11,12 +11,6 @@ using System.Threading;
 
 namespace VulkanTest
 {
-	public static class Util
-	{
-		[DllImport("kernel32.dll")]
-		public static extern IntPtr GetModuleHandle(string lpModuleName);
-	}
-
 	public partial class VulkanForm : Form
 	{
 		VulkanApp vulkanApp;
@@ -37,5 +31,17 @@ namespace VulkanTest
 		{
 			vulkanApp.shutdown();
 		}
+
+		private void VulkanForm_Paint(object sender, PaintEventArgs e)
+		{
+			vulkanApp.draw();
+		}
 	}
+
+	public static class Util
+	{
+		[DllImport("kernel32.dll")]
+		public static extern IntPtr GetModuleHandle(string lpModuleName);
+	}
+
 }
