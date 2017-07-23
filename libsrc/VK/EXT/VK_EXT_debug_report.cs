@@ -5,7 +5,7 @@ using System.Security;
 namespace Vulkan
 {
 	#region enums
-	public enum DebugReportObjectTypeExt : int
+	public enum DebugReportObjectTypeEXT : int
 	{
 		Unknown = 0,
 		Instance = 1,
@@ -33,20 +33,20 @@ namespace Vulkan
 		DescriptorSet = 23,
 		Framebuffer = 24,
 		CommandPool = 25,
-		SurfaceKhr = 26,
-		SwapchainKhr = 27,
-		DebugReportCallbackExt = 28,
-		DisplayKhr = 29,
-		DisplayModeKhr = 30,
-		ObjectTableNvx = 31,
-		IndirectCommandsLayoutNvx = 32,
-		DescriptorUpdateTemplateKhr = 1000085000,
+		SurfaceKHR = 26,
+		SwapchainKHR = 27,
+		DebugReportCallbackEXT = 28,
+		DisplayKHR = 29,
+		DisplayModeKHR = 30,
+		ObjectTableNVX = 31,
+		IndirectCommandsLayoutNVX = 32,
+		DescriptorUpdateTemplateKHR = 1000085000,
 	}
 	#endregion
 
 	#region flags
 	[Flags]
-	public enum DebugReportFlagsExt : int
+	public enum DebugReportFlagsEXT : int
 	{
 		Information = 0x1,
 		Warning = 0x2,
@@ -58,7 +58,7 @@ namespace Vulkan
 
 	#region structs
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-	public delegate Bool32 DebugReportCallbackFunction( DebugReportFlagsExt flags, DebugReportObjectTypeExt objectType, UInt64 _object, IntPtr location, Int32 messageCode, string layerPrefix, string message, IntPtr userData);
+	public delegate Bool32 DebugReportCallbackFunction( DebugReportFlagsEXT flags, DebugReportObjectTypeEXT objectType, UInt64 _object, IntPtr location, Int32 messageCode, string layerPrefix, string message, IntPtr userData);
 
 	[StructLayout(LayoutKind.Sequential)] public struct DebugReportCallbackEXT { public UInt64 native; }
 
@@ -67,7 +67,7 @@ namespace Vulkan
 	{
 		public StructureType sType;
 		public IntPtr pNext;
-		public DebugReportFlagsExt flags;
+		public DebugReportFlagsEXT flags;
 		public DebugReportCallbackFunction pfnCallback;
 		public IntPtr pUserData;
 	}
@@ -77,7 +77,7 @@ namespace Vulkan
 	//external functions we need to get from the instance
 	public delegate Result CreateDebugReportCallbackEXTDelegate(Instance instance, ref DebugReportCallbackCreateInfoEXT createInfo, AllocationCallbacks allocator, out DebugReportCallbackEXT callback);
 	public delegate Result DestroyDebugReportCallbackEXTDelegate(Instance instance, DebugReportCallbackEXT callback, AllocationCallbacks allocator = null);
-	public delegate void DebugReportMessageEXTDelegate(Instance instance, DebugReportFlagsExt flags, DebugReportObjectTypeExt objectType, UInt64 _object, IntPtr location, Int32 messageCode, String pLayerPrefix, String pMessage);
+	public delegate void DebugReportMessageEXTDelegate(Instance instance, DebugReportFlagsEXT flags, DebugReportObjectTypeEXT objectType, UInt64 _object, IntPtr location, Int32 messageCode, String pLayerPrefix, String pMessage);
 
 	public static partial class VK
 	{
@@ -85,7 +85,7 @@ namespace Vulkan
 
 		public static DestroyDebugReportCallbackEXTDelegate DestroyDebugReportCallbackEXT;
 
-		public static DebugReportMessageEXTDelegate DebugReportMessageExt;
+		public static DebugReportMessageEXTDelegate DebugReportMessageEXT;
 	}
 
 	public static class VK_EXT_debug_report
@@ -94,7 +94,7 @@ namespace Vulkan
 		{
 			VK.CreateDebugReportCallbackEXT = ExternalFunction.getInstanceFunction<CreateDebugReportCallbackEXTDelegate>(instance, "vkCreateDebugReportCallbackEXT");
 			VK.DestroyDebugReportCallbackEXT = ExternalFunction.getInstanceFunction<DestroyDebugReportCallbackEXTDelegate>(instance, "vkDestroyDebugReportCallbackEXT");
-			VK.DebugReportMessageExt = ExternalFunction.getInstanceFunction<DebugReportMessageEXTDelegate>(instance, "vkDebugReportMessageEXT");
+			VK.DebugReportMessageEXT = ExternalFunction.getInstanceFunction<DebugReportMessageEXTDelegate>(instance, "vkDebugReportMessageEXT");
 		}
 	}
 	#endregion

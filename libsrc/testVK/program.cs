@@ -27,9 +27,9 @@ namespace VulkanTest
 			public Queue computeQueue;
 			public Queue sparseQueue;
 
-			public SurfaceKhr surface;
-			public SurfaceCapabilitiesKhr surfaceCapabilities;
-			public SwapchainKhr swapChain;
+			public SurfaceKHR surface;
+			public SurfaceCapabilitiesKHR surfaceCapabilities;
+			public SwapchainKHR swapChain;
 			public Image[] swapChainImages;
 			public ImageView[] swapChainImageViews;
 			public Format swapChainFormat;
@@ -183,9 +183,9 @@ namespace VulkanTest
 
 			DebugReportCallbackCreateInfoEXT info = new DebugReportCallbackCreateInfoEXT()
 			{
-				sType = StructureType.DebugReportCallbackCreateInfoExt,
+				sType = StructureType.DebugReportCallbackCreateInfoEXT,
 				pNext = IntPtr.Zero,
-				flags = DebugReportFlagsExt.Error | DebugReportFlagsExt.Warning,
+				flags = DebugReportFlagsEXT.Error | DebugReportFlagsEXT.Warning,
 				pfnCallback = debugCallback,
 				pUserData = IntPtr.Zero
 			};
@@ -200,9 +200,9 @@ namespace VulkanTest
 		void createSurface()
 		{
 			Console.WriteLine("Creating surface");
-			Win32SurfaceCreateInfoKhr info = new Win32SurfaceCreateInfoKhr()
+			Win32SurfaceCreateInfoKHR info = new Win32SurfaceCreateInfoKHR()
 			{
-				sType = StructureType.Win32SurfaceCreateInfoKhr,
+				sType = StructureType.Win32SurfaceCreateInfoKHR,
 				pNext = IntPtr.Zero,
 				flags = 0,
 				hinstance = HInstance,
@@ -385,28 +385,28 @@ namespace VulkanTest
 			checkResult(res, "Failed to get physical device surface format count");
 
 			Console.WriteLine("Found {0} formats for display surface", formatCount);
-			SurfaceFormatKhr[] surfaceFormats = new SurfaceFormatKhr[formatCount];
+			SurfaceFormatKHR[] surfaceFormats = new SurfaceFormatKHR[formatCount];
 			res = VK.GetPhysicalDeviceSurfaceFormatsKHR(context.physicalDevice, context.surface, out formatCount, surfaceFormats);
 			checkResult(res, "Failed to get physical device surface format values");
 
 			//just use the first format/colorspace
 			Format bestFormat = surfaceFormats[0].format;
-			ColorSpaceKhr bestColorspace = surfaceFormats[0].colorSpace;
+			ColorSpaceKHR bestColorspace = surfaceFormats[0].colorSpace;
 
 			UInt32 presentModeCount = 0;
 			res = VK.GetPhysicalDeviceSurfacePresentModesKHR(context.physicalDevice, context.surface, out presentModeCount, null);
 			checkResult(res, "Failed to get physical device surface present mode count");
 
 			Console.WriteLine("Found {0} present modes for display surface", presentModeCount);
-			PresentModeKhr[] presentModes = new PresentModeKhr[presentModeCount];
+			PresentModeKHR[] presentModes = new PresentModeKHR[presentModeCount];
 			res = VK.GetPhysicalDeviceSurfacePresentModesKHR(context.physicalDevice, context.surface, out presentModeCount, presentModes);
 			checkResult(res, "Failed to get physical device surface present mode values");
 
 			//prefer mailbox, but use fifo as a fallback
-			PresentModeKhr bestPresentMode = PresentModeKhr.Fifo;
-			foreach (PresentModeKhr availableMode in presentModes)
+			PresentModeKHR bestPresentMode = PresentModeKHR.Fifo;
+			foreach (PresentModeKHR availableMode in presentModes)
 			{
-				if (availableMode == PresentModeKhr.Mailbox)
+				if (availableMode == PresentModeKHR.Mailbox)
 				{
 					bestPresentMode = availableMode;
 					break;
@@ -419,9 +419,9 @@ namespace VulkanTest
 			else
 				usageFlags = ImageUsageFlags.ColorAttachment;
 
-			SwapchainCreateInfoKhr info = new SwapchainCreateInfoKhr()
+			SwapchainCreateInfoKHR info = new SwapchainCreateInfoKHR()
 			{
-				SType = StructureType.SwapchainCreateInfoKhr,
+				SType = StructureType.SwapchainCreateInfoKHR,
 				Next = IntPtr.Zero,
 				Flags = 0,
 				Surface = context.surface,
@@ -433,9 +433,9 @@ namespace VulkanTest
 				ImageUsage = usageFlags,
 				PresentMode = bestPresentMode,
 				PreTransform = context.surfaceCapabilities.currentTransform,
-				CompositeAlpha = CompositeAlphaFlagsKhr.Opaque,
+				CompositeAlpha = CompositeAlphaFlagsKHR.Opaque,
 				Clipped = true,
-				OldSwapchain = new SwapchainKhr()
+				OldSwapchain = new SwapchainKHR()
 			};
 
 			if (context.presentQueueIndex != context.graphicsQueueIndex)
@@ -599,7 +599,7 @@ namespace VulkanTest
 						SrcAccessMask = AccessFlags.TransferWrite,
 						DstAccessMask = AccessFlags.MemoryRead,
 						OldLayout = Vulkan.ImageLayout.TransferDstOptimal,
-						NewLayout = Vulkan.ImageLayout.PresentSrcKhr,
+						NewLayout = Vulkan.ImageLayout.PresentSrcKHR,
 						SrcQueueFamilyIndex = VK.QUEUE_FAMILY_IGNORED,
 						DstQueueFamilyIndex = VK.QUEUE_FAMILY_IGNORED,
 						Image = context.swapChainImages[i],
@@ -647,12 +647,12 @@ namespace VulkanTest
 			res = VK.QueueSubmit(context.presentQueue, 1, new SubmitInfo[] { submitInfo }, VK.NULL_FENCE);
 			checkResult(res, "submit queue");
 
-			PresentInfoKhr presentInfo = new PresentInfoKhr()
+			PresentInfoKHR presentInfo = new PresentInfoKHR()
 			{
-				SType = StructureType.PresentInfoKhr,
+				SType = StructureType.PresentInfoKHR,
 				Next = IntPtr.Zero,
 				WaitSemaphores = new List<Semaphore>() { context.renderingFinished },
-				Swapchains = new List<SwapchainKhr>() { context.swapChain },
+				Swapchains = new List<SwapchainKHR>() { context.swapChain },
 				Indices = new List<uint>() { index },
 				Results = new List<Result>() { Result.NotReady}
 			};
@@ -701,11 +701,11 @@ namespace VulkanTest
 			Console.WriteLine("Success!");
 		}
 
-		static Bool32 debugCallback(DebugReportFlagsExt flags, DebugReportObjectTypeExt objectType, UInt64 _object, IntPtr location, Int32 messageCode, string layerPrefix, string message, IntPtr userData)
+		static Bool32 debugCallback(DebugReportFlagsEXT flags, DebugReportObjectTypeEXT objectType, UInt64 _object, IntPtr location, Int32 messageCode, string layerPrefix, string message, IntPtr userData)
 		{
 			string level = "";
-			if (flags.HasFlag(DebugReportFlagsExt.Error)) level = "Error";
-			if (flags.HasFlag(DebugReportFlagsExt.Warning)) level = "Warning";
+			if (flags.HasFlag(DebugReportFlagsEXT.Error)) level = "Error";
+			if (flags.HasFlag(DebugReportFlagsEXT.Warning)) level = "Warning";
 
 			Console.WriteLine("{0}: {1}-{2} ", level, objectType, message);
 

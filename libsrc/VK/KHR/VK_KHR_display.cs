@@ -10,7 +10,7 @@ namespace Vulkan
 
 	#region flags
 	[Flags]
-	public enum DisplayPlaneAlphaFlagsKhr : int
+	public enum DisplayPlaneAlphaFlagsKHR : int
 	{
 		Opaque = 0x1,
 		Global = 0x2,
@@ -20,50 +20,53 @@ namespace Vulkan
 	#endregion
 
 	#region structs
-	[StructLayout(LayoutKind.Sequential)]
-	public struct DisplayKhr { public UInt64 native; }
-	[StructLayout(LayoutKind.Sequential)]
-	public struct DisplayModeKhr { public UInt64 native; }
+	[StructLayout(LayoutKind.Sequential)] 	public struct DisplayKHR { public UInt64 native; }
+	[StructLayout(LayoutKind.Sequential)] 	public struct DisplayModeKHR { public UInt64 native; }
 
 	[StructLayout(LayoutKind.Sequential)]
-	public struct DisplayPropertiesKhr
+	public struct DisplayPropertiesKHR
 	{
-		public UInt64 Display;
-		public IntPtr DisplayName;
+		public DisplayKHR Display;
+
+		IntPtr _DisplayName;
+		public String DisplayName
+		{
+			get { return Marshal.PtrToStringAnsi(_DisplayName); }
+		}
 		public Extent2D PhysicalDimensions;
 		public Extent2D PhysicalResolution;
-		public SurfaceTransformFlagsKhr SupportedTransforms;
+		public SurfaceTransformFlagsKHR SupportedTransforms;
 		public Bool32 PlaneReorderPossible;
 		public Bool32 PersistentContent;
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
-	public struct DisplayModeParametersKhr
+	public struct DisplayModeParametersKHR
 	{
 		Extent2D visibleRegion;
 		UInt32 refreshRate;
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
-	public struct DisplayModePropertiesKhr
+	public struct DisplayModePropertiesKHR
 	{
 		public UInt64 DisplayMode;
-		public DisplayModeParametersKhr Parameters;
+		public DisplayModeParametersKHR Parameters;
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
-	public struct DisplayModeCreateInfoKhr
+	public struct DisplayModeCreateInfoKHR
 	{
 		public StructureType SType;
 		public IntPtr Next;
 		public UInt32 Flags;
-		public DisplayModeParametersKhr Parameters;
+		public DisplayModeParametersKHR Parameters;
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
-	public struct DisplayPlaneCapabilitiesKhr
+	public struct DisplayPlaneCapabilitiesKHR
 	{
-		DisplayPlaneAlphaFlagsKhr supportedAlpha;
+		DisplayPlaneAlphaFlagsKHR supportedAlpha;
 		Offset2D minSrcPosition;
 		Offset2D maxSrcPosition;
 		Extent2D minSrcExtent;
@@ -75,24 +78,24 @@ namespace Vulkan
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
-	public struct DisplayPlanePropertiesKhr
+	public struct DisplayPlanePropertiesKHR
 	{
-		public UInt64 CurrentDisplay;
+		public DisplayKHR CurrentDisplay;
 		public UInt32 CurrentStackIndex;
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
-	public struct DisplaySurfaceCreateInfoKhr
+	public struct DisplaySurfaceCreateInfoKHR
 	{
 		public StructureType SType;
 		public IntPtr Next;
 		public UInt32 Flags;
-		public UInt64 DisplayMode;
+		public DisplayModeKHR DisplayMode;
 		public UInt32 PlaneIndex;
 		public UInt32 PlaneStackIndex;
-		public SurfaceTransformFlagsKhr Transform;
+		public SurfaceTransformFlagsKHR Transform;
 		public float GlobalAlpha;
-		public DisplayPlaneAlphaFlagsKhr AlphaMode;
+		public DisplayPlaneAlphaFlagsKHR AlphaMode;
 		public Extent2D ImageExtent;
 	}
 	#endregion
@@ -100,32 +103,67 @@ namespace Vulkan
 	#region functions
 	public static partial class VK
 	{
-		[DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceDisplayPropertiesKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern Result GetPhysicalDeviceDisplayPropertiesKHR(PhysicalDevice physicalDevice, out UInt32 pPropertyCount, DisplayPropertiesKhr[] pProperties);
+		[DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceDisplayPropertiesKHR", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity]
+		static extern Result _GetPhysicalDeviceDisplayPropertiesKHR(PhysicalDevice physicalDevice, out UInt32 pPropertyCount, IntPtr pProperties);
+		public unsafe static Result GetPhysicalDeviceDisplayPropertiesKHR(PhysicalDevice physicalDevice, out UInt32 pPropertyCount, DisplayPropertiesKHR[] pProperties)
+		{
+			fixed(DisplayPropertiesKHR* ptr = pProperties)
+			{
+				return _GetPhysicalDeviceDisplayPropertiesKHR(physicalDevice, out pPropertyCount, (IntPtr)ptr);
+			}
+		}
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceDisplayPlanePropertiesKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern Result GetPhysicalDeviceDisplayPlanePropertiesKHR(PhysicalDevice physicalDevice, out UInt32 pPropertyCount, DisplayPlanePropertiesKhr[] pProperties);
+		static extern Result _GetPhysicalDeviceDisplayPlanePropertiesKHR(PhysicalDevice physicalDevice, out UInt32 pPropertyCount, IntPtr pProperties);
+		public unsafe static Result GetPhysicalDeviceDisplayPlanePropertiesKHR(PhysicalDevice physicalDevice, out UInt32 pPropertyCount, DisplayPlanePropertiesKHR[] pProperties)
+		{
+			fixed(DisplayPlanePropertiesKHR* ptr = pProperties)
+			{
+				return _GetPhysicalDeviceDisplayPlanePropertiesKHR(physicalDevice, out pPropertyCount, (IntPtr)ptr);
+			}
+		}
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkGetDisplayPlaneSupportedDisplaysKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern Result GetDisplayPlaneSupportedDisplaysKHR(PhysicalDevice physicalDevice, UInt32 planeIndex, out UInt32 pDisplayCount, DisplayKhr[] pDisplays);
+		static extern Result _GetDisplayPlaneSupportedDisplaysKHR(PhysicalDevice physicalDevice, UInt32 planeIndex, out UInt32 pDisplayCount, IntPtr pDisplays);
+		public unsafe static Result GetDisplayPlaneSupportedDisplaysKHR(PhysicalDevice physicalDevice, UInt32 planeIndex, out UInt32 pDisplayCount, DisplayKHR[] pDisplays)
+		{
+			fixed (DisplayKHR* ptr = pDisplays)
+			{
+				return _GetDisplayPlaneSupportedDisplaysKHR(physicalDevice, planeIndex, out pDisplayCount, (IntPtr)ptr);
+			}
+		}
 
-		[DllImport(VulkanLibrary, EntryPoint = "vkGetDisplayModePropertiesKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern Result GetDisplayModePropertiesKHR(PhysicalDevice physicalDevice, DisplayKhr display, out UInt32 pPropertyCount, DisplayModePropertiesKhr[] pProperties);
+		[DllImport(VulkanLibrary, EntryPoint = "vkGetDisplayModePropertiesKHR", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity]
+		static extern Result _GetDisplayModePropertiesKHR(PhysicalDevice physicalDevice, DisplayKHR display, out UInt32 pPropertyCount, IntPtr pProperties);
+		public unsafe static Result GetDisplayModePropertiesKHR(PhysicalDevice physicalDevice, DisplayKHR display, out UInt32 pPropertyCount, DisplayModePropertiesKHR[] pProperties)
+		{
+			fixed (DisplayModePropertiesKHR* ptr = pProperties)
+			{
+				return _GetDisplayModePropertiesKHR(physicalDevice, display, out pPropertyCount, (IntPtr)ptr);
+			}
+		}
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkCreateDisplayModeKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern Result CreateDisplayModeKHR(PhysicalDevice physicalDevice, DisplayKhr display, ref DisplayModeCreateInfoKhr pCreateInfo, AllocationCallbacks pAllocator, out DisplayModeKhr pMode);
+		static extern Result _CreateDisplayModeKHR(PhysicalDevice physicalDevice, DisplayKHR display, ref DisplayModeCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, out DisplayModeKHR pMode);
+		public static Result CreateDisplayModeKHR(PhysicalDevice physicalDevice, DisplayKHR display, ref DisplayModeCreateInfoKHR pCreateInfo, out DisplayModeKHR pMode, AllocationCallbacks pAllocator=null)
+		{
+			return _CreateDisplayModeKHR(physicalDevice, display, ref pCreateInfo, pAllocator, out pMode);
+		}
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkGetDisplayPlaneCapabilitiesKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern Result GetDisplayPlaneCapabilitiesKHR(PhysicalDevice physicalDevice, DisplayModeKhr mode, UInt32 planeIndex, out DisplayPlaneCapabilitiesKhr pCapabilities);
+		public static extern Result GetDisplayPlaneCapabilitiesKHR(PhysicalDevice physicalDevice, DisplayModeKHR mode, UInt32 planeIndex, out DisplayPlaneCapabilitiesKHR pCapabilities);
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkCreateDisplayPlaneSurfaceKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern Result CreateDisplayPlaneSurfaceKHR(PhysicalDevice instance, ref DisplaySurfaceCreateInfoKhr pCreateInfo, AllocationCallbacks pAllocator, out SurfaceKhr pSurface);
-
-
+		static extern Result _CreateDisplayPlaneSurfaceKHR(Instance instance, ref DisplaySurfaceCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, out SurfaceKHR pSurface);
+		public static Result CreateDisplayPlaneSurfaceKHR(Instance instance, ref DisplaySurfaceCreateInfoKHR pCreateInfo, out SurfaceKHR pSurface, AllocationCallbacks pAllocator = null)
+		{
+			return _CreateDisplayPlaneSurfaceKHR(instance, ref pCreateInfo, pAllocator, out pSurface);
+		}
 	}
 	#endregion
 
 	#region interop
+
 
 	#endregion
 }

@@ -5,25 +5,25 @@ using System.Security;
 namespace Vulkan
 {
 	#region enums
-	public enum ColorSpaceKhr : int
+	public enum ColorSpaceKHR : int
 	{
 		SrgbNonlinear = 0,
-		DisplayP3NonlinearExt = 1000104001,
-		ExtendedSrgbLinearExt = 1000104002,
-		DciP3LinearExt = 1000104003,
-		DciP3NonlinearExt = 1000104004,
-		Bt709LinearExt = 1000104005,
-		Bt709NonlinearExt = 1000104006,
-		Bt2020LinearExt = 1000104007,
-		Hdr10St2084Ext = 1000104008,
-		DolbyvisionExt = 1000104009,
-		Hdr10HlgExt = 1000104010,
-		AdobergbLinearExt = 1000104011,
-		AdobergbNonlinearExt = 1000104012,
-		PassThroughExt = 1000104013,
+		DisplayP3NonlinearEXT = 1000104001,
+		ExtendedSrgbLinearEXT = 1000104002,
+		DciP3LinearEXT = 1000104003,
+		DciP3NonlinearEXT = 1000104004,
+		Bt709LinearEXT = 1000104005,
+		Bt709NonlinearEXT = 1000104006,
+		Bt2020LinearEXT = 1000104007,
+		Hdr10St2084EXT = 1000104008,
+		DolbyvisionEXT = 1000104009,
+		Hdr10HlgEXT = 1000104010,
+		AdobergbLinearEXT = 1000104011,
+		AdobergbNonlinearEXT = 1000104012,
+		PassThroughEXT = 1000104013,
 	}
 
-	public enum PresentModeKhr : int
+	public enum PresentModeKHR : int
 	{
 		Immediate = 0,
 		Mailbox = 1,
@@ -36,7 +36,7 @@ namespace Vulkan
 
 	#region flags
 	[Flags]
-	public enum SurfaceTransformFlagsKhr : int
+	public enum SurfaceTransformFlagsKHR : int
 	{
 		Identity = 0x1,
 		Rotate90 = 0x2,
@@ -50,7 +50,7 @@ namespace Vulkan
 	}
 
 	[Flags]
-	public enum CompositeAlphaFlagsKhr : int
+	public enum CompositeAlphaFlagsKHR : int
 	{
 		Opaque = 0x1,
 		PreMultiplied = 0x2,
@@ -60,10 +60,10 @@ namespace Vulkan
 	#endregion
 
 	#region structs
-	[StructLayout(LayoutKind.Sequential)] public struct SurfaceKhr { public UInt64 native; }
+	[StructLayout(LayoutKind.Sequential)] public struct SurfaceKHR { public UInt64 native; }
 
 	[StructLayout(LayoutKind.Sequential)]
-	public struct SurfaceCapabilitiesKhr
+	public struct SurfaceCapabilitiesKHR
 	{
 		public UInt32 minImageCount;
 		public UInt32 maxImageCount;
@@ -71,17 +71,17 @@ namespace Vulkan
 		public Extent2D minImageExtent;
 		public Extent2D maxImageExtent;
 		public UInt32 maxImageArrayLayers;
-		public SurfaceTransformFlagsKhr supportedTransforms;
-		public SurfaceTransformFlagsKhr currentTransform;
-		public SurfaceTransformFlagsKhr supportedCompositeAlpha;
+		public SurfaceTransformFlagsKHR supportedTransforms;
+		public SurfaceTransformFlagsKHR currentTransform;
+		public SurfaceTransformFlagsKHR supportedCompositeAlpha;
 		public ImageUsageFlags supportedUsageFlags;
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
-	public struct SurfaceFormatKhr
+	public struct SurfaceFormatKHR
 	{
 		public Format format;
-		public ColorSpaceKhr colorSpace;
+		public ColorSpaceKHR colorSpace;
 	}
 
 	#endregion
@@ -90,17 +90,17 @@ namespace Vulkan
 	public static partial class VK
 	{
 		[DllImport(VulkanLibrary, EntryPoint = "vkDestroySurfaceKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern void DestroySurfaceKHR(Instance instance, SurfaceKhr surface, AllocationCallbacks pAllocator = null);
+		public static extern void DestroySurfaceKHR(Instance instance, SurfaceKHR surface, AllocationCallbacks pAllocator = null);
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceSurfaceSupportKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern Result GetPhysicalDeviceSurfaceSupportKHR(PhysicalDevice physicalDevice, UInt32 queueFamilyIndex, SurfaceKhr surface, out Bool32 pSupported);
+		public static extern Result GetPhysicalDeviceSurfaceSupportKHR(PhysicalDevice physicalDevice, UInt32 queueFamilyIndex, SurfaceKHR surface, out Bool32 pSupported);
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceSurfaceCapabilitiesKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern Result GetPhysicalDeviceSurfaceCapabilitiesKHR(PhysicalDevice physicalDevice, SurfaceKhr surface, out SurfaceCapabilitiesKhr pSurfaceCapabilities);
+		public static extern Result GetPhysicalDeviceSurfaceCapabilitiesKHR(PhysicalDevice physicalDevice, SurfaceKHR surface, out SurfaceCapabilitiesKHR pSurfaceCapabilities);
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceSurfaceFormatsKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		static extern Result _GetPhysicalDeviceSurfaceFormatsKHR(PhysicalDevice physicalDevice, SurfaceKhr surface, out UInt32 pSurfaceFormatCount, IntPtr pSurfaceFormats);
-		public static unsafe Result GetPhysicalDeviceSurfaceFormatsKHR(PhysicalDevice physicalDevice, SurfaceKhr surface, out UInt32 pSurfaceFormatCount, SurfaceFormatKhr[] pSurfaceFormats)
+		static extern Result _GetPhysicalDeviceSurfaceFormatsKHR(PhysicalDevice physicalDevice, SurfaceKHR surface, out UInt32 pSurfaceFormatCount, IntPtr pSurfaceFormats);
+		public static unsafe Result GetPhysicalDeviceSurfaceFormatsKHR(PhysicalDevice physicalDevice, SurfaceKHR surface, out UInt32 pSurfaceFormatCount, SurfaceFormatKHR[] pSurfaceFormats)
 		{
 			if (pSurfaceFormats == null)
 			{
@@ -108,7 +108,7 @@ namespace Vulkan
 			}
 			else
 			{
-				fixed (SurfaceFormatKhr* ptr = pSurfaceFormats)
+				fixed (SurfaceFormatKHR* ptr = pSurfaceFormats)
 				{
 					return _GetPhysicalDeviceSurfaceFormatsKHR(physicalDevice, surface, out pSurfaceFormatCount, (IntPtr)ptr);
 				}
@@ -116,8 +116,8 @@ namespace Vulkan
 		}
 
 		[DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceSurfacePresentModesKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		static extern Result _GetPhysicalDeviceSurfacePresentModesKHR(PhysicalDevice physicalDevice, SurfaceKhr surface, out UInt32 pPresentModeCount, IntPtr pPresentModes);
-		public static unsafe Result GetPhysicalDeviceSurfacePresentModesKHR(PhysicalDevice physicalDevice, SurfaceKhr surface, out UInt32 pPresentModeCount, PresentModeKhr[] pPresentModes)
+		static extern Result _GetPhysicalDeviceSurfacePresentModesKHR(PhysicalDevice physicalDevice, SurfaceKHR surface, out UInt32 pPresentModeCount, IntPtr pPresentModes);
+		public static unsafe Result GetPhysicalDeviceSurfacePresentModesKHR(PhysicalDevice physicalDevice, SurfaceKHR surface, out UInt32 pPresentModeCount, PresentModeKHR[] pPresentModes)
 		{
 			if (pPresentModes == null)
 			{
@@ -125,7 +125,7 @@ namespace Vulkan
 			}
 			else
 			{
-				fixed (PresentModeKhr* ptr = pPresentModes)
+				fixed (PresentModeKHR* ptr = pPresentModes)
 				{
 					return _GetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, out pPresentModeCount, (IntPtr)ptr);
 				}
