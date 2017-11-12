@@ -21,9 +21,9 @@ project "VK"
 	targetdir "../bin"
 	links("System")
 	namespace("Vulkan")
-   clr "Unsafe"
-   framework("4.6.2")
-   
+    clr "Unsafe"
+    framework("4.6.2")
+
 project "Test Vulkan"
 	language  "C#"
 	kind "ConsoleApp"
@@ -33,5 +33,6 @@ project "Test Vulkan"
 	targetdir "../bin"
 	links     { "System", "VK", "System.Windows", "System.Windows.Forms", "System.Drawing"}
 	namespace("VulkanTest")
-   framework("4.6.2")
+    framework("4.6.2")
+
    

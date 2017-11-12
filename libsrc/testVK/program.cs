@@ -55,14 +55,14 @@ namespace VulkanTest
 			HInstance = appHandle;
 			Hwnd = windowHandle;
 
-			//enumerateInstanceLayers();
-			//enumerateInstanceExtensions();
+			enumerateInstanceLayers();
+			enumerateInstanceExtensions();
 			initVulkan();
 			setupDebugCallback();
 			createSurface();
 			getPhysicalDevice();
-			//enumerateDeviceLayers();
-			//enumerateDeviceExtensions();
+			enumerateDeviceLayers();
+			enumerateDeviceExtensions();
 			getDevice();
 			getQueues();
 			createSwapChain();
