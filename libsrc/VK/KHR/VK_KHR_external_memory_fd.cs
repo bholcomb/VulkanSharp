@@ -4,26 +4,26 @@ using System.Security;
 
 namespace Vulkan
 {
-	#region enums
+   public static partial class VK
+   {
+      #region enums
 
-	#endregion
+      #endregion
 
-	#region flags
+      #region flags
 
-	#endregion
+      #endregion
 
-	#region structs
+      #region structs
 
-	#endregion
+      #endregion
 
-	#region functions
-	public static partial class VK
-	{
+      #region functions
 
-	}
-	#endregion
+      #endregion
 
-	#region interop
+      #region interop
 
-	#endregion
+      #endregion
+   }
 }

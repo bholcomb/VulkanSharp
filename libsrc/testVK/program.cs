@@ -247,7 +247,7 @@ namespace VulkanTest
 					ApplicationVersion = Vulkan.Version.Make(1, 0, 0),
 					EngineName = "Bobatron",
 					EngineVersion = 1,
-					ApiVersion = Vulkan.Version.Make(1, 0, 0)
+					ApiVersion = Vulkan.Version.Make(1, 1, 0)
 				},
 				EnabledLayerNames = new List<string>() {
 					InstanceLayers.VK_LAYER_LUNARG_standard_validation
@@ -729,6 +729,7 @@ namespace VulkanTest
 
       void loadShaders()
       {
+         /*
          byte[] vsSpv = getEmbeddedResource("Test Vulkan.shaders.vs.glsl.spv");
 
          VK.ShaderModuleCreateInfo createInfo = new VK.ShaderModuleCreateInfo()
@@ -763,6 +764,7 @@ namespace VulkanTest
          fragShaderStageInfo.pName = "main";
 
          VkPipelineShaderStageCreateInfo shaderStages[] = { vertShaderStageInfo, fragShaderStageInfo };
+         */
       }
 
       byte[] getEmbeddedResource(string resourceName)

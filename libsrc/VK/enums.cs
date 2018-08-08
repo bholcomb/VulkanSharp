@@ -8,6 +8,9 @@ namespace Vulkan
       public enum PipelineCacheHeaderVersion : int
       {
          One = 1,
+         BeginRange = One,
+         EndRange = One,
+         RangeSize = (One - One + 1)
       }
 
       public enum Result : int
@@ -30,15 +33,29 @@ namespace Vulkan
          ErrorTooManyObjects = -10,
          ErrorFormatNotSupported = -11,
          ErrorFragmentedPool = -12,
+         ErrorOutOfPoolMemory = -1000069000,
+         ErrorInvalidExternalHandle = -1000072003,
+
+         //VK_KHR_surface
          ErrorSurfaceLostKHR = -1000000000,
          ErrorNativeWindowInUseKHR = -1000000001,
-         SuboptimalKHR = 1000001003,
+         //VK_KHR_swapchain
+         SuboptimalKHR = -1000001003,
          ErrorOutOfDateKHR = -1000001004,
+         //VK_KHR_display_swapchain
          ErrorIncompatibleDisplayKHR = -1000003001,
+         //VK_EXT_debug_report
          ErrorValidationFailedEXT = -1000011001,
-         ErrorInvalidShaderNV = -1000012000,
-         ErrorOutOfPoolMemoryKHR = -1000069000,
-         ErrorInvalidExternalHandleKHR = -1000072003,
+         //VK_NV_glsl_shader
+         ErrorInvalidShaderNV = -1000012000,         
+         //VK_EXT_descriptor_indexing
+         ErrorFragmentationEXT = -1000161000,
+         //VK_EXT_global_priority
+         ErrorNotPermittedEXT = -1000174001,
+         
+         BeginRange = ErrorFragmentedPool,
+         EndRange = Incomplete,
+         RangeSize = (Incomplete - ErrorFragmentedPool + 1),
       }
 
       public enum StructureType : int
@@ -93,136 +110,210 @@ namespace Vulkan
          LoaderInstanceCreateInfo = 47,
          LoaderDeviceCreateInfo = 48,
 
+         //VK_KHR_swapchain
          SwapchainCreateInfoKHR = 1000001000,
          PresentInfoKHR = 1000001001,
+         DeviceGroupPresentCapabilitiesKHR = 1000001007,
+         ImageSwapchainCreateInfoKHR = 1000001008,
+         BindImageMemorySwapchainInfoKHR = 1000001009,
+         AcquireNextImageInfoKHR = 1000001010,
+         DeviceGroupPresentInfoKHR = 1000001011,
+         DeviceGroupSwapchainCreateInfoKHR = 1000001012,
+         //VK_KHR_display
          DisplayModeCreateInfoKHR = 1000002000,
          DisplaySurfaceCreateInfoKHR = 1000002001,
+         //VK_KHR_display_swapchain
          DisplayPresentInfoKHR = 1000003000,
+         //VK_KHR_xlib_surface
          XlibSurfaceCreateInfoKHR = 1000004000,
+         //VK_KHR_xcb_surface
          XcbSurfaceCreateInfoKHR = 1000005000,
+         //VK_KHR_wayland_surface
          WaylandSurfaceCreateInfoKHR = 1000006000,
+         //VK_KHR_mir_surface
          MirSurfaceCreateInfoKHR = 1000007000,
+         //VK_KHR_android_surface
          AndroidSurfaceCreateInfoKHR = 1000008000,
+         //VK_KHR_win32_surface
          Win32SurfaceCreateInfoKHR = 1000009000,
+         //VK_EXT_debug_report
          DebugReportCallbackCreateInfoEXT = 1000011000,
+         //VK_AMD_rasterization_order
          PipelineRasterizationStateRasterizationOrderAMD = 1000018000,
+         //VK_EXT_debug_marker
          DebugMarkerObjectNameInfoEXT = 1000022000,
          DebugMarkerObjectTagInfoEXT = 1000022001,
          DebugMarkerMarkerInfoEXT = 1000022002,
+         //VK_NV_dedicated_allocation
          DedicatedAllocationImageCreateInfoNV = 1000026000,
          DedicatedAllocationBufferCreateInfoNV = 1000026001,
          DedicatedAllocationMemoryAllocateInfoNV = 1000026002,
+         //VK_AMD_texture_gather_bias_lod
          TextureLodGatherFormatPropertiesAMD = 1000041000,
-         RenderPassMultiviewCreateInfoKHX = 1000053000,
-         PhysicalDeviceMultiviewFeaturesKHX = 1000053001,
-         PhysicalDeviceMultiviewPropertiesKHX = 1000053002,
+         //VK_NV_external_memory
          ExternalMemoryImageCreateInfoNV = 1000056000,
          ExportMemoryAllocateInfoNV = 1000056001,
+         //VK_NV_external_memory_win32
          ImportMemoryWin32HandleInfoNV = 1000057000,
          ExportMemoryWin32HandleInfoNV = 1000057001,
+         //VK_NV_win32_keyed_mutex
          Win32KeyedMutexAcquireReleaseInfoNV = 1000058000,
-         PhysicalDeviceFeatures2KHR = 1000059000,
-         PhysicalDeviceProperties2KHR = 1000059001,
-         FormatProperties2KHR = 1000059002,
-         ImageFormatProperties2KHR = 1000059003,
-         PhysicalDeviceImageFormatInfo2KHR = 1000059004,
-         QueueFamilyProperties2KHR = 1000059005,
-         PhysicalDeviceMemoryProperties2KHR = 1000059006,
-         SparseImageFormatProperties2KHR = 1000059007,
-         PhysicalDeviceSparseImageFormatInfo2KHR = 1000059008,
-         MemoryAllocateFlagsInfoKHX = 1000060000,
-         BindBufferMemoryInfoKHX = 1000060001,
-         BindImageMemoryInfoKHX = 1000060002,
-         DeviceGroupRenderPassBeginInfoKHX = 1000060003,
-         DeviceGroupCommandBufferBeginInfoKHX = 1000060004,
-         DeviceGroupSubmitInfoKHX = 1000060005,
-         DeviceGroupBindSparseInfoKHX = 1000060006,
-         DeviceGroupPresentCapabilitiesKHX = 1000060007,
-         ImageSwapchainCreateInfoKHX = 1000060008,
-         BindImageMemorySwapchainInfoKHX = 1000060009,
-         AcquireNextImageInfoKHX = 1000060010,
-         DeviceGroupPresentInfoKHX = 1000060011,
-         DeviceGroupSwapchainCreateInfoKHX = 1000060012,
+         //VK_KHR_device_group
+         DeviceGroupPresentCapabilitiesKHR = 1000060007,
+         ImageSwapchainCreateInfoKHR = 1000060008,
+         BindImageMemorySwapchainInfoKHR = 1000060009,
+         AcquireNextImageInfoKHR = 1000060010,
+         DeviceGroupPresentInfoKHR = 1000060011,
+         DeviceGroupSwapchainCreateInfoKHR = 1000060012,
+         //VK_EXT_validation_flags
          ValidationFlagsEXT = 1000061000,
+         //VK_NN_vi_surface
          ViSurfaceCreateInfoNN = 1000062000,
-         PhysicalDeviceGroupPropertiesKHX = 1000070000,
-         DeviceGroupDeviceCreateInfoKHX = 1000070001,
-         PhysicalDeviceExternalImageFormatInfoKHR = 1000071000,
-         ExternalImageFormatPropertiesKHR = 1000071001,
-         PhysicalDeviceExternalBufferInfoKHR = 1000071002,
-         ExternalBufferPropertiesKHR = 1000071003,
-         PhysicalDeviceIdPropertiesKHR = 1000071004,
-         ExternalMemoryBufferCreateInfoKHR = 1000072000,
-         ExternalMemoryImageCreateInfoKHR = 1000072001,
-         ExportMemoryAllocateInfoKHR = 1000072002,
+         //VK_KHR_external_memory_win32
          ImportMemoryWin32HandleInfoKHR = 1000073000,
          ExportMemoryWin32HandleInfoKHR = 1000073001,
          MemoryWin32HandlePropertiesKHR = 1000073002,
          MemoryGetWin32HandleInfoKHR = 1000073003,
+         //VK_KHR_external_memory_fd
          ImportMemoryFdInfoKHR = 1000074000,
          MemoryFdPropertiesKHR = 1000074001,
          MemoryGetFdInfoKHR = 1000074002,
+         //VK_KHR_win32_keyed_mutex
          Win32KeyedMutexAcquireReleaseInfoKHR = 1000075000,
-         PhysicalDeviceExternalSemaphoreInfoKHR = 1000076000,
-         ExternalSemaphorePropertiesKHR = 1000076001,
-         ExportSemaphoreCreateInfoKHR = 1000077000,
+         //VK_KHR_external_semaphore_win32
          ImportSemaphoreWin32HandleInfoKHR = 1000078000,
          ExportSemaphoreWin32HandleInfoKHR = 1000078001,
-         D3D12FenceSubmitInfoKHR = 1000078002,
+         D3d12FenceSubmitInfoKHR = 1000078002,
          SemaphoreGetWin32HandleInfoKHR = 1000078003,
+         //VK_KHR_external_semaphore_fd
          ImportSemaphoreFdInfoKHR = 1000079000,
          SemaphoreGetFdInfoKHR = 1000079001,
+         //VK_KHR_push_descriptor
          PhysicalDevicePushDescriptorPropertiesKHR = 1000080000,
-         PhysicalDevice16BitStorageFeaturesKHR = 1000083000,
+         //VK_EXT_conditional_rendering
+         CommandBufferInheritanceConditionalRenderingInfoEXT = 1000081000,
+         PhysicalDeviceConditionalRenderingFeaturesEXT = 1000081001,
+         ConditionalRenderingBeginInfoEXT = 1000081002,
+         //VK_KHR_incremental_present
          PresentRegionsKHR = 1000084000,
-         DescriptorUpdateTemplateCreateInfoKHR = 1000085000,
+         //VK_NVX_device_generated_commands
          ObjectTableCreateInfoNVX = 1000086000,
          IndirectCommandsLayoutCreateInfoNVX = 1000086001,
          CmdProcessCommandsInfoNVX = 1000086002,
          CmdReserveSpaceForCommandsInfoNVX = 1000086003,
          DeviceGeneratedCommandsLimitsNVX = 1000086004,
          DeviceGeneratedCommandsFeaturesNVX = 1000086005,
+         //VK_NV_clip_space_w_scaling
          PipelineViewportWScalingStateCreateInfoNV = 1000087000,
+         //VK_EXT_display_surface_counter
          SurfaceCapabilities2EXT = 1000090000,
+         //VK_EXT_display_control
          DisplayPowerInfoEXT = 1000091000,
          DeviceEventInfoEXT = 1000091001,
          DisplayEventInfoEXT = 1000091002,
          SwapchainCounterCreateInfoEXT = 1000091003,
-         PresentTimesInfoGoogle = 1000092000,
+         //VK_GOOGLE_display_timing
+         PresentTimesInfoGOOGLE = 1000092000,
+         //VK_NVX_multiview_per_view_attributes
          PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX = 1000097000,
+         //VK_NV_viewport_swizzle
          PipelineViewportSwizzleStateCreateInfoNV = 1000098000,
+         //VK_EXT_discard_rectangles
          PhysicalDeviceDiscardRectanglePropertiesEXT = 1000099000,
          PipelineDiscardRectangleStateCreateInfoEXT = 1000099001,
+         //VK_EXT_conservative_rasterization
+         PhysicalDeviceConservativeRasterizationPropertiesEXT = 1000101000,
+         PipelineRasterizationConservativeStateCreateInfoEXT = 1000101001,
+         //VK_EXT_hdr_metadata
          HdrMetadataEXT = 1000105000,
+         //VK_KHR_create_renderpass2
+         AttachmentDescription2KHR = 1000109000,
+         AttachmentReference2KHR = 1000109001,
+         SubpassDescription2KHR = 1000109002,
+         SubpassDependency2KHR = 1000109003,
+         RenderPassCreateInfo2KHR = 1000109004,
+         SubpassBeginInfoKHR = 1000109005,
+         SubpassEndInfoKHR = 1000109006,
+         //VK_KHR_shared_presentable_image
          SharedPresentSurfaceCapabilitiesKHR = 1000111000,
-         PhysicalDeviceExternalFenceInfoKHR = 1000112000,
-         ExternalFencePropertiesKHR = 1000112001,
-         ExportFenceCreateInfoKHR = 1000113000,
+         //VK_KHR_external_fence_win32
          ImportFenceWin32HandleInfoKHR = 1000114000,
          ExportFenceWin32HandleInfoKHR = 1000114001,
          FenceGetWin32HandleInfoKHR = 1000114002,
+         //VK_KHR_external_fence_fd
          ImportFenceFdInfoKHR = 1000115000,
          FenceGetFdInfoKHR = 1000115001,
+         //VK_KHR_get_surface_capabilities2
          PhysicalDeviceSurfaceInfo2KHR = 1000119000,
          SurfaceCapabilities2KHR = 1000119001,
          SurfaceFormat2KHR = 1000119002,
-         PhysicalDeviceVariablePointerFeaturesKHR = 1000120000,
-         IosSurfaceCreateInfoMvk = 1000122000,
-         MacosSurfaceCreateInfoMvk = 1000123000,
-         MemoryDedicatedRequirementsKHR = 1000127000,
-         MemoryDedicatedAllocateInfoKHR = 1000127001,
-         PhysicalDeviceSamplerFilterMinMaxPropertiesEXT = 1000130000,
+         //VK_KHR_get_display_properties2
+         DisplayProperties2KHR = 1000121000,
+         DisplayPlaneProperties2KHR = 1000121001,
+         DisplayModeProperties2KHR = 1000121002,
+         DisplayPlaneInfo2KHR = 1000121003,
+         DisplayPlaneCapabilities2KHR = 1000121004,
+         //VK_MVK_ios_surface
+         IosSurfaceCreateInfoMVK = 1000122000,
+         //VK_MVK_macos_surface
+         MacosSurfaceCreateInfoMVK = 1000123000,
+         //VK_EXT_debug_utils
+         DebugUtilsObjectNameInfoEXT = 1000128000,
+         DebugUtilsObjectTagInfoEXT = 1000128001,
+         DebugUtilsLabelEXT = 1000128002,
+         DebugUtilsMessengerCallbackDataEXT = 1000128003,
+         DebugUtilsMessengerCreateInfoEXT = 1000128004,
+         //VK_ANDROID_external_memory_android_hardware_buffer
+         AndroidHardwareBufferUsageANDROID = 1000129000,
+         AndroidHardwareBufferPropertiesANDROID = 1000129001,
+         AndroidHardwareBufferFormatPropertiesANDROID = 1000129002,
+         ImportAndroidHardwareBufferInfoANDROID = 1000129003,
+         MemoryGetAndroidHardwareBufferInfoANDROID = 1000129004,
+         ExternalFormatANDROID = 1000129005,
+         //VK_EXT_sampler_filter_minmax
+         PhysicalDeviceSamplerFilterMinmaxPropertiesEXT = 1000130000,
          SamplerReductionModeCreateInfoEXT = 1000130001,
-         BufferMemoryRequirementsInfo2KHR = 1000146000,
-         ImageMemroryRequirementsInfo2KHR = 1000146001,
-         ImageSparseMemoryRequirementsInfo2KHR = 1000146002,
-         MemoryRequirements2KHR = 1000146003,
-         SparseImageMemoryRequirements2KHR = 1000146004,
+         //VK_EXT_sample_locations
+         SampleLocationsInfoEXT = 1000143000,
+         RenderPassSampleLocationsBeginInfoEXT = 1000143001,
+         PipelineSampleLocationsStateCreateInfoEXT = 1000143002,
+         PhysicalDeviceSampleLocationsPropertiesEXT = 1000143003,
+         MultisamplePropertiesEXT = 1000143004,
+         //VK_KHR_image_format_list
+         ImageFormatListCreateInfoKHR = 1000147000,
+         //VK_EXT_blend_operation_advanced
          PhysicalDeviceBlendOperationAdvancedFeaturesEXT = 1000148000,
          PhysicalDeviceBlendOperationAdvancedPropertiesEXT = 1000148001,
          PipelineColorBlendAdvancedStateCreateInfoEXT = 1000148002,
-         PipelineCoverateToColorStateCreateInfoNV = 1000149000,
-         PipelineCoverateModulationStateCreateInfoNV = 1000152000
+         //VK_NV_fragment_coverage_to_color
+         PipelineCoverageToColorStateCreateInfoNV = 1000149000,
+         //VK_NV_framebuffer_mixed_samples
+         PipelineCoverageModulationStateCreateInfoNV = 1000152000,
+         //VK_EXT_validation_cache
+         ValidationCacheCreateInfoEXT = 1000160000,
+         ShaderModuleValidationCacheCreateInfoEXT = 1000160001,
+         //VK_EXT_descriptor_indexing
+         DescriptorSetLayoutBindingFlagsCreateInfoEXT = 1000161000,
+         PhysicalDeviceDescriptorIndexingFeaturesEXT = 1000161001,
+         PhysicalDeviceDescriptorIndexingPropertiesEXT = 1000161002,
+         DescriptorSetVariableDescriptorCountAllocateInfoEXT = 1000161003,
+         DescriptorSetVariableDescriptorCountLayoutSupportEXT = 1000161004,
+         //VK_EXT_global_priority
+         DeviceQueueGlobalPriorityCreateInfoEXT = 1000174000,
+         //VK_KHR_8bit_storage
+         PhysicalDevice8bitStorageFeaturesKHR = 1000177000,
+         //VK_EXT_external_memory_host
+         ImportMemoryHostPointerInfoEXT = 1000178000,
+         MemoryHostPointerPropertiesEXT = 1000178001,
+         PhysicalDeviceExternalMemoryHostPropertiesEXT = 1000178002,
+         //VK_AMD_shader_core_properties
+         PhysicalDeviceShaderCorePropertiesAMD = 1000185000,
+         //VK_EXT_vertex_attribute_divisor
+         PhysicalDeviceVertexAttributeDivisorPropertiesEXT = 1000190000,
+         PipelineVertexInputDivisorStateCreateInfoEXT = 1000190001,
+         //VK_NV_device_diagnostic_checkpoints
+         CheckpointDataNV = 1000206000,
+         QueueFamilyCheckpointPropertiesNV = 1000206001,
       }
 
       public enum SystemAllocationScope : int
@@ -426,14 +517,16 @@ namespace Vulkan
          Astc12X10SrgbBlock = 182,
          Astc12X12UnormBlock = 183,
          Astc12X12SrgbBlock = 184,
-         Pvrtc12BppUnormBlockImg = 1000054000,
-         Pvrtc14BppUnormBlockImg = 1000054001,
-         Pvrtc22BppUnormBlockImg = 1000054002,
-         Pvrtc24BppUnormBlockImg = 1000054003,
-         Pvrtc12BppSrgbBlockImg = 1000054004,
-         Pvrtc14BppSrgbBlockImg = 1000054005,
-         Pvrtc22BppSrgbBlockImg = 1000054006,
-         Pvrtc24BppSrgbBlockImg = 1000054007,
+
+         //VK_IMG_format_pvrtc
+         Pvrtc12bppUnormBlockIMG = 1000054000,
+         Pvrtc14bppUnormBlockIMG = 1000054001,
+         Pvrtc22bppUnormBlockIMG = 1000054002,
+         Pvrtc24bppUnormBlockIMG = 1000054003,
+         Pvrtc12bppSrgbBlockIMG = 1000054004,
+         Pvrtc14bppSrgbBlockIMG = 1000054005,
+         Pvrtc22bppSrgbBlockIMG = 1000054006,
+         Pvrtc24bppSrgbBlockIMG = 1000054007,
       }
 
       public enum ImageType : int
@@ -482,7 +575,10 @@ namespace Vulkan
          TransferSrcOptimal = 6,
          TransferDstOptimal = 7,
          Preinitialized = 8,
+
+         //VK_KHR_swapchain
          PresentSrcKHR = 1000001002,
+         //VK_KHR_shared_presentable_image
          SharedPresentKHR = 1000111000,
       }
 
@@ -617,6 +713,7 @@ namespace Vulkan
          ReverseSubtract = 2,
          Min = 3,
          Max = 4,
+
          ZeroEXT = 1000148000,
          SrcEXT = 1000148001,
          DstEXT = 1000148002,
@@ -676,6 +773,7 @@ namespace Vulkan
          StencilCompareMask = 6,
          StencilWriteMask = 7,
          StencilReference = 8,
+
          ViewportWScalingNV = 1000087000,
          DiscardRectangleEXT = 1000099000,
       }
@@ -792,14 +890,23 @@ namespace Vulkan
          DescriptorSet = 23,
          Framebuffer = 24,
          CommandPool = 25,
+
+         //VK_KHR_surface
          SurfaceKHR = 1000000000,
+         //VK_KHR_swapchain
          SwapchainKHR = 1000001000,
+         //VK_KHR_display
          DisplayKHR = 1000002000,
          DisplayModeKHR = 1000002001,
+         //VK_EXT_debug_report
          DebugReportCallbackEXT = 1000011000,
-         DescriptorUpdateTemplateKHR = 1000085000,
+         //VK_NVX_device_generated_commands
          ObjectTableNVX = 1000086000,
          IndirectCommandsLayoutNVX = 1000086001,
+         //VK_EXT_debug_utils
+         DebugUtilsMessengerEXT = 1000128000,
+         //VK_EXT_validation_cache
+         ValidationCacheEXT = 1000160000,
       }
 
       #endregion
