@@ -64,9 +64,9 @@ project "VK"
 	targetdir "../bin"
 	links("System")
 	namespace("Vulkan")
-   clr "Unsafe"
-   framework("4.6.2")
-   
+    clr "Unsafe"
+    framework("4.6.2")
+
 project "Test Vulkan"
    generateSpirV("../libsrc/testVK/shaders")
 	language  "C#"
@@ -77,5 +77,6 @@ project "Test Vulkan"
 	targetdir "../bin"
 	links     { "System", "VK", "System.Windows", "System.Windows.Forms", "System.Drawing", "System.Numerics"}
 	namespace("VulkanTest")
-   framework("4.6.2")
+    framework("4.6.2")
+
    
