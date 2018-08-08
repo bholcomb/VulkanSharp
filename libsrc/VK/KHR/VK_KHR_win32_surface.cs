@@ -4,38 +4,39 @@ using System.Security;
 
 namespace Vulkan
 {
-	#region enums
+   public static partial class VK
+   {
+      #region enums
 
-	#endregion
+      #endregion
 
-	#region flags
+      #region flags
 
-	#endregion
+      #endregion
 
-	#region structs
-	[StructLayout(LayoutKind.Sequential)]
-	public struct Win32SurfaceCreateInfoKHR
-	{
-		public StructureType sType;
-		public IntPtr pNext;
-		public UInt32 flags;
-		public IntPtr hinstance;
-		public IntPtr hwnd;
-	}
-	#endregion
+      #region structs
+      [StructLayout(LayoutKind.Sequential)]
+      public struct Win32SurfaceCreateInfoKHR
+      {
+         public StructureType sType;
+         public IntPtr pNext;
+         public UInt32 flags;
+         public IntPtr hinstance;
+         public IntPtr hwnd;
+      }
+      #endregion
 
-	#region functions
-	public static partial class VK
-	{
-		[DllImport(VulkanLibrary, EntryPoint = "vkCreateWin32SurfaceKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern Result CreateWin32SurfaceKHR(Instance instance, ref Win32SurfaceCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, out SurfaceKHR pSurface);
+      #region functions
 
-		[DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceWin32PresentationSupportKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern Bool32 GetPhysicalDeviceWin32PresentationSupportKHR(PhysicalDevice physicalDevice, UInt32 queueFamilyIndex);
-	}
-	#endregion
+      [DllImport(VulkanLibrary, EntryPoint = "vkCreateWin32SurfaceKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+      public static extern Result CreateWin32SurfaceKHR(Instance instance, ref Win32SurfaceCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, out SurfaceKHR pSurface);
 
-	#region interop
+      [DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceWin32PresentationSupportKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+      public static extern Bool32 GetPhysicalDeviceWin32PresentationSupportKHR(PhysicalDevice physicalDevice, UInt32 queueFamilyIndex);
+   }
+   #endregion
 
-	#endregion
+   #region interop
+
+   #endregion
 }

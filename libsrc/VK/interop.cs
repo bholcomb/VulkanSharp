@@ -6,7 +6,7 @@ namespace Vulkan
 {
 	internal static class ExternalFunction
 	{
-		internal static T getInstanceFunction<T>(Instance instance, string name)
+		internal static T getInstanceFunction<T>(VK.Instance instance, string name)
 		{
 			IntPtr funcPtr = VK.GetInstanceProcAddr(instance, name);
 			if (funcPtr == IntPtr.Zero)
@@ -17,7 +17,7 @@ namespace Vulkan
 			return Marshal.GetDelegateForFunctionPointer<T>(funcPtr);
 		}
 
-		internal static T getDeviceFunction<T>(Device device, string name)
+		internal static T getDeviceFunction<T>(VK.Device device, string name)
 		{
 			IntPtr funcPtr = VK.GetDeviceProcAddr(device, name);
 			if (funcPtr == IntPtr.Zero)
@@ -82,7 +82,7 @@ namespace Vulkan
 	[StructLayout(LayoutKind.Sequential)]
 	internal unsafe struct _InstanceCreateInfo
 	{
-		public StructureType sType;
+		public VK.StructureType sType;
 		public IntPtr next;
 		public UInt32 flags;
 		public IntPtr applicationInfo;
@@ -93,7 +93,7 @@ namespace Vulkan
 		public UInt32 enabledExtensionCount;
 		public IntPtr* enabledExtensionNames;
 
-		public _InstanceCreateInfo(InstanceCreateInfo info)
+		public _InstanceCreateInfo(VK.InstanceCreateInfo info)
 		{
 			sType = info.SType;
 			next = info.Next;
@@ -118,7 +118,7 @@ namespace Vulkan
 	[StructLayout(LayoutKind.Sequential)]
 	internal unsafe struct _DeviceCreateInfo
 	{
-		public StructureType SType;
+		public VK.StructureType SType;
 		public IntPtr Next;
 		public UInt32 Flags;
 
@@ -133,7 +133,7 @@ namespace Vulkan
 
 		public IntPtr EnabledFeatures;
 
-		public _DeviceCreateInfo(DeviceCreateInfo info)
+		public _DeviceCreateInfo(VK.DeviceCreateInfo info)
 		{
 			SType = info.SType;
 			Next = info.Next;
@@ -169,14 +169,14 @@ namespace Vulkan
 	[StructLayout(LayoutKind.Sequential)]
 	internal struct _DeviceQueueCreateInfo
 	{
-		public StructureType SType;
+		public VK.StructureType SType;
 		public IntPtr Next;
 		public UInt32 Flags;
 		public UInt32 QueueFamilyIndex;
 		public UInt32 QueueCount;
 		public IntPtr QueuePriorities;
 
-		public _DeviceQueueCreateInfo(DeviceQueueCreateInfo info)
+		public _DeviceQueueCreateInfo(VK.DeviceQueueCreateInfo info)
 		{
 			SType = info.SType;
 			Next = info.Next;
@@ -197,7 +197,7 @@ namespace Vulkan
 	[StructLayout(LayoutKind.Sequential)]
 	internal struct _BindSparseInfo
 	{
-		StructureType sType;
+      VK.StructureType sType;
 		IntPtr pNext;
 		UInt32 waitSemaphoreCount;
 		IntPtr pWaitSemaphores;
@@ -210,7 +210,7 @@ namespace Vulkan
 		UInt32 signalSemaphoreCount;
 		IntPtr pSignalSemaphores;
 
-		public _BindSparseInfo(BindSparseInfo info)
+		public _BindSparseInfo(VK.BindSparseInfo info)
 		{
 			sType = info.sType;
 			pNext = info.pNext;
@@ -240,7 +240,7 @@ namespace Vulkan
 	[StructLayout(LayoutKind.Sequential)]
 	internal struct _SubmitInfo
 	{
-		public StructureType SType;
+		public VK.StructureType SType;
 		public IntPtr Next;
 		public UInt32 WaitSemaphoreCount;
 		public IntPtr WaitSemaphores;
@@ -250,7 +250,7 @@ namespace Vulkan
 		public UInt32 SignalSemaphoreCount;
 		public IntPtr SignalSemaphores;
 
-		public _SubmitInfo(SubmitInfo info)
+		public _SubmitInfo(VK.SubmitInfo info)
 		{
 			SType = info.SType;
 			Next = info.Next;

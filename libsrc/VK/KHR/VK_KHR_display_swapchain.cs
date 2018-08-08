@@ -4,36 +4,37 @@ using System.Security;
 
 namespace Vulkan
 {
-	#region enums
+   public static partial class VK
+   {
+      #region enums
 
-	#endregion
+      #endregion
 
-	#region flags
+      #region flags
 
-	#endregion
+      #endregion
 
-	#region structs
-	[StructLayout(LayoutKind.Sequential)]
-	public struct DisplayPresentInfoKHR
-	{
-		public StructureType SType;
-		public IntPtr Next;
-		public Rect2D SrcRect;
-		public Rect2D DstRect;
-		public Bool32 Persistent;
-	}
-	#endregion
+      #region structs
+      [StructLayout(LayoutKind.Sequential)]
+      public struct DisplayPresentInfoKHR
+      {
+         public VK.StructureType SType;
+         public IntPtr Next;
+         public VK.Rect2D SrcRect;
+         public VK.Rect2D DstRect;
+         public Bool32 Persistent;
+      }
+      #endregion
 
-	#region functions
-	public static partial class VK
-	{
-		[DllImport(VulkanLibrary, EntryPoint = "vkCreateSharedSwapchainsKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-		public static extern Result CreateSharedSwapchainsKHR(Device device, UInt32 swapchainCount, SwapchainCreateInfoKHR[] pCreateInfos, AllocationCallbacks pAllocator, out SwapchainKHR[] pSwapchains);
+      #region functions
 
-	}
-	#endregion
+      [DllImport(VulkanLibrary, EntryPoint = "vkCreateSharedSwapchainsKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+      public static extern Result CreateSharedSwapchainsKHR(Device device, UInt32 swapchainCount, SwapchainCreateInfoKHR[] pCreateInfos, AllocationCallbacks pAllocator, out SwapchainKHR[] pSwapchains);
 
-	#region interop
+   }
+   #endregion
 
-	#endregion
+   #region interop
+
+   #endregion
 }
