@@ -87,6 +87,8 @@ end
 
 --findEnumExtensions(tree, "VkResult")
 --findEnumExtensions(tree, "VkStructureType")
-findEnumExtensions(tree, "VkFormat")
+--findEnumExtensions(tree, "VkFormat")
 --findEnumExtensions(tree, "VkImageLayout")
 --findEnumExtensions(tree, "VkObjectType")
+--findEnumExtensions(tree, "VkBlendOp")
+findEnumExtensions(tree, "VkDynamicState")

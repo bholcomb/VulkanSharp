@@ -113,12 +113,6 @@ namespace Vulkan
          //VK_KHR_swapchain
          SwapchainCreateInfoKHR = 1000001000,
          PresentInfoKHR = 1000001001,
-         DeviceGroupPresentCapabilitiesKHR = 1000001007,
-         ImageSwapchainCreateInfoKHR = 1000001008,
-         BindImageMemorySwapchainInfoKHR = 1000001009,
-         AcquireNextImageInfoKHR = 1000001010,
-         DeviceGroupPresentInfoKHR = 1000001011,
-         DeviceGroupSwapchainCreateInfoKHR = 1000001012,
          //VK_KHR_display
          DisplayModeCreateInfoKHR = 1000002000,
          DisplaySurfaceCreateInfoKHR = 1000002001,
@@ -714,6 +708,7 @@ namespace Vulkan
          Min = 3,
          Max = 4,
 
+         //VK_EXT_blend_operation_advanced
          ZeroEXT = 1000148000,
          SrcEXT = 1000148001,
          DstEXT = 1000148002,
@@ -774,7 +769,9 @@ namespace Vulkan
          StencilWriteMask = 7,
          StencilReference = 8,
 
+         //VK_NV_clip_space_w_scaling
          ViewportWScalingNV = 1000087000,
+         //VK_EXT_discard_rectangles
          DiscardRectangleEXT = 1000099000,
       }
 
