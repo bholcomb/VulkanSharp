@@ -33,14 +33,14 @@ namespace Vulkan
       //VkResult vkCreateHeadlessSurfaceEXT(VkInstance  instance, const VkHeadlessSurfaceCreateInfoEXT *  pCreateInfo, const VkAllocationCallbacks *  pAllocator, VkSurfaceKHR *  pSurface);
       
       //delegate definitions
-      public delegate Result CreateHeadlessSurfaceEXTDelegate(Instance instance, ref HeadlessSurfaceCreateInfoEXT pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
+      public delegate Result CreateHeadlessSurfaceEXTDelegate(Instance instance, ref HeadlessSurfaceCreateInfoEXT pCreateInfo, AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
       
       //delegate instances
       public static CreateHeadlessSurfaceEXTDelegate CreateHeadlessSurfaceEXT;
       #endregion
 
       #region interop
-      public static class VK_EXT_headless_surface
+      public static class EXT_headless_surface
       {
          public static void init(VK.Instance instance)
          {

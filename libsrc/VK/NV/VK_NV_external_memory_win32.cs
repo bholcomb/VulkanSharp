@@ -50,7 +50,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_NV_external_memory_win32
+      public static class NV_external_memory_win32
       {
          public static void init(VK.Device device)
          {

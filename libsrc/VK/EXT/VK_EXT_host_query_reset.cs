@@ -40,7 +40,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_host_query_reset
+      public static class EXT_host_query_reset
       {
          public static void init(VK.Device device)
          {

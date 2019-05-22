@@ -39,8 +39,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SwapchainCreateInfoKHR
       {
-         StructureType sType;
-         IntPtr pNext;
+         StructureType type;
+         IntPtr next;
          UInt32 flags;
          SurfaceKHR surface;
          UInt32 minImageCount;
@@ -51,7 +51,7 @@ namespace Vulkan
          ImageUsageFlags imageUsage;
          SharingMode imageSharingMode;
          UInt32 queueFamilyIndexCount;
-         IntPtr pQueueFamilyIndices;
+         IntPtr queueFamilyIndices;
          UInt32 preTransform;
          UInt32 compositeAlpha;
          PresentModeKHR presentMode;
@@ -62,14 +62,14 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PresentInfoKHR
       {
-         StructureType sType;
-         IntPtr pNext;
+         StructureType type;
+         IntPtr next;
          UInt32 waitSemaphoreCount;
-         Semaphore* pWaitSemaphores;
+         Semaphore* waitSemaphores;
          UInt32 swapchainCount;
-         SwapchainKHR* pSwapchains;
-         IntPtr pImageIndices;
-         Result* pResults;
+         SwapchainKHR* swapchains;
+         IntPtr imageIndices;
+         Result* results;
       }
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -143,8 +143,8 @@ namespace Vulkan
       //VkResult vkAcquireNextImage2KHR(VkDevice  device, const VkAcquireNextImageInfoKHR *  pAcquireInfo, uint32_t *  pImageIndex);
       
       //delegate definitions
-      public delegate Result CreateSwapchainKHRDelegate(Device device, ref SwapchainCreateInfoKHR pCreateInfo, ref AllocationCallbacks pAllocator, ref SwapchainKHR pSwapchains);
-      public delegate void DestroySwapchainKHRDelegate(Device device, SwapchainKHR swapchain, ref AllocationCallbacks pAllocators);
+      public delegate Result CreateSwapchainKHRDelegate(Device device, ref SwapchainCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, ref SwapchainKHR pSwapchains);
+      public delegate void DestroySwapchainKHRDelegate(Device device, SwapchainKHR swapchain, AllocationCallbacks pAllocators);
       public delegate Result GetSwapchainImagesKHRDelegate(Device device, SwapchainKHR swapchain, ref UInt32 pSwapchainImageCount, ref Image pSwapchainImagess);
       public delegate Result AcquireNextImageKHRDelegate(Device device, SwapchainKHR swapchain, UInt64 timeout, Semaphore semaphore, Fence fence, ref UInt32 pImageIndexs);
       public delegate Result QueuePresentKHRDelegate(Queue queue, ref PresentInfoKHR pPresentInfos);
@@ -166,7 +166,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_KHR_swapchain
+      public static class KHR_swapchain
       {
          public static void init(VK.Device device)
          {

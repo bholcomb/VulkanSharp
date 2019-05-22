@@ -180,8 +180,8 @@ namespace VulkanTest
 
 			for (int i = 0; i < props.Length; i++)
 			{
-				Console.WriteLine("\tLayer Name: {0}", props[i].LayerName);
-				Console.WriteLine("\t\tDescription: {0}", props[i].Description);
+				Console.WriteLine("\tLayer Name: {0}", props[i].layerName);
+				Console.WriteLine("\t\tDescription: {0}", props[i].description);
 			}
 		}
 
@@ -196,7 +196,7 @@ namespace VulkanTest
 
 			for (int i = 0; i < props.Length; i++)
 			{
-				Console.WriteLine("\tExtensions Name: {0}", props[i].ExtensionName);
+				Console.WriteLine("\tExtensions Name: {0}", props[i].extensionName);
 			}
 		}
 
@@ -211,8 +211,8 @@ namespace VulkanTest
 
 			for (int i = 0; i < props.Length; i++)
 			{
-				Console.WriteLine("\tLayer Name: {0}", props[i].LayerName);
-				Console.WriteLine("\t\tDescription: {0}", props[i].Description);
+				Console.WriteLine("\tLayer Name: {0}", props[i].layerName);
+				Console.WriteLine("\t\tDescription: {0}", props[i].description);
 			}
 		}
 
@@ -227,7 +227,7 @@ namespace VulkanTest
 
 			for (int i = 0; i < props.Length; i++)
 			{
-				Console.WriteLine("\tExtensions Name: {0}", props[i].ExtensionName);
+				Console.WriteLine("\tExtensions Name: {0}", props[i].extensionName);
 			}
 		}
 
@@ -236,23 +236,23 @@ namespace VulkanTest
 			Console.Write("Creating Instance...");
          VK.InstanceCreateInfo info = new VK.InstanceCreateInfo()
 			{
-				SType = VK.StructureType.InstanceCreateInfo,
-				Next = IntPtr.Zero,
-				Flags = 0,
-            ApplicationInfo = new VK.ApplicationInfo()
+				type = VK.StructureType.InstanceCreateInfo,
+				next = IntPtr.Zero,
+				flags = 0,
+            applicationInfo = new VK.ApplicationInfo()
 				{
-					SType = VK.StructureType.ApplicationInfo,
-					Next = IntPtr.Zero,
-					ApplicationName = "Test VK Bindings",
-					ApplicationVersion = Vulkan.Version.Make(1, 0, 0),
-					EngineName = "Bobatron",
-					EngineVersion = 1,
-					ApiVersion = Vulkan.Version.Make(1, 1, 0)
+					type = VK.StructureType.ApplicationInfo,
+					next = IntPtr.Zero,
+					applicationName = "Test VK Bindings",
+					applicationVersion = Vulkan.Version.Make(1, 0, 0),
+					engineName = "Bobatron",
+					engineVersion = 1,
+					apiVersion = Vulkan.Version.Make(1, 1, 0)
 				},
-				EnabledLayerNames = new List<string>() {
+				enabledLayerNames = new List<string>() {
 					InstanceLayers.VK_LAYER_LUNARG_standard_validation
 				},
-				EnabledExtensionNames = new List<string>() {
+				enabledExtensionNames = new List<string>() {
 					InstanceExtensions.VK_KHR_surface,
 					InstanceExtensions.VK_KHR_win32_surface,
 					InstanceExtensions.VK_EXT_debug_report
@@ -270,13 +270,13 @@ namespace VulkanTest
 		void setupDebugCallback()
 		{
 			Console.WriteLine("Initializing debug report extension");
-			VK_EXT_debug_report.init(context.instance);
+			VK.EXT_debug_report.init(context.instance);
 
          VK.DebugReportCallbackCreateInfoEXT info = new VK.DebugReportCallbackCreateInfoEXT()
 			{
-				sType = VK.StructureType.DebugReportCallbackCreateInfoEXT,
-				pNext = IntPtr.Zero,
-				flags = VK.DebugReportFlagsEXT.Error | VK.DebugReportFlagsEXT.Warning,
+				type = VK.StructureType.DebugReportCallbackCreateInfoExt,
+				next = IntPtr.Zero,
+				flags = VK.DebugReportFlagsEXT.ErrorBitExt | VK.DebugReportFlagsEXT.WarningBitExt,
 				pfnCallback = debugCallback,
 				pUserData = IntPtr.Zero
 			};
@@ -293,8 +293,8 @@ namespace VulkanTest
 			Console.WriteLine("Creating surface");
          VK.Win32SurfaceCreateInfoKHR info = new VK.Win32SurfaceCreateInfoKHR()
 			{
-				sType = VK.StructureType.Win32SurfaceCreateInfoKHR,
-				pNext = IntPtr.Zero,
+				type = VK.StructureType.Win32SurfaceCreateInfoKhr,
+				next = IntPtr.Zero,
 				flags = 0,
 				hinstance = HInstance,
 				hwnd = Hwnd
@@ -323,8 +323,8 @@ namespace VulkanTest
             VK.PhysicalDeviceProperties props;
 				VK.GetPhysicalDeviceProperties(physicalDevices[i], out props);
 
-				Console.WriteLine("\tFound Physical Device {0} of type {1}", props.DeviceName, props.DeviceType);
-				Console.WriteLine("\tWith Driver version {0}", Vulkan.Version.ToString(props.ApiVersion));
+				Console.WriteLine("\tFound Physical Device {0} of type {1}", props.deviceName, props.deviceType);
+				Console.WriteLine("\tWith Driver version {0}", Vulkan.Version.ToString(props.apiVersion));
 
             VK.PhysicalDeviceFeatures supportedFeatures;
 				VK.GetPhysicalDeviceFeatures(physicalDevices[i], out supportedFeatures);
@@ -334,7 +334,7 @@ namespace VulkanTest
             VK.PhysicalDeviceMemoryProperties memProps;
 				VK.GetPhysicalDeviceMemoryProperties(physicalDevices[i], out memProps);
 
-				Console.WriteLine("\tDevice has {0} memory types and {1} heaps", memProps.MemoryTypeCount, memProps.MemoryHeapCount);
+				Console.WriteLine("\tDevice has {0} memory types and {1} heaps", memProps.memoryTypeCount, memProps.memoryHeapCount);
 
 
 				UInt32 queueFamilyCount = 0;
@@ -352,7 +352,7 @@ namespace VulkanTest
 
 				for (int j = 0; j < queueFamilyProps.Length; j++)
 				{
-					Console.WriteLine("\t\tQueue Family {0} has {1} queues with flags {2}", j, queueFamilyProps[j].queueCount, queueFamilyProps[j].QueueFlags);
+					Console.WriteLine("\t\tQueue Family {0} has {1} queues with flags {2}", j, queueFamilyProps[j].queueCount, queueFamilyProps[j].queueFlags);
 					Bool32 supportsPresent;
 					VK.GetPhysicalDeviceSurfaceSupportKHR(physicalDevices[i], (UInt32)j, context.surface, out supportsPresent);
 
@@ -363,28 +363,28 @@ namespace VulkanTest
 						presentFound = true;
 					}
 
-					if (!graphicsFound && queueFamilyProps[j].QueueFlags.HasFlag(VK.QueueFlags.Graphics))
+					if (!graphicsFound && queueFamilyProps[j].queueFlags.HasFlag(VK.QueueFlags.GraphicsBit))
 					{
 						context.graphicsQueueIndex = j;
 						Console.WriteLine("\tFound queue family supporting graphics: {0}", j);
 						graphicsFound = true;
 					}
 
-					if (!transferFound && queueFamilyProps[j].QueueFlags.HasFlag(VK.QueueFlags.Transfer))
+					if (!transferFound && queueFamilyProps[j].queueFlags.HasFlag(VK.QueueFlags.TransferBit))
 					{
 						context.transferQueueIndex = j;
 						Console.WriteLine("\tFound queue family supporting transfer: {0}", j);
 						transferFound = true;
 					}
 
-					if (!computeFound && queueFamilyProps[j].QueueFlags.HasFlag(VK.QueueFlags.Compute))
+					if (!computeFound && queueFamilyProps[j].queueFlags.HasFlag(VK.QueueFlags.ComputeBit))
 					{
 						context.computeQueueIndex = j;
 						Console.WriteLine("\tFound queue family supporting compute: {0}", j);
 						computeFound = true;
 					}
 
-					if (!sparseFound && queueFamilyProps[j].QueueFlags.HasFlag(VK.QueueFlags.SparseBinding))
+					if (!sparseFound && queueFamilyProps[j].queueFlags.HasFlag(VK.QueueFlags.SparseBindingBit))
 					{
 						context.sparseQueueIndex = j;
 						Console.WriteLine("\tFound queue family supporting sparse: {0}", j);
@@ -420,29 +420,29 @@ namespace VulkanTest
 
          VK.DeviceCreateInfo info = new VK.DeviceCreateInfo()
 			{
-				SType = VK.StructureType.DeviceCreateInfo,
-				Next = IntPtr.Zero,
-				Flags = 0,
-				QueueCreateInfos = new List<VK.DeviceQueueCreateInfo>(),
-				EnabledFeatures = context.deviceFeatures,
-				EnabledExtensionNames = new List<string>()
+				type = VK.StructureType.DeviceCreateInfo,
+				next = IntPtr.Zero,
+				flags = 0,
+				queueCreateInfos = new List<VK.DeviceQueueCreateInfo>(),
+				enabledFeatures = context.deviceFeatures,
+				enabledExtensionNames = new List<string>()
 				{
 					DeviceExtensions.VK_KHR_swapchain
 				},
-				EnabledLayerNames = new List<string>() { }
+				enabledLayerNames = new List<string>() { }
 			};
 
 			foreach (UInt32 familyIndex in queueFamilies)
 			{
-				info.QueueCreateInfos.Add(
+				info.queueCreateInfos.Add(
 					new VK.DeviceQueueCreateInfo()
 					{
-						SType = VK.StructureType.DeviceQueueCreateInfo,
-						Next = IntPtr.Zero,
-						Flags = 0,
-						QueueFamilyIndex = familyIndex,
-						QueueCount = 1,
-						QueuePriorities = new float[1] { 1.0f }
+						type = VK.StructureType.DeviceQueueCreateInfo,
+						next = IntPtr.Zero,
+						flags = 0,
+						queueFamilyIndex = familyIndex,
+						queueCount = 1,
+						queuePriorities = new float[1] { 1.0f }
 					}
 				);
 			}
@@ -472,12 +472,12 @@ namespace VulkanTest
 			checkResult(res, "Failed to get physical device surface capabilities");
 
 			UInt32 formatCount = 0;
-			res = VK.GetPhysicalDeviceSurfaceFormatsKHR(context.physicalDevice, context.surface, out formatCount, null);
+			res = VK.GetPhysicalDeviceSurfaceFormatsKHR(context.physicalDevice, context.surface, ref formatCount, null);
 			checkResult(res, "Failed to get physical device surface format count");
 
 			Console.WriteLine("Found {0} formats for display surface", formatCount);
          VK.SurfaceFormatKHR[] surfaceFormats = new VK.SurfaceFormatKHR[formatCount];
-			res = VK.GetPhysicalDeviceSurfaceFormatsKHR(context.physicalDevice, context.surface, out formatCount, surfaceFormats);
+			res = VK.GetPhysicalDeviceSurfaceFormatsKHR(context.physicalDevice, context.surface, ref formatCount, ref surfaceFormats);
 			checkResult(res, "Failed to get physical device surface format values");
 
          //just use the first format/colorspace
@@ -505,39 +505,39 @@ namespace VulkanTest
 			}
 
          VK.ImageUsageFlags usageFlags;
-			if (context.surfaceCapabilities.supportedUsageFlags.HasFlag(VK.ImageUsageFlags.TransferDst))
-				usageFlags = VK.ImageUsageFlags.ColorAttachment | VK.ImageUsageFlags.TransferDst;
+			if (context.surfaceCapabilities.supportedUsageFlags.HasFlag(VK.ImageUsageFlags.TransferDstBit))
+				usageFlags = VK.ImageUsageFlags.ColorAttachmentBit | VK.ImageUsageFlags.TransferDstBit;
 			else
-				usageFlags = VK.ImageUsageFlags.ColorAttachment;
+				usageFlags = VK.ImageUsageFlags.ColorAttachmentBit;
 
          VK.SwapchainCreateInfoKHR info = new VK.SwapchainCreateInfoKHR()
 			{
-				SType = VK.StructureType.SwapchainCreateInfoKHR,
-				Next = IntPtr.Zero,
-				Flags = 0,
-				Surface = context.surface,
-				MinImageCount = context.surfaceCapabilities.minImageCount + 1,
-				ImageFormat = bestFormat,
-				ImageColorSpace = bestColorspace,
-				ImageExtent = context.surfaceCapabilities.currentExtent,
-				ImageArrayLayers = 1,
-				ImageUsage = usageFlags,
-				PresentMode = bestPresentMode,
-				PreTransform = context.surfaceCapabilities.currentTransform,
-				CompositeAlpha = VK.CompositeAlphaFlagsKHR.Opaque,
-				Clipped = true,
-				OldSwapchain = new VK.SwapchainKHR()
+				type = VK.StructureType.SwapchainCreateInfoKhr,
+				next = IntPtr.Zero,
+				flags = 0,
+				surface = context.surface,
+				minImageCount = context.surfaceCapabilities.minImageCount + 1,
+				imageFormat = bestFormat,
+				imageColorSpace = bestColorspace,
+				imageExtent = context.surfaceCapabilities.currentExtent,
+				imageArrayLayers = 1,
+				imageUsage = usageFlags,
+				presentMode = bestPresentMode,
+				preTransform = context.surfaceCapabilities.currentTransform,
+				compositeAlpha = VK.CompositeAlphaFlagsKHR.Opaque,
+				clipped = true,
+				oldSwapchain = new VK.SwapchainKHR()
 			};
 
 			if (context.presentQueueIndex != context.graphicsQueueIndex)
 			{
-				info.ImageSharingMode = VK.SharingMode.Concurrent;
-				info.QueueFamilyIndices = new List<UInt32>() { (UInt32)context.presentQueueIndex, (UInt32)context.graphicsQueueIndex };
+				info.imageSharingMode = VK.SharingMode.Concurrent;
+				info.queueFamilyIndices = new List<UInt32>() { (UInt32)context.presentQueueIndex, (UInt32)context.graphicsQueueIndex };
 			}
 			else
 			{
-				info.ImageSharingMode = VK.SharingMode.Exclusive;
-				info.QueueFamilyIndices = new List<UInt32>() { 0 };
+				info.imageSharingMode = VK.SharingMode.Exclusive;
+				info.queueFamilyIndices = new List<UInt32>() { 0 };
 			}
 
 			res = VK.CreateSwapchainKHR(context.device, ref info, out context.swapChain);
@@ -562,22 +562,22 @@ namespace VulkanTest
 			{
             VK.ImageViewCreateInfo viewInfo = new VK.ImageViewCreateInfo()
 				{
-					SType = VK.StructureType.ImageViewCreateInfo,
-					Next = IntPtr.Zero,
-					Flags = 0,
+					type = VK.StructureType.ImageViewCreateInfo,
+					next = IntPtr.Zero,
+					flags = 0,
 					image = context.swapChainImages[i],
-					ViewType = VK.ImageViewType.View2D,
-					Format = context.swapChainFormat,
-					Components = new VK.ComponentMapping()
+					viewType = VK.ImageViewType.View2d,
+					format = context.swapChainFormat,
+					components = new VK.ComponentMapping()
 					{
-						R = VK.ComponentSwizzle.Identity,
-						G = VK.ComponentSwizzle.Identity,
-						B = VK.ComponentSwizzle.Identity,
-						A = VK.ComponentSwizzle.Identity
+						r = VK.ComponentSwizzle.Identity,
+						g = VK.ComponentSwizzle.Identity,
+						b = VK.ComponentSwizzle.Identity,
+						a = VK.ComponentSwizzle.Identity
 					},
-					SubresourceRange = new VK.ImageSubresourceRange()
+					subresourceRange = new VK.ImageSubresourceRange()
 					{
-						aspectMask = VK.ImageAspectFlags.Color,
+						aspectMask = VK.ImageAspectFlags.ColorBit,
 						baseMipLevel = 0,
 						levelCount = 1,
 						baseArrayLayer = 0,
@@ -597,9 +597,9 @@ namespace VulkanTest
 			Console.Write("Creating semaphores...");
          VK.SemaphoreCreateInfo info = new VK.SemaphoreCreateInfo()
 			{
-				SType = VK.StructureType.SemaphoreCreateInfo,
-				Next = IntPtr.Zero,
-				Flags = 0
+				type = VK.StructureType.SemaphoreCreateInfo,
+				next = IntPtr.Zero,
+				flags = 0
 			};
 
          VK.Result res = VK.CreateSemaphore(context.device, ref info, out context.imageAvailable);
@@ -616,10 +616,10 @@ namespace VulkanTest
 			Console.Write("Creating command buffers...");
          VK.CommandPoolCreateInfo info = new VK.CommandPoolCreateInfo()
 			{
-				SType = VK.StructureType.CommandPoolCreateInfo,
-				Next = IntPtr.Zero,
-				Flags = 0,
-				QueueFamilyIndex = (UInt32)context.presentQueueIndex
+				type = VK.StructureType.CommandPoolCreateInfo,
+				next = IntPtr.Zero,
+				flags = 0,
+				queueFamilyIndex = (UInt32)context.presentQueueIndex
 			};
 
          VK.Result res = VK.CreateCommandPool(context.device, ref info, out context.presentCommandPool);
@@ -629,11 +629,11 @@ namespace VulkanTest
 
          VK.CommandBufferAllocateInfo allocInfo = new VK.CommandBufferAllocateInfo()
 			{
-				SType = VK.StructureType.CommandBufferAllocateInfo,
-				Next = IntPtr.Zero,
-				CommandPool = context.presentCommandPool,
-				Level = VK.CommandBufferLevel.Primary,
-				CommandBufferCount = (UInt32)context.swapChainImages.Length
+				type = VK.StructureType.CommandBufferAllocateInfo,
+				next = IntPtr.Zero,
+				commandPool = context.presentCommandPool,
+				level = VK.CommandBufferLevel.Primary,
+				commandBufferCount = (UInt32)context.swapChainImages.Length
 			};
 
 			res = VK.AllocateCommandBuffers(context.device, ref allocInfo, context.presentCommandBuffers);
@@ -647,10 +647,10 @@ namespace VulkanTest
 			Console.Write("Record command buffers...");
          VK.CommandBufferBeginInfo beginInfo = new VK.CommandBufferBeginInfo()
 			{
-				SType = VK.StructureType.CommandBufferBeginInfo,
-				Next = IntPtr.Zero,
-				Flags = 0,
-				InheritanceInfo = IntPtr.Zero
+				type = VK.StructureType.CommandBufferBeginInfo,
+				next = IntPtr.Zero,
+				flags = 0,
+				inheritanceInfo = IntPtr.Zero
 			};
 
          VK.ClearColorValue clearColor = new VK.ClearColorValue() { r = 1.0f, g = 0.8f, b = 0.4f, a = 0.0f };
@@ -668,42 +668,42 @@ namespace VulkanTest
 			{
             VK.ImageMemoryBarrier barrierFromPresentToClear = new VK.ImageMemoryBarrier()
 					{
-						SType = VK.StructureType.ImageMemoryBarrier,
-						Next = IntPtr.Zero,
-						SrcAccessMask = VK.AccessFlags.MemoryRead,
-						DstAccessMask = VK.AccessFlags.TransferWrite,
-						OldLayout = VK.ImageLayout.Undefined,
-						NewLayout = VK.ImageLayout.TransferDstOptimal,
-						SrcQueueFamilyIndex = VK.QUEUE_FAMILY_IGNORED,
-						DstQueueFamilyIndex = VK.QUEUE_FAMILY_IGNORED,
-                  Image = context.swapChainImages[i],
-						SubresourceRange = imageSubresourceRange
+						type = VK.StructureType.ImageMemoryBarrier,
+						next = IntPtr.Zero,
+						srcAccessMask = VK.AccessFlags.MemoryReadBit,
+						dstAccessMask = VK.AccessFlags.TransferWriteBit,
+						oldLayout = VK.ImageLayout.Undefined,
+						newLayout = VK.ImageLayout.TransferDstOptimal,
+						srcQueueFamilyIndex = VK.QUEUE_FAMILY_IGNORED,
+						dstQueueFamilyIndex = VK.QUEUE_FAMILY_IGNORED,
+                  image = context.swapChainImages[i],
+						subresourceRange = imageSubresourceRange
 					};
 
             VK.ImageMemoryBarrier barrierFromClearToPresent =
 					new VK.ImageMemoryBarrier()
 					{
-						SType = VK.StructureType.ImageMemoryBarrier,
-						Next = IntPtr.Zero,
-						SrcAccessMask = VK.AccessFlags.TransferWrite,
-						DstAccessMask = VK.AccessFlags.MemoryRead,
-						OldLayout = VK.ImageLayout.TransferDstOptimal,
-						NewLayout = VK.ImageLayout.PresentSrcKHR,
-						SrcQueueFamilyIndex = VK.QUEUE_FAMILY_IGNORED,
-						DstQueueFamilyIndex = VK.QUEUE_FAMILY_IGNORED,
-                  Image = context.swapChainImages[i],
-						SubresourceRange = imageSubresourceRange
+						type = VK.StructureType.ImageMemoryBarrier,
+						next = IntPtr.Zero,
+						srcAccessMask = VK.AccessFlags.TransferWriteBit,
+						dstAccessMask = VK.AccessFlags.MemoryReadBit,
+						oldLayout = VK.ImageLayout.TransferDstOptimal,
+						newLayout = VK.ImageLayout.PresentSrcKhr,
+						srcQueueFamilyIndex = VK.QUEUE_FAMILY_IGNORED,
+						dstQueueFamilyIndex = VK.QUEUE_FAMILY_IGNORED,
+                  image = context.swapChainImages[i],
+						subresourceRange = imageSubresourceRange
 					};
 
 
             VK.Result res = VK.BeginCommandBuffer(context.presentCommandBuffers[i], ref beginInfo);
 				checkResult(res, "Begin command buffer");
 
-				VK.CmdPipelineBarrier(context.presentCommandBuffers[i], VK.PipelineStageFlags.Transfer, VK.PipelineStageFlags.Transfer, 0, 0, null, 0, null, 1, new VK.ImageMemoryBarrier[] { barrierFromPresentToClear });
+				VK.CmdPipelineBarrier(context.presentCommandBuffers[i], VK.PipelineStageFlags.TransferBit, VK.PipelineStageFlags.TransferBit, 0, 0, null, 0, null, 1, new VK.ImageMemoryBarrier[] { barrierFromPresentToClear });
 				
 				VK.CmdClearColorImage(context.presentCommandBuffers[i], context.swapChainImages[i], VK.ImageLayout.TransferDstOptimal, ref clearColor, 1, new VK.ImageSubresourceRange[] { imageSubresourceRange });
 				
-				VK.CmdPipelineBarrier(context.presentCommandBuffers[i], VK.PipelineStageFlags.Transfer, VK.PipelineStageFlags.BottomOfPipe, 0, 0, null, 0, null, 1, new VK.ImageMemoryBarrier[] { barrierFromClearToPresent});
+				VK.CmdPipelineBarrier(context.presentCommandBuffers[i], VK.PipelineStageFlags.TransferBit, VK.PipelineStageFlags.BottomOfPipeBit, 0, 0, null, 0, null, 1, new VK.ImageMemoryBarrier[] { barrierFromClearToPresent});
 
 				res = VK.EndCommandBuffer(context.presentCommandBuffers[i]);
 				checkResult(res, "End command buffer");
@@ -734,7 +734,7 @@ namespace VulkanTest
 
          VK.ShaderModuleCreateInfo createInfo = new VK.ShaderModuleCreateInfo()
          {
-            SType = VK.StructureType.ShaderModuleCreateInfo,
+            type = VK.StructureType.ShaderModuleCreateInfo,
             CodeSize = 0,
             Code = ,
             Flags = 0
@@ -804,12 +804,12 @@ namespace VulkanTest
 
          VK.SubmitInfo submitInfo = new VK.SubmitInfo()
 			{
-				SType = VK.StructureType.SubmitInfo,
-				Next = IntPtr.Zero,
-				WaitSemaphores = new List<VK.Semaphore>() { context.imageAvailable },
-				WaitDstStageMask = VK.PipelineStageFlags.Transfer,
-				CommandBuffers = new List<VK.CommandBuffer>() { context.presentCommandBuffers[index] },
-				SignalSemaphores = new List<VK.Semaphore>() { context.renderingFinished }
+				type = VK.StructureType.SubmitInfo,
+				next = IntPtr.Zero,
+				waitSemaphores = new List<VK.Semaphore>() { context.imageAvailable },
+				waitDstStageMask = VK.PipelineStageFlags.TransferBit,
+				commandBuffers = new List<VK.CommandBuffer>() { context.presentCommandBuffers[index] },
+				signalSemaphores = new List<VK.Semaphore>() { context.renderingFinished }
 			};
 
 			res = VK.QueueSubmit(context.presentQueue, 1, new VK.SubmitInfo[] { submitInfo }, VK.NULL_FENCE);
@@ -817,12 +817,12 @@ namespace VulkanTest
 
          VK.PresentInfoKHR presentInfo = new VK.PresentInfoKHR()
 			{
-				SType = VK.StructureType.PresentInfoKHR,
-				Next = IntPtr.Zero,
-				WaitSemaphores = new List<VK.Semaphore>() { context.renderingFinished },
-				Swapchains = new List<VK.SwapchainKHR>() { context.swapChain },
-				Indices = new List<uint>() { index },
-				Results = new List<VK.Result>() { VK.Result.NotReady}
+				type = VK.StructureType.PresentInfoKhr,
+				next = IntPtr.Zero,
+				waitSemaphores = new List<VK.Semaphore>() { context.renderingFinished },
+				swapchains = new List<VK.SwapchainKHR>() { context.swapChain },
+				indices = new List<uint>() { index },
+				results = new List<VK.Result>() { VK.Result.NotReady}
 			};
 
 			res = VK.QueuePresentKHR(context.presentQueue, ref presentInfo);
@@ -847,7 +847,7 @@ namespace VulkanTest
 				VK.DestroyImageView(context.device, context.swapChainImageViews[i]);
 			}
 
-			VK.DestroySwapchainKHR(context.device, context.swapChain);
+			VK.DestroySwapchainKHR(context.device, context.swapChain, null);
 
 			Console.WriteLine("Success");
 		}
@@ -863,17 +863,17 @@ namespace VulkanTest
 		void destroyInstance()
 		{
 			Console.Write("Destroying Instance...");
-			VK.DestroySurfaceKHR(context.instance, context.surface);
-			VK.DestroyDebugReportCallbackEXT(context.instance, debugCallbackHandle);
+			VK.DestroySurfaceKHR(context.instance, context.surface, null);
+			VK.DestroyDebugReportCallbackEXT(context.instance, debugCallbackHandle, null);
 			VK.DestroyInstance(context.instance);
 			Console.WriteLine("Success!");
 		}
 
-		static Bool32 debugCallback(VK.DebugReportFlagsEXT flags, VK.DebugReportObjectTypeEXT objectType, UInt64 _object, IntPtr location, Int32 messageCode, string layerPrefix, string message, IntPtr userData)
+		static Bool32 debugCallback(VK.DebugReportFlagsEXT flags, VK.DebugReportObjectTypeEXT objectType, UInt64 _object, UInt32 location, Int32 messageCode, string layerPrefix, string message, IntPtr userData)
 		{
 			string level = "";
-			if (flags.HasFlag(VK.DebugReportFlagsEXT.Error)) level = "Error";
-			if (flags.HasFlag(VK.DebugReportFlagsEXT.Warning)) level = "Warning";
+			if (flags.HasFlag(VK.DebugReportFlagsEXT.ErrorBitExt)) level = "Error";
+			if (flags.HasFlag(VK.DebugReportFlagsEXT.WarningBitExt)) level = "Warning";
 
 			Console.WriteLine("{0}: {1}-{2} ", level, objectType, message);
 

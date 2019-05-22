@@ -108,8 +108,8 @@ namespace Vulkan
       public delegate void CmdBeginDebugUtilsLabelEXTDelegate(CommandBuffer commandBuffer, ref DebugUtilsLabelEXT pLabelInfos);
       public delegate void CmdEndDebugUtilsLabelEXTDelegate(CommandBuffer commandBuffers);
       public delegate void CmdInsertDebugUtilsLabelEXTDelegate(CommandBuffer commandBuffer, ref DebugUtilsLabelEXT pLabelInfos);
-      public delegate Result CreateDebugUtilsMessengerEXTDelegate(Instance instance, ref DebugUtilsMessengerCreateInfoEXT pCreateInfo, ref AllocationCallbacks pAllocator, ref DebugUtilsMessengerEXT pMessengers);
-      public delegate void DestroyDebugUtilsMessengerEXTDelegate(Instance instance, DebugUtilsMessengerEXT messenger, ref AllocationCallbacks pAllocators);
+      public delegate Result CreateDebugUtilsMessengerEXTDelegate(Instance instance, ref DebugUtilsMessengerCreateInfoEXT pCreateInfo, AllocationCallbacks pAllocator, ref DebugUtilsMessengerEXT pMessengers);
+      public delegate void DestroyDebugUtilsMessengerEXTDelegate(Instance instance, DebugUtilsMessengerEXT messenger, AllocationCallbacks pAllocators);
       public delegate void SubmitDebugUtilsMessageEXTDelegate(Instance instance, DebugUtilsMessageSeverityFlagsEXT messageSeverity, DebugUtilsMessageTypeFlagsEXT messageTypes, ref DebugUtilsMessengerCallbackDataEXT pCallbackDatas);
       
       //delegate instances
@@ -127,7 +127,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_debug_utils
+      public static class EXT_debug_utils
       {
          public static void init(VK.Instance instance)
          {

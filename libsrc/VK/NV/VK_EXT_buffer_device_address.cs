@@ -58,7 +58,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_buffer_device_address
+      public static class EXT_buffer_device_address
       {
          public static void init(VK.Device device)
          {

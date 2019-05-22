@@ -58,7 +58,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_discard_rectangles
+      public static class EXT_discard_rectangles
       {
          public static void init(VK.Device device)
          {

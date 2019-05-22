@@ -58,7 +58,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_NV_external_memory_capabilities
+      public static class NV_external_memory_capabilities
       {
          public static void init(VK.Instance instance)
          {

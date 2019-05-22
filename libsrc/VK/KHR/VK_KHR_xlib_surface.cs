@@ -36,7 +36,7 @@ namespace Vulkan
       //VkBool32 vkGetPhysicalDeviceXlibPresentationSupportKHR(VkPhysicalDevice  physicalDevice, uint32_t  queueFamilyIndex, Display *  dpy, VisualID  visualID);
       
       //delegate definitions
-      public delegate Result CreateXlibSurfaceKHRDelegate(Instance instance, ref XlibSurfaceCreateInfoKHR pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
+      public delegate Result CreateXlibSurfaceKHRDelegate(Instance instance, ref XlibSurfaceCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
       public delegate Bool32 GetPhysicalDeviceXlibPresentationSupportKHRDelegate(PhysicalDevice physicalDevice, UInt32 queueFamilyIndex, IntPtr dpy, IntPtr visualIDs);
       
       //delegate instances
@@ -45,7 +45,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_KHR_xlib_surface
+      public static class KHR_xlib_surface
       {
          public static void init(VK.Instance instance)
          {

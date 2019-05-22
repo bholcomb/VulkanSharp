@@ -49,7 +49,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_NV_scissor_exclusive
+      public static class NV_scissor_exclusive
       {
          public static void init(VK.Device device)
          {

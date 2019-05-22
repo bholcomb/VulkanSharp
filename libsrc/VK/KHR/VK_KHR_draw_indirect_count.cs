@@ -35,7 +35,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_KHR_draw_indirect_count
+      public static class KHR_draw_indirect_count
       {
          public static void init(VK.Device device)
          {

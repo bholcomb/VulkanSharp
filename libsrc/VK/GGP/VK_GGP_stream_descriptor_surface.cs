@@ -34,14 +34,14 @@ namespace Vulkan
       //VkResult vkCreateStreamDescriptorSurfaceGGP(VkInstance  instance, const VkStreamDescriptorSurfaceCreateInfoGGP *  pCreateInfo, const VkAllocationCallbacks *  pAllocator, VkSurfaceKHR *  pSurface);
       
       //delegate definitions
-      public delegate Result CreateStreamDescriptorSurfaceGGPDelegate(Instance instance, ref StreamDescriptorSurfaceCreateInfoGGP pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
+      public delegate Result CreateStreamDescriptorSurfaceGGPDelegate(Instance instance, ref StreamDescriptorSurfaceCreateInfoGGP pCreateInfo, AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
       
       //delegate instances
       public static CreateStreamDescriptorSurfaceGGPDelegate CreateStreamDescriptorSurfaceGGP;
       #endregion
 
       #region interop
-      public static class VK_GGP_stream_descriptor_surface
+      public static class GGP_stream_descriptor_surface
       {
          public static void init(VK.Instance instance)
          {

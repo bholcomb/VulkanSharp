@@ -32,7 +32,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_AMD_buffer_marker
+      public static class AMD_buffer_marker
       {
          public static void init(VK.Device device)
          {

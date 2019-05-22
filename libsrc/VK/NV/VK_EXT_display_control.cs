@@ -81,8 +81,8 @@ namespace Vulkan
       
       //delegate definitions
       public delegate Result DisplayPowerControlEXTDelegate(Device device, DisplayKHR display, ref DisplayPowerInfoEXT pDisplayPowerInfos);
-      public delegate Result RegisterDeviceEventEXTDelegate(Device device, ref DeviceEventInfoEXT pDeviceEventInfo, ref AllocationCallbacks pAllocator, ref Fence pFences);
-      public delegate Result RegisterDisplayEventEXTDelegate(Device device, DisplayKHR display, ref DisplayEventInfoEXT pDisplayEventInfo, ref AllocationCallbacks pAllocator, ref Fence pFences);
+      public delegate Result RegisterDeviceEventEXTDelegate(Device device, ref DeviceEventInfoEXT pDeviceEventInfo, AllocationCallbacks pAllocator, ref Fence pFences);
+      public delegate Result RegisterDisplayEventEXTDelegate(Device device, DisplayKHR display, ref DisplayEventInfoEXT pDisplayEventInfo, AllocationCallbacks pAllocator, ref Fence pFences);
       public delegate Result GetSwapchainCounterEXTDelegate(Device device, SwapchainKHR swapchain, SurfaceCounterFlagsEXT counter, ref UInt64 pCounterValues);
       
       //delegate instances
@@ -93,7 +93,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_display_control
+      public static class EXT_display_control
       {
          public static void init(VK.Device device)
          {

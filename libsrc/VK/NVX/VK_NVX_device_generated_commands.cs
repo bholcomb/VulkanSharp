@@ -218,10 +218,10 @@ namespace Vulkan
       //delegate definitions
       public delegate void CmdProcessCommandsNVXDelegate(CommandBuffer commandBuffer, ref CmdProcessCommandsInfoNVX pProcessCommandsInfos);
       public delegate void CmdReserveSpaceForCommandsNVXDelegate(CommandBuffer commandBuffer, ref CmdReserveSpaceForCommandsInfoNVX pReserveSpaceInfos);
-      public delegate Result CreateIndirectCommandsLayoutNVXDelegate(Device device, ref IndirectCommandsLayoutCreateInfoNVX pCreateInfo, ref AllocationCallbacks pAllocator, ref IndirectCommandsLayoutNVX pIndirectCommandsLayouts);
-      public delegate void DestroyIndirectCommandsLayoutNVXDelegate(Device device, IndirectCommandsLayoutNVX indirectCommandsLayout, ref AllocationCallbacks pAllocators);
-      public delegate Result CreateObjectTableNVXDelegate(Device device, ref ObjectTableCreateInfoNVX pCreateInfo, ref AllocationCallbacks pAllocator, ref ObjectTableNVX pObjectTables);
-      public delegate void DestroyObjectTableNVXDelegate(Device device, ObjectTableNVX objectTable, ref AllocationCallbacks pAllocators);
+      public delegate Result CreateIndirectCommandsLayoutNVXDelegate(Device device, ref IndirectCommandsLayoutCreateInfoNVX pCreateInfo, AllocationCallbacks pAllocator, ref IndirectCommandsLayoutNVX pIndirectCommandsLayouts);
+      public delegate void DestroyIndirectCommandsLayoutNVXDelegate(Device device, IndirectCommandsLayoutNVX indirectCommandsLayout, AllocationCallbacks pAllocators);
+      public delegate Result CreateObjectTableNVXDelegate(Device device, ref ObjectTableCreateInfoNVX pCreateInfo, AllocationCallbacks pAllocator, ref ObjectTableNVX pObjectTables);
+      public delegate void DestroyObjectTableNVXDelegate(Device device, ObjectTableNVX objectTable, AllocationCallbacks pAllocators);
       public delegate Result RegisterObjectsNVXDelegate(Device device, ObjectTableNVX objectTable, UInt32 objectCount, ref ObjectTableEntryNVX ppObjectTableEntries, ref UInt32 pObjectIndicess);
       public delegate Result UnregisterObjectsNVXDelegate(Device device, ObjectTableNVX objectTable, UInt32 objectCount, ref ObjectEntryTypeNVX pObjectEntryTypes, ref UInt32 pObjectIndicess);
       public delegate void GetPhysicalDeviceGeneratedCommandsPropertiesNVXDelegate(PhysicalDevice physicalDevice, ref DeviceGeneratedCommandsFeaturesNVX pFeatures, ref DeviceGeneratedCommandsLimitsNVX pLimitss);
@@ -239,7 +239,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_NVX_device_generated_commands
+      public static class NVX_device_generated_commands
       {
          public static void init(VK.Device device)
          {

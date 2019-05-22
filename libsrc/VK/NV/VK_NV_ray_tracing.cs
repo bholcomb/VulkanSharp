@@ -234,14 +234,14 @@ namespace Vulkan
       //VkResult vkCompileDeferredNV(VkDevice  device, VkPipeline  pipeline, uint32_t  shader);
       
       //delegate definitions
-      public delegate Result CreateAccelerationStructureNVDelegate(Device device, ref AccelerationStructureCreateInfoNV pCreateInfo, ref AllocationCallbacks pAllocator, ref AccelerationStructureNV pAccelerationStructures);
-      public delegate void DestroyAccelerationStructureNVDelegate(Device device, AccelerationStructureNV accelerationStructure, ref AllocationCallbacks pAllocators);
+      public delegate Result CreateAccelerationStructureNVDelegate(Device device, ref AccelerationStructureCreateInfoNV pCreateInfo, AllocationCallbacks pAllocator, ref AccelerationStructureNV pAccelerationStructures);
+      public delegate void DestroyAccelerationStructureNVDelegate(Device device, AccelerationStructureNV accelerationStructure, AllocationCallbacks pAllocators);
       public delegate void GetAccelerationStructureMemoryRequirementsNVDelegate(Device device, ref AccelerationStructureMemoryRequirementsInfoNV pInfo, ref MemoryRequirements2 pMemoryRequirementss);
       public delegate Result BindAccelerationStructureMemoryNVDelegate(Device device, UInt32 bindInfoCount, ref BindAccelerationStructureMemoryInfoNV pBindInfoss);
       public delegate void CmdBuildAccelerationStructureNVDelegate(CommandBuffer commandBuffer, ref AccelerationStructureInfoNV pInfo, Buffer instanceData, DeviceSize instanceOffset, Bool32 update, AccelerationStructureNV dst, AccelerationStructureNV src, Buffer scratch, DeviceSize scratchOffsets);
       public delegate void CmdCopyAccelerationStructureNVDelegate(CommandBuffer commandBuffer, AccelerationStructureNV dst, AccelerationStructureNV src, CopyAccelerationStructureModeNV modes);
       public delegate void CmdTraceRaysNVDelegate(CommandBuffer commandBuffer, Buffer raygenShaderBindingTableBuffer, DeviceSize raygenShaderBindingOffset, Buffer missShaderBindingTableBuffer, DeviceSize missShaderBindingOffset, DeviceSize missShaderBindingStride, Buffer hitShaderBindingTableBuffer, DeviceSize hitShaderBindingOffset, DeviceSize hitShaderBindingStride, Buffer callableShaderBindingTableBuffer, DeviceSize callableShaderBindingOffset, DeviceSize callableShaderBindingStride, UInt32 width, UInt32 height, UInt32 depths);
-      public delegate Result CreateRayTracingPipelinesNVDelegate(Device device, PipelineCache pipelineCache, UInt32 createInfoCount, ref RayTracingPipelineCreateInfoNV pCreateInfos, ref AllocationCallbacks pAllocator, ref Pipeline pPipeliness);
+      public delegate Result CreateRayTracingPipelinesNVDelegate(Device device, PipelineCache pipelineCache, UInt32 createInfoCount, ref RayTracingPipelineCreateInfoNV pCreateInfos, AllocationCallbacks pAllocator, ref Pipeline pPipeliness);
       public delegate Result GetRayTracingShaderGroupHandlesNVDelegate(Device device, Pipeline pipeline, UInt32 firstGroup, UInt32 groupCount, UInt32 dataSize, IntPtr pDatas);
       public delegate Result GetAccelerationStructureHandleNVDelegate(Device device, AccelerationStructureNV accelerationStructure, UInt32 dataSize, IntPtr pDatas);
       public delegate void CmdWriteAccelerationStructuresPropertiesNVDelegate(CommandBuffer commandBuffer, UInt32 accelerationStructureCount, ref AccelerationStructureNV pAccelerationStructures, QueryType queryType, QueryPool queryPool, UInt32 firstQuerys);
@@ -263,7 +263,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_NV_ray_tracing
+      public static class NV_ray_tracing
       {
          public static void init(VK.Device device)
          {

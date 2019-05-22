@@ -36,7 +36,7 @@ namespace Vulkan
       //VkBool32 vkGetPhysicalDeviceWaylandPresentationSupportKHR(VkPhysicalDevice  physicalDevice, uint32_t  queueFamilyIndex, struct wl_display *  display);
       
       //delegate definitions
-      public delegate Result CreateWaylandSurfaceKHRDelegate(Instance instance, ref WaylandSurfaceCreateInfoKHR pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
+      public delegate Result CreateWaylandSurfaceKHRDelegate(Instance instance, ref WaylandSurfaceCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
       public delegate Bool32 GetPhysicalDeviceWaylandPresentationSupportKHRDelegate(PhysicalDevice physicalDevice, UInt32 queueFamilyIndex, IntPtr displays);
       
       //delegate instances
@@ -45,7 +45,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_KHR_wayland_surface
+      public static class KHR_wayland_surface
       {
          public static void init(VK.Instance instance)
          {

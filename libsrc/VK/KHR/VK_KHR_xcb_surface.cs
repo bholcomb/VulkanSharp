@@ -36,7 +36,7 @@ namespace Vulkan
       //VkBool32 vkGetPhysicalDeviceXcbPresentationSupportKHR(VkPhysicalDevice  physicalDevice, uint32_t  queueFamilyIndex, xcb_connection_t *  connection, xcb_visualid_t  visual_id);
       
       //delegate definitions
-      public delegate Result CreateXcbSurfaceKHRDelegate(Instance instance, ref XcbSurfaceCreateInfoKHR pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
+      public delegate Result CreateXcbSurfaceKHRDelegate(Instance instance, ref XcbSurfaceCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
       public delegate Bool32 GetPhysicalDeviceXcbPresentationSupportKHRDelegate(PhysicalDevice physicalDevice, UInt32 queueFamilyIndex, IntPtr connection, IntPtr visual_ids);
       
       //delegate instances
@@ -45,7 +45,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_KHR_xcb_surface
+      public static class KHR_xcb_surface
       {
          public static void init(VK.Instance instance)
          {

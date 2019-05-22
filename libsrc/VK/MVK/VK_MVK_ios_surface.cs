@@ -34,14 +34,14 @@ namespace Vulkan
       //VkResult vkCreateIOSSurfaceMVK(VkInstance  instance, const VkIOSSurfaceCreateInfoMVK *  pCreateInfo, const VkAllocationCallbacks *  pAllocator, VkSurfaceKHR *  pSurface);
       
       //delegate definitions
-      public delegate Result CreateIOSSurfaceMVKDelegate(Instance instance, ref IOSSurfaceCreateInfoMVK pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
+      public delegate Result CreateIOSSurfaceMVKDelegate(Instance instance, ref IOSSurfaceCreateInfoMVK pCreateInfo, AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
       
       //delegate instances
       public static CreateIOSSurfaceMVKDelegate CreateIOSSurfaceMVK;
       #endregion
 
       #region interop
-      public static class VK_MVK_ios_surface
+      public static class MVK_ios_surface
       {
          public static void init(VK.Instance instance)
          {

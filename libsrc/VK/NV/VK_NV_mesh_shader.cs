@@ -74,7 +74,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_NV_mesh_shader
+      public static class NV_mesh_shader
       {
          public static void init(VK.Device device)
          {

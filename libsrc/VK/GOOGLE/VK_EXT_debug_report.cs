@@ -57,19 +57,27 @@ namespace Vulkan
       #endregion
 
       #region flags
+      public enum DebugReportFlagsEXT : UInt32
+      {
+         InformationBitExt = 0x00000001,
+         WarningBitExt = 0x00000002,
+         PerformanceWarningBitExt = 0x00000004,
+         ErrorBitExt = 0x00000008,
+         DebugBitExt = 0x00000010,
+      };
       #endregion
 
       #region structs
       [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-      public delegate Bool32 DebugReportCallbackEXT(UInt32 flags, DebugReportObjectTypeEXT objectType, UInt64 obj, UInt32 location, Int32 messageCode, string pLayerPrefix, string pMessage, IntPtr pUserData);
+      public delegate Bool32 DebugReportCallbackEXT(DebugReportFlagsEXT flags, DebugReportObjectTypeEXT objectType, UInt64 obj, UInt32 location, Int32 messageCode, string pLayerPrefix, string pMessage, IntPtr pUserData);
 
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DebugReportCallbackCreateInfoEXT 
       {
-         public StructureType sType;
-         public IntPtr pNext;
-         public UInt32 flags;
+         public StructureType type;
+         public IntPtr next;
+         public DebugReportFlagsEXT flags;
          public DebugReportCallbackEXT pfnCallback;
          public IntPtr pUserData;
       };
@@ -83,8 +91,8 @@ namespace Vulkan
       //void vkDebugReportMessageEXT(VkInstance  instance, VkDebugReportFlagsEXT  flags, VkDebugReportObjectTypeEXT  objectType, uint64_t  object, size_t  location, int32_t  messageCode, const char *  pLayerPrefix, const char *  pMessage);
       
       //delegate definitions
-      public delegate Result CreateDebugReportCallbackEXTDelegate(Instance instance, ref DebugReportCallbackCreateInfoEXT pCreateInfo, ref AllocationCallbacks pAllocator, ref DebugReportCallbackEXT pCallbacks);
-      public delegate void DestroyDebugReportCallbackEXTDelegate(Instance instance, DebugReportCallbackEXT callback, ref AllocationCallbacks pAllocators);
+      public delegate Result CreateDebugReportCallbackEXTDelegate(Instance instance, ref DebugReportCallbackCreateInfoEXT pCreateInfo, AllocationCallbacks pAllocator, out DebugReportCallbackEXT pCallbacks);
+      public delegate void DestroyDebugReportCallbackEXTDelegate(Instance instance, DebugReportCallbackEXT callback, AllocationCallbacks pAllocators);
       public delegate void DebugReportMessageEXTDelegate(Instance instance, UInt32 flags, DebugReportObjectTypeEXT objectType, UInt64 obj, UInt32 location, Int32 messageCode, string pLayerPrefix, string pMessages);
       
       //delegate instances
@@ -94,7 +102,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_debug_report
+      public static class EXT_debug_report
       {
          public static void init(VK.Instance instance)
          {

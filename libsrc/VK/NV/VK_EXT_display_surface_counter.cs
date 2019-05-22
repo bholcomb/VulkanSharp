@@ -56,7 +56,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_display_surface_counter
+      public static class EXT_display_surface_counter
       {
          public static void init(VK.Instance instance)
          {

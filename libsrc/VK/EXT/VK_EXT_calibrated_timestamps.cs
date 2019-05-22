@@ -52,7 +52,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_calibrated_timestamps
+      public static class EXT_calibrated_timestamps
       {
          public static void init(VK.Device device)
          {

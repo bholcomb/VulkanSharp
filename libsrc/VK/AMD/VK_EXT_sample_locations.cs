@@ -107,7 +107,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_sample_locations
+      public static class EXT_sample_locations
       {
          public static void init(VK.Device device)
          {

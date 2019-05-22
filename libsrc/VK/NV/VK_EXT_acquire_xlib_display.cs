@@ -35,7 +35,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_acquire_xlib_display
+      public static class EXT_acquire_xlib_display
       {
          public static void init(VK.Instance instance)
          {

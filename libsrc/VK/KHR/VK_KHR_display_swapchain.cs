@@ -35,14 +35,14 @@ namespace Vulkan
       //VkResult vkCreateSharedSwapchainsKHR(VkDevice  device, uint32_t  swapchainCount, const VkSwapchainCreateInfoKHR *  pCreateInfos, const VkAllocationCallbacks *  pAllocator, VkSwapchainKHR *  pSwapchains);
       
       //delegate definitions
-      public delegate Result CreateSharedSwapchainsKHRDelegate(Device device, UInt32 swapchainCount, ref SwapchainCreateInfoKHR pCreateInfos, ref AllocationCallbacks pAllocator, ref SwapchainKHR pSwapchainss);
+      public delegate Result CreateSharedSwapchainsKHRDelegate(Device device, UInt32 swapchainCount, ref SwapchainCreateInfoKHR pCreateInfos, AllocationCallbacks pAllocator, ref SwapchainKHR pSwapchainss);
       
       //delegate instances
       public static CreateSharedSwapchainsKHRDelegate CreateSharedSwapchainsKHR;
       #endregion
 
       #region interop
-      public static class VK_KHR_display_swapchain
+      public static class KHR_display_swapchain
       {
          public static void init(VK.Device device)
          {

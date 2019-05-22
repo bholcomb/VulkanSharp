@@ -34,12 +34,12 @@ namespace Vulkan
 
       public enum PresentModeKHR : int
       {
-         IMMEDIATE_KHR = 0,
-         MAILBOX_KHR = 1,
-         FIFO_KHR = 2,
-         FIFO_RELAXED_KHR = 3,
-         SHARED_DEMAND_REFRESH_KHR = 1000111000,
-         SHARED_CONTINUOUS_REFRESH_KHR = 1000111001,
+         Immediate = 0,
+         Mailbox = 1,
+         Fifo = 2,
+         FifoRelaxed = 3,
+         SharedDemandRefresh = 1000111000,
+         SharedContinousRefresh = 1000111001,
       };
 
 
@@ -106,11 +106,11 @@ namespace Vulkan
       //VkResult vkGetPhysicalDeviceSurfacePresentModesKHR(VkPhysicalDevice  physicalDevice, VkSurfaceKHR  surface, uint32_t *  pPresentModeCount, VkPresentModeKHR *  pPresentModes);
 
       //delegate definitions
-      public delegate void DestroySurfaceKHRDelegate(Instance instance, SurfaceKHR surface, ref AllocationCallbacks pAllocators);
-      public delegate Result GetPhysicalDeviceSurfaceSupportKHRDelegate(PhysicalDevice physicalDevice, UInt32 queueFamilyIndex, SurfaceKHR surface, ref Bool32 pSupporteds);
-      public delegate Result GetPhysicalDeviceSurfaceCapabilitiesKHRDelegate(PhysicalDevice physicalDevice, SurfaceKHR surface, ref SurfaceCapabilitiesKHR pSurfaceCapabilitiess);
+      public delegate void DestroySurfaceKHRDelegate(Instance instance, SurfaceKHR surface, AllocationCallbacks pAllocators);
+      public delegate Result GetPhysicalDeviceSurfaceSupportKHRDelegate(PhysicalDevice physicalDevice, UInt32 queueFamilyIndex, SurfaceKHR surface, out Bool32 pSupporteds);
+      public delegate Result GetPhysicalDeviceSurfaceCapabilitiesKHRDelegate(PhysicalDevice physicalDevice, SurfaceKHR surface, out SurfaceCapabilitiesKHR pSurfaceCapabilitiess);
       public delegate Result GetPhysicalDeviceSurfaceFormatsKHRDelegate(PhysicalDevice physicalDevice, SurfaceKHR surface, ref UInt32 pSurfaceFormatCount, ref SurfaceFormatKHR pSurfaceFormatss);
-      public delegate Result GetPhysicalDeviceSurfacePresentModesKHRDelegate(PhysicalDevice physicalDevice, SurfaceKHR surface, ref UInt32 pPresentModeCount, ref PresentModeKHR pPresentModess);
+      public delegate Result GetPhysicalDeviceSurfacePresentModesKHRDelegate(PhysicalDevice physicalDevice, SurfaceKHR surface, out UInt32 pPresentModeCount, out PresentModeKHR pPresentModess);
       
       //delegate instances
       public static DestroySurfaceKHRDelegate DestroySurfaceKHR;
@@ -121,7 +121,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_KHR_surface
+      public static class KHR_surface
       {
          public static void init(VK.Instance instance)
          {

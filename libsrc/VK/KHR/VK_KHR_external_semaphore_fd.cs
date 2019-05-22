@@ -55,7 +55,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_KHR_external_semaphore_fd
+      public static class KHR_external_semaphore_fd
       {
          public static void init(VK.Device device)
          {

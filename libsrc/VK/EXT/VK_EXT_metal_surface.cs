@@ -34,14 +34,14 @@ namespace Vulkan
       //VkResult vkCreateMetalSurfaceEXT(VkInstance  instance, const VkMetalSurfaceCreateInfoEXT *  pCreateInfo, const VkAllocationCallbacks *  pAllocator, VkSurfaceKHR *  pSurface);
       
       //delegate definitions
-      public delegate Result CreateMetalSurfaceEXTDelegate(Instance instance, ref MetalSurfaceCreateInfoEXT pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
+      public delegate Result CreateMetalSurfaceEXTDelegate(Instance instance, ref MetalSurfaceCreateInfoEXT pCreateInfo, AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
       
       //delegate instances
       public static CreateMetalSurfaceEXTDelegate CreateMetalSurfaceEXT;
       #endregion
 
       #region interop
-      public static class VK_EXT_metal_surface
+      public static class EXT_metal_surface
       {
          public static void init(VK.Instance instance)
          {

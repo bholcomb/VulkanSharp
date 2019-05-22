@@ -49,7 +49,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_NV_clip_space_w_scaling
+      public static class NV_clip_space_w_scaling
       {
          public static void init(VK.Device device)
          {

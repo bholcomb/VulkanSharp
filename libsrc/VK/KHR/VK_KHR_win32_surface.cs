@@ -21,8 +21,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct Win32SurfaceCreateInfoKHR 
       {
-         public StructureType sType;
-         public IntPtr pNext;
+         public StructureType type;
+         public IntPtr next;
          public UInt32 flags;
          public IntPtr hinstance;
          public IntPtr hwnd;
@@ -36,7 +36,7 @@ namespace Vulkan
       //VkBool32 vkGetPhysicalDeviceWin32PresentationSupportKHR(VkPhysicalDevice  physicalDevice, uint32_t  queueFamilyIndex);
       
       //delegate definitions
-      public delegate Result CreateWin32SurfaceKHRDelegate(Instance instance, ref Win32SurfaceCreateInfoKHR pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
+      public delegate Result CreateWin32SurfaceKHRDelegate(Instance instance, ref Win32SurfaceCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, out SurfaceKHR pSurfaces);
       public delegate Bool32 GetPhysicalDeviceWin32PresentationSupportKHRDelegate(PhysicalDevice physicalDevice, UInt32 queueFamilyIndexs);
       
       //delegate instances
@@ -45,7 +45,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_KHR_win32_surface
+      public static class KHR_win32_surface
       {
          public static void init(VK.Instance instance)
          {
