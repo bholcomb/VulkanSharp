@@ -4,11 +4,12 @@ dofile("vkUtil.lua")
 templates = {
    file=[[
 using System;
-USING
+using System.Runtime.InteropServices;
+using System.Security;
 
 namespace Vulkan
 {
-   public static partical class VK
+   public static partial class VK
    {
 COMMANDS
    }

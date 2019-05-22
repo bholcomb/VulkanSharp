@@ -1,221 +1,186 @@
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Security;
 
 namespace Vulkan
 {
+   public static partial class DeviceExtensions
+   {
+      public const string VK_KHR_swapchain = "VK_KHR_swapchain";
+   };
+   
    public static partial class VK
    {
+      [StructLayout(LayoutKind.Sequential)] public struct SwapchainKHR { public UInt64 native; }
       #region enums
-
       #endregion
 
       #region flags
       [Flags]
-      public enum SwapchainCreateFlagsKHR : int
+      public enum SwapchainCreateFlags : int
       {
-         BindSfrBitKHX = 0x1,
-      }
+        SplitInstanceBindRegionsBitKhr = 1 << 0 ,
+        ProtectedBitKhr = 1 << 1,
+        MutableFormatBitKhr = 1 << 2,
+      };
+
+      [Flags]
+      public enum DeviceGroupPresentMode : int
+      {  
+         LocalBitKhr = 1 << 0,
+         RemoteBitKhr = 1 << 1,
+         SumBitKhr = 1 << 2,
+         LocalMultiDeviceBitKhr = 1 << 3,
+      };
+
       #endregion
 
       #region structs
-      [StructLayout(LayoutKind.Sequential)]
-      public struct SwapchainKHR { public UInt64 native; }
-
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SwapchainCreateInfoKHR
       {
-         public StructureType SType;
-         public IntPtr Next;
-         public SwapchainCreateFlagsKHR Flags;
-         public SurfaceKHR Surface;
-         public UInt32 MinImageCount;
-         public Format ImageFormat;
-         public ColorSpaceKHR ImageColorSpace;
-         public Extent2D ImageExtent;
-         public UInt32 ImageArrayLayers;
-         public ImageUsageFlags ImageUsage;
-         public SharingMode ImageSharingMode;
-         public List<UInt32> QueueFamilyIndices;
-         public SurfaceTransformFlagsKHR PreTransform;
-         public CompositeAlphaFlagsKHR CompositeAlpha;
-         public PresentModeKHR PresentMode;
-         public Bool32 Clipped;
-         public SwapchainKHR OldSwapchain;
-      }
+         StructureType sType;
+         IntPtr pNext;
+         UInt32 flags;
+         SurfaceKHR surface;
+         UInt32 minImageCount;
+         Format imageFormat;
+         ColorSpaceKHR imageColorSpace;
+         Extent2D imageExtent;
+         UInt32 imageArrayLayers;
+         ImageUsageFlags imageUsage;
+         SharingMode imageSharingMode;
+         UInt32 queueFamilyIndexCount;
+         IntPtr pQueueFamilyIndices;
+         UInt32 preTransform;
+         UInt32 compositeAlpha;
+         PresentModeKHR presentMode;
+         Bool32 clipped;
+         SwapchainKHR oldSwapchain;
+      };
 
-      public struct PresentInfoKHR
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+      public unsafe struct PresentInfoKHR
       {
-         public StructureType SType;
-         public IntPtr Next;
-         public List<Semaphore> WaitSemaphores;
-         public List<SwapchainKHR> Swapchains;
-         public List<UInt32> Indices;
-         public List<Result> Results;
+         StructureType sType;
+         IntPtr pNext;
+         UInt32 waitSemaphoreCount;
+         Semaphore* pWaitSemaphores;
+         UInt32 swapchainCount;
+         SwapchainKHR* pSwapchains;
+         IntPtr pImageIndices;
+         Result* pResults;
       }
 
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+      public struct ImageSwapchainCreateInfoKHR 
+      {
+         public StructureType sType;
+         public IntPtr pNext;
+         public SwapchainKHR swapchain;
+      };
+      
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+      public struct BindImageMemorySwapchainInfoKHR 
+      {
+         public StructureType sType;
+         public IntPtr pNext;
+         public SwapchainKHR swapchain;
+         public UInt32 imageIndex;
+      };
+      
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+      public struct AcquireNextImageInfoKHR 
+      {
+         public StructureType sType;
+         public IntPtr pNext;
+         public SwapchainKHR swapchain;
+         public UInt64 timeout;
+         public Semaphore semaphore;
+         public Fence fence;
+         public UInt32 deviceMask;
+      };
+      
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+      public unsafe struct DeviceGroupPresentCapabilitiesKHR 
+      {
+         public StructureType sType;
+         public IntPtr pNext;
+         public fixed UInt32 presentMask[(int)VK.MAX_DEVICE_GROUP_SIZE];
+         public UInt32 modes;
+      };
+      
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+      public struct DeviceGroupPresentInfoKHR 
+      {
+         public StructureType sType;
+         public IntPtr pNext;
+         public UInt32 swapchainCount;
+         public IntPtr pDeviceMasks;
+         public UInt32 mode;
+      };
+      
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+      public struct DeviceGroupSwapchainCreateInfoKHR 
+      {
+         public StructureType sType;
+         public IntPtr pNext;
+         public UInt32 modes;
+      };
+      
       #endregion
 
       #region functions
+      //external functions we need to get from the device
+      //VkResult vkCreateSwapchainKHR(VkDevice  device, const VkSwapchainCreateInfoKHR *  pCreateInfo, const VkAllocationCallbacks *  pAllocator, VkSwapchainKHR *  pSwapchain);
+      //void vkDestroySwapchainKHR(VkDevice  device, VkSwapchainKHR  swapchain, const VkAllocationCallbacks *  pAllocator);
+      //VkResult vkGetSwapchainImagesKHR(VkDevice  device, VkSwapchainKHR  swapchain, uint32_t *  pSwapchainImageCount, VkImage *  pSwapchainImages);
+      //VkResult vkAcquireNextImageKHR(VkDevice  device, VkSwapchainKHR  swapchain, uint64_t  timeout, VkSemaphore  semaphore, VkFence  fence, uint32_t *  pImageIndex);
+      //VkResult vkQueuePresentKHR(VkQueue  queue, const VkPresentInfoKHR *  pPresentInfo);
+      //VkResult vkGetDeviceGroupPresentCapabilitiesKHR(VkDevice  device, VkDeviceGroupPresentCapabilitiesKHR *  pDeviceGroupPresentCapabilities);
+      //VkResult vkGetDeviceGroupSurfacePresentModesKHR(VkDevice  device, VkSurfaceKHR  surface, VkDeviceGroupPresentModeFlagsKHR *  pModes);
+      //VkResult vkGetPhysicalDevicePresentRectanglesKHR(VkPhysicalDevice  physicalDevice, VkSurfaceKHR  surface, uint32_t *  pRectCount, VkRect2D *  pRects);
+      //VkResult vkAcquireNextImage2KHR(VkDevice  device, const VkAcquireNextImageInfoKHR *  pAcquireInfo, uint32_t *  pImageIndex);
+      
+      //delegate definitions
+      public delegate Result CreateSwapchainKHRDelegate(Device device, ref SwapchainCreateInfoKHR pCreateInfo, ref AllocationCallbacks pAllocator, ref SwapchainKHR pSwapchains);
+      public delegate void DestroySwapchainKHRDelegate(Device device, SwapchainKHR swapchain, ref AllocationCallbacks pAllocators);
+      public delegate Result GetSwapchainImagesKHRDelegate(Device device, SwapchainKHR swapchain, ref UInt32 pSwapchainImageCount, ref Image pSwapchainImagess);
+      public delegate Result AcquireNextImageKHRDelegate(Device device, SwapchainKHR swapchain, UInt64 timeout, Semaphore semaphore, Fence fence, ref UInt32 pImageIndexs);
+      public delegate Result QueuePresentKHRDelegate(Queue queue, ref PresentInfoKHR pPresentInfos);
+      public delegate Result GetDeviceGroupPresentCapabilitiesKHRDelegate(Device device, ref DeviceGroupPresentCapabilitiesKHR pDeviceGroupPresentCapabilitiess);
+      public delegate Result GetDeviceGroupSurfacePresentModesKHRDelegate(Device device, SurfaceKHR surface, ref UInt32 pModess);
+      public delegate Result GetPhysicalDevicePresentRectanglesKHRDelegate(PhysicalDevice physicalDevice, SurfaceKHR surface, ref UInt32 pRectCount, ref Rect2D pRectss);
+      public delegate Result AcquireNextImage2KHRDelegate(Device device, ref AcquireNextImageInfoKHR pAcquireInfo, ref UInt32 pImageIndexs);
+      
+      //delegate instances
+      public static CreateSwapchainKHRDelegate CreateSwapchainKHR;
+      public static DestroySwapchainKHRDelegate DestroySwapchainKHR;
+      public static GetSwapchainImagesKHRDelegate GetSwapchainImagesKHR;
+      public static AcquireNextImageKHRDelegate AcquireNextImageKHR;
+      public static QueuePresentKHRDelegate QueuePresentKHR;
+      public static GetDeviceGroupPresentCapabilitiesKHRDelegate GetDeviceGroupPresentCapabilitiesKHR;
+      public static GetDeviceGroupSurfacePresentModesKHRDelegate GetDeviceGroupSurfacePresentModesKHR;
+      public static GetPhysicalDevicePresentRectanglesKHRDelegate GetPhysicalDevicePresentRectanglesKHR;
+      public static AcquireNextImage2KHRDelegate AcquireNextImage2KHR;
+      #endregion
 
-      [DllImport(VulkanLibrary, EntryPoint = "vkCreateSwapchainKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      static extern Result _CreateSwapchainKHR(Device device, ref _SwapchainCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, out SwapchainKHR pSwapchain);
-      public static Result CreateSwapchainKHR(Device device, ref SwapchainCreateInfoKHR pCreateInfo, out SwapchainKHR pSwapchain, AllocationCallbacks pAllocator = null)
+      #region interop
+      public static class VK_KHR_swapchain
       {
-         _SwapchainCreateInfoKHR info = new _SwapchainCreateInfoKHR(pCreateInfo);
-
-         Result res = _CreateSwapchainKHR(device, ref info, pAllocator, out pSwapchain);
-
-         info.destroy();
-
-         return res;
-      }
-
-      [DllImport(VulkanLibrary, EntryPoint = "vkDestroySwapchainKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroySwapchainKHR(Device device, SwapchainKHR swapchain, AllocationCallbacks pAllocator = null);
-
-      [DllImport(VulkanLibrary, EntryPoint = "vkGetSwapchainImagesKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      static extern Result _GetSwapchainImagesKHR(Device device, SwapchainKHR swapchain, out UInt32 pSwapchainImageCount, IntPtr pSwapchainImages);
-      public unsafe static Result GetSwapchainImagesKHR(Device device, SwapchainKHR swapchain, out UInt32 pSwapchainImageCount, Image[] pSwapchainImages)
-      {
-         fixed (Image* ptr = pSwapchainImages)
+         public static void init(VK.Device device)
          {
-            return _GetSwapchainImagesKHR(device, swapchain, out pSwapchainImageCount, (IntPtr)ptr);
+            VK.CreateSwapchainKHR = ExternalFunction.getDeviceFunction<VK.CreateSwapchainKHRDelegate>(device, "vkCreateSwapchainKHR");
+            VK.DestroySwapchainKHR = ExternalFunction.getDeviceFunction<VK.DestroySwapchainKHRDelegate>(device, "vkDestroySwapchainKHR");
+            VK.GetSwapchainImagesKHR = ExternalFunction.getDeviceFunction<VK.GetSwapchainImagesKHRDelegate>(device, "vkGetSwapchainImagesKHR");
+            VK.AcquireNextImageKHR = ExternalFunction.getDeviceFunction<VK.AcquireNextImageKHRDelegate>(device, "vkAcquireNextImageKHR");
+            VK.QueuePresentKHR = ExternalFunction.getDeviceFunction<VK.QueuePresentKHRDelegate>(device, "vkQueuePresentKHR");
+            VK.GetDeviceGroupPresentCapabilitiesKHR = ExternalFunction.getDeviceFunction<VK.GetDeviceGroupPresentCapabilitiesKHRDelegate>(device, "vkGetDeviceGroupPresentCapabilitiesKHR");
+            VK.GetDeviceGroupSurfacePresentModesKHR = ExternalFunction.getDeviceFunction<VK.GetDeviceGroupSurfacePresentModesKHRDelegate>(device, "vkGetDeviceGroupSurfacePresentModesKHR");
+            VK.GetPhysicalDevicePresentRectanglesKHR = ExternalFunction.getDeviceFunction<VK.GetPhysicalDevicePresentRectanglesKHRDelegate>(device, "vkGetPhysicalDevicePresentRectanglesKHR");
+            VK.AcquireNextImage2KHR = ExternalFunction.getDeviceFunction<VK.AcquireNextImage2KHRDelegate>(device, "vkAcquireNextImage2KHR");
          }
       }
-
-      [DllImport(VulkanLibrary, EntryPoint = "vkAcquireNextImageKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result AcquireNextImageKHR(Device device, SwapchainKHR swapchain, UInt64 timeout, Semaphore semaphore, Fence fence, out UInt32 pImageIndex);
-
-      [DllImport(VulkanLibrary, EntryPoint = "vkQueuePresentKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      static extern Result _QueuePresentKHR(Queue queue, ref _PresentInfoKHR pPresentInfo);
-      public unsafe static Result QueuePresentKHR(Queue queue, ref PresentInfoKHR pPresentInfo)
-      {
-         _PresentInfoKHR p = new _PresentInfoKHR(pPresentInfo);
-
-         int resultsCount = (pPresentInfo.Results == null || pPresentInfo.Results.Count == 0) ? 0 : pPresentInfo.Results.Count;
-
-         Result res = _QueuePresentKHR(queue, ref p);
-
-         if (resultsCount > 0)
-         {
-            pPresentInfo.Results = p.getResults(resultsCount);
-         }
-
-         p.destroy();
-
-         return res;
-      }
+      #endregion
    }
-   #endregion
-
-   #region interop
-   [StructLayout(LayoutKind.Sequential)]
-   internal struct _SwapchainCreateInfoKHR
-   {
-      public VK.StructureType SType;
-      public IntPtr Next;
-      public VK.SwapchainCreateFlagsKHR Flags;
-      public VK.SurfaceKHR Surface;
-      public UInt32 MinImageCount;
-      public VK.Format ImageFormat;
-      public VK.ColorSpaceKHR ImageColorSpace;
-      public VK.Extent2D ImageExtent;
-      public UInt32 ImageArrayLayers;
-      public VK.ImageUsageFlags ImageUsage;
-      public VK.SharingMode ImageSharingMode;
-      public UInt32 QueueFamilyIndexCount;
-      public IntPtr QueueFamilyIndices;
-      public VK.SurfaceTransformFlagsKHR PreTransform;
-      public VK.CompositeAlphaFlagsKHR CompositeAlpha;
-      public VK.PresentModeKHR PresentMode;
-      public Bool32 Clipped;
-      public VK.SwapchainKHR OldSwapchain;
-
-      public _SwapchainCreateInfoKHR(VK.SwapchainCreateInfoKHR info)
-      {
-         SType = info.SType;
-         Next = info.Next;
-         Flags = info.Flags;
-         Surface = info.Surface;
-         MinImageCount = info.MinImageCount;
-         ImageFormat = info.ImageFormat;
-         ImageColorSpace = info.ImageColorSpace;
-         ImageExtent = info.ImageExtent;
-         ImageArrayLayers = info.ImageArrayLayers;
-         ImageUsage = info.ImageUsage;
-         ImageSharingMode = info.ImageSharingMode;
-         QueueFamilyIndexCount = (UInt32)info.QueueFamilyIndices.Count;
-         QueueFamilyIndices = Alloc.alloc(info.QueueFamilyIndices);
-         PreTransform = info.PreTransform;
-         CompositeAlpha = info.CompositeAlpha;
-         PresentMode = info.PresentMode;
-         Clipped = info.Clipped;
-         OldSwapchain = info.OldSwapchain;
-      }
-
-      public void destroy()
-      {
-         Alloc.free(QueueFamilyIndices);
-      }
-   }
-
-   [StructLayout(LayoutKind.Sequential)]
-   internal struct _PresentInfoKHR
-   {
-      public VK.StructureType SType;
-      public IntPtr Next;
-      public UInt32 WaitSemaphoreCount;
-      public IntPtr WaitSemaphores;
-      public UInt32 SwapchainCount;
-      public IntPtr Swapchains;
-      public IntPtr ImageIndices;
-      public IntPtr Results;
-
-      public _PresentInfoKHR(VK.PresentInfoKHR info)
-      {
-         SType = info.SType;
-         Next = info.Next;
-         WaitSemaphoreCount = (UInt32)info.WaitSemaphores.Count;
-         SwapchainCount = (UInt32)info.Swapchains.Count;
-
-         WaitSemaphores = Alloc.alloc(info.WaitSemaphores);
-         Swapchains = Alloc.alloc(info.Swapchains);
-         ImageIndices = Alloc.alloc(info.Indices);
-
-         List<UInt32> res;
-         if (info.Results == null || info.Results.Count == 0)
-         {
-            Results = IntPtr.Zero;
-         }
-         else
-         {
-            res = new List<UInt32>(info.Results.Count);
-            Results = Alloc.alloc(res);
-         }
-      }
-
-      public List<VK.Result> getResults(int count)
-      {
-         int[] vals = new int[count];
-         Marshal.Copy(Results, vals, 0, count);
-
-         List<VK.Result> ret = new List<VK.Result>(count);
-         foreach (int v in vals)
-         {
-            ret.Add((VK.Result)v);
-         }
-
-         return ret;
-      }
-
-      public void destroy()
-      {
-         Alloc.free(WaitSemaphores);
-         Alloc.free(Swapchains);
-         Alloc.free(ImageIndices);
-         Alloc.free(Results);
-      }
-   }
-   #endregion
 }

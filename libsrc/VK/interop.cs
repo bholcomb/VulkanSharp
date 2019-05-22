@@ -95,15 +95,15 @@ namespace Vulkan
 
 		public _InstanceCreateInfo(VK.InstanceCreateInfo info)
 		{
-			sType = info.SType;
-			next = info.Next;
-			flags = info.Flags;
-			applicationInfo = Alloc.alloc(info.ApplicationInfo);
-			enabledLayerCount = (UInt32)info.EnabledLayerNames.Count;
-			enabledExtensionCount = (UInt32)info.EnabledExtensionNames.Count;
+			sType = info.type;
+			next = info.next;
+			flags = info.flags;
+			applicationInfo = Alloc.alloc(info.applicationInfo);
+			enabledLayerCount = (UInt32)info.enabledLayerNames.Count;
+			enabledExtensionCount = (UInt32)info.enabledExtensionNames.Count;
 
-			enabledLayerNames = Alloc.alloc(info.EnabledLayerNames);
-			enabledExtensionNames = Alloc.alloc(info.EnabledExtensionNames);
+			enabledLayerNames = Alloc.alloc(info.enabledLayerNames);
+			enabledExtensionNames = Alloc.alloc(info.enabledExtensionNames);
 		}
 
 		public void destroy()
@@ -135,26 +135,26 @@ namespace Vulkan
 
 		public _DeviceCreateInfo(VK.DeviceCreateInfo info)
 		{
-			SType = info.SType;
-			Next = info.Next;
-			Flags = info.Flags;
+			SType = info.type;
+			Next = info.next;
+			Flags = info.flags;
 
-			QueueCreateInfoCount = (UInt32)info.QueueCreateInfos.Count;
-			List<_DeviceQueueCreateInfo> qArray = new List<_DeviceQueueCreateInfo>();
-			for(int i=0; i < info.QueueCreateInfos.Count; i++)
+			QueueCreateInfoCount = (UInt32)info.queueCreateInfos.Count;
+         List<_DeviceQueueCreateInfo> qArray = new List<_DeviceQueueCreateInfo>();
+			for(int i=0; i < info.queueCreateInfos.Count; i++)
 			{
-				qArray.Add(new _DeviceQueueCreateInfo(info.QueueCreateInfos[i]));
+				qArray.Add(new _DeviceQueueCreateInfo(info.queueCreateInfos[i]));
 			}
 
 			QueueCreateInfos = (IntPtr*)Alloc.alloc(qArray);
 
-			enabledLayerCount = (UInt32)info.EnabledLayerNames.Count;
-			enabledExtensionCount = (UInt32)info.EnabledExtensionNames.Count;
+			enabledLayerCount = (UInt32)info.enabledLayerNames.Count;
+			enabledExtensionCount = (UInt32)info.enabledExtensionNames.Count;
 
-			enabledLayerNames = Alloc.alloc(info.EnabledLayerNames);
-			enabledExtensionNames = Alloc.alloc(info.EnabledExtensionNames);
+			enabledLayerNames = Alloc.alloc(info.enabledLayerNames);
+			enabledExtensionNames = Alloc.alloc(info.enabledExtensionNames);
 
-			EnabledFeatures = Alloc.alloc(info.EnabledFeatures);
+			EnabledFeatures = Alloc.alloc(info.enabledFeatures);
 		}
 
 		public void destroy()
@@ -178,14 +178,14 @@ namespace Vulkan
 
 		public _DeviceQueueCreateInfo(VK.DeviceQueueCreateInfo info)
 		{
-			SType = info.SType;
-			Next = info.Next;
-			Flags = info.Flags;
-			QueueFamilyIndex = info.QueueFamilyIndex;
-			QueueCount = info.QueueCount;
+			SType = info.type;
+			Next = info.next;
+			Flags = info.flags;
+			QueueFamilyIndex = info.queueFamilyIndex;
+			QueueCount = info.queueCount;
 
-			QueuePriorities = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(float)) * info.QueuePriorities.Length);
-			Marshal.Copy(info.QueuePriorities, 0, QueuePriorities, info.QueuePriorities.Length);
+			QueuePriorities = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(float)) * info.queuePriorities.Length);
+			Marshal.Copy(info.queuePriorities, 0, QueuePriorities, info.queuePriorities.Length);
 		}
 
 		public void destroy()
@@ -212,7 +212,7 @@ namespace Vulkan
 
 		public _BindSparseInfo(VK.BindSparseInfo info)
 		{
-			sType = info.sType;
+			sType = info.type;
 			pNext = info.pNext;
 			waitSemaphoreCount = (UInt32)info.pWaitSemaphores.Count;
 			bufferBindCount = (UInt32)info.pBufferBinds.Count;
@@ -252,16 +252,16 @@ namespace Vulkan
 
 		public _SubmitInfo(VK.SubmitInfo info)
 		{
-			SType = info.SType;
-			Next = info.Next;
-			WaitSemaphoreCount = (UInt32)info.WaitSemaphores.Count;
-			CommandBufferCount = (UInt32)info.CommandBuffers.Count;
-			SignalSemaphoreCount = (UInt32)info.SignalSemaphores.Count;
+			SType = info.type;
+			Next = info.next;
+			WaitSemaphoreCount = (UInt32)info.waitSemaphores.Count;
+			CommandBufferCount = (UInt32)info.commandBuffers.Count;
+			SignalSemaphoreCount = (UInt32)info.signalSemaphores.Count;
 
-			WaitDstStageMask = Alloc.alloc((UInt32)info.WaitDstStageMask);
-			WaitSemaphores = Alloc.alloc(info.WaitSemaphores);
-			CommandBuffers = Alloc.alloc(info.CommandBuffers);
-			SignalSemaphores = Alloc.alloc(info.SignalSemaphores);
+			WaitDstStageMask = Alloc.alloc((UInt32)info.waitDstStageMask);
+			WaitSemaphores = Alloc.alloc(info.waitSemaphores);
+			CommandBuffers = Alloc.alloc(info.commandBuffers);
+			SignalSemaphores = Alloc.alloc(info.signalSemaphores);
 		}
 
 		public void destroy()

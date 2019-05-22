@@ -134,8 +134,9 @@ function parseExtensions()
             extension.bitmasks = {}
             extension.name = ext.name
             extension.number = ext.number
-            extension.type = ext.device
+            extension.type = ext.type
             extension.author = ext.author
+            extension.type = ext.type
             for kk,vv in pairs(ext) do
                if(type(vv)== "table" and vv:tag() == "require") then
                   for i,r in pairs(vv) do
@@ -187,13 +188,12 @@ function parseStructs()
    local types = vk:find("types");
    for k,v in pairs(types)  do
       if(type(v) == "table" and v:tag() == "type" and v.category == "struct" and v.alias == nil) then
-         
          local struct = {}
          struct.fields = {}
          struct.name = v.name
          struct.returnedOnly = v.returnedOnly or false
          for kk,member in pairs(v) do
-            if(type(member) == "table") then
+            if(type(member) == "table" and member:tag()=="member") then
                local field = {}
                field.type = ""
                
@@ -211,7 +211,7 @@ function parseStructs()
                   elseif(type(vv) == "table" and vv:tag() == "comment") then
                      --noop
                   else
-                     --field.type = field.type .. vv.. " "
+                     field.type = field.type .. vv.. " "
                   end
                end
                
@@ -253,7 +253,7 @@ function parseApi()
                   end
                end
             end
-         end   
+         end
       end
    end
 end
@@ -266,5 +266,12 @@ parseStructs()
 parseExtensions()
 parseApi()
 
---print(dump(enums))
---print(dump(extensions))
+if(arg[1] == "-p") then
+   print(dump(tags))
+   print(dump(commands))
+   print(dump(enums))
+   print(dump(bitmasks))
+   print(dump(structs))
+   print(dump(api))
+   print(dump(extensions))
+end

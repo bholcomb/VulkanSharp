@@ -4,166 +4,157 @@ using System.Security;
 
 namespace Vulkan
 {
+   public static partial class InstanceExtensions
+   {
+      public const string VK_KHR_display = "VK_KHR_display";
+   };
+   
    public static partial class VK
    {
-      #region enums
+      [StructLayout(LayoutKind.Sequential)] public struct DisplayKHR { public UInt64 native; }
+      [StructLayout(LayoutKind.Sequential)] public struct DisplayModeKHR { public UInt64 native; }
 
+      #region enums
       #endregion
 
       #region flags
       [Flags]
       public enum DisplayPlaneAlphaFlagsKHR : int
       {
-         Opaque = 0x1,
-         Global = 0x2,
-         PerPixel = 0x4,
-         PerPixelPremultiplied = 0x8,
-      }
+         OPAQUE_BIT_KHR = 0x00000001,
+         GLOBAL_BIT_KHR = 0x00000002,
+         PER_PIXEL_BIT_KHR = 0x00000004,
+         PER_PIXEL_PREMULTIPLIED_BIT_KHR = 0x00000008
+      };
+
+      [Flags]
+      public enum DisplayPlane : int
+      {  
+         AlphaOpaqueBitKhr = 1 << 0,
+         AlphaGlobalBitKhr = 1 << 1,
+         AlphaPerPixelBitKhr = 1 << 2,
+         AlphaPerPixelPremultipliedBitKhr = 1 << 3,
+      };
+      
       #endregion
 
       #region structs
-      [StructLayout(LayoutKind.Sequential)] public struct DisplayKHR { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct DisplayModeKHR { public UInt64 native; }
-
-      [StructLayout(LayoutKind.Sequential)]
-      public struct DisplayPropertiesKHR
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+      public struct DisplayPropertiesKHR 
       {
-         public DisplayKHR Display;
-
-         IntPtr _DisplayName;
-         public String DisplayName
-         {
-            get { return Marshal.PtrToStringAnsi(_DisplayName); }
-         }
-         public Extent2D PhysicalDimensions;
-         public Extent2D PhysicalResolution;
-         public SurfaceTransformFlagsKHR SupportedTransforms;
-         public Bool32 PlaneReorderPossible;
-         public Bool32 PersistentContent;
-      }
-
-      [StructLayout(LayoutKind.Sequential)]
-      public struct DisplayModeParametersKHR
+         public DisplayKHR display;
+         public string displayName;
+         public Extent2D physicalDimensions;
+         public Extent2D physicalResolution;
+         public SurfaceTransformFlagsKHR supportedTransforms;
+         public Bool32 planeReorderPossible;
+         public Bool32 persistentContent;
+      };
+      
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+      public struct DisplayModeParametersKHR 
       {
-         Extent2D visibleRegion;
-         UInt32 refreshRate;
-      }
-
-      [StructLayout(LayoutKind.Sequential)]
-      public struct DisplayModePropertiesKHR
+         public Extent2D visibleRegion;
+         public UInt32 refreshRate;
+      };
+      
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+      public struct DisplayModePropertiesKHR 
       {
-         public UInt64 DisplayMode;
-         public DisplayModeParametersKHR Parameters;
-      }
-
-      [StructLayout(LayoutKind.Sequential)]
-      public struct DisplayModeCreateInfoKHR
+         public DisplayModeKHR displayMode;
+         public DisplayModeParametersKHR parameters;
+      };
+      
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+      public struct DisplayModeCreateInfoKHR 
       {
-         public StructureType SType;
-         public IntPtr Next;
-         public UInt32 Flags;
-         public DisplayModeParametersKHR Parameters;
-      }
-
-      [StructLayout(LayoutKind.Sequential)]
-      public struct DisplayPlaneCapabilitiesKHR
+         public StructureType sType;
+         public IntPtr pNext;
+         public UInt32 flags;
+         public DisplayModeParametersKHR parameters;
+      };
+      
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+      public struct DisplayPlaneCapabilitiesKHR 
       {
-         DisplayPlaneAlphaFlagsKHR supportedAlpha;
-         Offset2D minSrcPosition;
-         Offset2D maxSrcPosition;
-         Extent2D minSrcExtent;
-         Extent2D maxSrcExtent;
-         Offset2D minDstPosition;
-         Offset2D maxDstPosition;
-         Extent2D minDstExtent;
-         Extent2D maxDstExtent;
-      }
-
-      [StructLayout(LayoutKind.Sequential)]
-      public struct DisplayPlanePropertiesKHR
+         public DisplayPlaneAlphaFlagsKHR supportedAlpha;
+         public Offset2D minSrcPosition;
+         public Offset2D maxSrcPosition;
+         public Extent2D minSrcExtent;
+         public Extent2D maxSrcExtent;
+         public Offset2D minDstPosition;
+         public Offset2D maxDstPosition;
+         public Extent2D minDstExtent;
+         public Extent2D maxDstExtent;
+      };
+      
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+      public struct DisplayPlanePropertiesKHR 
       {
-         public DisplayKHR CurrentDisplay;
-         public UInt32 CurrentStackIndex;
-      }
-
-      [StructLayout(LayoutKind.Sequential)]
-      public struct DisplaySurfaceCreateInfoKHR
+         public DisplayKHR currentDisplay;
+         public UInt32 currentStackIndex;
+      };
+      
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+      public struct DisplaySurfaceCreateInfoKHR 
       {
-         public VK.StructureType SType;
-         public IntPtr Next;
-         public UInt32 Flags;
-         public DisplayModeKHR DisplayMode;
-         public UInt32 PlaneIndex;
-         public UInt32 PlaneStackIndex;
-         public SurfaceTransformFlagsKHR Transform;
-         public float GlobalAlpha;
-         public DisplayPlaneAlphaFlagsKHR AlphaMode;
-         public Extent2D ImageExtent;
-      }
+         public StructureType sType;
+         public IntPtr pNext;
+         public UInt32 flags;
+         public DisplayModeKHR displayMode;
+         public UInt32 planeIndex;
+         public UInt32 planeStackIndex;
+         public SurfaceTransformFlagsKHR transform;
+         public float globalAlpha;
+         public DisplayPlaneAlphaFlagsKHR alphaMode;
+         public Extent2D imageExtent;
+      };
+      
       #endregion
 
       #region functions
-      [DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceDisplayPropertiesKHR", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity]
-      static extern Result _GetPhysicalDeviceDisplayPropertiesKHR(PhysicalDevice physicalDevice, out UInt32 pPropertyCount, IntPtr pProperties);
-      public unsafe static Result GetPhysicalDeviceDisplayPropertiesKHR(PhysicalDevice physicalDevice, out UInt32 pPropertyCount, DisplayPropertiesKHR[] pProperties)
+      //external functions we need to get from the instance
+      //VkResult vkGetPhysicalDeviceDisplayPropertiesKHR(VkPhysicalDevice  physicalDevice, uint32_t *  pPropertyCount, VkDisplayPropertiesKHR *  pProperties);
+      //VkResult vkGetPhysicalDeviceDisplayPlanePropertiesKHR(VkPhysicalDevice  physicalDevice, uint32_t *  pPropertyCount, VkDisplayPlanePropertiesKHR *  pProperties);
+      //VkResult vkGetDisplayPlaneSupportedDisplaysKHR(VkPhysicalDevice  physicalDevice, uint32_t  planeIndex, uint32_t *  pDisplayCount, VkDisplayKHR *  pDisplays);
+      //VkResult vkGetDisplayModePropertiesKHR(VkPhysicalDevice  physicalDevice, VkDisplayKHR  display, uint32_t *  pPropertyCount, VkDisplayModePropertiesKHR *  pProperties);
+      //VkResult vkCreateDisplayModeKHR(VkPhysicalDevice  physicalDevice, VkDisplayKHR  display, const VkDisplayModeCreateInfoKHR *  pCreateInfo, const VkAllocationCallbacks *  pAllocator, VkDisplayModeKHR *  pMode);
+      //VkResult vkGetDisplayPlaneCapabilitiesKHR(VkPhysicalDevice  physicalDevice, VkDisplayModeKHR  mode, uint32_t  planeIndex, VkDisplayPlaneCapabilitiesKHR *  pCapabilities);
+      //VkResult vkCreateDisplayPlaneSurfaceKHR(VkInstance  instance, const VkDisplaySurfaceCreateInfoKHR *  pCreateInfo, const VkAllocationCallbacks *  pAllocator, VkSurfaceKHR *  pSurface);
+      
+      //delegate definitions
+      public delegate Result GetPhysicalDeviceDisplayPropertiesKHRDelegate(PhysicalDevice physicalDevice, ref UInt32 pPropertyCount, ref DisplayPropertiesKHR pPropertiess);
+      public delegate Result GetPhysicalDeviceDisplayPlanePropertiesKHRDelegate(PhysicalDevice physicalDevice, ref UInt32 pPropertyCount, ref DisplayPlanePropertiesKHR pPropertiess);
+      public delegate Result GetDisplayPlaneSupportedDisplaysKHRDelegate(PhysicalDevice physicalDevice, UInt32 planeIndex, ref UInt32 pDisplayCount, ref DisplayKHR pDisplayss);
+      public delegate Result GetDisplayModePropertiesKHRDelegate(PhysicalDevice physicalDevice, DisplayKHR display, ref UInt32 pPropertyCount, ref DisplayModePropertiesKHR pPropertiess);
+      public delegate Result CreateDisplayModeKHRDelegate(PhysicalDevice physicalDevice, DisplayKHR display, ref DisplayModeCreateInfoKHR pCreateInfo, ref AllocationCallbacks pAllocator, ref DisplayModeKHR pModes);
+      public delegate Result GetDisplayPlaneCapabilitiesKHRDelegate(PhysicalDevice physicalDevice, DisplayModeKHR mode, UInt32 planeIndex, ref DisplayPlaneCapabilitiesKHR pCapabilitiess);
+      public delegate Result CreateDisplayPlaneSurfaceKHRDelegate(Instance instance, ref DisplaySurfaceCreateInfoKHR pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
+      
+      //delegate instances
+      public static GetPhysicalDeviceDisplayPropertiesKHRDelegate GetPhysicalDeviceDisplayPropertiesKHR;
+      public static GetPhysicalDeviceDisplayPlanePropertiesKHRDelegate GetPhysicalDeviceDisplayPlanePropertiesKHR;
+      public static GetDisplayPlaneSupportedDisplaysKHRDelegate GetDisplayPlaneSupportedDisplaysKHR;
+      public static GetDisplayModePropertiesKHRDelegate GetDisplayModePropertiesKHR;
+      public static CreateDisplayModeKHRDelegate CreateDisplayModeKHR;
+      public static GetDisplayPlaneCapabilitiesKHRDelegate GetDisplayPlaneCapabilitiesKHR;
+      public static CreateDisplayPlaneSurfaceKHRDelegate CreateDisplayPlaneSurfaceKHR;
+      #endregion
+
+      #region interop
+      public static class VK_KHR_display
       {
-         fixed (DisplayPropertiesKHR* ptr = pProperties)
+         public static void init(VK.Instance instance)
          {
-            return _GetPhysicalDeviceDisplayPropertiesKHR(physicalDevice, out pPropertyCount, (IntPtr)ptr);
+            VK.GetPhysicalDeviceDisplayPropertiesKHR = ExternalFunction.getInstanceFunction<VK.GetPhysicalDeviceDisplayPropertiesKHRDelegate>(instance, "vkGetPhysicalDeviceDisplayPropertiesKHR");
+            VK.GetPhysicalDeviceDisplayPlanePropertiesKHR = ExternalFunction.getInstanceFunction<VK.GetPhysicalDeviceDisplayPlanePropertiesKHRDelegate>(instance, "vkGetPhysicalDeviceDisplayPlanePropertiesKHR");
+            VK.GetDisplayPlaneSupportedDisplaysKHR = ExternalFunction.getInstanceFunction<VK.GetDisplayPlaneSupportedDisplaysKHRDelegate>(instance, "vkGetDisplayPlaneSupportedDisplaysKHR");
+            VK.GetDisplayModePropertiesKHR = ExternalFunction.getInstanceFunction<VK.GetDisplayModePropertiesKHRDelegate>(instance, "vkGetDisplayModePropertiesKHR");
+            VK.CreateDisplayModeKHR = ExternalFunction.getInstanceFunction<VK.CreateDisplayModeKHRDelegate>(instance, "vkCreateDisplayModeKHR");
+            VK.GetDisplayPlaneCapabilitiesKHR = ExternalFunction.getInstanceFunction<VK.GetDisplayPlaneCapabilitiesKHRDelegate>(instance, "vkGetDisplayPlaneCapabilitiesKHR");
+            VK.CreateDisplayPlaneSurfaceKHR = ExternalFunction.getInstanceFunction<VK.CreateDisplayPlaneSurfaceKHRDelegate>(instance, "vkCreateDisplayPlaneSurfaceKHR");
          }
       }
-
-      [DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceDisplayPlanePropertiesKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      static extern Result _GetPhysicalDeviceDisplayPlanePropertiesKHR(PhysicalDevice physicalDevice, out UInt32 pPropertyCount, IntPtr pProperties);
-      public unsafe static Result GetPhysicalDeviceDisplayPlanePropertiesKHR(PhysicalDevice physicalDevice, out UInt32 pPropertyCount, DisplayPlanePropertiesKHR[] pProperties)
-      {
-         fixed (DisplayPlanePropertiesKHR* ptr = pProperties)
-         {
-            return _GetPhysicalDeviceDisplayPlanePropertiesKHR(physicalDevice, out pPropertyCount, (IntPtr)ptr);
-         }
-      }
-
-      [DllImport(VulkanLibrary, EntryPoint = "vkGetDisplayPlaneSupportedDisplaysKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      static extern Result _GetDisplayPlaneSupportedDisplaysKHR(PhysicalDevice physicalDevice, UInt32 planeIndex, out UInt32 pDisplayCount, IntPtr pDisplays);
-      public unsafe static Result GetDisplayPlaneSupportedDisplaysKHR(PhysicalDevice physicalDevice, UInt32 planeIndex, out UInt32 pDisplayCount, DisplayKHR[] pDisplays)
-      {
-         fixed (DisplayKHR* ptr = pDisplays)
-         {
-            return _GetDisplayPlaneSupportedDisplaysKHR(physicalDevice, planeIndex, out pDisplayCount, (IntPtr)ptr);
-         }
-      }
-
-      [DllImport(VulkanLibrary, EntryPoint = "vkGetDisplayModePropertiesKHR", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi), SuppressUnmanagedCodeSecurity]
-      static extern Result _GetDisplayModePropertiesKHR(PhysicalDevice physicalDevice, DisplayKHR display, out UInt32 pPropertyCount, IntPtr pProperties);
-      public unsafe static Result GetDisplayModePropertiesKHR(PhysicalDevice physicalDevice, DisplayKHR display, out UInt32 pPropertyCount, DisplayModePropertiesKHR[] pProperties)
-      {
-         fixed (DisplayModePropertiesKHR* ptr = pProperties)
-         {
-            return _GetDisplayModePropertiesKHR(physicalDevice, display, out pPropertyCount, (IntPtr)ptr);
-         }
-      }
-
-      [DllImport(VulkanLibrary, EntryPoint = "vkCreateDisplayModeKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      static extern Result _CreateDisplayModeKHR(PhysicalDevice physicalDevice, DisplayKHR display, ref DisplayModeCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, out DisplayModeKHR pMode);
-      public static Result CreateDisplayModeKHR(PhysicalDevice physicalDevice, DisplayKHR display, ref DisplayModeCreateInfoKHR pCreateInfo, out DisplayModeKHR pMode, AllocationCallbacks pAllocator = null)
-      {
-         return _CreateDisplayModeKHR(physicalDevice, display, ref pCreateInfo, pAllocator, out pMode);
-      }
-
-      [DllImport(VulkanLibrary, EntryPoint = "vkGetDisplayPlaneCapabilitiesKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result GetDisplayPlaneCapabilitiesKHR(PhysicalDevice physicalDevice, DisplayModeKHR mode, UInt32 planeIndex, out DisplayPlaneCapabilitiesKHR pCapabilities);
-
-      [DllImport(VulkanLibrary, EntryPoint = "vkCreateDisplayPlaneSurfaceKHR", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      static extern Result _CreateDisplayPlaneSurfaceKHR(Instance instance, ref DisplaySurfaceCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, out SurfaceKHR pSurface);
-      public static Result CreateDisplayPlaneSurfaceKHR(Instance instance, ref DisplaySurfaceCreateInfoKHR pCreateInfo, out SurfaceKHR pSurface, AllocationCallbacks pAllocator = null)
-      {
-         return _CreateDisplayPlaneSurfaceKHR(instance, ref pCreateInfo, pAllocator, out pSurface);
-      }
+      #endregion
    }
-   #endregion
-
-   #region interop
-
-
-   #endregion
 }

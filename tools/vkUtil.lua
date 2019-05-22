@@ -1,3 +1,7 @@
+function trim(s)
+   return (s:gsub("^%s*(.-)%s*$", "%1"))
+end
+
 function sanitizeEnumName(name, filter)
    local n = string.gsub(name, "VK_", "")
    
@@ -6,8 +10,7 @@ function sanitizeEnumName(name, filter)
       local tagLength = t:len()
       local loc = string.find(n, t, -tagLength)
       if(loc ~= nil and loc ~= 1) then
-         n = string.sub(n, 1, loc-2)
-         
+         --n = string.sub(n, 1, loc-2)
       end
    end
    
@@ -55,10 +58,17 @@ end
 function sanitizeType(name)
    local n = string.gsub(name, "Vk", "") --remove beginning vk   
    n = string.gsub(n, "const ", "")
+   n = string.gsub(n, "struct ", "")
    n = string.gsub(n, "void %*", "IntPtr")
-   n = string.gsub(n, "uint32_t", "UInt32")
+   n = string.gsub(n, "uint32_t", "UInt32")   
    n = string.gsub(n, "int32_t", "Int32")
-      
-   return n
+   n = string.gsub(n, "uint64_t", "UInt64")
+   n = string.gsub(n, "int64_t", "Int64")
+   n = string.gsub(n, "uint8_t", "byte")
+   n = string.gsub(n, "int8_t", "sbyte")
+   n = string.gsub(n, "size_t", "UInt32")
+   n = string.gsub(n, "char *", "string")
+   
+   return trim(n)
 
 end
