@@ -11,18 +11,19 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceFragmentDensityMapFeaturesEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public Bool32 fragmentDensityMap;
          public Bool32 fragmentDensityMapDynamic;
          public Bool32 fragmentDensityMapNonSubsampledImages;
@@ -32,7 +33,7 @@ namespace Vulkan
       public struct PhysicalDeviceFragmentDensityMapPropertiesEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public Extent2D minFragmentDensityTexelSize;
          public Extent2D maxFragmentDensityTexelSize;
          public Bool32 fragmentDensityInvocations;
@@ -42,21 +43,12 @@ namespace Vulkan
       public struct RenderPassFragmentDensityMapCreateInfoEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public AttachmentReference fragmentDensityMapAttachment;
       };
       
       #endregion
 
-      #region functions
-      //external functions we need to get from the device
-      
-      //delegate definitions
-      
-      //delegate instances
-      #endregion
-
-      #region interop
-      #endregion
+      //no functions
    }
 }

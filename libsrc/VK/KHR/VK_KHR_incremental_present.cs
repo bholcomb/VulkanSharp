@@ -11,27 +11,28 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct PresentRegionsKHR 
+      public struct PresentRegionsKHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public UInt32 swapchainCount;
-         public PresentRegionKHR* pRegions;
+         public PresentRegionKHR pRegions;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct PresentRegionKHR 
+      public struct PresentRegionKHR 
       {
          public UInt32 rectangleCount;
-         public RectLayerKHR* pRectangles;
+         public RectLayerKHR pRectangles;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -44,15 +45,6 @@ namespace Vulkan
       
       #endregion
 
-      #region functions
-      //external functions we need to get from the device
-      
-      //delegate definitions
-      
-      //delegate instances
-      #endregion
-
-      #region interop
-      #endregion
+      //no functions
    }
 }

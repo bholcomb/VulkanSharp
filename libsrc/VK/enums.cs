@@ -5,186 +5,14 @@ namespace Vulkan
    public static partial class VK
    {
       #region enums
-      public enum PrimitiveTopology : int
-      {
-         PointList = 0,
-         LineList = 1,
-         LineStrip = 2,
-         TriangleList = 3,
-         TriangleStrip = 4,
-         TriangleFan = 5,
-         LineListWithAdjacency = 6,
-         LineStripWithAdjacency = 7,
-         TriangleListWithAdjacency = 8,
-         TriangleStripWithAdjacency = 9,
-         PatchList = 10,
-
+    
+      public enum PipelineCacheHeaderVersion: int
+      {  
+         One = 1,
       };
-
-      public enum FrontFace : int
-      {
-         CounterClockwise = 0,
-         Clockwise = 1,
-
-      };
-
-      public enum DynamicState : int
-      {
-         Viewport = 0,
-         Scissor = 1,
-         LineWidth = 2,
-         DepthBias = 3,
-         BlendConstants = 4,
-         DepthBounds = 5,
-         StencilCompareMask = 6,
-         StencilWriteMask = 7,
-         StencilReference = 8,
-         //VK_NV_clip_space_w_scaling
-         ViewportWScalingNv = 1000088000,
-         //VK_EXT_discard_rectangles
-         DiscardRectangleExt = 1000100000,
-         //VK_EXT_sample_locations
-         SampleLocationsExt = 1000144000,
-         //VK_NV_shading_rate_image
-         ViewportShadingRatePaletteNv = 1000165004,
-         ViewportCoarseSampleOrderNv = 1000165006,
-         //VK_NV_scissor_exclusive
-         ExclusiveScissorNv = 1000206001,
-
-      };
-
-      public enum ImageViewType : int
-      {
-         View1d = 0,
-         View2d = 1,
-         View3d = 2,
-         Cube = 3,
-         View1dArray = 4,
-         View2dArray = 5,
-         CubeArray = 6,
-
-      };
-
-      public enum SamplerMipmapMode : int
-      {
-         Nearest = 0,
-         Linear = 1,
-
-      };
-
-      public enum StencilOp : int
-      {
-         Keep = 0,
-         Zero = 1,
-         Replace = 2,
-         IncrementAndClamp = 3,
-         DecrementAndClamp = 4,
-         Invert = 5,
-         IncrementAndWrap = 6,
-         DecrementAndWrap = 7,
-
-      };
-
-      public enum Filter : int
-      {
-         Nearest = 0,
-         Linear = 1,
-         //VK_IMG_filter_cubic
-         CubicImg = 1000016000,
-
-      };
-
-      public enum BorderColor : int
-      {
-         FloatTransparentBlack = 0,
-         IntTransparentBlack = 1,
-         FloatOpaqueBlack = 2,
-         IntOpaqueBlack = 3,
-         FloatOpaqueWhite = 4,
-         IntOpaqueWhite = 5,
-
-      };
-
-      public enum ImageTiling : int
-      {
-         Optimal = 0,
-         Linear = 1,
-         //VK_EXT_image_drm_format_modifier
-         DrmFormatModifierExt = 1000159000,
-
-      };
-
-      public enum ComponentSwizzle : int
-      {
-         Identity = 0,
-         Zero = 1,
-         One = 2,
-         R = 3,
-         G = 4,
-         B = 5,
-         A = 6,
-
-      };
-
-      public enum BlendOp : int
-      {
-         Add = 0,
-         Subtract = 1,
-         ReverseSubtract = 2,
-         Min = 3,
-         Max = 4,
-         //VK_EXT_blend_operation_advanced
-         ZeroExt = 1000149000,
-         SrcExt = 1000149001,
-         DstExt = 1000149002,
-         SrcOverExt = 1000149003,
-         DstOverExt = 1000149004,
-         SrcInExt = 1000149005,
-         DstInExt = 1000149006,
-         SrcOutExt = 1000149007,
-         DstOutExt = 1000149008,
-         SrcAtopExt = 1000149009,
-         DstAtopExt = 1000149010,
-         XorExt = 1000149011,
-         MultiplyExt = 1000149012,
-         ScreenExt = 1000149013,
-         OverlayExt = 1000149014,
-         DarkenExt = 1000149015,
-         LightenExt = 1000149016,
-         ColordodgeExt = 1000149017,
-         ColorburnExt = 1000149018,
-         HardlightExt = 1000149019,
-         SoftlightExt = 1000149020,
-         DifferenceExt = 1000149021,
-         ExclusionExt = 1000149022,
-         InvertExt = 1000149023,
-         InvertRgbExt = 1000149024,
-         LineardodgeExt = 1000149025,
-         LinearburnExt = 1000149026,
-         VividlightExt = 1000149027,
-         LinearlightExt = 1000149028,
-         PinlightExt = 1000149029,
-         HardmixExt = 1000149030,
-         HslHueExt = 1000149031,
-         HslSaturationExt = 1000149032,
-         HslColorExt = 1000149033,
-         HslLuminosityExt = 1000149034,
-         PlusExt = 1000149035,
-         PlusClampedExt = 1000149036,
-         PlusClampedAlphaExt = 1000149037,
-         PlusDarkerExt = 1000149038,
-         MinusExt = 1000149039,
-         MinusClampedExt = 1000149040,
-         ContrastExt = 1000149041,
-         InvertOvgExt = 1000149042,
-         RedExt = 1000149043,
-         GreenExt = 1000149044,
-         BlueExt = 1000149045,
-
-      };
-
-      public enum Result : int
-      {
+    
+      public enum Result: int
+      {  
          Success = 0,
          NotReady = 1,
          Timeout = 2,
@@ -203,73 +31,34 @@ namespace Vulkan
          ErrorTooManyObjects = -10,
          ErrorFormatNotSupported = -11,
          ErrorFragmentedPool = -12,
-         //VK_KHR_surface
+         ErrorOutOfPoolMemory = 1000070000,
+         ErrorInvalidExternalHandle = 1000073003,
+          //VK_KHR_surface
          ErrorSurfaceLostKhr = 1000001000,
          ErrorNativeWindowInUseKhr = 1000001001,
-         //VK_KHR_swapchain
+          //VK_KHR_swapchain
          SuboptimalKhr = 1000002003,
          ErrorOutOfDateKhr = 1000002004,
-         //VK_KHR_display_swapchain
+          //VK_KHR_display_swapchain
          ErrorIncompatibleDisplayKhr = 1000004001,
-         //VK_EXT_debug_report
+          //VK_EXT_debug_report
          ErrorValidationFailedExt = 1000012001,
-         //VK_NV_glsl_shader
+          //VK_NV_glsl_shader
          ErrorInvalidShaderNv = 1000013000,
-         //VK_EXT_image_drm_format_modifier
+          //VK_EXT_image_drm_format_modifier
          ErrorInvalidDrmFormatModifierPlaneLayoutExt = 1000159000,
-         //VK_EXT_descriptor_indexing
+          //VK_EXT_descriptor_indexing
          ErrorFragmentationExt = 1000162000,
-         //VK_EXT_global_priority
+          //VK_EXT_global_priority
          ErrorNotPermittedExt = 1000175001,
-         //VK_EXT_buffer_device_address
+          //VK_EXT_buffer_device_address
          ErrorInvalidDeviceAddressExt = 1000245000,
-         //VK_EXT_full_screen_exclusive
+          //VK_EXT_full_screen_exclusive
          ErrorFullScreenExclusiveModeLostExt = 1000256000,
-
       };
-
-      public enum VendorId : int
-      {
-         Viv = 0x10001,
-         Vsi = 0x10002,
-         Kazan = 0x10003,
-
-      };
-
-      public enum PhysicalDeviceType : int
-      {
-         Other = 0,
-         IntegratedGpu = 1,
-         DiscreteGpu = 2,
-         VirtualGpu = 3,
-         Cpu = 4,
-
-      };
-
-      public enum IndexType : int
-      {
-         Uint16 = 0,
-         Uint32 = 1,
-         //VK_NV_ray_tracing
-         NoneNv = 1000166000,
-
-      };
-
-      public enum AttachmentStoreOp : int
-      {
-         Store = 0,
-         DontCare = 1,
-
-      };
-
-      public enum DescriptorUpdateTemplateType : int
-      {
-         DescriptorSet = 0,
-
-      };
-
-      public enum StructureType : int
-      {
+    
+      public enum StructureType: int
+      {  
          ApplicationInfo = 0,
          InstanceCreateInfo = 1,
          DeviceQueueCreateInfo = 2,
@@ -319,7 +108,72 @@ namespace Vulkan
          MemoryBarrier = 46,
          LoaderInstanceCreateInfo = 47,
          LoaderDeviceCreateInfo = 48,
-         //VK_KHR_swapchain
+         PhysicalDeviceSubgroupProperties = 1000095000,
+         BindBufferMemoryInfo = 1000158000,
+         BindImageMemoryInfo = 1000158001,
+         PhysicalDevice16bitStorageFeatures = 1000084000,
+         MemoryDedicatedRequirements = 1000128000,
+         MemoryDedicatedAllocateInfo = 1000128001,
+         MemoryAllocateFlagsInfo = 1000061000,
+         DeviceGroupRenderPassBeginInfo = 1000061003,
+         DeviceGroupCommandBufferBeginInfo = 1000061004,
+         DeviceGroupSubmitInfo = 1000061005,
+         DeviceGroupBindSparseInfo = 1000061006,
+         BindBufferMemoryDeviceGroupInfo = 1000061013,
+         BindImageMemoryDeviceGroupInfo = 1000061014,
+         PhysicalDeviceGroupProperties = 1000071000,
+         DeviceGroupDeviceCreateInfo = 1000071001,
+         BufferMemoryRequirementsInfo2 = 1000147000,
+         ImageMemoryRequirementsInfo2 = 1000147001,
+         ImageSparseMemoryRequirementsInfo2 = 1000147002,
+         MemoryRequirements2 = 1000147003,
+         SparseImageMemoryRequirements2 = 1000147004,
+         PhysicalDeviceFeatures2 = 1000060000,
+         PhysicalDeviceProperties2 = 1000060001,
+         FormatProperties2 = 1000060002,
+         ImageFormatProperties2 = 1000060003,
+         PhysicalDeviceImageFormatInfo2 = 1000060004,
+         QueueFamilyProperties2 = 1000060005,
+         PhysicalDeviceMemoryProperties2 = 1000060006,
+         SparseImageFormatProperties2 = 1000060007,
+         PhysicalDeviceSparseImageFormatInfo2 = 1000060008,
+         PhysicalDevicePointClippingProperties = 1000118000,
+         RenderPassInputAttachmentAspectCreateInfo = 1000118001,
+         ImageViewUsageCreateInfo = 1000118002,
+         PipelineTessellationDomainOriginStateCreateInfo = 1000118003,
+         RenderPassMultiviewCreateInfo = 1000054000,
+         PhysicalDeviceMultiviewFeatures = 1000054001,
+         PhysicalDeviceMultiviewProperties = 1000054002,
+         PhysicalDeviceVariablePointersFeatures = 1000121000,
+         ProtectedSubmitInfo = 1000146000,
+         PhysicalDeviceProtectedMemoryFeatures = 1000146001,
+         PhysicalDeviceProtectedMemoryProperties = 1000146002,
+         DeviceQueueInfo2 = 1000146003,
+         SamplerYcbcrConversionCreateInfo = 1000157000,
+         SamplerYcbcrConversionInfo = 1000157001,
+         BindImagePlaneMemoryInfo = 1000157002,
+         ImagePlaneMemoryRequirementsInfo = 1000157003,
+         PhysicalDeviceSamplerYcbcrConversionFeatures = 1000157004,
+         SamplerYcbcrConversionImageFormatProperties = 1000157005,
+         DescriptorUpdateTemplateCreateInfo = 1000086000,
+         PhysicalDeviceExternalImageFormatInfo = 1000072000,
+         ExternalImageFormatProperties = 1000072001,
+         PhysicalDeviceExternalBufferInfo = 1000072002,
+         ExternalBufferProperties = 1000072003,
+         PhysicalDeviceIdProperties = 1000072004,
+         ExternalMemoryBufferCreateInfo = 1000073000,
+         ExternalMemoryImageCreateInfo = 1000073001,
+         ExportMemoryAllocateInfo = 1000073002,
+         PhysicalDeviceExternalFenceInfo = 1000113000,
+         ExternalFenceProperties = 1000113001,
+         ExportFenceCreateInfo = 1000114000,
+         ExportSemaphoreCreateInfo = 1000078000,
+         PhysicalDeviceExternalSemaphoreInfo = 1000077000,
+         ExternalSemaphoreProperties = 1000077001,
+         PhysicalDeviceMaintenance3Properties = 1000169000,
+         DescriptorSetLayoutSupport = 1000169001,
+         PhysicalDeviceShaderDrawParametersFeatures = 1000064000,
+          //VK_KHR_swapchain
          SwapchainCreateInfoKhr = 1000002000,
          PresentInfoKhr = 1000002001,
          DeviceGroupPresentCapabilitiesKhr = 1000002007,
@@ -328,117 +182,117 @@ namespace Vulkan
          AcquireNextImageInfoKhr = 1000002010,
          DeviceGroupPresentInfoKhr = 1000002011,
          DeviceGroupSwapchainCreateInfoKhr = 1000002012,
-         //VK_KHR_display
+          //VK_KHR_display
          DisplayModeCreateInfoKhr = 1000003000,
          DisplaySurfaceCreateInfoKhr = 1000003001,
-         //VK_KHR_display_swapchain
+          //VK_KHR_display_swapchain
          DisplayPresentInfoKhr = 1000004000,
-         //VK_KHR_xlib_surface
+          //VK_KHR_xlib_surface
          XlibSurfaceCreateInfoKhr = 1000005000,
-         //VK_KHR_xcb_surface
+          //VK_KHR_xcb_surface
          XcbSurfaceCreateInfoKhr = 1000006000,
-         //VK_KHR_wayland_surface
+          //VK_KHR_wayland_surface
          WaylandSurfaceCreateInfoKhr = 1000007000,
-         //VK_KHR_android_surface
+          //VK_KHR_android_surface
          AndroidSurfaceCreateInfoKhr = 1000009000,
-         //VK_KHR_win32_surface
+          //VK_KHR_win32_surface
          Win32SurfaceCreateInfoKhr = 1000010000,
-         //VK_EXT_debug_report
+          //VK_EXT_debug_report
          DebugReportCallbackCreateInfoExt = 1000012000,
-         //VK_AMD_rasterization_order
+          //VK_AMD_rasterization_order
          PipelineRasterizationStateRasterizationOrderAmd = 1000019000,
-         //VK_NV_dedicated_allocation
+          //VK_NV_dedicated_allocation
          DedicatedAllocationImageCreateInfoNv = 1000027000,
          DedicatedAllocationBufferCreateInfoNv = 1000027001,
          DedicatedAllocationMemoryAllocateInfoNv = 1000027002,
-         //VK_EXT_transform_feedback
+          //VK_EXT_transform_feedback
          PhysicalDeviceTransformFeedbackFeaturesExt = 1000029000,
          PhysicalDeviceTransformFeedbackPropertiesExt = 1000029001,
          PipelineRasterizationStateStreamCreateInfoExt = 1000029002,
-         //VK_NVX_image_view_handle
+          //VK_NVX_image_view_handle
          ImageViewHandleInfoNvx = 1000031000,
-         //VK_AMD_texture_gather_bias_lod
+          //VK_AMD_texture_gather_bias_lod
          TextureLodGatherFormatPropertiesAmd = 1000042000,
-         //VK_GGP_stream_descriptor_surface
+          //VK_GGP_stream_descriptor_surface
          StreamDescriptorSurfaceCreateInfoGgp = 1000050000,
-         //VK_NV_corner_sampled_image
+          //VK_NV_corner_sampled_image
          PhysicalDeviceCornerSampledImageFeaturesNv = 1000051000,
-         //VK_NV_external_memory
+          //VK_NV_external_memory
          ExternalMemoryImageCreateInfoNv = 1000057000,
          ExportMemoryAllocateInfoNv = 1000057001,
-         //VK_NV_external_memory_win32
+          //VK_NV_external_memory_win32
          ImportMemoryWin32HandleInfoNv = 1000058000,
          ExportMemoryWin32HandleInfoNv = 1000058001,
-         //VK_EXT_validation_flags
+          //VK_EXT_validation_flags
          ValidationFlagsExt = 1000062000,
-         //VK_NN_vi_surface
+          //VK_NN_vi_surface
          ViSurfaceCreateInfoNn = 1000063000,
-         //VK_EXT_astc_decode_mode
+          //VK_EXT_astc_decode_mode
          ImageViewAstcDecodeModeExt = 1000068000,
          PhysicalDeviceAstcDecodeFeaturesExt = 1000068001,
-         //VK_KHR_external_memory_win32
+          //VK_KHR_external_memory_win32
          ImportMemoryWin32HandleInfoKhr = 1000074000,
          ExportMemoryWin32HandleInfoKhr = 1000074001,
          MemoryWin32HandlePropertiesKhr = 1000074002,
          MemoryGetWin32HandleInfoKhr = 1000074003,
-         //VK_KHR_external_memory_fd
+          //VK_KHR_external_memory_fd
          ImportMemoryFdInfoKhr = 1000075000,
          MemoryFdPropertiesKhr = 1000075001,
          MemoryGetFdInfoKhr = 1000075002,
-         //VK_KHR_win32_keyed_mutex
+          //VK_KHR_win32_keyed_mutex
          Win32KeyedMutexAcquireReleaseInfoKhr = 1000076000,
-         //VK_KHR_external_semaphore_win32
+          //VK_KHR_external_semaphore_win32
          ImportSemaphoreWin32HandleInfoKhr = 1000079000,
          ExportSemaphoreWin32HandleInfoKhr = 1000079001,
          D3d12FenceSubmitInfoKhr = 1000079002,
          SemaphoreGetWin32HandleInfoKhr = 1000079003,
-         //VK_KHR_external_semaphore_fd
+          //VK_KHR_external_semaphore_fd
          ImportSemaphoreFdInfoKhr = 1000080000,
          SemaphoreGetFdInfoKhr = 1000080001,
-         //VK_KHR_push_descriptor
+          //VK_KHR_push_descriptor
          PhysicalDevicePushDescriptorPropertiesKhr = 1000081000,
-         //VK_EXT_conditional_rendering
+          //VK_EXT_conditional_rendering
          CommandBufferInheritanceConditionalRenderingInfoExt = 1000082000,
          PhysicalDeviceConditionalRenderingFeaturesExt = 1000082001,
          ConditionalRenderingBeginInfoExt = 1000082002,
-         //VK_KHR_shader_float16_int8
+          //VK_KHR_shader_float16_int8
          PhysicalDeviceFloat16Int8FeaturesKhr = 1000083000,
-         //VK_KHR_incremental_present
+          //VK_KHR_incremental_present
          PresentRegionsKhr = 1000085000,
-         //VK_NVX_device_generated_commands
+          //VK_NVX_device_generated_commands
          ObjectTableCreateInfoNvx = 1000087000,
          IndirectCommandsLayoutCreateInfoNvx = 1000087001,
          CmdProcessCommandsInfoNvx = 1000087002,
          CmdReserveSpaceForCommandsInfoNvx = 1000087003,
          DeviceGeneratedCommandsLimitsNvx = 1000087004,
          DeviceGeneratedCommandsFeaturesNvx = 1000087005,
-         //VK_NV_clip_space_w_scaling
+          //VK_NV_clip_space_w_scaling
          PipelineViewportWScalingStateCreateInfoNv = 1000088000,
-         //VK_EXT_display_surface_counter
+          //VK_EXT_display_surface_counter
          SurfaceCapabilities2Ext = 1000091000,
-         //VK_EXT_display_control
+          //VK_EXT_display_control
          DisplayPowerInfoExt = 1000092000,
          DeviceEventInfoExt = 1000092001,
          DisplayEventInfoExt = 1000092002,
          SwapchainCounterCreateInfoExt = 1000092003,
-         //VK_GOOGLE_display_timing
+          //VK_GOOGLE_display_timing
          PresentTimesInfoGoogle = 1000093000,
-         //VK_NVX_multiview_per_view_attributes
+          //VK_NVX_multiview_per_view_attributes
          PhysicalDeviceMultiviewPerViewAttributesPropertiesNvx = 1000098000,
-         //VK_NV_viewport_swizzle
+          //VK_NV_viewport_swizzle
          PipelineViewportSwizzleStateCreateInfoNv = 1000099000,
-         //VK_EXT_discard_rectangles
+          //VK_EXT_discard_rectangles
          PhysicalDeviceDiscardRectanglePropertiesExt = 1000100000,
          PipelineDiscardRectangleStateCreateInfoExt = 1000100001,
-         //VK_EXT_conservative_rasterization
+          //VK_EXT_conservative_rasterization
          PhysicalDeviceConservativeRasterizationPropertiesExt = 1000102000,
          PipelineRasterizationConservativeStateCreateInfoExt = 1000102001,
-         //VK_EXT_depth_clip_enable
+          //VK_EXT_depth_clip_enable
          PhysicalDeviceDepthClipEnableFeaturesExt = 1000103000,
          PipelineRasterizationDepthClipStateCreateInfoExt = 1000103001,
-         //VK_EXT_hdr_metadata
+          //VK_EXT_hdr_metadata
          HdrMetadataExt = 1000106000,
-         //VK_KHR_create_renderpass2
+          //VK_KHR_create_renderpass2
          AttachmentDescription2Khr = 1000110000,
          AttachmentReference2Khr = 1000110001,
          SubpassDescription2Khr = 1000110002,
@@ -446,88 +300,88 @@ namespace Vulkan
          RenderPassCreateInfo2Khr = 1000110004,
          SubpassBeginInfoKhr = 1000110005,
          SubpassEndInfoKhr = 1000110006,
-         //VK_KHR_shared_presentable_image
+          //VK_KHR_shared_presentable_image
          SharedPresentSurfaceCapabilitiesKhr = 1000112000,
-         //VK_KHR_external_fence_win32
+          //VK_KHR_external_fence_win32
          ImportFenceWin32HandleInfoKhr = 1000115000,
          ExportFenceWin32HandleInfoKhr = 1000115001,
          FenceGetWin32HandleInfoKhr = 1000115002,
-         //VK_KHR_external_fence_fd
+          //VK_KHR_external_fence_fd
          ImportFenceFdInfoKhr = 1000116000,
          FenceGetFdInfoKhr = 1000116001,
-         //VK_KHR_get_surface_capabilities2
+          //VK_KHR_get_surface_capabilities2
          PhysicalDeviceSurfaceInfo2Khr = 1000120000,
          SurfaceCapabilities2Khr = 1000120001,
          SurfaceFormat2Khr = 1000120002,
-         //VK_KHR_get_display_properties2
+          //VK_KHR_get_display_properties2
          DisplayProperties2Khr = 1000122000,
          DisplayPlaneProperties2Khr = 1000122001,
          DisplayModeProperties2Khr = 1000122002,
          DisplayPlaneInfo2Khr = 1000122003,
          DisplayPlaneCapabilities2Khr = 1000122004,
-         //VK_MVK_ios_surface
+          //VK_MVK_ios_surface
          IosSurfaceCreateInfoMvk = 1000123000,
-         //VK_MVK_macos_surface
+          //VK_MVK_macos_surface
          MacosSurfaceCreateInfoMvk = 1000124000,
-         //VK_EXT_debug_utils
+          //VK_EXT_debug_utils
          DebugUtilsObjectNameInfoExt = 1000129000,
          DebugUtilsObjectTagInfoExt = 1000129001,
          DebugUtilsLabelExt = 1000129002,
          DebugUtilsMessengerCallbackDataExt = 1000129003,
          DebugUtilsMessengerCreateInfoExt = 1000129004,
-         //VK_ANDROID_external_memory_android_hardware_buffer
+          //VK_ANDROID_external_memory_android_hardware_buffer
          AndroidHardwareBufferUsageAndroid = 1000130000,
          AndroidHardwareBufferPropertiesAndroid = 1000130001,
          AndroidHardwareBufferFormatPropertiesAndroid = 1000130002,
          ImportAndroidHardwareBufferInfoAndroid = 1000130003,
          MemoryGetAndroidHardwareBufferInfoAndroid = 1000130004,
          ExternalFormatAndroid = 1000130005,
-         //VK_EXT_sampler_filter_minmax
+          //VK_EXT_sampler_filter_minmax
          PhysicalDeviceSamplerFilterMinmaxPropertiesExt = 1000131000,
          SamplerReductionModeCreateInfoExt = 1000131001,
-         //VK_EXT_inline_uniform_block
+          //VK_EXT_inline_uniform_block
          PhysicalDeviceInlineUniformBlockFeaturesExt = 1000139000,
          PhysicalDeviceInlineUniformBlockPropertiesExt = 1000139001,
          WriteDescriptorSetInlineUniformBlockExt = 1000139002,
          DescriptorPoolInlineUniformBlockCreateInfoExt = 1000139003,
-         //VK_EXT_sample_locations
+          //VK_EXT_sample_locations
          SampleLocationsInfoExt = 1000144000,
          RenderPassSampleLocationsBeginInfoExt = 1000144001,
          PipelineSampleLocationsStateCreateInfoExt = 1000144002,
          PhysicalDeviceSampleLocationsPropertiesExt = 1000144003,
          MultisamplePropertiesExt = 1000144004,
-         //VK_KHR_image_format_list
+          //VK_KHR_image_format_list
          ImageFormatListCreateInfoKhr = 1000148000,
-         //VK_EXT_blend_operation_advanced
+          //VK_EXT_blend_operation_advanced
          PhysicalDeviceBlendOperationAdvancedFeaturesExt = 1000149000,
          PhysicalDeviceBlendOperationAdvancedPropertiesExt = 1000149001,
          PipelineColorBlendAdvancedStateCreateInfoExt = 1000149002,
-         //VK_NV_fragment_coverage_to_color
+          //VK_NV_fragment_coverage_to_color
          PipelineCoverageToColorStateCreateInfoNv = 1000150000,
-         //VK_NV_framebuffer_mixed_samples
+          //VK_NV_framebuffer_mixed_samples
          PipelineCoverageModulationStateCreateInfoNv = 1000153000,
-         //VK_EXT_image_drm_format_modifier
+          //VK_EXT_image_drm_format_modifier
          DrmFormatModifierPropertiesListExt = 1000159000,
          DrmFormatModifierPropertiesExt = 1000159001,
          PhysicalDeviceImageDrmFormatModifierInfoExt = 1000159002,
          ImageDrmFormatModifierListCreateInfoExt = 1000159003,
          ImageDrmFormatModifierExplicitCreateInfoExt = 1000159004,
          ImageDrmFormatModifierPropertiesExt = 1000159005,
-         //VK_EXT_validation_cache
+          //VK_EXT_validation_cache
          ValidationCacheCreateInfoExt = 1000161000,
          ShaderModuleValidationCacheCreateInfoExt = 1000161001,
-         //VK_EXT_descriptor_indexing
+          //VK_EXT_descriptor_indexing
          DescriptorSetLayoutBindingFlagsCreateInfoExt = 1000162000,
          PhysicalDeviceDescriptorIndexingFeaturesExt = 1000162001,
          PhysicalDeviceDescriptorIndexingPropertiesExt = 1000162002,
          DescriptorSetVariableDescriptorCountAllocateInfoExt = 1000162003,
          DescriptorSetVariableDescriptorCountLayoutSupportExt = 1000162004,
-         //VK_NV_shading_rate_image
+          //VK_NV_shading_rate_image
          PipelineViewportShadingRateImageStateCreateInfoNv = 1000165000,
          PhysicalDeviceShadingRateImageFeaturesNv = 1000165001,
          PhysicalDeviceShadingRateImagePropertiesNv = 1000165002,
          PipelineViewportCoarseSampleOrderStateCreateInfoNv = 1000165005,
-         //VK_NV_ray_tracing
+          //VK_NV_ray_tracing
          RayTracingPipelineCreateInfoNv = 1000166000,
          AccelerationStructureCreateInfoNv = 1000166001,
          GeometryNv = 1000166003,
@@ -539,111 +393,124 @@ namespace Vulkan
          PhysicalDeviceRayTracingPropertiesNv = 1000166009,
          RayTracingShaderGroupCreateInfoNv = 1000166011,
          AccelerationStructureInfoNv = 1000166012,
-         //VK_NV_representative_fragment_test
+          //VK_NV_representative_fragment_test
          PhysicalDeviceRepresentativeFragmentTestFeaturesNv = 1000167000,
          PipelineRepresentativeFragmentTestStateCreateInfoNv = 1000167001,
-         //VK_EXT_filter_cubic
+          //VK_EXT_filter_cubic
          PhysicalDeviceImageViewImageFormatInfoExt = 1000171000,
          FilterCubicImageViewImageFormatPropertiesExt = 1000171001,
-         //VK_EXT_global_priority
+          //VK_EXT_global_priority
          DeviceQueueGlobalPriorityCreateInfoExt = 1000175000,
-         //VK_KHR_8bit_storage
+          //VK_KHR_8bit_storage
          PhysicalDevice8bitStorageFeaturesKhr = 1000178000,
-         //VK_EXT_external_memory_host
+          //VK_EXT_external_memory_host
          ImportMemoryHostPointerInfoExt = 1000179000,
          MemoryHostPointerPropertiesExt = 1000179001,
          PhysicalDeviceExternalMemoryHostPropertiesExt = 1000179002,
-         //VK_KHR_shader_atomic_int64
+          //VK_KHR_shader_atomic_int64
          PhysicalDeviceShaderAtomicInt64FeaturesKhr = 1000181000,
-         //VK_EXT_calibrated_timestamps
+          //VK_EXT_calibrated_timestamps
          CalibratedTimestampInfoExt = 1000185000,
-         //VK_AMD_shader_core_properties
+          //VK_AMD_shader_core_properties
          PhysicalDeviceShaderCorePropertiesAmd = 1000186000,
-         //VK_AMD_memory_overallocation_behavior
+          //VK_AMD_memory_overallocation_behavior
          DeviceMemoryOverallocationCreateInfoAmd = 1000190000,
-         //VK_EXT_vertex_attribute_divisor
+          //VK_EXT_vertex_attribute_divisor
          PhysicalDeviceVertexAttributeDivisorPropertiesExt = 1000191000,
          PipelineVertexInputDivisorStateCreateInfoExt = 1000191001,
          PhysicalDeviceVertexAttributeDivisorFeaturesExt = 1000191002,
-         //VK_GGP_frame_token
+          //VK_GGP_frame_token
          PresentFrameTokenGgp = 1000192000,
-         //VK_EXT_pipeline_creation_feedback
+          //VK_EXT_pipeline_creation_feedback
          PipelineCreationFeedbackCreateInfoExt = 1000193000,
-         //VK_KHR_driver_properties
+          //VK_KHR_driver_properties
          PhysicalDeviceDriverPropertiesKhr = 1000197000,
-         //VK_KHR_shader_float_controls
+          //VK_KHR_shader_float_controls
          PhysicalDeviceFloatControlsPropertiesKhr = 1000198000,
-         //VK_KHR_depth_stencil_resolve
+          //VK_KHR_depth_stencil_resolve
          PhysicalDeviceDepthStencilResolvePropertiesKhr = 1000200000,
          SubpassDescriptionDepthStencilResolveKhr = 1000200001,
-         //VK_NV_compute_shader_derivatives
+          //VK_NV_compute_shader_derivatives
          PhysicalDeviceComputeShaderDerivativesFeaturesNv = 1000202000,
-         //VK_NV_mesh_shader
+          //VK_NV_mesh_shader
          PhysicalDeviceMeshShaderFeaturesNv = 1000203000,
          PhysicalDeviceMeshShaderPropertiesNv = 1000203001,
-         //VK_NV_fragment_shader_barycentric
+          //VK_NV_fragment_shader_barycentric
          PhysicalDeviceFragmentShaderBarycentricFeaturesNv = 1000204000,
-         //VK_NV_shader_image_footprint
+          //VK_NV_shader_image_footprint
          PhysicalDeviceShaderImageFootprintFeaturesNv = 1000205000,
-         //VK_NV_scissor_exclusive
+          //VK_NV_scissor_exclusive
          PipelineViewportExclusiveScissorStateCreateInfoNv = 1000206000,
          PhysicalDeviceExclusiveScissorFeaturesNv = 1000206002,
-         //VK_NV_device_diagnostic_checkpoints
+          //VK_NV_device_diagnostic_checkpoints
          CheckpointDataNv = 1000207000,
          QueueFamilyCheckpointPropertiesNv = 1000207001,
-         //VK_KHR_vulkan_memory_model
+          //VK_KHR_vulkan_memory_model
          PhysicalDeviceVulkanMemoryModelFeaturesKhr = 1000212000,
-         //VK_EXT_pci_bus_info
+          //VK_EXT_pci_bus_info
          PhysicalDevicePciBusInfoPropertiesExt = 1000213000,
-         //VK_AMD_display_native_hdr
+          //VK_AMD_display_native_hdr
          DisplayNativeHdrSurfaceCapabilitiesAmd = 1000214000,
          SwapchainDisplayNativeHdrCreateInfoAmd = 1000214001,
-         //VK_FUCHSIA_imagepipe_surface
+          //VK_FUCHSIA_imagepipe_surface
          ImagepipeSurfaceCreateInfoFuchsia = 1000215000,
-         //VK_EXT_metal_surface
+          //VK_EXT_metal_surface
          MetalSurfaceCreateInfoExt = 1000218000,
-         //VK_EXT_fragment_density_map
+          //VK_EXT_fragment_density_map
          PhysicalDeviceFragmentDensityMapFeaturesExt = 1000219000,
          PhysicalDeviceFragmentDensityMapPropertiesExt = 1000219001,
          RenderPassFragmentDensityMapCreateInfoExt = 1000219002,
-         //VK_EXT_scalar_block_layout
+          //VK_EXT_scalar_block_layout
          PhysicalDeviceScalarBlockLayoutFeaturesExt = 1000222000,
-         //VK_EXT_memory_budget
+          //VK_EXT_memory_budget
          PhysicalDeviceMemoryBudgetPropertiesExt = 1000238000,
-         //VK_EXT_memory_priority
+          //VK_EXT_memory_priority
          PhysicalDeviceMemoryPriorityFeaturesExt = 1000239000,
          MemoryPriorityAllocateInfoExt = 1000239001,
-         //VK_KHR_surface_protected_capabilities
+          //VK_KHR_surface_protected_capabilities
          SurfaceProtectedCapabilitiesKhr = 1000240000,
-         //VK_NV_dedicated_allocation_image_aliasing
+          //VK_NV_dedicated_allocation_image_aliasing
          PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNv = 1000241000,
-         //VK_EXT_buffer_device_address
+          //VK_EXT_buffer_device_address
          PhysicalDeviceBufferDeviceAddressFeaturesExt = 1000245000,
          BufferDeviceAddressInfoExt = 1000245001,
          BufferDeviceAddressCreateInfoExt = 1000245002,
-         //VK_EXT_separate_stencil_usage
+          //VK_EXT_separate_stencil_usage
          ImageStencilUsageCreateInfoExt = 1000247000,
-         //VK_EXT_validation_features
+          //VK_EXT_validation_features
          ValidationFeaturesExt = 1000248000,
-         //VK_NV_cooperative_matrix
+          //VK_NV_cooperative_matrix
          PhysicalDeviceCooperativeMatrixFeaturesNv = 1000250000,
          CooperativeMatrixPropertiesNv = 1000250001,
          PhysicalDeviceCooperativeMatrixPropertiesNv = 1000250002,
-         //VK_EXT_ycbcr_image_arrays
+          //VK_EXT_ycbcr_image_arrays
          PhysicalDeviceYcbcrImageArraysFeaturesExt = 1000253000,
-         //VK_EXT_full_screen_exclusive
+          //VK_EXT_full_screen_exclusive
          SurfaceFullScreenExclusiveInfoExt = 1000256000,
          SurfaceCapabilitiesFullScreenExclusiveExt = 1000256002,
          SurfaceFullScreenExclusiveWin32InfoExt = 1000256001,
-         //VK_EXT_headless_surface
+          //VK_EXT_headless_surface
          HeadlessSurfaceCreateInfoExt = 1000257000,
-         //VK_EXT_host_query_reset
+          //VK_EXT_host_query_reset
          PhysicalDeviceHostQueryResetFeaturesExt = 1000262000,
-
       };
-
-      public enum Format : int
-      {
+    
+      public enum SystemAllocationScope: int
+      {  
+         Command = 0,
+         Object = 1,
+         Cache = 2,
+         Device = 3,
+         Instance = 4,
+      };
+    
+      public enum InternalAllocationType: int
+      {  
+         Executable = 0,
+      };
+    
+      public enum Format: int
+      {  
          Undefined = 0,
          R4g4UnormPack8 = 1,
          R4g4b4a4UnormPack16 = 2,
@@ -829,7 +696,41 @@ namespace Vulkan
          Astc12x10SrgbBlock = 182,
          Astc12x12UnormBlock = 183,
          Astc12x12SrgbBlock = 184,
-         //VK_IMG_format_pvrtc
+         G8b8g8r8422Unorm = 1000157000,
+         B8g8r8g8422Unorm = 1000157001,
+         G8B8R83plane420Unorm = 1000157002,
+         G8B8r82plane420Unorm = 1000157003,
+         G8B8R83plane422Unorm = 1000157004,
+         G8B8r82plane422Unorm = 1000157005,
+         G8B8R83plane444Unorm = 1000157006,
+         R10x6UnormPack16 = 1000157007,
+         R10x6g10x6Unorm2pack16 = 1000157008,
+         R10x6g10x6b10x6a10x6Unorm4pack16 = 1000157009,
+         G10x6b10x6g10x6r10x6422Unorm4pack16 = 1000157010,
+         B10x6g10x6r10x6g10x6422Unorm4pack16 = 1000157011,
+         G10x6B10x6R10x63plane420Unorm3pack16 = 1000157012,
+         G10x6B10x6r10x62plane420Unorm3pack16 = 1000157013,
+         G10x6B10x6R10x63plane422Unorm3pack16 = 1000157014,
+         G10x6B10x6r10x62plane422Unorm3pack16 = 1000157015,
+         G10x6B10x6R10x63plane444Unorm3pack16 = 1000157016,
+         R12x4UnormPack16 = 1000157017,
+         R12x4g12x4Unorm2pack16 = 1000157018,
+         R12x4g12x4b12x4a12x4Unorm4pack16 = 1000157019,
+         G12x4b12x4g12x4r12x4422Unorm4pack16 = 1000157020,
+         B12x4g12x4r12x4g12x4422Unorm4pack16 = 1000157021,
+         G12x4B12x4R12x43plane420Unorm3pack16 = 1000157022,
+         G12x4B12x4r12x42plane420Unorm3pack16 = 1000157023,
+         G12x4B12x4R12x43plane422Unorm3pack16 = 1000157024,
+         G12x4B12x4r12x42plane422Unorm3pack16 = 1000157025,
+         G12x4B12x4R12x43plane444Unorm3pack16 = 1000157026,
+         G16b16g16r16422Unorm = 1000157027,
+         B16g16r16g16422Unorm = 1000157028,
+         G16B16R163plane420Unorm = 1000157029,
+         G16B16r162plane420Unorm = 1000157030,
+         G16B16R163plane422Unorm = 1000157031,
+         G16B16r162plane422Unorm = 1000157032,
+         G16B16R163plane444Unorm = 1000157033,
+          //VK_IMG_format_pvrtc
          Pvrtc12bppUnormBlockImg = 1000055000,
          Pvrtc14bppUnormBlockImg = 1000055001,
          Pvrtc22bppUnormBlockImg = 1000055002,
@@ -838,70 +739,51 @@ namespace Vulkan
          Pvrtc14bppSrgbBlockImg = 1000055005,
          Pvrtc22bppSrgbBlockImg = 1000055006,
          Pvrtc24bppSrgbBlockImg = 1000055007,
-
       };
-
-      public enum SamplerYcbcrRange : int
-      {
-         ItuFull = 0,
-         ItuNarrow = 1,
-
-      };
-
-      public enum DescriptorType : int
-      {
-         Sampler = 0,
-         CombinedImageSampler = 1,
-         SampledImage = 2,
-         StorageImage = 3,
-         UniformTexelBuffer = 4,
-         StorageTexelBuffer = 5,
-         UniformBuffer = 6,
-         StorageBuffer = 7,
-         UniformBufferDynamic = 8,
-         StorageBufferDynamic = 9,
-         InputAttachment = 10,
-         //VK_EXT_inline_uniform_block
-         InlineUniformBlockExt = 1000139000,
-         //VK_NV_ray_tracing
-         AccelerationStructureNv = 1000166000,
-
-      };
-
-      public enum PointClippingBehavior : int
-      {
-         AllClipPlanes = 0,
-         UserClipPlanesOnly = 1,
-
-      };
-
-      public enum ImageType : int
-      {
+    
+      public enum ImageType: int
+      {  
          _1d = 0,
          _2d = 1,
          _3d = 2,
-
       };
-
-      public enum SystemAllocationScope : int
-      {
-         Command = 0,
-         Object = 1,
-         Cache = 2,
-         Device = 3,
-         Instance = 4,
-
+    
+      public enum ImageTiling: int
+      {  
+         Optimal = 0,
+         Linear = 1,
+          //VK_EXT_image_drm_format_modifier
+         DrmFormatModifierExt = 1000159000,
       };
-
-      public enum ChromaLocation : int
-      {
-         CositedEven = 0,
-         Midpoint = 1,
-
+    
+      public enum PhysicalDeviceType: int
+      {  
+         Other = 0,
+         IntegratedGpu = 1,
+         DiscreteGpu = 2,
+         VirtualGpu = 3,
+         Cpu = 4,
       };
-
-      public enum ImageLayout : int
-      {
+    
+      public enum QueryType: int
+      {  
+         Occlusion = 0,
+         PipelineStatistics = 1,
+         Timestamp = 2,
+          //VK_EXT_transform_feedback
+         TransformFeedbackStreamExt = 1000029004,
+          //VK_NV_ray_tracing
+         AccelerationStructureCompactedSizeNv = 1000166000,
+      };
+    
+      public enum SharingMode: int
+      {  
+         Exclusive = 0,
+         Concurrent = 1,
+      };
+    
+      public enum ImageLayout: int
+      {  
          Undefined = 0,
          General = 1,
          ColorAttachmentOptimal = 2,
@@ -911,26 +793,102 @@ namespace Vulkan
          TransferSrcOptimal = 6,
          TransferDstOptimal = 7,
          Preinitialized = 8,
-         //VK_KHR_swapchain
+         DepthReadOnlyStencilAttachmentOptimal = 1000118000,
+         DepthAttachmentStencilReadOnlyOptimal = 1000118001,
+          //VK_KHR_swapchain
          PresentSrcKhr = 1000002002,
-         //VK_KHR_shared_presentable_image
+          //VK_KHR_shared_presentable_image
          SharedPresentKhr = 1000112000,
-         //VK_NV_shading_rate_image
+          //VK_NV_shading_rate_image
          ShadingRateOptimalNv = 1000165003,
-         //VK_EXT_fragment_density_map
+          //VK_EXT_fragment_density_map
          FragmentDensityMapOptimalExt = 1000219000,
-
       };
-
-      public enum ValidationFeatureEnableEXT : int
-      {
-         GpuAssistedExt = 0,
-         GpuAssistedReserveBindingSlotExt = 1,
-
+    
+      public enum ImageViewType: int
+      {  
+         _1d = 0,
+         _2d = 1,
+         _3d = 2,
+         Cube = 3,
+         _1dArray = 4,
+         _2dArray = 5,
+         CubeArray = 6,
       };
-
-      public enum LogicOp : int
-      {
+    
+      public enum ComponentSwizzle: int
+      {  
+         Identity = 0,
+         Zero = 1,
+         One = 2,
+         R = 3,
+         G = 4,
+         B = 5,
+         A = 6,
+      };
+    
+      public enum VertexInputRate: int
+      {  
+         Vertex = 0,
+         Instance = 1,
+      };
+    
+      public enum PrimitiveTopology: int
+      {  
+         PointList = 0,
+         LineList = 1,
+         LineStrip = 2,
+         TriangleList = 3,
+         TriangleStrip = 4,
+         TriangleFan = 5,
+         LineListWithAdjacency = 6,
+         LineStripWithAdjacency = 7,
+         TriangleListWithAdjacency = 8,
+         TriangleStripWithAdjacency = 9,
+         PatchList = 10,
+      };
+    
+      public enum PolygonMode: int
+      {  
+         Fill = 0,
+         Line = 1,
+         Point = 2,
+          //VK_NV_fill_rectangle
+         FillRectangleNv = 1000154000,
+      };
+    
+      public enum FrontFace: int
+      {  
+         CounterClockwise = 0,
+         Clockwise = 1,
+      };
+    
+      public enum CompareOp: int
+      {  
+         Never = 0,
+         Less = 1,
+         Equal = 2,
+         LessOrEqual = 3,
+         Greater = 4,
+         NotEqual = 5,
+         GreaterOrEqual = 6,
+         Always = 7,
+      };
+    
+      public enum StencilOp: int
+      {  
+         Keep = 0,
+         Zero = 1,
+         Replace = 2,
+         IncrementAndClamp = 3,
+         DecrementAndClamp = 4,
+         Invert = 5,
+         IncrementAndWrap = 6,
+         DecrementAndWrap = 7,
+      };
+    
+      public enum LogicOp: int
+      {  
          Clear = 0,
          And = 1,
          AndReverse = 2,
@@ -947,25 +905,10 @@ namespace Vulkan
          OrInverted = 13,
          Nand = 14,
          Set = 15,
-
       };
-
-      public enum AccelerationStructureTypeNV : int
-      {
-         TopLevelNv = 0,
-         BottomLevelNv = 1,
-
-      };
-
-      public enum CommandBufferLevel : int
-      {
-         Primary = 0,
-         Secondary = 1,
-
-      };
-
-      public enum BlendFactor : int
-      {
+    
+      public enum BlendFactor: int
+      {  
          Zero = 0,
          One = 1,
          SrcColor = 2,
@@ -985,112 +928,182 @@ namespace Vulkan
          OneMinusSrc1Color = 16,
          Src1Alpha = 17,
          OneMinusSrc1Alpha = 18,
-
       };
-
-      public enum InternalAllocationType : int
-      {
-         Executable = 0,
-
+    
+      public enum BlendOp: int
+      {  
+         Add = 0,
+         Subtract = 1,
+         ReverseSubtract = 2,
+         Min = 3,
+         Max = 4,
+          //VK_EXT_blend_operation_advanced
+         ZeroExt = 1000149000,
+         SrcExt = 1000149001,
+         DstExt = 1000149002,
+         SrcOverExt = 1000149003,
+         DstOverExt = 1000149004,
+         SrcInExt = 1000149005,
+         DstInExt = 1000149006,
+         SrcOutExt = 1000149007,
+         DstOutExt = 1000149008,
+         SrcAtopExt = 1000149009,
+         DstAtopExt = 1000149010,
+         XorExt = 1000149011,
+         MultiplyExt = 1000149012,
+         ScreenExt = 1000149013,
+         OverlayExt = 1000149014,
+         DarkenExt = 1000149015,
+         LightenExt = 1000149016,
+         ColordodgeExt = 1000149017,
+         ColorburnExt = 1000149018,
+         HardlightExt = 1000149019,
+         SoftlightExt = 1000149020,
+         DifferenceExt = 1000149021,
+         ExclusionExt = 1000149022,
+         InvertExt = 1000149023,
+         InvertRgbExt = 1000149024,
+         LineardodgeExt = 1000149025,
+         LinearburnExt = 1000149026,
+         VividlightExt = 1000149027,
+         LinearlightExt = 1000149028,
+         PinlightExt = 1000149029,
+         HardmixExt = 1000149030,
+         HslHueExt = 1000149031,
+         HslSaturationExt = 1000149032,
+         HslColorExt = 1000149033,
+         HslLuminosityExt = 1000149034,
+         PlusExt = 1000149035,
+         PlusClampedExt = 1000149036,
+         PlusClampedAlphaExt = 1000149037,
+         PlusDarkerExt = 1000149038,
+         MinusExt = 1000149039,
+         MinusClampedExt = 1000149040,
+         ContrastExt = 1000149041,
+         InvertOvgExt = 1000149042,
+         RedExt = 1000149043,
+         GreenExt = 1000149044,
+         BlueExt = 1000149045,
       };
-
-      public enum SamplerYcbcrModelConversion : int
-      {
-         RgbIdentity = 0,
-         YcbcrIdentity = 1,
-         Ycbcr709 = 2,
-         Ycbcr601 = 3,
-         Ycbcr2020 = 4,
-
+    
+      public enum DynamicState: int
+      {  
+         Viewport = 0,
+         Scissor = 1,
+         LineWidth = 2,
+         DepthBias = 3,
+         BlendConstants = 4,
+         DepthBounds = 5,
+         StencilCompareMask = 6,
+         StencilWriteMask = 7,
+         StencilReference = 8,
+          //VK_NV_clip_space_w_scaling
+         ViewportWScalingNv = 1000088000,
+          //VK_EXT_discard_rectangles
+         DiscardRectangleExt = 1000100000,
+          //VK_EXT_sample_locations
+         SampleLocationsExt = 1000144000,
+          //VK_NV_shading_rate_image
+         ViewportShadingRatePaletteNv = 1000165004,
+         ViewportCoarseSampleOrderNv = 1000165006,
+          //VK_NV_scissor_exclusive
+         ExclusiveScissorNv = 1000206001,
       };
-
-      public enum AttachmentLoadOp : int
-      {
-         Load = 0,
-         Clear = 1,
-         DontCare = 2,
-
+    
+      public enum Filter: int
+      {  
+         Nearest = 0,
+         Linear = 1,
+          //VK_IMG_filter_cubic
+         CubicImg = 1000016000,
       };
-
-      public enum VertexInputRate : int
-      {
-         Vertex = 0,
-         Instance = 1,
-
+    
+      public enum SamplerMipmapMode: int
+      {  
+         Nearest = 0,
+         Linear = 1,
       };
-
-      public enum SubpassContents : int
-      {
-         Inline = 0,
-         SecondaryCommandBuffers = 1,
-
-      };
-
-      public enum TessellationDomainOrigin : int
-      {
-         UpperLeft = 0,
-         LowerLeft = 1,
-
-      };
-
-      public enum PipelineCacheHeaderVersion : int
-      {
-         One = 1,
-
-      };
-
-      public enum SharingMode : int
-      {
-         Exclusive = 0,
-         Concurrent = 1,
-
-      };
-
-      public enum ValidationFeatureDisableEXT : int
-      {
-         AllExt = 0,
-         ShadersExt = 1,
-         ThreadSafetyExt = 2,
-         ApiParametersExt = 3,
-         ObjectLifetimesExt = 4,
-         CoreChecksExt = 5,
-         UniqueHandlesExt = 6,
-
-      };
-
-      public enum PolygonMode : int
-      {
-         Fill = 0,
-         Line = 1,
-         Point = 2,
-         //VK_NV_fill_rectangle
-         FillRectangleNv = 1000154000,
-
-      };
-
-      public enum QueryType : int
-      {
-         Occlusion = 0,
-         PipelineStatistics = 1,
-         Timestamp = 2,
-         //VK_EXT_transform_feedback
-         TransformFeedbackStreamExt = 1000029004,
-         //VK_NV_ray_tracing
-         AccelerationStructureCompactedSizeNv = 1000166000,
-
-      };
-
-      public enum SamplerAddressMode : int
-      {
+    
+      public enum SamplerAddressMode: int
+      {  
          Repeat = 0,
          MirroredRepeat = 1,
          ClampToEdge = 2,
          ClampToBorder = 3,
-
       };
-
-      public enum ObjectType : int
-      {
+    
+      public enum BorderColor: int
+      {  
+         FloatTransparentBlack = 0,
+         IntTransparentBlack = 1,
+         FloatOpaqueBlack = 2,
+         IntOpaqueBlack = 3,
+         FloatOpaqueWhite = 4,
+         IntOpaqueWhite = 5,
+      };
+    
+      public enum DescriptorType: int
+      {  
+         Sampler = 0,
+         CombinedImageSampler = 1,
+         SampledImage = 2,
+         StorageImage = 3,
+         UniformTexelBuffer = 4,
+         StorageTexelBuffer = 5,
+         UniformBuffer = 6,
+         StorageBuffer = 7,
+         UniformBufferDynamic = 8,
+         StorageBufferDynamic = 9,
+         InputAttachment = 10,
+          //VK_EXT_inline_uniform_block
+         InlineUniformBlockExt = 1000139000,
+          //VK_NV_ray_tracing
+         AccelerationStructureNv = 1000166000,
+      };
+    
+      public enum AttachmentLoadOp: int
+      {  
+         Load = 0,
+         Clear = 1,
+         DontCare = 2,
+      };
+    
+      public enum AttachmentStoreOp: int
+      {  
+         Store = 0,
+         DontCare = 1,
+      };
+    
+      public enum PipelineBindPoint: int
+      {  
+         Graphics = 0,
+         Compute = 1,
+          //VK_NV_ray_tracing
+         RayTracingNv = 1000166000,
+      };
+    
+      public enum CommandBufferLevel: int
+      {  
+         Primary = 0,
+         Secondary = 1,
+      };
+    
+      public enum IndexType: int
+      {  
+         Uint16 = 0,
+         Uint32 = 1,
+          //VK_NV_ray_tracing
+         NoneNv = 1000166000,
+      };
+    
+      public enum SubpassContents: int
+      {  
+         Inline = 0,
+         SecondaryCommandBuffers = 1,
+      };
+    
+      public enum ObjectType: int
+      {  
          Unknown = 0,
          Instance = 1,
          PhysicalDevice = 2,
@@ -1117,645 +1130,739 @@ namespace Vulkan
          DescriptorSet = 23,
          Framebuffer = 24,
          CommandPool = 25,
-         //VK_KHR_surface
+         SamplerYcbcrConversion = 1000157000,
+         DescriptorUpdateTemplate = 1000086000,
+          //VK_KHR_surface
          SurfaceKhr = 1000001000,
-         //VK_KHR_swapchain
+          //VK_KHR_swapchain
          SwapchainKhr = 1000002000,
-         //VK_KHR_display
+          //VK_KHR_display
          DisplayKhr = 1000003000,
          DisplayModeKhr = 1000003001,
-         //VK_EXT_debug_report
+          //VK_EXT_debug_report
          DebugReportCallbackExt = 1000012000,
-         //VK_NVX_device_generated_commands
+          //VK_NVX_device_generated_commands
          ObjectTableNvx = 1000087000,
          IndirectCommandsLayoutNvx = 1000087001,
-         //VK_EXT_debug_utils
+          //VK_EXT_debug_utils
          DebugUtilsMessengerExt = 1000129000,
-         //VK_EXT_validation_cache
+          //VK_EXT_validation_cache
          ValidationCacheExt = 1000161000,
-         //VK_NV_ray_tracing
+          //VK_NV_ray_tracing
          AccelerationStructureNv = 1000166000,
-
       };
-
-      public enum CompareOp : int
-      {
-         Never = 0,
-         Less = 1,
-         Equal = 2,
-         LessOrEqual = 3,
-         Greater = 4,
-         NotEqual = 5,
-         GreaterOrEqual = 6,
-         Always = 7,
-
+    
+      public enum VendorId: int
+      {  
+         Viv = 0x10001,
+         Vsi = 0x10002,
+         Kazan = 0x10003,
       };
-
-      public enum PipelineBindPoint : int
-      {
-         Graphics = 0,
-         Compute = 1,
-         //VK_NV_ray_tracing
-         RayTracingNv = 1000166000,
-
+    
+      public enum PointClippingBehavior: int
+      {  
+         AllClipPlanes = 0,
+         UserClipPlanesOnly = 1,
       };
-
-
+    
+      public enum TessellationDomainOrigin: int
+      {  
+         UpperLeft = 0,
+         LowerLeft = 1,
+      };
+    
+      public enum SamplerYcbcrModelConversion: int
+      {  
+         RgbIdentity = 0,
+         YcbcrIdentity = 1,
+         Ycbcr709 = 2,
+         Ycbcr601 = 3,
+         Ycbcr2020 = 4,
+      };
+    
+      public enum SamplerYcbcrRange: int
+      {  
+         ItuFull = 0,
+         ItuNarrow = 1,
+      };
+    
+      public enum ChromaLocation: int
+      {  
+         CositedEven = 0,
+         Midpoint = 1,
+      };
+    
+      public enum DescriptorUpdateTemplateType: int
+      {  
+         DescriptorSet = 0,
+      };
       #endregion
-
+      
       #region bitmasks
       [Flags]
-      public enum CommandBufferResetFlags : int
-      {
-         ReleaseResourcesBit = 1 << 0,
-
+      public enum InstanceCreateFlags : int
+      {  
       };
-
-      [Flags]
-      public enum DebugUtilsMessageTypeFlagsEXT : int
-      {
-         GeneralBitExt = 1 << 0,
-         ValidationBitExt = 1 << 1,
-         PerformanceBitExt = 1 << 2,
-
-      };
-
-      [Flags]
-      public enum DebugUtilsMessageSeverityFlagsEXT : int
-      {
-         VerboseBitExt = 1 << 0,
-         InfoBitExt = 1 << 4,
-         WarningBitExt = 1 << 8,
-         ErrorBitExt = 1 << 12,
-
-      };
-
-      [Flags]
-      public enum AccessFlags : int
-      {
-         IndirectCommandReadBit = 1 << 0,
-         IndexReadBit = 1 << 1,
-         VertexAttributeReadBit = 1 << 2,
-         UniformReadBit = 1 << 3,
-         InputAttachmentReadBit = 1 << 4,
-         ShaderReadBit = 1 << 5,
-         ShaderWriteBit = 1 << 6,
-         ColorAttachmentReadBit = 1 << 7,
-         ColorAttachmentWriteBit = 1 << 8,
-         DepthStencilAttachmentReadBit = 1 << 9,
-         DepthStencilAttachmentWriteBit = 1 << 10,
-         TransferReadBit = 1 << 11,
-         TransferWriteBit = 1 << 12,
-         HostReadBit = 1 << 13,
-         HostWriteBit = 1 << 14,
-         MemoryReadBit = 1 << 15,
-         MemoryWriteBit = 1 << 16,
-         //VK_EXT_transform_feedback
-         TransformFeedbackWriteBitExt = 1 << 25,
-         TransformFeedbackCounterReadBitExt = 1 << 26,
-         TransformFeedbackCounterWriteBitExt = 1 << 27,
-         //VK_EXT_conditional_rendering
-         ConditionalRenderingReadBitExt = 1 << 20,
-         //VK_NVX_device_generated_commands
-         CommandProcessReadBitNvx = 1 << 17,
-         CommandProcessWriteBitNvx = 1 << 18,
-         //VK_EXT_blend_operation_advanced
-         ColorAttachmentReadNoncoherentBitExt = 1 << 19,
-         //VK_NV_shading_rate_image
-         ShadingRateImageReadBitNv = 1 << 23,
-         //VK_NV_ray_tracing
-         AccelerationStructureReadBitNv = 1 << 21,
-         AccelerationStructureWriteBitNv = 1 << 22,
-         //VK_EXT_fragment_density_map
-         FragmentDensityMapReadBitExt = 1 << 24,
-
-      };
-
-      [Flags]
-      public enum CommandBufferUsageFlags : int
-      {
-         OneTimeSubmitBit = 1 << 0,
-         RenderPassContinueBit = 1 << 1,
-         SimultaneousUseBit = 1 << 2,
-
-      };
-
-      [Flags]
-      public enum DescriptorPoolCreateFlags : int
-      {
-         FreeDescriptorSetBit = 1 << 0,
-         //VK_EXT_descriptor_indexing
-         UpdateAfterBindBitExt = 1 << 1,
-
-      };
-
-      [Flags]
-      public enum ImageAspectFlags : int
-      {
-         ColorBit = 1 << 0,
-         DepthBit = 1 << 1,
-         StencilBit = 1 << 2,
-         MetadataBit = 1 << 3,
-         //VK_EXT_image_drm_format_modifier
-         MemoryPlane0BitExt = 1 << 7,
-         MemoryPlane1BitExt = 1 << 8,
-         MemoryPlane2BitExt = 1 << 9,
-         MemoryPlane3BitExt = 1 << 10,
-
-      };
-
-      [Flags]
-      public enum ExternalMemoryFeatureFlags : int
-      {
-         DedicatedOnlyBit = 1 << 0,
-         ExportableBit = 1 << 1,
-         ImportableBit = 1 << 2,
-
-      };
-
-      [Flags]
-      public enum SampleCountFlags : int
-      {
-         _1Bit = 1 << 0,
-         _2Bit = 1 << 1,
-         _4Bit = 1 << 2,
-         _8Bit = 1 << 3,
-         _16Bit = 1 << 4,
-         _32Bit = 1 << 5,
-         _64Bit = 1 << 6,
-
-      };
-
-      [Flags]
-      public enum SamplerCreateFlags : int
-      {
-         //VK_EXT_fragment_density_map
-         SubsampledBitExt = 1 << 0,
-         SubsampledCoarseReconstructionBitExt = 1 << 1,
-
-      };
-
-      [Flags]
-      public enum ExternalMemoryHandleTypeFlags : int
-      {
-         OpaqueFdBit = 1 << 0,
-         OpaqueWin32Bit = 1 << 1,
-         OpaqueWin32KmtBit = 1 << 2,
-         D3d11TextureBit = 1 << 3,
-         D3d11TextureKmtBit = 1 << 4,
-         D3d12HeapBit = 1 << 5,
-         D3d12ResourceBit = 1 << 6,
-         //VK_EXT_external_memory_dma_buf
-         DmaBufBitExt = 1 << 9,
-         //VK_ANDROID_external_memory_android_hardware_buffer
-         AndroidHardwareBufferBitAndroid = 1 << 10,
-         //VK_EXT_external_memory_host
-         HostAllocationBitExt = 1 << 7,
-         HostMappedForeignMemoryBitExt = 1 << 8,
-
-      };
-
-      [Flags]
-      public enum PipelineCreateFlags : int
-      {
-         DisableOptimizationBit = 1 << 0,
-         AllowDerivativesBit = 1 << 1,
-         DerivativeBit = 1 << 2,
-         //VK_NV_ray_tracing
-         DeferCompileBitNv = 1 << 5,
-
-      };
-
-      [Flags]
-      public enum CullModeFlags : int
-      {
-         FrontBit = 1 << 0,
-         BackBit = 1 << 1,
-
-      };
-
-      [Flags]
-      public enum ExternalFenceFeatureFlags : int
-      {
-         ExportableBit = 1 << 0,
-         ImportableBit = 1 << 1,
-
-      };
-
-      [Flags]
-      public enum QueueFlags : int
-      {
-         GraphicsBit = 1 << 0,
-         ComputeBit = 1 << 1,
-         TransferBit = 1 << 2,
-         SparseBindingBit = 1 << 3,
-
-      };
-
-      [Flags]
-      public enum PipelineStageFlags : int
-      {
-         TopOfPipeBit = 1 << 0,
-         DrawIndirectBit = 1 << 1,
-         VertexInputBit = 1 << 2,
-         VertexShaderBit = 1 << 3,
-         TessellationControlShaderBit = 1 << 4,
-         TessellationEvaluationShaderBit = 1 << 5,
-         GeometryShaderBit = 1 << 6,
-         FragmentShaderBit = 1 << 7,
-         EarlyFragmentTestsBit = 1 << 8,
-         LateFragmentTestsBit = 1 << 9,
-         ColorAttachmentOutputBit = 1 << 10,
-         ComputeShaderBit = 1 << 11,
-         TransferBit = 1 << 12,
-         BottomOfPipeBit = 1 << 13,
-         HostBit = 1 << 14,
-         AllGraphicsBit = 1 << 15,
-         AllCommandsBit = 1 << 16,
-         //VK_EXT_transform_feedback
-         TransformFeedbackBitExt = 1 << 24,
-         //VK_EXT_conditional_rendering
-         ConditionalRenderingBitExt = 1 << 18,
-         //VK_NVX_device_generated_commands
-         CommandProcessBitNvx = 1 << 17,
-         //VK_NV_shading_rate_image
-         ShadingRateImageBitNv = 1 << 22,
-         //VK_NV_ray_tracing
-         RayTracingShaderBitNv = 1 << 21,
-         AccelerationStructureBuildBitNv = 1 << 25,
-         //VK_NV_mesh_shader
-         TaskShaderBitNv = 1 << 19,
-         MeshShaderBitNv = 1 << 20,
-         //VK_EXT_fragment_density_map
-         FragmentDensityProcessBitExt = 1 << 23,
-
-      };
-
-      [Flags]
-      public enum BufferUsageFlags : int
-      {
-         TransferSrcBit = 1 << 0,
-         TransferDstBit = 1 << 1,
-         UniformTexelBufferBit = 1 << 2,
-         StorageTexelBufferBit = 1 << 3,
-         UniformBufferBit = 1 << 4,
-         StorageBufferBit = 1 << 5,
-         IndexBufferBit = 1 << 6,
-         VertexBufferBit = 1 << 7,
-         IndirectBufferBit = 1 << 8,
-         //VK_EXT_transform_feedback
-         TransformFeedbackBufferBitExt = 1 << 11,
-         TransformFeedbackCounterBufferBitExt = 1 << 12,
-         //VK_EXT_conditional_rendering
-         ConditionalRenderingBitExt = 1 << 9,
-         //VK_NV_ray_tracing
-         RayTracingBitNv = 1 << 10,
-         //VK_EXT_buffer_device_address
-         ShaderDeviceAddressBitExt = 1 << 17,
-
-      };
-
-      [Flags]
-      public enum DescriptorSetLayoutCreateFlags : int
-      {
-         //VK_KHR_push_descriptor
-         PushDescriptorBitKhr = 1 << 0,
-         //VK_EXT_descriptor_indexing
-         UpdateAfterBindPoolBitExt = 1 << 1,
-
-      };
-
-      [Flags]
-      public enum FenceCreateFlags : int
-      {
-         SignaledBit = 1 << 0,
-
-      };
-
-      [Flags]
-      public enum QueryPipelineStatisticFlags : int
-      {
-         InputAssemblyVerticesBit = 1 << 0,
-         InputAssemblyPrimitivesBit = 1 << 1,
-         VertexShaderInvocationsBit = 1 << 2,
-         GeometryShaderInvocationsBit = 1 << 3,
-         GeometryShaderPrimitivesBit = 1 << 4,
-         ClippingInvocationsBit = 1 << 5,
-         ClippingPrimitivesBit = 1 << 6,
-         FragmentShaderInvocationsBit = 1 << 7,
-         TessellationControlShaderPatchesBit = 1 << 8,
-         TessellationEvaluationShaderInvocationsBit = 1 << 9,
-         ComputeShaderInvocationsBit = 1 << 10,
-
-      };
-
-      [Flags]
-      public enum CommandPoolCreateFlags : int
-      {
-         TransientBit = 1 << 0,
-         ResetCommandBufferBit = 1 << 1,
-
-      };
-
-      [Flags]
-      public enum CommandPoolResetFlags : int
-      {
-         ReleaseResourcesBit = 1 << 0,
-
-      };
-
-      [Flags]
-      public enum DependencyFlags : int
-      {
-         ByRegionBit = 1 << 0,
-
-      };
-
-      [Flags]
-      public enum MemoryHeapFlags : int
-      {
-         DeviceLocalBit = 1 << 0,
-
-      };
-
-      [Flags]
-      public enum ImageUsageFlags : int
-      {
-         TransferSrcBit = 1 << 0,
-         TransferDstBit = 1 << 1,
-         SampledBit = 1 << 2,
-         StorageBit = 1 << 3,
-         ColorAttachmentBit = 1 << 4,
-         DepthStencilAttachmentBit = 1 << 5,
-         TransientAttachmentBit = 1 << 6,
-         InputAttachmentBit = 1 << 7,
-         //VK_NV_shading_rate_image
-         ShadingRateImageBitNv = 1 << 8,
-         //VK_EXT_fragment_density_map
-         FragmentDensityMapBitExt = 1 << 9,
-
-      };
-
-      [Flags]
-      public enum QueryControlFlags : int
-      {
-         PreciseBit = 1 << 0,
-
-      };
-
-      [Flags]
-      public enum SparseMemoryBindFlags : int
-      {
-         MetadataBit = 1 << 0,
-
-      };
-
-      [Flags]
-      public enum PeerMemoryFeatureFlags : int
-      {
-         CopySrcBit = 1 << 0,
-         CopyDstBit = 1 << 1,
-         GenericSrcBit = 1 << 2,
-         GenericDstBit = 1 << 3,
-
-      };
-
-      [Flags]
-      public enum FenceImportFlags : int
-      {
-         TemporaryBit = 1 << 0,
-
-      };
-
-      [Flags]
-      public enum MemoryPropertyFlags : int
-      {
-         DeviceLocalBit = 1 << 0,
-         HostVisibleBit = 1 << 1,
-         HostCoherentBit = 1 << 2,
-         HostCachedBit = 1 << 3,
-         LazilyAllocatedBit = 1 << 4,
-
-      };
-
-      [Flags]
-      public enum DeviceQueueCreateFlags : int
-      {
-
-      };
-
-      [Flags]
-      public enum ImageCreateFlags : int
-      {
-         SparseBindingBit = 1 << 0,
-         SparseResidencyBit = 1 << 1,
-         SparseAliasedBit = 1 << 2,
-         MutableFormatBit = 1 << 3,
-         CubeCompatibleBit = 1 << 4,
-         //VK_NV_corner_sampled_image
-         CornerSampledBitNv = 1 << 13,
-         //VK_EXT_sample_locations
-         SampleLocationsCompatibleDepthBitExt = 1 << 12,
-         //VK_EXT_fragment_density_map
-         SubsampledBitExt = 1 << 14,
-
-      };
-
-      [Flags]
-      public enum StencilFaceFlags : int
-      {
-         FrontBit = 1 << 0,
-         BackBit = 1 << 1,
-
-      };
-
-      [Flags]
-      public enum SemaphoreImportFlags : int
-      {
-         TemporaryBit = 1 << 0,
-
-      };
-
-      [Flags]
-      public enum SubpassDescriptionFlags : int
-      {
-         //VK_NVX_multiview_per_view_attributes
-         PerViewAttributesBitNvx = 1 << 0,
-         PerViewPositionXOnlyBitNvx = 1 << 1,
-
-      };
-
-      [Flags]
-      public enum ShaderStageFlags : int
-      {
-         VertexBit = 1 << 0,
-         TessellationControlBit = 1 << 1,
-         TessellationEvaluationBit = 1 << 2,
-         GeometryBit = 1 << 3,
-         FragmentBit = 1 << 4,
-         ComputeBit = 1 << 5,
-         //VK_NV_ray_tracing
-         RaygenBitNv = 1 << 8,
-         AnyHitBitNv = 1 << 9,
-         ClosestHitBitNv = 1 << 10,
-         MissBitNv = 1 << 11,
-         IntersectionBitNv = 1 << 12,
-         CallableBitNv = 1 << 13,
-         //VK_NV_mesh_shader
-         TaskBitNv = 1 << 6,
-         MeshBitNv = 1 << 7,
-
-      };
-
-      [Flags]
-      public enum QueryResultFlags : int
-      {
-         _64Bit = 1 << 0,
-         WaitBit = 1 << 1,
-         WithAvailabilityBit = 1 << 2,
-         PartialBit = 1 << 3,
-
-      };
-
-      [Flags]
-      public enum RenderPassCreateFlags : int
-      {
-
-      };
-
-      [Flags]
-      public enum BufferCreateFlags : int
-      {
-         SparseBindingBit = 1 << 0,
-         SparseResidencyBit = 1 << 1,
-         SparseAliasedBit = 1 << 2,
-         //VK_EXT_buffer_device_address
-         DeviceAddressCaptureReplayBitExt = 1 << 4,
-
-      };
-
-      [Flags]
-      public enum ExternalSemaphoreHandleTypeFlags : int
-      {
-         OpaqueFdBit = 1 << 0,
-         OpaqueWin32Bit = 1 << 1,
-         OpaqueWin32KmtBit = 1 << 2,
-         D3d12FenceBit = 1 << 3,
-         SyncFdBit = 1 << 4,
-
-      };
-
-      [Flags]
-      public enum SubgroupFeatureFlags : int
-      {
-         BasicBit = 1 << 0,
-         VoteBit = 1 << 1,
-         ArithmeticBit = 1 << 2,
-         BallotBit = 1 << 3,
-         ShuffleBit = 1 << 4,
-         ShuffleRelativeBit = 1 << 5,
-         ClusteredBit = 1 << 6,
-         QuadBit = 1 << 7,
-         //VK_NV_shader_subgroup_partitioned
-         PartitionedBitNv = 1 << 8,
-
-      };
-
+      
       [Flags]
       public enum FormatFeatureFlags : int
-      {
-         SampledImageBit = 1 << 0,
-         StorageImageBit = 1 << 1,
-         StorageImageAtomicBit = 1 << 2,
-         UniformTexelBufferBit = 1 << 3,
-         StorageTexelBufferBit = 1 << 4,
-         StorageTexelBufferAtomicBit = 1 << 5,
-         VertexBufferBit = 1 << 6,
-         ColorAttachmentBit = 1 << 7,
-         ColorAttachmentBlendBit = 1 << 8,
-         DepthStencilAttachmentBit = 1 << 9,
-         BlitSrcBit = 1 << 10,
-         BlitDstBit = 1 << 11,
-         SampledImageFilterLinearBit = 1 << 12,
-         //VK_IMG_filter_cubic
-         SampledImageFilterCubicBitImg = 1 << 13,
-         //VK_EXT_sampler_filter_minmax
-         SampledImageFilterMinmaxBitExt = 1 << 16,
-         //VK_EXT_fragment_density_map
-         FragmentDensityMapBitExt = 1 << 24,
-
+      {  
+          FormatFeatureSampledImageBit =  1 << 0,
+          FormatFeatureStorageImageBit =  1 << 1,
+          FormatFeatureStorageImageAtomicBit =  1 << 2,
+          FormatFeatureUniformTexelBufferBit =  1 << 3,
+          FormatFeatureStorageTexelBufferBit =  1 << 4,
+          FormatFeatureStorageTexelBufferAtomicBit =  1 << 5,
+          FormatFeatureVertexBufferBit =  1 << 6,
+          FormatFeatureColorAttachmentBit =  1 << 7,
+          FormatFeatureColorAttachmentBlendBit =  1 << 8,
+          FormatFeatureDepthStencilAttachmentBit =  1 << 9,
+          FormatFeatureBlitSrcBit =  1 << 10,
+          FormatFeatureBlitDstBit =  1 << 11,
+          FormatFeatureSampledImageFilterLinearBit =  1 << 12,
+          FormatFeatureTransferSrcBit =  1 << 14,
+          FormatFeatureTransferDstBit =  1 << 15,
+          FormatFeatureMidpointChromaSamplesBit =  1 << 17,
+          FormatFeatureSampledImageYcbcrConversionLinearFilterBit =  1 << 18,
+          FormatFeatureSampledImageYcbcrConversionSeparateReconstructionFilterBit =  1 << 19,
+          FormatFeatureSampledImageYcbcrConversionChromaReconstructionExplicitBit =  1 << 20,
+          FormatFeatureSampledImageYcbcrConversionChromaReconstructionExplicitForceableBit =  1 << 21,
+          FormatFeatureDisjointBit =  1 << 22,
+          FormatFeatureCositedChromaSamplesBit =  1 << 23,
+          //VK_IMG_filter_cubic
+          FormatFeatureSampledImageFilterCubicBitImg =  1 << 13,
+          //VK_EXT_sampler_filter_minmax
+          FormatFeatureSampledImageFilterMinmaxBitExt =  1 << 16,
+          //VK_EXT_fragment_density_map
+          FormatFeatureFragmentDensityMapBitExt =  1 << 24,
       };
-
+      
       [Flags]
-      public enum ColorComponentFlags : int
-      {
-         RBit = 1 << 0,
-         GBit = 1 << 1,
-         BBit = 1 << 2,
-         ABit = 1 << 3,
-
+      public enum ImageUsageFlags : int
+      {  
+          ImageUsageTransferSrcBit =  1 << 0,
+          ImageUsageTransferDstBit =  1 << 1,
+          ImageUsageSampledBit =  1 << 2,
+          ImageUsageStorageBit =  1 << 3,
+          ImageUsageColorAttachmentBit =  1 << 4,
+          ImageUsageDepthStencilAttachmentBit =  1 << 5,
+          ImageUsageTransientAttachmentBit =  1 << 6,
+          ImageUsageInputAttachmentBit =  1 << 7,
+          //VK_NV_shading_rate_image
+          ImageUsageShadingRateImageBitNv =  1 << 8,
+          //VK_EXT_fragment_density_map
+          ImageUsageFragmentDensityMapBitExt =  1 << 9,
       };
-
+      
       [Flags]
-      public enum ImageViewCreateFlags : int
-      {
-         //VK_EXT_fragment_density_map
-         FragmentDensityMapDynamicBitExt = 1 << 0,
-
+      public enum ImageCreateFlags : int
+      {  
+          ImageCreateSparseBindingBit =  1 << 0,
+          ImageCreateSparseResidencyBit =  1 << 1,
+          ImageCreateSparseAliasedBit =  1 << 2,
+          ImageCreateMutableFormatBit =  1 << 3,
+          ImageCreateCubeCompatibleBit =  1 << 4,
+          ImageCreateAliasBit =  1 << 10,
+          ImageCreateSplitInstanceBindRegionsBit =  1 << 6,
+          ImageCreate2dArrayCompatibleBit =  1 << 5,
+          ImageCreateBlockTexelViewCompatibleBit =  1 << 7,
+          ImageCreateExtendedUsageBit =  1 << 8,
+          ImageCreateProtectedBit =  1 << 11,
+          ImageCreateDisjointBit =  1 << 9,
+          //VK_NV_corner_sampled_image
+          ImageCreateCornerSampledBitNv =  1 << 13,
+          //VK_EXT_sample_locations
+          ImageCreateSampleLocationsCompatibleDepthBitExt =  1 << 12,
+          //VK_EXT_fragment_density_map
+          ImageCreateSubsampledBitExt =  1 << 14,
       };
-
+      
       [Flags]
-      public enum ExternalFenceHandleTypeFlags : int
-      {
-         OpaqueFdBit = 1 << 0,
-         OpaqueWin32Bit = 1 << 1,
-         OpaqueWin32KmtBit = 1 << 2,
-         SyncFdBit = 1 << 3,
-
+      public enum SampleCountFlags : int
+      {  
+          SampleCount1Bit =  1 << 0,
+          SampleCount2Bit =  1 << 1,
+          SampleCount4Bit =  1 << 2,
+          SampleCount8Bit =  1 << 3,
+          SampleCount16Bit =  1 << 4,
+          SampleCount32Bit =  1 << 5,
+          SampleCount64Bit =  1 << 6,
       };
-
+      
       [Flags]
-      public enum MemoryAllocateFlags : int
-      {
-         DeviceMaskBit = 1 << 0,
-
+      public enum QueueFlags : int
+      {  
+          QueueGraphicsBit =  1 << 0,
+          QueueComputeBit =  1 << 1,
+          QueueTransferBit =  1 << 2,
+          QueueSparseBindingBit =  1 << 3,
+          QueueProtectedBit =  1 << 4,
       };
-
+      
       [Flags]
-      public enum ExternalSemaphoreFeatureFlags : int
-      {
-         ExportableBit = 1 << 0,
-         ImportableBit = 1 << 1,
-
+      public enum MemoryPropertyFlags : int
+      {  
+          MemoryPropertyDeviceLocalBit =  1 << 0,
+          MemoryPropertyHostVisibleBit =  1 << 1,
+          MemoryPropertyHostCoherentBit =  1 << 2,
+          MemoryPropertyHostCachedBit =  1 << 3,
+          MemoryPropertyLazilyAllocatedBit =  1 << 4,
+          MemoryPropertyProtectedBit =  1 << 5,
       };
-
+      
       [Flags]
-      public enum DescriptorBindingFlagsEXT : int
-      {
-         UpdateAfterBindBitExt = 1 << 0,
-         UpdateUnusedWhilePendingBitExt = 1 << 1,
-         PartiallyBoundBitExt = 1 << 2,
-         VariableDescriptorCountBitExt = 1 << 3,
-
+      public enum MemoryHeapFlags : int
+      {  
+          MemoryHeapDeviceLocalBit =  1 << 0,
+          MemoryHeapMultiInstanceBit =  1 << 1,
       };
-
+      
       [Flags]
-      public enum AttachmentDescriptionFlags : int
-      {
-         MayAliasBit = 1 << 0,
-
+      public enum DeviceCreateFlags : int
+      {  
       };
-
+      
+      [Flags]
+      public enum DeviceQueueCreateFlags : int
+      {  
+          DeviceQueueCreateProtectedBit =  1 << 0,
+      };
+      
+      [Flags]
+      public enum PipelineStageFlags : int
+      {  
+          PipelineStageTopOfPipeBit =  1 << 0,
+          PipelineStageDrawIndirectBit =  1 << 1,
+          PipelineStageVertexInputBit =  1 << 2,
+          PipelineStageVertexShaderBit =  1 << 3,
+          PipelineStageTessellationControlShaderBit =  1 << 4,
+          PipelineStageTessellationEvaluationShaderBit =  1 << 5,
+          PipelineStageGeometryShaderBit =  1 << 6,
+          PipelineStageFragmentShaderBit =  1 << 7,
+          PipelineStageEarlyFragmentTestsBit =  1 << 8,
+          PipelineStageLateFragmentTestsBit =  1 << 9,
+          PipelineStageColorAttachmentOutputBit =  1 << 10,
+          PipelineStageComputeShaderBit =  1 << 11,
+          PipelineStageTransferBit =  1 << 12,
+          PipelineStageBottomOfPipeBit =  1 << 13,
+          PipelineStageHostBit =  1 << 14,
+          PipelineStageAllGraphicsBit =  1 << 15,
+          PipelineStageAllCommandsBit =  1 << 16,
+          //VK_EXT_transform_feedback
+          PipelineStageTransformFeedbackBitExt =  1 << 24,
+          //VK_EXT_conditional_rendering
+          PipelineStageConditionalRenderingBitExt =  1 << 18,
+          //VK_NVX_device_generated_commands
+          PipelineStageCommandProcessBitNvx =  1 << 17,
+          //VK_NV_shading_rate_image
+          PipelineStageShadingRateImageBitNv =  1 << 22,
+          //VK_NV_ray_tracing
+          PipelineStageRayTracingShaderBitNv =  1 << 21,
+          PipelineStageAccelerationStructureBuildBitNv =  1 << 25,
+          //VK_NV_mesh_shader
+          PipelineStageTaskShaderBitNv =  1 << 19,
+          PipelineStageMeshShaderBitNv =  1 << 20,
+          //VK_EXT_fragment_density_map
+          PipelineStageFragmentDensityProcessBitExt =  1 << 23,
+      };
+      
+      [Flags]
+      public enum MemoryMapFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum ImageAspectFlags : int
+      {  
+          ImageAspectColorBit =  1 << 0,
+          ImageAspectDepthBit =  1 << 1,
+          ImageAspectStencilBit =  1 << 2,
+          ImageAspectMetadataBit =  1 << 3,
+          ImageAspectPlane0Bit =  1 << 4,
+          ImageAspectPlane1Bit =  1 << 5,
+          ImageAspectPlane2Bit =  1 << 6,
+          //VK_EXT_image_drm_format_modifier
+          ImageAspectMemoryPlane0BitExt =  1 << 7,
+          ImageAspectMemoryPlane1BitExt =  1 << 8,
+          ImageAspectMemoryPlane2BitExt =  1 << 9,
+          ImageAspectMemoryPlane3BitExt =  1 << 10,
+      };
+      
       [Flags]
       public enum SparseImageFormatFlags : int
-      {
-         SingleMiptailBit = 1 << 0,
-         AlignedMipSizeBit = 1 << 1,
-         NonstandardBlockSizeBit = 1 << 2,
-
+      {  
+          SparseImageFormatSingleMiptailBit =  1 << 0,
+          SparseImageFormatAlignedMipSizeBit =  1 << 1,
+          SparseImageFormatNonstandardBlockSizeBit =  1 << 2,
       };
-
-
+      
+      [Flags]
+      public enum SparseMemoryBindFlags : int
+      {  
+          SparseMemoryBindMetadataBit =  1 << 0,
+      };
+      
+      [Flags]
+      public enum FenceCreateFlags : int
+      {  
+          FenceCreateSignaledBit =  1 << 0,
+      };
+      
+      [Flags]
+      public enum SemaphoreCreateFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum EventCreateFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum QueryPoolCreateFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum QueryPipelineStatisticFlags : int
+      {  
+          QueryPipelineStatisticInputAssemblyVerticesBit =  1 << 0,
+          QueryPipelineStatisticInputAssemblyPrimitivesBit =  1 << 1,
+          QueryPipelineStatisticVertexShaderInvocationsBit =  1 << 2,
+          QueryPipelineStatisticGeometryShaderInvocationsBit =  1 << 3,
+          QueryPipelineStatisticGeometryShaderPrimitivesBit =  1 << 4,
+          QueryPipelineStatisticClippingInvocationsBit =  1 << 5,
+          QueryPipelineStatisticClippingPrimitivesBit =  1 << 6,
+          QueryPipelineStatisticFragmentShaderInvocationsBit =  1 << 7,
+          QueryPipelineStatisticTessellationControlShaderPatchesBit =  1 << 8,
+          QueryPipelineStatisticTessellationEvaluationShaderInvocationsBit =  1 << 9,
+          QueryPipelineStatisticComputeShaderInvocationsBit =  1 << 10,
+      };
+      
+      [Flags]
+      public enum QueryResultFlags : int
+      {  
+          QueryResult64Bit =  1 << 0,
+          QueryResultWaitBit =  1 << 1,
+          QueryResultWithAvailabilityBit =  1 << 2,
+          QueryResultPartialBit =  1 << 3,
+      };
+      
+      [Flags]
+      public enum BufferCreateFlags : int
+      {  
+          BufferCreateSparseBindingBit =  1 << 0,
+          BufferCreateSparseResidencyBit =  1 << 1,
+          BufferCreateSparseAliasedBit =  1 << 2,
+          BufferCreateProtectedBit =  1 << 3,
+          //VK_EXT_buffer_device_address
+          BufferCreateDeviceAddressCaptureReplayBitExt =  1 << 4,
+      };
+      
+      [Flags]
+      public enum BufferUsageFlags : int
+      {  
+          BufferUsageTransferSrcBit =  1 << 0,
+          BufferUsageTransferDstBit =  1 << 1,
+          BufferUsageUniformTexelBufferBit =  1 << 2,
+          BufferUsageStorageTexelBufferBit =  1 << 3,
+          BufferUsageUniformBufferBit =  1 << 4,
+          BufferUsageStorageBufferBit =  1 << 5,
+          BufferUsageIndexBufferBit =  1 << 6,
+          BufferUsageVertexBufferBit =  1 << 7,
+          BufferUsageIndirectBufferBit =  1 << 8,
+          //VK_EXT_transform_feedback
+          BufferUsageTransformFeedbackBufferBitExt =  1 << 11,
+          BufferUsageTransformFeedbackCounterBufferBitExt =  1 << 12,
+          //VK_EXT_conditional_rendering
+          BufferUsageConditionalRenderingBitExt =  1 << 9,
+          //VK_NV_ray_tracing
+          BufferUsageRayTracingBitNv =  1 << 10,
+          //VK_EXT_buffer_device_address
+          BufferUsageShaderDeviceAddressBitExt =  1 << 17,
+      };
+      
+      [Flags]
+      public enum BufferViewCreateFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum ImageViewCreateFlags : int
+      {  
+          //VK_EXT_fragment_density_map
+          ImageViewCreateFragmentDensityMapDynamicBitExt =  1 << 0,
+      };
+      
+      [Flags]
+      public enum ShaderModuleCreateFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum PipelineCacheCreateFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum PipelineCreateFlags : int
+      {  
+          PipelineCreateDisableOptimizationBit =  1 << 0,
+          PipelineCreateAllowDerivativesBit =  1 << 1,
+          PipelineCreateDerivativeBit =  1 << 2,
+          PipelineCreateViewIndexFromDeviceIndexBit =  1 << 3,
+          PipelineCreateDispatchBase =  1 << 4,
+          //VK_NV_ray_tracing
+          PipelineCreateDeferCompileBitNv =  1 << 5,
+      };
+      
+      [Flags]
+      public enum PipelineShaderStageCreateFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum ShaderStageFlags : int
+      {  
+          ShaderStageVertexBit =  1 << 0,
+          ShaderStageTessellationControlBit =  1 << 1,
+          ShaderStageTessellationEvaluationBit =  1 << 2,
+          ShaderStageGeometryBit =  1 << 3,
+          ShaderStageFragmentBit =  1 << 4,
+          ShaderStageComputeBit =  1 << 5,
+          //VK_NV_ray_tracing
+          ShaderStageRaygenBitNv =  1 << 8,
+          ShaderStageAnyHitBitNv =  1 << 9,
+          ShaderStageClosestHitBitNv =  1 << 10,
+          ShaderStageMissBitNv =  1 << 11,
+          ShaderStageIntersectionBitNv =  1 << 12,
+          ShaderStageCallableBitNv =  1 << 13,
+          //VK_NV_mesh_shader
+          ShaderStageTaskBitNv =  1 << 6,
+          ShaderStageMeshBitNv =  1 << 7,
+      };
+      
+      [Flags]
+      public enum PipelineVertexInputStateCreateFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum PipelineInputAssemblyStateCreateFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum PipelineTessellationStateCreateFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum PipelineViewportStateCreateFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum PipelineRasterizationStateCreateFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum CullModeFlags : int
+      {  
+          CullModeFrontBit =  1 << 0,
+          CullModeBackBit =  1 << 1,
+      };
+      
+      [Flags]
+      public enum PipelineMultisampleStateCreateFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum PipelineDepthStencilStateCreateFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum PipelineColorBlendStateCreateFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum ColorComponentFlags : int
+      {  
+          ColorComponentRBit =  1 << 0,
+          ColorComponentGBit =  1 << 1,
+          ColorComponentBBit =  1 << 2,
+          ColorComponentABit =  1 << 3,
+      };
+      
+      [Flags]
+      public enum PipelineDynamicStateCreateFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum PipelineLayoutCreateFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum SamplerCreateFlags : int
+      {  
+          //VK_EXT_fragment_density_map
+          SamplerCreateSubsampledBitExt =  1 << 0,
+          SamplerCreateSubsampledCoarseReconstructionBitExt =  1 << 1,
+      };
+      
+      [Flags]
+      public enum DescriptorSetLayoutCreateFlags : int
+      {  
+          //VK_KHR_push_descriptor
+          DescriptorSetLayoutCreatePushDescriptorBitKhr =  1 << 0,
+          //VK_EXT_descriptor_indexing
+          DescriptorSetLayoutCreateUpdateAfterBindPoolBitExt =  1 << 1,
+      };
+      
+      [Flags]
+      public enum DescriptorPoolCreateFlags : int
+      {  
+          DescriptorPoolCreateFreeDescriptorSetBit =  1 << 0,
+          //VK_EXT_descriptor_indexing
+          DescriptorPoolCreateUpdateAfterBindBitExt =  1 << 1,
+      };
+      
+      [Flags]
+      public enum DescriptorPoolResetFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum FramebufferCreateFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum RenderPassCreateFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum AttachmentDescriptionFlags : int
+      {  
+          AttachmentDescriptionMayAliasBit =  1 << 0,
+      };
+      
+      [Flags]
+      public enum SubpassDescriptionFlags : int
+      {  
+          //VK_NVX_multiview_per_view_attributes
+          SubpassDescriptionPerViewAttributesBitNvx =  1 << 0,
+          SubpassDescriptionPerViewPositionXOnlyBitNvx =  1 << 1,
+      };
+      
+      [Flags]
+      public enum AccessFlags : int
+      {  
+          AccessIndirectCommandReadBit =  1 << 0,
+          AccessIndexReadBit =  1 << 1,
+          AccessVertexAttributeReadBit =  1 << 2,
+          AccessUniformReadBit =  1 << 3,
+          AccessInputAttachmentReadBit =  1 << 4,
+          AccessShaderReadBit =  1 << 5,
+          AccessShaderWriteBit =  1 << 6,
+          AccessColorAttachmentReadBit =  1 << 7,
+          AccessColorAttachmentWriteBit =  1 << 8,
+          AccessDepthStencilAttachmentReadBit =  1 << 9,
+          AccessDepthStencilAttachmentWriteBit =  1 << 10,
+          AccessTransferReadBit =  1 << 11,
+          AccessTransferWriteBit =  1 << 12,
+          AccessHostReadBit =  1 << 13,
+          AccessHostWriteBit =  1 << 14,
+          AccessMemoryReadBit =  1 << 15,
+          AccessMemoryWriteBit =  1 << 16,
+          //VK_EXT_transform_feedback
+          AccessTransformFeedbackWriteBitExt =  1 << 25,
+          AccessTransformFeedbackCounterReadBitExt =  1 << 26,
+          AccessTransformFeedbackCounterWriteBitExt =  1 << 27,
+          //VK_EXT_conditional_rendering
+          AccessConditionalRenderingReadBitExt =  1 << 20,
+          //VK_NVX_device_generated_commands
+          AccessCommandProcessReadBitNvx =  1 << 17,
+          AccessCommandProcessWriteBitNvx =  1 << 18,
+          //VK_EXT_blend_operation_advanced
+          AccessColorAttachmentReadNoncoherentBitExt =  1 << 19,
+          //VK_NV_shading_rate_image
+          AccessShadingRateImageReadBitNv =  1 << 23,
+          //VK_NV_ray_tracing
+          AccessAccelerationStructureReadBitNv =  1 << 21,
+          AccessAccelerationStructureWriteBitNv =  1 << 22,
+          //VK_EXT_fragment_density_map
+          AccessFragmentDensityMapReadBitExt =  1 << 24,
+      };
+      
+      [Flags]
+      public enum DependencyFlags : int
+      {  
+          DependencyByRegionBit =  1 << 0,
+          DependencyDeviceGroupBit =  1 << 2,
+          DependencyViewLocalBit =  1 << 1,
+      };
+      
+      [Flags]
+      public enum CommandPoolCreateFlags : int
+      {  
+          CommandPoolCreateTransientBit =  1 << 0,
+          CommandPoolCreateResetCommandBufferBit =  1 << 1,
+          CommandPoolCreateProtectedBit =  1 << 2,
+      };
+      
+      [Flags]
+      public enum CommandPoolResetFlags : int
+      {  
+          CommandPoolResetReleaseResourcesBit =  1 << 0,
+      };
+      
+      [Flags]
+      public enum CommandBufferUsageFlags : int
+      {  
+          CommandBufferUsageOneTimeSubmitBit =  1 << 0,
+          CommandBufferUsageRenderPassContinueBit =  1 << 1,
+          CommandBufferUsageSimultaneousUseBit =  1 << 2,
+      };
+      
+      [Flags]
+      public enum QueryControlFlags : int
+      {  
+          QueryControlPreciseBit =  1 << 0,
+      };
+      
+      [Flags]
+      public enum CommandBufferResetFlags : int
+      {  
+          CommandBufferResetReleaseResourcesBit =  1 << 0,
+      };
+      
+      [Flags]
+      public enum StencilFaceFlags : int
+      {  
+          StencilFaceFrontBit =  1 << 0,
+          StencilFaceBackBit =  1 << 1,
+      };
+      
+      [Flags]
+      public enum SubgroupFeatureFlags : int
+      {  
+          SubgroupFeatureBasicBit =  1 << 0,
+          SubgroupFeatureVoteBit =  1 << 1,
+          SubgroupFeatureArithmeticBit =  1 << 2,
+          SubgroupFeatureBallotBit =  1 << 3,
+          SubgroupFeatureShuffleBit =  1 << 4,
+          SubgroupFeatureShuffleRelativeBit =  1 << 5,
+          SubgroupFeatureClusteredBit =  1 << 6,
+          SubgroupFeatureQuadBit =  1 << 7,
+          //VK_NV_shader_subgroup_partitioned
+          SubgroupFeaturePartitionedBitNv =  1 << 8,
+      };
+      
+      [Flags]
+      public enum PeerMemoryFeatureFlags : int
+      {  
+          PeerMemoryFeatureCopySrcBit =  1 << 0,
+          PeerMemoryFeatureCopyDstBit =  1 << 1,
+          PeerMemoryFeatureGenericSrcBit =  1 << 2,
+          PeerMemoryFeatureGenericDstBit =  1 << 3,
+      };
+      
+      [Flags]
+      public enum MemoryAllocateFlags : int
+      {  
+          MemoryAllocateDeviceMaskBit =  1 << 0,
+      };
+      
+      [Flags]
+      public enum CommandPoolTrimFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum DescriptorUpdateTemplateCreateFlags : int
+      {  
+      };
+      
+      [Flags]
+      public enum ExternalMemoryHandleTypeFlags : int
+      {  
+          ExternalMemoryHandleTypeOpaqueFdBit =  1 << 0,
+          ExternalMemoryHandleTypeOpaqueWin32Bit =  1 << 1,
+          ExternalMemoryHandleTypeOpaqueWin32KmtBit =  1 << 2,
+          ExternalMemoryHandleTypeD3d11TextureBit =  1 << 3,
+          ExternalMemoryHandleTypeD3d11TextureKmtBit =  1 << 4,
+          ExternalMemoryHandleTypeD3d12HeapBit =  1 << 5,
+          ExternalMemoryHandleTypeD3d12ResourceBit =  1 << 6,
+          //VK_EXT_external_memory_dma_buf
+          ExternalMemoryHandleTypeDmaBufBitExt =  1 << 9,
+          //VK_ANDROID_external_memory_android_hardware_buffer
+          ExternalMemoryHandleTypeAndroidHardwareBufferBitAndroid =  1 << 10,
+          //VK_EXT_external_memory_host
+          ExternalMemoryHandleTypeHostAllocationBitExt =  1 << 7,
+          ExternalMemoryHandleTypeHostMappedForeignMemoryBitExt =  1 << 8,
+      };
+      
+      [Flags]
+      public enum ExternalMemoryFeatureFlags : int
+      {  
+          ExternalMemoryFeatureDedicatedOnlyBit =  1 << 0,
+          ExternalMemoryFeatureExportableBit =  1 << 1,
+          ExternalMemoryFeatureImportableBit =  1 << 2,
+      };
+      
+      [Flags]
+      public enum ExternalFenceHandleTypeFlags : int
+      {  
+          ExternalFenceHandleTypeOpaqueFdBit =  1 << 0,
+          ExternalFenceHandleTypeOpaqueWin32Bit =  1 << 1,
+          ExternalFenceHandleTypeOpaqueWin32KmtBit =  1 << 2,
+          ExternalFenceHandleTypeSyncFdBit =  1 << 3,
+      };
+      
+      [Flags]
+      public enum ExternalFenceFeatureFlags : int
+      {  
+          ExternalFenceFeatureExportableBit =  1 << 0,
+          ExternalFenceFeatureImportableBit =  1 << 1,
+      };
+      
+      [Flags]
+      public enum FenceImportFlags : int
+      {  
+          FenceImportTemporaryBit =  1 << 0,
+      };
+      
+      [Flags]
+      public enum SemaphoreImportFlags : int
+      {  
+          SemaphoreImportTemporaryBit =  1 << 0,
+      };
+      
+      [Flags]
+      public enum ExternalSemaphoreHandleTypeFlags : int
+      {  
+          ExternalSemaphoreHandleTypeOpaqueFdBit =  1 << 0,
+          ExternalSemaphoreHandleTypeOpaqueWin32Bit =  1 << 1,
+          ExternalSemaphoreHandleTypeOpaqueWin32KmtBit =  1 << 2,
+          ExternalSemaphoreHandleTypeD3d12FenceBit =  1 << 3,
+          ExternalSemaphoreHandleTypeSyncFdBit =  1 << 4,
+      };
+      
+      [Flags]
+      public enum ExternalSemaphoreFeatureFlags : int
+      {  
+          ExternalSemaphoreFeatureExportableBit =  1 << 0,
+          ExternalSemaphoreFeatureImportableBit =  1 << 1,
+      };
+      
       #endregion
    }
 }

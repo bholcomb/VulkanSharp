@@ -11,18 +11,19 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceInlineUniformBlockFeaturesEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public Bool32 inlineUniformBlock;
          public Bool32 descriptorBindingInlineUniformBlockUpdateAfterBind;
       };
@@ -31,42 +32,33 @@ namespace Vulkan
       public struct PhysicalDeviceInlineUniformBlockPropertiesEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public UInt32 maxInlineUniformBlockSize;
          public UInt32 maxPerStageDescriptorInlineUniformBlocks;
-         public UInt32 maxDescriptorSetUpdateAfterBindInlineUniformBlocks;
-         public UInt32 maxDescriptorSetInlineUniformBlocks;
          public UInt32 maxPerStageDescriptorUpdateAfterBindInlineUniformBlocks;
+         public UInt32 maxDescriptorSetInlineUniformBlocks;
+         public UInt32 maxDescriptorSetUpdateAfterBindInlineUniformBlocks;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct WriteDescriptorSetInlineUniformBlockEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public UInt32 dataSize;
-         public IntPtr pData;
+         public void pData;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DescriptorPoolInlineUniformBlockCreateInfoEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public UInt32 maxInlineUniformBlockBindings;
       };
       
       #endregion
 
-      #region functions
-      //external functions we need to get from the device
-      
-      //delegate definitions
-      
-      //delegate instances
-      #endregion
-
-      #region interop
-      #endregion
+      //no functions
    }
 }

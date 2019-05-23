@@ -11,23 +11,23 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
 
-      #region structs
-      #endregion
+      //no bitfields
+
+      //no structs
 
       #region functions
       //external functions we need to get from the device
-      //void vkCmdDrawIndirectCountKHR(VkCommandBuffer  commandBuffer, VkBuffer  buffer, VkDeviceSize  offset, VkBuffer  countBuffer, VkDeviceSize  countBufferOffset, uint32_t  maxDrawCount, uint32_t  stride);
-      //void vkCmdDrawIndexedIndirectCountKHR(VkCommandBuffer  commandBuffer, VkBuffer  buffer, VkDeviceSize  offset, VkBuffer  countBuffer, VkDeviceSize  countBufferOffset, uint32_t  maxDrawCount, uint32_t  stride);
+      //void vkCmdDrawIndirectCountKHR(VkCommandBuffer commandBuffer, VkBuffer buffer, VkDeviceSize offset, VkBuffer countBuffer, VkDeviceSize countBufferOffset, uint32_t maxDrawCount, uint32_t stride);
+      //void vkCmdDrawIndexedIndirectCountKHR(VkCommandBuffer commandBuffer, VkBuffer buffer, VkDeviceSize offset, VkBuffer countBuffer, VkDeviceSize countBufferOffset, uint32_t maxDrawCount, uint32_t stride);
       
       //delegate definitions
-      public delegate void CmdDrawIndirectCountKHRDelegate(CommandBuffer commandBuffer, Buffer buffer, DeviceSize offset, Buffer countBuffer, DeviceSize countBufferOffset, UInt32 maxDrawCount, UInt32 strides);
-      public delegate void CmdDrawIndexedIndirectCountKHRDelegate(CommandBuffer commandBuffer, Buffer buffer, DeviceSize offset, Buffer countBuffer, DeviceSize countBufferOffset, UInt32 maxDrawCount, UInt32 strides);
+      public delegate void CmdDrawIndirectCountKHRDelegate(CommandBuffer commandBuffer, Buffer buffer, DeviceSize offset, Buffer countBuffer, DeviceSize countBufferOffset, UInt32 maxDrawCount, UInt32 stride);
+      public delegate void CmdDrawIndexedIndirectCountKHRDelegate(CommandBuffer commandBuffer, Buffer buffer, DeviceSize offset, Buffer countBuffer, DeviceSize countBufferOffset, UInt32 maxDrawCount, UInt32 stride);
       
       //delegate instances
       public static CmdDrawIndirectCountKHRDelegate CmdDrawIndirectCountKHR;
@@ -35,7 +35,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class KHR_draw_indirect_count
+      public static class VK_KHR_draw_indirect_count
       {
          public static void init(VK.Device device)
          {

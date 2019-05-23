@@ -6,38 +6,14 @@ using System.ComponentModel;
 namespace Vulkan
 {
    public static partial class VK
-   {
-      #region handles
-      [StructLayout(LayoutKind.Sequential)] public struct Instance { public IntPtr native; }
-      [StructLayout(LayoutKind.Sequential)] public struct PhysicalDevice { public IntPtr native; }
-      [StructLayout(LayoutKind.Sequential)] public struct Device { public IntPtr native; }
-      [StructLayout(LayoutKind.Sequential)] public struct Queue { public IntPtr native; }
-      [StructLayout(LayoutKind.Sequential)] public struct Semaphore { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct CommandBuffer { public IntPtr native; }
-      [StructLayout(LayoutKind.Sequential)] public struct Fence { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct DeviceMemory { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct Buffer { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct Image { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct Event { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct QueryPool { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct BufferView { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct ImageView { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct ShaderModule { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct PipelineCache { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct PipelineLayout { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct RenderPass { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct Pipeline { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct DescriptorSetLayout { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct Sampler { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct DescriptorPool { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct DescriptorSet { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct Framebuffer { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct CommandPool { public UInt64 native; }
-      //vulkan 1.1
-      [StructLayout(LayoutKind.Sequential)] public struct SamplerYcbcrConversion { public UInt64 native; }
-      [StructLayout(LayoutKind.Sequential)] public struct DescriptorUpdateTemplate { public UInt64 native; }
+	{
+		public const string VulkanLibrary = "vulkan-1.dll";
+		static DllLoader theDll;
 
-      #endregion
+		static VK()
+		{
+			theDll = new DllLoader(VulkanLibrary);
+		}
 
       #region allocation callback functions
       [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -55,8 +31,33 @@ namespace Vulkan
       [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
       public delegate IntPtr InternalFreeNotification(IntPtr userData, UInt32 size, InternalAllocationType allocationType, SystemAllocationScope allocationScope);
       #endregion
-   }
 
+		#region defines
+		public static Semaphore NULL_SEMAPHORE = new Semaphore();
+		public static Fence NULL_FENCE = new Fence();
+
+		public const float LOD_CLAMP_NONE = 1000.0f;
+		public const UInt32 REMAINING_MIP_LEVELS = (~0U);
+		public const UInt32 REMAINING_ARRAY_LAYERS = (~0U);
+		public const UInt64 WHOLE_SIZE = (~0UL);
+		public const UInt32 ATTACHMENT_UNUSED = (~0U);
+		public const UInt32 TRUE = 1;
+		public const UInt32 FALSE = 0;
+		public const UInt32 QUEUE_FAMILY_IGNORED = (~0U);
+		public const UInt32 SUBPASS_EXTERNAL = (~0U);
+		public const UInt32 MAX_PHYSICAL_DEVICE_NAME_SIZE = 256;
+		public const UInt32 UUID_SIZE = 16;
+		public const UInt32 MAX_MEMORY_TYPES = 32;
+		public const UInt32 MAX_MEMORY_HEAPS = 16;
+		public const UInt32 MAX_EXTENSION_NAME_SIZE = 256;
+		public const UInt32 MAX_DESCRIPTION_SIZE = 256;
+      //vulkan 1.1
+      public const UInt32 MAX_DEVICE_GROUP_SIZE = 32;
+      public const UInt32 LUID_SIZE = 8;
+      public const UInt32 QUEUE_FAMILY_EXTERNAL = (~0U - 1);
+      #endregion
+   }
+   
 	#region Extension and Layer Names
 	public partial class InstanceExtensions
 	{
@@ -238,43 +239,4 @@ namespace Vulkan
 	};
 
 	#endregion
-
-
-	public static partial class VK
-	{
-		public const string VulkanLibrary = "vulkan-1.dll";
-		static DllLoader theDll;
-
-		static VK()
-		{
-			theDll = new DllLoader(VulkanLibrary);
-		}
-
-
-		#region defines
-		public static Semaphore NULL_SEMAPHORE = new Semaphore();
-		public static Fence NULL_FENCE = new Fence();
-
-		public const float LOD_CLAMP_NONE = 1000.0f;
-		public const UInt32 REMAINING_MIP_LEVELS = (~0U);
-		public const UInt32 REMAINING_ARRAY_LAYERS = (~0U);
-		public const UInt64 WHOLE_SIZE = (~0UL);
-		public const UInt32 ATTACHMENT_UNUSED = (~0U);
-		public const UInt32 TRUE = 1;
-		public const UInt32 FALSE = 0;
-		public const UInt32 QUEUE_FAMILY_IGNORED = (~0U);
-		public const UInt32 SUBPASS_EXTERNAL = (~0U);
-		public const UInt32 MAX_PHYSICAL_DEVICE_NAME_SIZE = 256;
-		public const UInt32 UUID_SIZE = 16;
-		public const UInt32 MAX_MEMORY_TYPES = 32;
-		public const UInt32 MAX_MEMORY_HEAPS = 16;
-		public const UInt32 MAX_EXTENSION_NAME_SIZE = 256;
-		public const UInt32 MAX_DESCRIPTION_SIZE = 256;
-      //vulkan 1.1
-      public const UInt32 MAX_DEVICE_GROUP_SIZE = 32;
-      public const UInt32 LUID_SIZE = 8;
-      public const UInt32 QUEUE_FAMILY_EXTERNAL = (~0U - 1);
-      #endregion
-   }
-
 }

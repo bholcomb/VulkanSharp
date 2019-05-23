@@ -11,18 +11,20 @@ namespace Vulkan
    
    public static partial class VK
    {
+      //no handles
+      
+
       #region enums
       public enum ShaderInfoTypeAMD : int
       {  
          StatisticsAmd = 0,
          BinaryAmd = 1,
-         DisassemblyAmd = 2,     
+         DisassemblyAmd = 2,
       };
       
       #endregion
 
-      #region flags
-      #endregion
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -36,7 +38,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct ShaderStatisticsInfoAMD 
+      public struct ShaderStatisticsInfoAMD 
       {
          public ShaderStageFlags shaderStageMask;
          public ShaderResourceUsageAMD resourceUsage;
@@ -44,24 +46,24 @@ namespace Vulkan
          public UInt32 numPhysicalSgprs;
          public UInt32 numAvailableVgprs;
          public UInt32 numAvailableSgprs;
-         public fixed UInt32 computeWorkGroupSize[3];
+         public UInt32 computeWorkGroupSize;
       };
       
       #endregion
 
       #region functions
       //external functions we need to get from the device
-      //VkResult vkGetShaderInfoAMD(VkDevice  device, VkPipeline  pipeline, VkShaderStageFlagBits  shaderStage, VkShaderInfoTypeAMD  infoType, size_t *  pInfoSize, void *  pInfo);
+      //VkResult vkGetShaderInfoAMD(VkDevice device, VkPipeline pipeline, VkShaderStageFlags shaderStage, VkShaderInfoTypeAMD infoType, size_t* pInfoSize, void* pInfo);
       
       //delegate definitions
-      public delegate Result GetShaderInfoAMDDelegate(Device device, Pipeline pipeline, ShaderStageFlags shaderStage, ShaderInfoTypeAMD infoType, ref UInt32 pInfoSize, IntPtr pInfos);
+      public delegate Result GetShaderInfoAMDDelegate(Device device, Pipeline pipeline, ShaderStageFlags shaderStage, ShaderInfoTypeAMD infoType, ref UInt32 pInfoSize, ref void pInfo);
       
       //delegate instances
       public static GetShaderInfoAMDDelegate GetShaderInfoAMD;
       #endregion
 
       #region interop
-      public static class AMD_shader_info
+      public static class VK_AMD_shader_info
       {
          public static void init(VK.Device device)
          {

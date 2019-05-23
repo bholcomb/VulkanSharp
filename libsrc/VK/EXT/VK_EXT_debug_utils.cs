@@ -11,12 +11,42 @@ namespace Vulkan
    
    public static partial class VK
    {
+      #region handles
       [StructLayout(LayoutKind.Sequential)] public struct DebugUtilsMessengerEXT { public UInt64 native; }
+      #endregion 
+      
 
-      #region enums
-      #endregion
+      //no enums
 
+       
       #region flags
+      [Flags]
+      public enum DebugUtilsMessengerCallbackDataFlagsEXT : int
+      {  
+      };
+      
+      [Flags]
+      public enum DebugUtilsMessengerCreateFlagsEXT : int
+      {  
+      };
+      
+      [Flags]
+      public enum DebugUtilsMessageSeverityFlagsEXT : int
+      {  
+         DebugUtilsMessageSeverityVerboseBitExt = 1 << 0,
+         DebugUtilsMessageSeverityInfoBitExt = 1 << 4,
+         DebugUtilsMessageSeverityWarningBitExt = 1 << 8,
+         DebugUtilsMessageSeverityErrorBitExt = 1 << 12,
+      };
+      
+      [Flags]
+      public enum DebugUtilsMessageTypeFlagsEXT : int
+      {  
+         DebugUtilsMessageTypeGeneralBitExt = 1 << 0,
+         DebugUtilsMessageTypeValidationBitExt = 1 << 1,
+         DebugUtilsMessageTypePerformanceBitExt = 1 << 2,
+      };
+      
       #endregion
 
       #region structs
@@ -24,93 +54,90 @@ namespace Vulkan
       public struct DebugUtilsObjectNameInfoEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public ObjectType objectType;
          public UInt64 objectHandle;
-         public string pObjectName;
+         public char pObjectName;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DebugUtilsObjectTagInfoEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public ObjectType objectType;
          public UInt64 objectHandle;
          public UInt64 tagName;
          public UInt32 tagSize;
-         public IntPtr pTag;
+         public void pTag;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct DebugUtilsLabelEXT 
+      public struct DebugUtilsLabelEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
-         public string pLabelName;
-         public fixed float color[4];
+         public void pNext;
+         public char pLabelName;
+         public float color;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct DebugUtilsMessengerCallbackDataEXT 
+      public struct DebugUtilsMessengerCallbackDataEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
-         public UInt32 flags;
-         public string pMessageIdName;
+         public void pNext;
+         public DebugUtilsMessengerCallbackDataFlagsEXT flags;
+         public char pMessageIdName;
          public Int32 messageIdNumber;
-         public string pMessage;
+         public char pMessage;
          public UInt32 queueLabelCount;
-         public IntPtr* pQueueLabels;
+         public DebugUtilsLabelEXT pQueueLabels;
          public UInt32 cmdBufLabelCount;
-         public IntPtr* pCmdBufLabels;
+         public DebugUtilsLabelEXT pCmdBufLabels;
          public UInt32 objectCount;
-         public IntPtr* pObjects;
+         public DebugUtilsObjectNameInfoEXT pObjects;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DebugUtilsMessengerCreateInfoEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
-         public UInt32 flags;
+         public void pNext;
+         public DebugUtilsMessengerCreateFlagsEXT flags;
          public DebugUtilsMessageSeverityFlagsEXT messageSeverity;
          public DebugUtilsMessageTypeFlagsEXT messageType;
          public DebugUtilsMessengerCallbackEXT pfnUserCallback;
-         public IntPtr pUserData;
+         public void pUserData;
       };
-
+      
       #endregion
 
       #region functions
-      [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-      public delegate Bool32 DebugUtilsMessengerCallbackEXT(DebugUtilsMessageSeverityFlagsEXT messageSeverity, DebugUtilsMessageTypeFlagsEXT messageTypes, ref DebugUtilsMessengerCallbackDataEXT pCallbackData, IntPtr pUserData);
-
       //external functions we need to get from the instance
-      //VkResult vkSetDebugUtilsObjectNameEXT(VkDevice  device, const VkDebugUtilsObjectNameInfoEXT *  pNameInfo);
-      //VkResult vkSetDebugUtilsObjectTagEXT(VkDevice  device, const VkDebugUtilsObjectTagInfoEXT *  pTagInfo);
-      //void vkQueueBeginDebugUtilsLabelEXT(VkQueue  queue, const VkDebugUtilsLabelEXT *  pLabelInfo);
-      //void vkQueueEndDebugUtilsLabelEXT(VkQueue  queue);
-      //void vkQueueInsertDebugUtilsLabelEXT(VkQueue  queue, const VkDebugUtilsLabelEXT *  pLabelInfo);
-      //void vkCmdBeginDebugUtilsLabelEXT(VkCommandBuffer  commandBuffer, const VkDebugUtilsLabelEXT *  pLabelInfo);
-      //void vkCmdEndDebugUtilsLabelEXT(VkCommandBuffer  commandBuffer);
-      //void vkCmdInsertDebugUtilsLabelEXT(VkCommandBuffer  commandBuffer, const VkDebugUtilsLabelEXT *  pLabelInfo);
-      //VkResult vkCreateDebugUtilsMessengerEXT(VkInstance  instance, const VkDebugUtilsMessengerCreateInfoEXT *  pCreateInfo, const VkAllocationCallbacks *  pAllocator, VkDebugUtilsMessengerEXT *  pMessenger);
-      //void vkDestroyDebugUtilsMessengerEXT(VkInstance  instance, VkDebugUtilsMessengerEXT  messenger, const VkAllocationCallbacks *  pAllocator);
-      //void vkSubmitDebugUtilsMessageEXT(VkInstance  instance, VkDebugUtilsMessageSeverityFlagBitsEXT  messageSeverity, VkDebugUtilsMessageTypeFlagsEXT  messageTypes, const VkDebugUtilsMessengerCallbackDataEXT *  pCallbackData);
-
+      //VkResult vkSetDebugUtilsObjectNameEXT(VkDevice device, VkDebugUtilsObjectNameInfoEXT* pNameInfo);
+      //VkResult vkSetDebugUtilsObjectTagEXT(VkDevice device, VkDebugUtilsObjectTagInfoEXT* pTagInfo);
+      //void vkQueueBeginDebugUtilsLabelEXT(VkQueue queue, VkDebugUtilsLabelEXT* pLabelInfo);
+      //void vkQueueEndDebugUtilsLabelEXT(VkQueue queue);
+      //void vkQueueInsertDebugUtilsLabelEXT(VkQueue queue, VkDebugUtilsLabelEXT* pLabelInfo);
+      //void vkCmdBeginDebugUtilsLabelEXT(VkCommandBuffer commandBuffer, VkDebugUtilsLabelEXT* pLabelInfo);
+      //void vkCmdEndDebugUtilsLabelEXT(VkCommandBuffer commandBuffer);
+      //void vkCmdInsertDebugUtilsLabelEXT(VkCommandBuffer commandBuffer, VkDebugUtilsLabelEXT* pLabelInfo);
+      //VkResult vkCreateDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pMessenger);
+      //void vkDestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMessengerEXT messenger, VkAllocationCallbacks* pAllocator);
+      //void vkSubmitDebugUtilsMessageEXT(VkInstance instance, VkDebugUtilsMessageSeverityFlagsEXT messageSeverity, VkDebugUtilsMessageTypeFlagsEXT messageTypes, VkDebugUtilsMessengerCallbackDataEXT* pCallbackData);
+      
       //delegate definitions
-      public delegate Result SetDebugUtilsObjectNameEXTDelegate(Device device, ref DebugUtilsObjectNameInfoEXT pNameInfos);
-      public delegate Result SetDebugUtilsObjectTagEXTDelegate(Device device, ref DebugUtilsObjectTagInfoEXT pTagInfos);
-      public delegate void QueueBeginDebugUtilsLabelEXTDelegate(Queue queue, ref DebugUtilsLabelEXT pLabelInfos);
-      public delegate void QueueEndDebugUtilsLabelEXTDelegate(Queue queues);
-      public delegate void QueueInsertDebugUtilsLabelEXTDelegate(Queue queue, ref DebugUtilsLabelEXT pLabelInfos);
-      public delegate void CmdBeginDebugUtilsLabelEXTDelegate(CommandBuffer commandBuffer, ref DebugUtilsLabelEXT pLabelInfos);
-      public delegate void CmdEndDebugUtilsLabelEXTDelegate(CommandBuffer commandBuffers);
-      public delegate void CmdInsertDebugUtilsLabelEXTDelegate(CommandBuffer commandBuffer, ref DebugUtilsLabelEXT pLabelInfos);
-      public delegate Result CreateDebugUtilsMessengerEXTDelegate(Instance instance, ref DebugUtilsMessengerCreateInfoEXT pCreateInfo, AllocationCallbacks pAllocator, ref DebugUtilsMessengerEXT pMessengers);
-      public delegate void DestroyDebugUtilsMessengerEXTDelegate(Instance instance, DebugUtilsMessengerEXT messenger, AllocationCallbacks pAllocators);
-      public delegate void SubmitDebugUtilsMessageEXTDelegate(Instance instance, DebugUtilsMessageSeverityFlagsEXT messageSeverity, DebugUtilsMessageTypeFlagsEXT messageTypes, ref DebugUtilsMessengerCallbackDataEXT pCallbackDatas);
+      public delegate Result SetDebugUtilsObjectNameEXTDelegate(Device device, ref DebugUtilsObjectNameInfoEXT pNameInfo);
+      public delegate Result SetDebugUtilsObjectTagEXTDelegate(Device device, ref DebugUtilsObjectTagInfoEXT pTagInfo);
+      public delegate void QueueBeginDebugUtilsLabelEXTDelegate(Queue queue, ref DebugUtilsLabelEXT pLabelInfo);
+      public delegate void QueueEndDebugUtilsLabelEXTDelegate(Queue queue);
+      public delegate void QueueInsertDebugUtilsLabelEXTDelegate(Queue queue, ref DebugUtilsLabelEXT pLabelInfo);
+      public delegate void CmdBeginDebugUtilsLabelEXTDelegate(CommandBuffer commandBuffer, ref DebugUtilsLabelEXT pLabelInfo);
+      public delegate void CmdEndDebugUtilsLabelEXTDelegate(CommandBuffer commandBuffer);
+      public delegate void CmdInsertDebugUtilsLabelEXTDelegate(CommandBuffer commandBuffer, ref DebugUtilsLabelEXT pLabelInfo);
+      public delegate Result CreateDebugUtilsMessengerEXTDelegate(Instance instance, ref DebugUtilsMessengerCreateInfoEXT pCreateInfo, ref AllocationCallbacks pAllocator, ref DebugUtilsMessengerEXT pMessenger);
+      public delegate void DestroyDebugUtilsMessengerEXTDelegate(Instance instance, DebugUtilsMessengerEXT messenger, ref AllocationCallbacks pAllocator);
+      public delegate void SubmitDebugUtilsMessageEXTDelegate(Instance instance, DebugUtilsMessageSeverityFlagsEXT messageSeverity, DebugUtilsMessageTypeFlagsEXT messageTypes, ref DebugUtilsMessengerCallbackDataEXT pCallbackData);
       
       //delegate instances
       public static SetDebugUtilsObjectNameEXTDelegate SetDebugUtilsObjectNameEXT;
@@ -127,7 +154,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class EXT_debug_utils
+      public static class VK_EXT_debug_utils
       {
          public static void init(VK.Instance instance)
          {

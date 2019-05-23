@@ -11,28 +11,28 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
 
-      #region structs
-      #endregion
+      //no bitfields
+
+      //no structs
 
       #region functions
       //external functions we need to get from the device
-      //void vkCmdWriteBufferMarkerAMD(VkCommandBuffer  commandBuffer, VkPipelineStageFlagBits  pipelineStage, VkBuffer  dstBuffer, VkDeviceSize  dstOffset, uint32_t  marker);
+      //void vkCmdWriteBufferMarkerAMD(VkCommandBuffer commandBuffer, VkPipelineStageFlags pipelineStage, VkBuffer dstBuffer, VkDeviceSize dstOffset, uint32_t marker);
       
       //delegate definitions
-      public delegate void CmdWriteBufferMarkerAMDDelegate(CommandBuffer commandBuffer, PipelineStageFlags pipelineStage, Buffer dstBuffer, DeviceSize dstOffset, UInt32 markers);
+      public delegate void CmdWriteBufferMarkerAMDDelegate(CommandBuffer commandBuffer, PipelineStageFlags pipelineStage, Buffer dstBuffer, DeviceSize dstOffset, UInt32 marker);
       
       //delegate instances
       public static CmdWriteBufferMarkerAMDDelegate CmdWriteBufferMarkerAMD;
       #endregion
 
       #region interop
-      public static class AMD_buffer_marker
+      public static class VK_AMD_buffer_marker
       {
          public static void init(VK.Device device)
          {

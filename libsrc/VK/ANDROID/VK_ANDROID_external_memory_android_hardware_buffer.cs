@@ -11,26 +11,27 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AndroidHardwareBufferUsageANDROID 
       {
          public StructureType sType;
+         public void pNext;
          public UInt64 androidHardwareBufferUsage;
-         public IntPtr pNext;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AndroidHardwareBufferPropertiesANDROID 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public DeviceSize allocationSize;
          public UInt32 memoryTypeBits;
       };
@@ -39,30 +40,30 @@ namespace Vulkan
       public struct AndroidHardwareBufferFormatPropertiesANDROID 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public Format format;
          public UInt64 externalFormat;
          public FormatFeatureFlags formatFeatures;
          public ComponentMapping samplerYcbcrConversionComponents;
          public SamplerYcbcrModelConversion suggestedYcbcrModel;
          public SamplerYcbcrRange suggestedYcbcrRange;
-         public ChromaLocation suggestedYChromaOffset;
          public ChromaLocation suggestedXChromaOffset;
+         public ChromaLocation suggestedYChromaOffset;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImportAndroidHardwareBufferInfoANDROID 
       {
          public StructureType sType;
-         public IntPtr pNext;
-         public IntPtr buffer;
+         public void pNext;
+         public AHardwareBuffer buffer;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MemoryGetAndroidHardwareBufferInfoANDROID 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public DeviceMemory memory;
       };
       
@@ -70,7 +71,7 @@ namespace Vulkan
       public struct ExternalFormatANDROID 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public UInt64 externalFormat;
       };
       
@@ -78,12 +79,12 @@ namespace Vulkan
 
       #region functions
       //external functions we need to get from the device
-      //VkResult vkGetAndroidHardwareBufferPropertiesANDROID(VkDevice  device, const struct AHardwareBuffer *  buffer, VkAndroidHardwareBufferPropertiesANDROID *  pProperties);
-      //VkResult vkGetMemoryAndroidHardwareBufferANDROID(VkDevice  device, const VkMemoryGetAndroidHardwareBufferInfoANDROID *  pInfo, struct AHardwareBuffer **  pBuffer);
+      //VkResult vkGetAndroidHardwareBufferPropertiesANDROID(VkDevice device, AHardwareBuffer* buffer, VkAndroidHardwareBufferPropertiesANDROID* pProperties);
+      //VkResult vkGetMemoryAndroidHardwareBufferANDROID(VkDevice device, VkMemoryGetAndroidHardwareBufferInfoANDROID* pInfo, AHardwareBuffer pBuffer);
       
       //delegate definitions
-      public delegate Result GetAndroidHardwareBufferPropertiesANDROIDDelegate(Device device, IntPtr buffer, ref AndroidHardwareBufferPropertiesANDROID  pPropertiess);
-      public delegate Result GetMemoryAndroidHardwareBufferANDROIDDelegate(Device device, ref MemoryGetAndroidHardwareBufferInfoANDROID  pInfo, ref IntPtr pBuffers);
+      public delegate Result GetAndroidHardwareBufferPropertiesANDROIDDelegate(Device device, ref AHardwareBuffer buffer, ref AndroidHardwareBufferPropertiesANDROID pProperties);
+      public delegate Result GetMemoryAndroidHardwareBufferANDROIDDelegate(Device device, ref MemoryGetAndroidHardwareBufferInfoANDROID pInfo, AHardwareBuffer pBuffer);
       
       //delegate instances
       public static GetAndroidHardwareBufferPropertiesANDROIDDelegate GetAndroidHardwareBufferPropertiesANDROID;
@@ -91,7 +92,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class ANDROID_external_memory_android_hardware_buffer
+      public static class VK_ANDROID_external_memory_android_hardware_buffer
       {
          public static void init(VK.Device device)
          {

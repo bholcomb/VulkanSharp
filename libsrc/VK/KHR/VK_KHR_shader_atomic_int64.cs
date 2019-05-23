@@ -11,33 +11,25 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceShaderAtomicInt64FeaturesKHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public Bool32 shaderBufferInt64Atomics;
          public Bool32 shaderSharedInt64Atomics;
       };
       
       #endregion
 
-      #region functions
-      //external functions we need to get from the device
-      
-      //delegate definitions
-      
-      //delegate instances
-      #endregion
-
-      #region interop
-      #endregion
+      //no functions
    }
 }

@@ -11,18 +11,19 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImageViewHandleInfoNVX 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public ImageView imageView;
          public DescriptorType descriptorType;
          public Sampler sampler;
@@ -32,17 +33,17 @@ namespace Vulkan
 
       #region functions
       //external functions we need to get from the device
-      //uint32_t vkGetImageViewHandleNVX(VkDevice  device, const VkImageViewHandleInfoNVX *  pInfo);
+      //uint32_t vkGetImageViewHandleNVX(VkDevice device, VkImageViewHandleInfoNVX* pInfo);
       
       //delegate definitions
-      public delegate UInt32 GetImageViewHandleNVXDelegate(Device device, ref ImageViewHandleInfoNVX pInfos);
+      public delegate UInt32 GetImageViewHandleNVXDelegate(Device device, ref ImageViewHandleInfoNVX pInfo);
       
       //delegate instances
       public static GetImageViewHandleNVXDelegate GetImageViewHandleNVX;
       #endregion
 
       #region interop
-      public static class NVX_image_view_handle
+      public static class VK_NVX_image_view_handle
       {
          public static void init(VK.Device device)
          {

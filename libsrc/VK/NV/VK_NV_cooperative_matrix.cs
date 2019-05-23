@@ -11,16 +11,10 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      public enum ScopeNV : int
-      {  
-         DeviceNv = 1,
-         WorkgroupNv = 2,
-         SubgroupNv = 3,
-         QueueFamilyNv = 5,
-         
-      };
+      //no handles
       
+
+      #region enums
       public enum ComponentTypeNV : int
       {  
          Float16Nv = 0,
@@ -34,20 +28,26 @@ namespace Vulkan
          Uint16Nv = 8,
          Uint32Nv = 9,
          Uint64Nv = 10,
-         
+      };
+      
+      public enum ScopeNV : int
+      {  
+         DeviceNv = 1,
+         WorkgroupNv = 2,
+         SubgroupNv = 3,
+         QueueFamilyNv = 5,
       };
       
       #endregion
 
-      #region flags
-      #endregion
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct CooperativeMatrixPropertiesNV 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public UInt32 MSize;
          public UInt32 NSize;
          public UInt32 KSize;
@@ -62,7 +62,7 @@ namespace Vulkan
       public struct PhysicalDeviceCooperativeMatrixFeaturesNV 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public Bool32 cooperativeMatrix;
          public Bool32 cooperativeMatrixRobustBufferAccess;
       };
@@ -71,25 +71,25 @@ namespace Vulkan
       public struct PhysicalDeviceCooperativeMatrixPropertiesNV 
       {
          public StructureType sType;
+         public void pNext;
          public ShaderStageFlags cooperativeMatrixSupportedStages;
-         public IntPtr pNext;
       };
       
       #endregion
 
       #region functions
       //external functions we need to get from the device
-      //VkResult vkGetPhysicalDeviceCooperativeMatrixPropertiesNV(VkPhysicalDevice  physicalDevice, uint32_t *  pPropertyCount, VkCooperativeMatrixPropertiesNV *  pProperties);
+      //VkResult vkGetPhysicalDeviceCooperativeMatrixPropertiesNV(VkPhysicalDevice physicalDevice, uint32_t* pPropertyCount, VkCooperativeMatrixPropertiesNV* pProperties);
       
       //delegate definitions
-      public delegate Result GetPhysicalDeviceCooperativeMatrixPropertiesNVDelegate(PhysicalDevice physicalDevice, ref UInt32 pPropertyCount, ref CooperativeMatrixPropertiesNV pPropertiess);
+      public delegate Result GetPhysicalDeviceCooperativeMatrixPropertiesNVDelegate(PhysicalDevice physicalDevice, ref UInt32 pPropertyCount, ref CooperativeMatrixPropertiesNV pProperties);
       
       //delegate instances
       public static GetPhysicalDeviceCooperativeMatrixPropertiesNVDelegate GetPhysicalDeviceCooperativeMatrixPropertiesNV;
       #endregion
 
       #region interop
-      public static class NV_cooperative_matrix
+      public static class VK_NV_cooperative_matrix
       {
          public static void init(VK.Device device)
          {

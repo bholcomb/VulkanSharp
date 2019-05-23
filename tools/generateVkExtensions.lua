@@ -221,13 +221,13 @@ function generateExtensions()
       
       local ret = liluat.render(templates.file, values)
       
-      if(v.author == nil) then v.author = "KHR" end
+      if(v.tag == nil) then v.tag = "KHR" end
      
-      if(directoryExists(v.author) == false) then
-         os.execute("mkdir "..v.author)
+      if(directoryExists(v.tag) == false) then
+         os.execute("mkdir "..v.tag)
       end
 
-      local filename = v.author.."/"..v.name..".cs"
+      local filename = v.tag.."/"..v.name..".cs"
       print("Writing file: ".. filename)
       local file = io.open(filename, "w")
       file:write(ret)

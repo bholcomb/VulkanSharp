@@ -11,6 +11,9 @@ namespace Vulkan
    
    public static partial class VK
    {
+      //no handles
+      
+
       #region enums
       public enum ShadingRatePaletteEntryNV : int
       {  
@@ -26,7 +29,6 @@ namespace Vulkan
          _1InvocationPer4x2PixelsNv = 9,
          _1InvocationPer2x4PixelsNv = 10,
          _1InvocationPer4x4PixelsNv = 11,
-         
       };
       
       public enum CoarseSampleOrderTypeNV : int
@@ -35,37 +37,35 @@ namespace Vulkan
          CustomNv = 1,
          PixelMajorNv = 2,
          SampleMajorNv = 3,
-         
       };
       
       #endregion
 
-      #region flags
-      #endregion
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct ShadingRatePaletteNV 
+      public struct ShadingRatePaletteNV 
       {
          public UInt32 shadingRatePaletteEntryCount;
-         public ShadingRatePaletteEntryNV* pShadingRatePaletteEntries;
+         public ShadingRatePaletteEntryNV pShadingRatePaletteEntries;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct PipelineViewportShadingRateImageStateCreateInfoNV 
+      public struct PipelineViewportShadingRateImageStateCreateInfoNV 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public Bool32 shadingRateImageEnable;
          public UInt32 viewportCount;
-         public ShadingRatePaletteNV* pShadingRatePalettes;
+         public ShadingRatePaletteNV pShadingRatePalettes;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceShadingRateImageFeaturesNV 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public Bool32 shadingRateImage;
          public Bool32 shadingRateCoarseSampleOrder;
       };
@@ -74,7 +74,7 @@ namespace Vulkan
       public struct PhysicalDeviceShadingRateImagePropertiesNV 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public Extent2D shadingRateTexelSize;
          public UInt32 shadingRatePaletteSize;
          public UInt32 shadingRateMaxCoarseSamples;
@@ -89,36 +89,36 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct CoarseSampleOrderCustomNV 
+      public struct CoarseSampleOrderCustomNV 
       {
          public ShadingRatePaletteEntryNV shadingRate;
          public UInt32 sampleCount;
          public UInt32 sampleLocationCount;
-         public CoarseSampleLocationNV* pSampleLocations;
+         public CoarseSampleLocationNV pSampleLocations;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct PipelineViewportCoarseSampleOrderStateCreateInfoNV 
+      public struct PipelineViewportCoarseSampleOrderStateCreateInfoNV 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public CoarseSampleOrderTypeNV sampleOrderType;
          public UInt32 customSampleOrderCount;
-         public CoarseSampleOrderCustomNV* pCustomSampleOrders;
+         public CoarseSampleOrderCustomNV pCustomSampleOrders;
       };
       
       #endregion
 
       #region functions
       //external functions we need to get from the device
-      //void vkCmdBindShadingRateImageNV(VkCommandBuffer  commandBuffer, VkImageView  imageView, VkImageLayout  imageLayout);
-      //void vkCmdSetViewportShadingRatePaletteNV(VkCommandBuffer  commandBuffer, uint32_t  firstViewport, uint32_t  viewportCount, const VkShadingRatePaletteNV *  pShadingRatePalettes);
-      //void vkCmdSetCoarseSampleOrderNV(VkCommandBuffer  commandBuffer, VkCoarseSampleOrderTypeNV  sampleOrderType, uint32_t  customSampleOrderCount, const VkCoarseSampleOrderCustomNV *  pCustomSampleOrders);
+      //void vkCmdBindShadingRateImageNV(VkCommandBuffer commandBuffer, VkImageView imageView, VkImageLayout imageLayout);
+      //void vkCmdSetViewportShadingRatePaletteNV(VkCommandBuffer commandBuffer, uint32_t firstViewport, uint32_t viewportCount, VkShadingRatePaletteNV* pShadingRatePalettes);
+      //void vkCmdSetCoarseSampleOrderNV(VkCommandBuffer commandBuffer, VkCoarseSampleOrderTypeNV sampleOrderType, uint32_t customSampleOrderCount, VkCoarseSampleOrderCustomNV* pCustomSampleOrders);
       
       //delegate definitions
-      public delegate void CmdBindShadingRateImageNVDelegate(CommandBuffer commandBuffer, ImageView imageView, ImageLayout imageLayouts);
-      public delegate void CmdSetViewportShadingRatePaletteNVDelegate(CommandBuffer commandBuffer, UInt32 firstViewport, UInt32 viewportCount, ref ShadingRatePaletteNV pShadingRatePalettess);
-      public delegate void CmdSetCoarseSampleOrderNVDelegate(CommandBuffer commandBuffer, CoarseSampleOrderTypeNV sampleOrderType, UInt32 customSampleOrderCount, ref CoarseSampleOrderCustomNV pCustomSampleOrderss);
+      public delegate void CmdBindShadingRateImageNVDelegate(CommandBuffer commandBuffer, ImageView imageView, ImageLayout imageLayout);
+      public delegate void CmdSetViewportShadingRatePaletteNVDelegate(CommandBuffer commandBuffer, UInt32 firstViewport, UInt32 viewportCount, ref ShadingRatePaletteNV pShadingRatePalettes);
+      public delegate void CmdSetCoarseSampleOrderNVDelegate(CommandBuffer commandBuffer, CoarseSampleOrderTypeNV sampleOrderType, UInt32 customSampleOrderCount, ref CoarseSampleOrderCustomNV pCustomSampleOrders);
       
       //delegate instances
       public static CmdBindShadingRateImageNVDelegate CmdBindShadingRateImageNV;
@@ -127,7 +127,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class NV_shading_rate_image
+      public static class VK_NV_shading_rate_image
       {
          public static void init(VK.Device device)
          {

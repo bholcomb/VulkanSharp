@@ -11,18 +11,19 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ExternalMemoryImageCreateInfoNV 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public ExternalMemoryHandleTypeFlagsNV handleTypes;
       };
       
@@ -30,21 +31,12 @@ namespace Vulkan
       public struct ExportMemoryAllocateInfoNV 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public ExternalMemoryHandleTypeFlagsNV handleTypes;
       };
       
       #endregion
 
-      #region functions
-      //external functions we need to get from the device
-      
-      //delegate definitions
-      
-      //delegate instances
-      #endregion
-
-      #region interop
-      #endregion
+      //no functions
    }
 }

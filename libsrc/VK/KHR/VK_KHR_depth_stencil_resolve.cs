@@ -11,54 +11,48 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
+      //no enums
+
+       
       #region flags
       [Flags]
       public enum ResolveModeFlagsKHR : int
       {  
-         SampleZeroBitKhr = 1 << 0,
-         AverageBitKhr = 1 << 1,
-         MinBitKhr = 1 << 2,
-         MaxBitKhr = 1 << 3,
+         ResolveModeSampleZeroBitKhr = 1 << 0,
+         ResolveModeAverageBitKhr = 1 << 1,
+         ResolveModeMinBitKhr = 1 << 2,
+         ResolveModeMaxBitKhr = 1 << 3,
       };
       
       #endregion
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct SubpassDescriptionDepthStencilResolveKHR 
+      public struct SubpassDescriptionDepthStencilResolveKHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public ResolveModeFlagsKHR depthResolveMode;
          public ResolveModeFlagsKHR stencilResolveMode;
-         public AttachmentReference2KHR* pDepthStencilResolveAttachment;
+         public AttachmentReference2KHR pDepthStencilResolveAttachment;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceDepthStencilResolvePropertiesKHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public ResolveModeFlagsKHR supportedDepthResolveModes;
          public ResolveModeFlagsKHR supportedStencilResolveModes;
-         public Bool32 independentResolve;
          public Bool32 independentResolveNone;
+         public Bool32 independentResolve;
       };
       
       #endregion
 
-      #region functions
-      //external functions we need to get from the device
-      
-      //delegate definitions
-      
-      //delegate instances
-      #endregion
-
-      #region interop
-      #endregion
+      //no functions
    }
 }

@@ -11,10 +11,18 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
+      //no enums
+
+       
       #region flags
+      [Flags]
+      public enum IOSSurfaceCreateFlagsMVK : int
+      {  
+      };
+      
       #endregion
 
       #region structs
@@ -22,26 +30,26 @@ namespace Vulkan
       public struct IOSSurfaceCreateInfoMVK 
       {
          public StructureType sType;
-         public IntPtr pNext;
-         public UInt32 flags;
-         public IntPtr pView;
+         public void pNext;
+         public IOSSurfaceCreateFlagsMVK flags;
+         public void pView;
       };
       
       #endregion
 
       #region functions
       //external functions we need to get from the instance
-      //VkResult vkCreateIOSSurfaceMVK(VkInstance  instance, const VkIOSSurfaceCreateInfoMVK *  pCreateInfo, const VkAllocationCallbacks *  pAllocator, VkSurfaceKHR *  pSurface);
+      //VkResult vkCreateIOSSurfaceMVK(VkInstance instance, VkIOSSurfaceCreateInfoMVK* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface);
       
       //delegate definitions
-      public delegate Result CreateIOSSurfaceMVKDelegate(Instance instance, ref IOSSurfaceCreateInfoMVK pCreateInfo, AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
+      public delegate Result CreateIOSSurfaceMVKDelegate(Instance instance, ref IOSSurfaceCreateInfoMVK pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
       
       //delegate instances
       public static CreateIOSSurfaceMVKDelegate CreateIOSSurfaceMVK;
       #endregion
 
       #region interop
-      public static class MVK_ios_surface
+      public static class VK_MVK_ios_surface
       {
          public static void init(VK.Instance instance)
          {

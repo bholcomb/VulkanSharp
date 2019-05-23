@@ -11,6 +11,9 @@ namespace Vulkan
    
    public static partial class VK
    {
+      //no handles
+      
+
       #region enums
       public enum FullScreenExclusiveEXT : int
       {  
@@ -18,20 +21,18 @@ namespace Vulkan
          AllowedExt = 1,
          DisallowedExt = 2,
          ApplicationControlledExt = 3,
-         
       };
       
       #endregion
 
-      #region flags
-      #endregion
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SurfaceFullScreenExclusiveInfoEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public FullScreenExclusiveEXT fullScreenExclusive;
       };
       
@@ -39,7 +40,7 @@ namespace Vulkan
       public struct SurfaceCapabilitiesFullScreenExclusiveEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public Bool32 fullScreenExclusiveSupported;
       };
       
@@ -47,24 +48,24 @@ namespace Vulkan
       public struct SurfaceFullScreenExclusiveWin32InfoEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
-         public IntPtr hmonitor;
+         public void pNext;
+         public HMONITOR hmonitor;
       };
       
       #endregion
 
       #region functions
       //external functions we need to get from the device
-      //VkResult vkGetPhysicalDeviceSurfacePresentModes2EXT(VkPhysicalDevice  physicalDevice, const VkPhysicalDeviceSurfaceInfo2KHR *  pSurfaceInfo, uint32_t *  pPresentModeCount, VkPresentModeKHR *  pPresentModes);
-      //VkResult vkAcquireFullScreenExclusiveModeEXT(VkDevice  device, VkSwapchainKHR  swapchain);
-      //VkResult vkReleaseFullScreenExclusiveModeEXT(VkDevice  device, VkSwapchainKHR  swapchain);
-      //VkResult vkGetDeviceGroupSurfacePresentModes2EXT(VkDevice  device, const VkPhysicalDeviceSurfaceInfo2KHR *  pSurfaceInfo, VkDeviceGroupPresentModeFlagsKHR *  pModes);
+      //VkResult vkGetPhysicalDeviceSurfacePresentModes2EXT(VkPhysicalDevice physicalDevice, VkPhysicalDeviceSurfaceInfo2KHR* pSurfaceInfo, uint32_t* pPresentModeCount, VkPresentModeKHR* pPresentModes);
+      //VkResult vkAcquireFullScreenExclusiveModeEXT(VkDevice device, VkSwapchainKHR swapchain);
+      //VkResult vkReleaseFullScreenExclusiveModeEXT(VkDevice device, VkSwapchainKHR swapchain);
+      //VkResult vkGetDeviceGroupSurfacePresentModes2EXT(VkDevice device, VkPhysicalDeviceSurfaceInfo2KHR* pSurfaceInfo, VkDeviceGroupPresentModeFlagsKHR* pModes);
       
       //delegate definitions
-      public delegate Result GetPhysicalDeviceSurfacePresentModes2EXTDelegate(PhysicalDevice physicalDevice, ref PhysicalDeviceSurfaceInfo2KHR pSurfaceInfo, ref UInt32 pPresentModeCount, ref PresentModeKHR pPresentModess);
-      public delegate Result AcquireFullScreenExclusiveModeEXTDelegate(Device device, SwapchainKHR swapchains);
-      public delegate Result ReleaseFullScreenExclusiveModeEXTDelegate(Device device, SwapchainKHR swapchains);
-      public delegate Result GetDeviceGroupSurfacePresentModes2EXTDelegate(Device device, ref PhysicalDeviceSurfaceInfo2KHR pSurfaceInfo, ref UInt32 pModess);
+      public delegate Result GetPhysicalDeviceSurfacePresentModes2EXTDelegate(PhysicalDevice physicalDevice, ref PhysicalDeviceSurfaceInfo2KHR pSurfaceInfo, ref UInt32 pPresentModeCount, ref PresentModeKHR pPresentModes);
+      public delegate Result AcquireFullScreenExclusiveModeEXTDelegate(Device device, SwapchainKHR swapchain);
+      public delegate Result ReleaseFullScreenExclusiveModeEXTDelegate(Device device, SwapchainKHR swapchain);
+      public delegate Result GetDeviceGroupSurfacePresentModes2EXTDelegate(Device device, ref PhysicalDeviceSurfaceInfo2KHR pSurfaceInfo, ref DeviceGroupPresentModeFlagsKHR pModes);
       
       //delegate instances
       public static GetPhysicalDeviceSurfacePresentModes2EXTDelegate GetPhysicalDeviceSurfacePresentModes2EXT;
@@ -74,7 +75,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class EXT_full_screen_exclusive
+      public static class VK_EXT_full_screen_exclusive
       {
          public static void init(VK.Device device)
          {

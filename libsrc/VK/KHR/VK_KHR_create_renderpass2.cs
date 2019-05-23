@@ -11,18 +11,35 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct AttachmentDescription2KHR
+      public struct RenderPassCreateInfo2KHR 
       {
-         public StructureType type;
-         public IntPtr Next;
+         public StructureType sType;
+         public void pNext;
+         public RenderPassCreateFlags flags;
+         public UInt32 attachmentCount;
+         public AttachmentDescription2KHR pAttachments;
+         public UInt32 subpassCount;
+         public SubpassDescription2KHR pSubpasses;
+         public UInt32 dependencyCount;
+         public SubpassDependency2KHR pDependencies;
+         public UInt32 correlatedViewMaskCount;
+         public UInt32 pCorrelatedViewMasks;
+      };
+      
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+      public struct AttachmentDescription2KHR 
+      {
+         public StructureType sType;
+         public void pNext;
          public AttachmentDescriptionFlags flags;
          public Format format;
          public SampleCountFlags samples;
@@ -33,40 +50,40 @@ namespace Vulkan
          public ImageLayout initialLayout;
          public ImageLayout finalLayout;
       };
-
+      
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct AttachmentReference2KHR
+      public struct SubpassDescription2KHR 
       {
-         public StructureType type;
-         public IntPtr next;
-         public UInt32 attachment;
-         public ImageLayout layout;
-         public ImageAspectFlags aspectMask;
-      };
-
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct SubpassDescription2KHR
-      {
-         public StructureType type;
-         public IntPtr next;
+         public StructureType sType;
+         public void pNext;
          public SubpassDescriptionFlags flags;
          public PipelineBindPoint pipelineBindPoint;
          public UInt32 viewMask;
          public UInt32 inputAttachmentCount;
-         public AttachmentReference2KHR* pInputAttachments;
+         public AttachmentReference2KHR pInputAttachments;
          public UInt32 colorAttachmentCount;
-         public AttachmentReference2KHR* pColorAttachments;
-         public AttachmentReference2KHR* pResolveAttachments;
-         public AttachmentReference2KHR* pDepthStencilAttachment;
+         public AttachmentReference2KHR pColorAttachments;
+         public AttachmentReference2KHR pResolveAttachments;
+         public AttachmentReference2KHR pDepthStencilAttachment;
          public UInt32 preserveAttachmentCount;
-         public IntPtr pPreserveAttachments;
+         public UInt32 pPreserveAttachments;
       };
-
+      
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct SubpassDependency2KHR
+      public struct AttachmentReference2KHR 
       {
-         public StructureType type;
-         public IntPtr next;
+         public StructureType sType;
+         public void pNext;
+         public UInt32 attachment;
+         public ImageLayout layout;
+         public ImageAspectFlags aspectMask;
+      };
+      
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+      public struct SubpassDependency2KHR 
+      {
+         public StructureType sType;
+         public void pNext;
          public UInt32 srcSubpass;
          public UInt32 dstSubpass;
          public PipelineStageFlags srcStageMask;
@@ -76,51 +93,36 @@ namespace Vulkan
          public DependencyFlags dependencyFlags;
          public Int32 viewOffset;
       };
-
+      
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct RenderPassCreateInfo2KHR
+      public struct SubpassBeginInfoKHR 
       {
-         public StructureType type;
-         public IntPtr next;
-         public RenderPassCreateFlags flags;
-         public UInt32 attachmentCount;
-         public AttachmentDescription2KHR* pAttachments;
-         public UInt32 subpassCount;
-         public SubpassDescription2KHR* pSubpasses;
-         public UInt32 dependencyCount;
-         public SubpassDependency2KHR* pDependencies;
-         public UInt32 correlatedViewMaskCount;
-         public IntPtr pCorrelatedViewMasks;
-      };
-
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct SubpassBeginInfoKHR
-      {
-         public StructureType type;
-         public IntPtr next;
+         public StructureType sType;
+         public void pNext;
          public SubpassContents contents;
       };
-
+      
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct SubpassEndInfoKHR
+      public struct SubpassEndInfoKHR 
       {
-         public StructureType type;
-         public IntPtr next;
+         public StructureType sType;
+         public void pNext;
       };
+      
       #endregion
 
       #region functions
       //external functions we need to get from the device
-      //VkResult vkCreateRenderPass2KHR(VkDevice  device, const VkRenderPassCreateInfo2KHR *  pCreateInfo, const VkAllocationCallbacks *  pAllocator, VkRenderPass *  pRenderPass);
-      //void vkCmdBeginRenderPass2KHR(VkCommandBuffer  commandBuffer, const VkRenderPassBeginInfo *  pRenderPassBegin, const VkSubpassBeginInfoKHR *  pSubpassBeginInfo);
-      //void vkCmdNextSubpass2KHR(VkCommandBuffer  commandBuffer, const VkSubpassBeginInfoKHR *  pSubpassBeginInfo, const VkSubpassEndInfoKHR *  pSubpassEndInfo);
-      //void vkCmdEndRenderPass2KHR(VkCommandBuffer  commandBuffer, const VkSubpassEndInfoKHR *  pSubpassEndInfo);
+      //VkResult vkCreateRenderPass2KHR(VkDevice device, VkRenderPassCreateInfo2KHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkRenderPass* pRenderPass);
+      //void vkCmdBeginRenderPass2KHR(VkCommandBuffer commandBuffer, VkRenderPassBeginInfo* pRenderPassBegin, VkSubpassBeginInfoKHR* pSubpassBeginInfo);
+      //void vkCmdNextSubpass2KHR(VkCommandBuffer commandBuffer, VkSubpassBeginInfoKHR* pSubpassBeginInfo, VkSubpassEndInfoKHR* pSubpassEndInfo);
+      //void vkCmdEndRenderPass2KHR(VkCommandBuffer commandBuffer, VkSubpassEndInfoKHR* pSubpassEndInfo);
       
       //delegate definitions
-      public delegate Result CreateRenderPass2KHRDelegate(Device device, ref RenderPassCreateInfo2KHR pCreateInfo, AllocationCallbacks pAllocator, ref RenderPass pRenderPasss);
-      public delegate void CmdBeginRenderPass2KHRDelegate(CommandBuffer commandBuffer, ref RenderPassBeginInfo pRenderPassBegin, ref SubpassBeginInfoKHR pSubpassBeginInfos);
-      public delegate void CmdNextSubpass2KHRDelegate(CommandBuffer commandBuffer, ref SubpassBeginInfoKHR pSubpassBeginInfo, ref SubpassEndInfoKHR pSubpassEndInfos);
-      public delegate void CmdEndRenderPass2KHRDelegate(CommandBuffer commandBuffer, ref SubpassEndInfoKHR pSubpassEndInfos);
+      public delegate Result CreateRenderPass2KHRDelegate(Device device, ref RenderPassCreateInfo2KHR pCreateInfo, ref AllocationCallbacks pAllocator, ref RenderPass pRenderPass);
+      public delegate void CmdBeginRenderPass2KHRDelegate(CommandBuffer commandBuffer, ref RenderPassBeginInfo pRenderPassBegin, ref SubpassBeginInfoKHR pSubpassBeginInfo);
+      public delegate void CmdNextSubpass2KHRDelegate(CommandBuffer commandBuffer, ref SubpassBeginInfoKHR pSubpassBeginInfo, ref SubpassEndInfoKHR pSubpassEndInfo);
+      public delegate void CmdEndRenderPass2KHRDelegate(CommandBuffer commandBuffer, ref SubpassEndInfoKHR pSubpassEndInfo);
       
       //delegate instances
       public static CreateRenderPass2KHRDelegate CreateRenderPass2KHR;
@@ -130,7 +132,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class KHR_create_renderpass2
+      public static class VK_KHR_create_renderpass2
       {
          public static void init(VK.Device device)
          {

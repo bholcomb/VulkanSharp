@@ -11,10 +11,18 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
+      //no enums
+
+       
       #region flags
+      [Flags]
+      public enum PipelineRasterizationDepthClipStateCreateFlagsEXT : int
+      {  
+      };
+      
       #endregion
 
       #region structs
@@ -22,7 +30,7 @@ namespace Vulkan
       public struct PhysicalDeviceDepthClipEnableFeaturesEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public Bool32 depthClipEnable;
       };
       
@@ -30,22 +38,13 @@ namespace Vulkan
       public struct PipelineRasterizationDepthClipStateCreateInfoEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
-         public UInt32 flags;
+         public void pNext;
+         public PipelineRasterizationDepthClipStateCreateFlagsEXT flags;
          public Bool32 depthClipEnable;
       };
       
       #endregion
 
-      #region functions
-      //external functions we need to get from the device
-      
-      //delegate definitions
-      
-      //delegate instances
-      #endregion
-
-      #region interop
-      #endregion
+      //no functions
    }
 }

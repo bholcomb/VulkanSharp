@@ -11,6 +11,9 @@ namespace Vulkan
    
    public static partial class VK
    {
+      //no handles
+      
+
       #region enums
       public enum RasterizationOrderAMD : int
       {  
@@ -20,29 +23,19 @@ namespace Vulkan
       
       #endregion
 
-      #region flags
-      #endregion
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineRasterizationStateRasterizationOrderAMD 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public RasterizationOrderAMD rasterizationOrder;
       };
       
       #endregion
 
-      #region functions
-      //external functions we need to get from the device
-      
-      //delegate definitions
-      
-      //delegate instances
-      #endregion
-
-      #region interop
-      #endregion
+      //no functions
    }
 }

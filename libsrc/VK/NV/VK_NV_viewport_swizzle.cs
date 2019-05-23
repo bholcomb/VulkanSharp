@@ -11,6 +11,9 @@ namespace Vulkan
    
    public static partial class VK
    {
+      //no handles
+      
+
       #region enums
       public enum ViewportCoordinateSwizzleNV : int
       {  
@@ -22,12 +25,17 @@ namespace Vulkan
          NegativeZNv = 5,
          PositiveWNv = 6,
          NegativeWNv = 7,
-         
       };
       
       #endregion
 
+       
       #region flags
+      [Flags]
+      public enum PipelineViewportSwizzleStateCreateFlagsNV : int
+      {  
+      };
+      
       #endregion
 
       #region structs
@@ -41,26 +49,17 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct PipelineViewportSwizzleStateCreateInfoNV 
+      public struct PipelineViewportSwizzleStateCreateInfoNV 
       {
          public StructureType sType;
-         public IntPtr pNext;
-         public UInt32 flags;
+         public void pNext;
+         public PipelineViewportSwizzleStateCreateFlagsNV flags;
          public UInt32 viewportCount;
-         public ViewportSwizzleNV* pViewportSwizzles;
+         public ViewportSwizzleNV pViewportSwizzles;
       };
       
       #endregion
 
-      #region functions
-      //external functions we need to get from the device
-      
-      //delegate definitions
-      
-      //delegate instances
-      #endregion
-
-      #region interop
-      #endregion
+      //no functions
    }
 }

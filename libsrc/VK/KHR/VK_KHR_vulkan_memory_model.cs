@@ -11,18 +11,19 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceVulkanMemoryModelFeaturesKHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public Bool32 vulkanMemoryModel;
          public Bool32 vulkanMemoryModelDeviceScope;
          public Bool32 vulkanMemoryModelAvailabilityVisibilityChains;
@@ -30,15 +31,6 @@ namespace Vulkan
       
       #endregion
 
-      #region functions
-      //external functions we need to get from the device
-      
-      //delegate definitions
-      
-      //delegate instances
-      #endregion
-
-      #region interop
-      #endregion
+      //no functions
    }
 }

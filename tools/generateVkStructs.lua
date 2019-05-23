@@ -13,7 +13,7 @@ namespace Vulkan
 {
    public static partial class VK
    {
-      #region enums
+      #region structs
       {{for k,sName in pairs(api.structs) do
         local s = types.structs[sName]
         local needsUnsafe = false

@@ -11,33 +11,41 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
+      //no enums
+
+       
       #region flags
+      [Flags]
+      public enum Win32SurfaceCreateFlagsKHR : int
+      {  
+      };
+      
       #endregion
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct Win32SurfaceCreateInfoKHR 
       {
-         public StructureType type;
-         public IntPtr next;
-         public UInt32 flags;
-         public IntPtr hinstance;
-         public IntPtr hwnd;
+         public StructureType sType;
+         public void pNext;
+         public Win32SurfaceCreateFlagsKHR flags;
+         public HINSTANCE hinstance;
+         public HWND hwnd;
       };
       
       #endregion
 
       #region functions
       //external functions we need to get from the instance
-      //VkResult vkCreateWin32SurfaceKHR(VkInstance  instance, const VkWin32SurfaceCreateInfoKHR *  pCreateInfo, const VkAllocationCallbacks *  pAllocator, VkSurfaceKHR *  pSurface);
-      //VkBool32 vkGetPhysicalDeviceWin32PresentationSupportKHR(VkPhysicalDevice  physicalDevice, uint32_t  queueFamilyIndex);
+      //VkResult vkCreateWin32SurfaceKHR(VkInstance instance, VkWin32SurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface);
+      //VkBool32 vkGetPhysicalDeviceWin32PresentationSupportKHR(VkPhysicalDevice physicalDevice, uint32_t queueFamilyIndex);
       
       //delegate definitions
-      public delegate Result CreateWin32SurfaceKHRDelegate(Instance instance, ref Win32SurfaceCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, out SurfaceKHR pSurfaces);
-      public delegate Bool32 GetPhysicalDeviceWin32PresentationSupportKHRDelegate(PhysicalDevice physicalDevice, UInt32 queueFamilyIndexs);
+      public delegate Result CreateWin32SurfaceKHRDelegate(Instance instance, ref Win32SurfaceCreateInfoKHR pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
+      public delegate Bool32 GetPhysicalDeviceWin32PresentationSupportKHRDelegate(PhysicalDevice physicalDevice, UInt32 queueFamilyIndex);
       
       //delegate instances
       public static CreateWin32SurfaceKHRDelegate CreateWin32SurfaceKHR;
@@ -45,7 +53,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class KHR_win32_surface
+      public static class VK_KHR_win32_surface
       {
          public static void init(VK.Instance instance)
          {

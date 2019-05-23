@@ -11,38 +11,39 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImportMemoryWin32HandleInfoKHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public ExternalMemoryHandleTypeFlags handleType;
-         public IntPtr handle;
-         public IntPtr name;
+         public HANDLE handle;
+         public LPCWSTR name;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ExportMemoryWin32HandleInfoKHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
-         public IntPtr pAttributes;
-         public UInt32 dwAccess;
-         public IntPtr name;
+         public void pNext;
+         public SECURITY_ATTRIBUTES pAttributes;
+         public DWORD dwAccess;
+         public LPCWSTR name;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MemoryWin32HandlePropertiesKHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public UInt32 memoryTypeBits;
       };
       
@@ -50,7 +51,7 @@ namespace Vulkan
       public struct MemoryGetWin32HandleInfoKHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public DeviceMemory memory;
          public ExternalMemoryHandleTypeFlags handleType;
       };
@@ -59,12 +60,12 @@ namespace Vulkan
 
       #region functions
       //external functions we need to get from the device
-      //VkResult vkGetMemoryWin32HandleKHR(VkDevice  device, const VkMemoryGetWin32HandleInfoKHR *  pGetWin32HandleInfo, HANDLE *  pHandle);
-      //VkResult vkGetMemoryWin32HandlePropertiesKHR(VkDevice  device, VkExternalMemoryHandleTypeFlagBits  handleType, HANDLE  handle, VkMemoryWin32HandlePropertiesKHR *  pMemoryWin32HandleProperties);
+      //VkResult vkGetMemoryWin32HandleKHR(VkDevice device, VkMemoryGetWin32HandleInfoKHR* pGetWin32HandleInfo, HANDLE* pHandle);
+      //VkResult vkGetMemoryWin32HandlePropertiesKHR(VkDevice device, VkExternalMemoryHandleTypeFlags handleType, HANDLE handle, VkMemoryWin32HandlePropertiesKHR* pMemoryWin32HandleProperties);
       
       //delegate definitions
-      public delegate Result GetMemoryWin32HandleKHRDelegate(Device device, ref MemoryGetWin32HandleInfoKHR pGetWin32HandleInfo, ref IntPtr pHandles);
-      public delegate Result GetMemoryWin32HandlePropertiesKHRDelegate(Device device, ExternalMemoryHandleTypeFlags handleType, IntPtr handle, ref MemoryWin32HandlePropertiesKHR pMemoryWin32HandlePropertiess);
+      public delegate Result GetMemoryWin32HandleKHRDelegate(Device device, ref MemoryGetWin32HandleInfoKHR pGetWin32HandleInfo, ref HANDLE pHandle);
+      public delegate Result GetMemoryWin32HandlePropertiesKHRDelegate(Device device, ExternalMemoryHandleTypeFlags handleType, HANDLE handle, ref MemoryWin32HandlePropertiesKHR pMemoryWin32HandleProperties);
       
       //delegate instances
       public static GetMemoryWin32HandleKHRDelegate GetMemoryWin32HandleKHR;
@@ -72,7 +73,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class KHR_external_memory_win32
+      public static class VK_KHR_external_memory_win32
       {
          public static void init(VK.Device device)
          {

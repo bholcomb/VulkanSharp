@@ -11,27 +11,28 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImportMemoryHostPointerInfoEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public ExternalMemoryHandleTypeFlags handleType;
-         public IntPtr pHostPointer;
+         public void pHostPointer;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MemoryHostPointerPropertiesEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public UInt32 memoryTypeBits;
       };
       
@@ -39,25 +40,25 @@ namespace Vulkan
       public struct PhysicalDeviceExternalMemoryHostPropertiesEXT 
       {
          public StructureType sType;
+         public void pNext;
          public DeviceSize minImportedHostPointerAlignment;
-         public IntPtr pNext;
       };
       
       #endregion
 
       #region functions
       //external functions we need to get from the device
-      //VkResult vkGetMemoryHostPointerPropertiesEXT(VkDevice  device, VkExternalMemoryHandleTypeFlagBits  handleType, const void *  pHostPointer, VkMemoryHostPointerPropertiesEXT *  pMemoryHostPointerProperties);
+      //VkResult vkGetMemoryHostPointerPropertiesEXT(VkDevice device, VkExternalMemoryHandleTypeFlags handleType, void* pHostPointer, VkMemoryHostPointerPropertiesEXT* pMemoryHostPointerProperties);
       
       //delegate definitions
-      public delegate Result GetMemoryHostPointerPropertiesEXTDelegate(Device device, ExternalMemoryHandleTypeFlags handleType, IntPtr pHostPointer, ref MemoryHostPointerPropertiesEXT pMemoryHostPointerPropertiess);
+      public delegate Result GetMemoryHostPointerPropertiesEXTDelegate(Device device, ExternalMemoryHandleTypeFlags handleType, ref void pHostPointer, ref MemoryHostPointerPropertiesEXT pMemoryHostPointerProperties);
       
       //delegate instances
       public static GetMemoryHostPointerPropertiesEXTDelegate GetMemoryHostPointerPropertiesEXT;
       #endregion
 
       #region interop
-      public static class EXT_external_memory_host
+      public static class VK_EXT_external_memory_host
       {
          public static void init(VK.Device device)
          {

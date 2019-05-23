@@ -11,35 +11,25 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct PhysicalDeviceMemoryBudgetPropertiesEXT 
+      public struct PhysicalDeviceMemoryBudgetPropertiesEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
-         [MarshalAs(UnmanagedType.ByValArray, SizeConst = (int)VK.MAX_MEMORY_HEAPS)]
-         public DeviceSize[] heapBudget;
-         [MarshalAs(UnmanagedType.ByValArray, SizeConst = (int)VK.MAX_MEMORY_HEAPS)]
-         public DeviceSize[] heapUsage;
+         public void pNext;
+         public DeviceSize heapBudget;
+         public DeviceSize heapUsage;
       };
       
       #endregion
 
-      #region functions
-      //external functions we need to get from the device
-      
-      //delegate definitions
-      
-      //delegate instances
-      #endregion
-
-      #region interop
-      #endregion
+      //no functions
    }
 }

@@ -11,29 +11,33 @@ namespace Vulkan
    
    public static partial class VK
    {
+      #region handles
       [StructLayout(LayoutKind.Sequential)] public struct DisplayKHR { public UInt64 native; }
       [StructLayout(LayoutKind.Sequential)] public struct DisplayModeKHR { public UInt64 native; }
+      #endregion 
+      
 
-      #region enums
-      #endregion
+      //no enums
 
+       
       #region flags
       [Flags]
       public enum DisplayPlaneAlphaFlagsKHR : int
-      {
-         OPAQUE_BIT_KHR = 0x00000001,
-         GLOBAL_BIT_KHR = 0x00000002,
-         PER_PIXEL_BIT_KHR = 0x00000004,
-         PER_PIXEL_PREMULTIPLIED_BIT_KHR = 0x00000008
-      };
-
-      [Flags]
-      public enum DisplayPlane : int
       {  
-         AlphaOpaqueBitKhr = 1 << 0,
-         AlphaGlobalBitKhr = 1 << 1,
-         AlphaPerPixelBitKhr = 1 << 2,
-         AlphaPerPixelPremultipliedBitKhr = 1 << 3,
+         DisplayPlaneAlphaOpaqueBitKhr = 1 << 0,
+         DisplayPlaneAlphaGlobalBitKhr = 1 << 1,
+         DisplayPlaneAlphaPerPixelBitKhr = 1 << 2,
+         DisplayPlaneAlphaPerPixelPremultipliedBitKhr = 1 << 3,
+      };
+      
+      [Flags]
+      public enum DisplayModeCreateFlagsKHR : int
+      {  
+      };
+      
+      [Flags]
+      public enum DisplaySurfaceCreateFlagsKHR : int
+      {  
       };
       
       #endregion
@@ -43,7 +47,7 @@ namespace Vulkan
       public struct DisplayPropertiesKHR 
       {
          public DisplayKHR display;
-         public string displayName;
+         public char displayName;
          public Extent2D physicalDimensions;
          public Extent2D physicalResolution;
          public SurfaceTransformFlagsKHR supportedTransforms;
@@ -69,8 +73,8 @@ namespace Vulkan
       public struct DisplayModeCreateInfoKHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
-         public UInt32 flags;
+         public void pNext;
+         public DisplayModeCreateFlagsKHR flags;
          public DisplayModeParametersKHR parameters;
       };
       
@@ -99,8 +103,8 @@ namespace Vulkan
       public struct DisplaySurfaceCreateInfoKHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
-         public UInt32 flags;
+         public void pNext;
+         public DisplaySurfaceCreateFlagsKHR flags;
          public DisplayModeKHR displayMode;
          public UInt32 planeIndex;
          public UInt32 planeStackIndex;
@@ -114,22 +118,22 @@ namespace Vulkan
 
       #region functions
       //external functions we need to get from the instance
-      //VkResult vkGetPhysicalDeviceDisplayPropertiesKHR(VkPhysicalDevice  physicalDevice, uint32_t *  pPropertyCount, VkDisplayPropertiesKHR *  pProperties);
-      //VkResult vkGetPhysicalDeviceDisplayPlanePropertiesKHR(VkPhysicalDevice  physicalDevice, uint32_t *  pPropertyCount, VkDisplayPlanePropertiesKHR *  pProperties);
-      //VkResult vkGetDisplayPlaneSupportedDisplaysKHR(VkPhysicalDevice  physicalDevice, uint32_t  planeIndex, uint32_t *  pDisplayCount, VkDisplayKHR *  pDisplays);
-      //VkResult vkGetDisplayModePropertiesKHR(VkPhysicalDevice  physicalDevice, VkDisplayKHR  display, uint32_t *  pPropertyCount, VkDisplayModePropertiesKHR *  pProperties);
-      //VkResult vkCreateDisplayModeKHR(VkPhysicalDevice  physicalDevice, VkDisplayKHR  display, const VkDisplayModeCreateInfoKHR *  pCreateInfo, const VkAllocationCallbacks *  pAllocator, VkDisplayModeKHR *  pMode);
-      //VkResult vkGetDisplayPlaneCapabilitiesKHR(VkPhysicalDevice  physicalDevice, VkDisplayModeKHR  mode, uint32_t  planeIndex, VkDisplayPlaneCapabilitiesKHR *  pCapabilities);
-      //VkResult vkCreateDisplayPlaneSurfaceKHR(VkInstance  instance, const VkDisplaySurfaceCreateInfoKHR *  pCreateInfo, const VkAllocationCallbacks *  pAllocator, VkSurfaceKHR *  pSurface);
+      //VkResult vkGetPhysicalDeviceDisplayPropertiesKHR(VkPhysicalDevice physicalDevice, uint32_t* pPropertyCount, VkDisplayPropertiesKHR* pProperties);
+      //VkResult vkGetPhysicalDeviceDisplayPlanePropertiesKHR(VkPhysicalDevice physicalDevice, uint32_t* pPropertyCount, VkDisplayPlanePropertiesKHR* pProperties);
+      //VkResult vkGetDisplayPlaneSupportedDisplaysKHR(VkPhysicalDevice physicalDevice, uint32_t planeIndex, uint32_t* pDisplayCount, VkDisplayKHR* pDisplays);
+      //VkResult vkGetDisplayModePropertiesKHR(VkPhysicalDevice physicalDevice, VkDisplayKHR display, uint32_t* pPropertyCount, VkDisplayModePropertiesKHR* pProperties);
+      //VkResult vkCreateDisplayModeKHR(VkPhysicalDevice physicalDevice, VkDisplayKHR display, VkDisplayModeCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDisplayModeKHR* pMode);
+      //VkResult vkGetDisplayPlaneCapabilitiesKHR(VkPhysicalDevice physicalDevice, VkDisplayModeKHR mode, uint32_t planeIndex, VkDisplayPlaneCapabilitiesKHR* pCapabilities);
+      //VkResult vkCreateDisplayPlaneSurfaceKHR(VkInstance instance, VkDisplaySurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface);
       
       //delegate definitions
-      public delegate Result GetPhysicalDeviceDisplayPropertiesKHRDelegate(PhysicalDevice physicalDevice, ref UInt32 pPropertyCount, ref DisplayPropertiesKHR pPropertiess);
-      public delegate Result GetPhysicalDeviceDisplayPlanePropertiesKHRDelegate(PhysicalDevice physicalDevice, ref UInt32 pPropertyCount, ref DisplayPlanePropertiesKHR pPropertiess);
-      public delegate Result GetDisplayPlaneSupportedDisplaysKHRDelegate(PhysicalDevice physicalDevice, UInt32 planeIndex, ref UInt32 pDisplayCount, ref DisplayKHR pDisplayss);
-      public delegate Result GetDisplayModePropertiesKHRDelegate(PhysicalDevice physicalDevice, DisplayKHR display, ref UInt32 pPropertyCount, ref DisplayModePropertiesKHR pPropertiess);
-      public delegate Result CreateDisplayModeKHRDelegate(PhysicalDevice physicalDevice, DisplayKHR display, ref DisplayModeCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, ref DisplayModeKHR pModes);
-      public delegate Result GetDisplayPlaneCapabilitiesKHRDelegate(PhysicalDevice physicalDevice, DisplayModeKHR mode, UInt32 planeIndex, ref DisplayPlaneCapabilitiesKHR pCapabilitiess);
-      public delegate Result CreateDisplayPlaneSurfaceKHRDelegate(Instance instance, ref DisplaySurfaceCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
+      public delegate Result GetPhysicalDeviceDisplayPropertiesKHRDelegate(PhysicalDevice physicalDevice, ref UInt32 pPropertyCount, ref DisplayPropertiesKHR pProperties);
+      public delegate Result GetPhysicalDeviceDisplayPlanePropertiesKHRDelegate(PhysicalDevice physicalDevice, ref UInt32 pPropertyCount, ref DisplayPlanePropertiesKHR pProperties);
+      public delegate Result GetDisplayPlaneSupportedDisplaysKHRDelegate(PhysicalDevice physicalDevice, UInt32 planeIndex, ref UInt32 pDisplayCount, ref DisplayKHR pDisplays);
+      public delegate Result GetDisplayModePropertiesKHRDelegate(PhysicalDevice physicalDevice, DisplayKHR display, ref UInt32 pPropertyCount, ref DisplayModePropertiesKHR pProperties);
+      public delegate Result CreateDisplayModeKHRDelegate(PhysicalDevice physicalDevice, DisplayKHR display, ref DisplayModeCreateInfoKHR pCreateInfo, ref AllocationCallbacks pAllocator, ref DisplayModeKHR pMode);
+      public delegate Result GetDisplayPlaneCapabilitiesKHRDelegate(PhysicalDevice physicalDevice, DisplayModeKHR mode, UInt32 planeIndex, ref DisplayPlaneCapabilitiesKHR pCapabilities);
+      public delegate Result CreateDisplayPlaneSurfaceKHRDelegate(Instance instance, ref DisplaySurfaceCreateInfoKHR pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
       
       //delegate instances
       public static GetPhysicalDeviceDisplayPropertiesKHRDelegate GetPhysicalDeviceDisplayPropertiesKHR;
@@ -142,7 +146,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class KHR_display
+      public static class VK_KHR_display
       {
          public static void init(VK.Instance instance)
          {

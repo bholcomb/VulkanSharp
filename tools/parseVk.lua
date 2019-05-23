@@ -311,8 +311,7 @@ function parseExtensions()
             extension.name = ext.name
             extension.number = ext.number
             extension.type = ext.type
-            extension.author = ext.author
-            extension.type = ext.type
+            _, _, extension.tag = string.find(ext.name, "^VK_(.-)_")
             
             for kk,vv in pairs(ext) do
                if(type(vv)== "table" and vv:tag() == "require") then

@@ -11,24 +11,15 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
-
-      #region flags
-      #endregion
-
-      #region structs
-      #endregion
-
-      #region functions
-      //external functions we need to get from the device
+      //no handles
       
-      //delegate definitions
-      
-      //delegate instances
-      #endregion
 
-      #region interop
-      #endregion
+      //no enums
+
+      //no bitfields
+
+      //no structs
+
+      //no functions
    }
 }

@@ -11,8 +11,11 @@ namespace Vulkan
    
    public static partial class VK
    {
+      #region handles
       [StructLayout(LayoutKind.Sequential)] public struct ObjectTableNVX { public UInt64 native; }
       [StructLayout(LayoutKind.Sequential)] public struct IndirectCommandsLayoutNVX { public UInt64 native; }
+      #endregion 
+      
 
       #region enums
       public enum IndirectCommandsTokenTypeNVX : int
@@ -25,7 +28,6 @@ namespace Vulkan
          DrawIndexedNvx = 5,
          DrawNvx = 6,
          DispatchNvx = 7,
-         
       };
       
       public enum ObjectEntryTypeNVX : int
@@ -35,26 +37,26 @@ namespace Vulkan
          IndexBufferNvx = 2,
          VertexBufferNvx = 3,
          PushConstantNvx = 4,
-         
       };
       
       #endregion
 
+       
       #region flags
       [Flags]
       public enum IndirectCommandsLayoutUsageFlagsNVX : int
       {  
-         UnorderedSequencesBitNvx = 1 << 0,
-         SparseSequencesBitNvx = 1 << 1,
-         EmptyExecutionsBitNvx = 1 << 2,
-         IndexedSequencesBitNvx = 1 << 3,
+         IndirectCommandsLayoutUsageUnorderedSequencesBitNvx = 1 << 0,
+         IndirectCommandsLayoutUsageSparseSequencesBitNvx = 1 << 1,
+         IndirectCommandsLayoutUsageEmptyExecutionsBitNvx = 1 << 2,
+         IndirectCommandsLayoutUsageIndexedSequencesBitNvx = 1 << 3,
       };
       
       [Flags]
       public enum ObjectEntryUsageFlagsNVX : int
       {  
-         GraphicsBitNvx = 1 << 0,
-         ComputeBitNvx = 1 << 1,
+         ObjectEntryUsageGraphicsBitNvx = 1 << 0,
+         ObjectEntryUsageComputeBitNvx = 1 << 1,
       };
       
       #endregion
@@ -64,7 +66,7 @@ namespace Vulkan
       public struct DeviceGeneratedCommandsFeaturesNVX 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public Bool32 computeBindingPointSupport;
       };
       
@@ -72,7 +74,7 @@ namespace Vulkan
       public struct DeviceGeneratedCommandsLimitsNVX 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public UInt32 maxIndirectCommandsLayoutTokenCount;
          public UInt32 maxObjectEntryCounts;
          public UInt32 minSequenceCountBufferOffsetAlignment;
@@ -98,25 +100,25 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct IndirectCommandsLayoutCreateInfoNVX 
+      public struct IndirectCommandsLayoutCreateInfoNVX 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public PipelineBindPoint pipelineBindPoint;
          public IndirectCommandsLayoutUsageFlagsNVX flags;
          public UInt32 tokenCount;
-         public IndirectCommandsLayoutTokenNVX* pTokens;
+         public IndirectCommandsLayoutTokenNVX pTokens;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct CmdProcessCommandsInfoNVX 
+      public struct CmdProcessCommandsInfoNVX 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public ObjectTableNVX objectTable;
          public IndirectCommandsLayoutNVX indirectCommandsLayout;
          public UInt32 indirectCommandsTokenCount;
-         public IndirectCommandsTokenNVX* pIndirectCommandsTokens;
+         public IndirectCommandsTokenNVX pIndirectCommandsTokens;
          public UInt32 maxSequencesCount;
          public CommandBuffer targetCommandBuffer;
          public Buffer sequencesCountBuffer;
@@ -129,21 +131,21 @@ namespace Vulkan
       public struct CmdReserveSpaceForCommandsInfoNVX 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public ObjectTableNVX objectTable;
          public IndirectCommandsLayoutNVX indirectCommandsLayout;
          public UInt32 maxSequencesCount;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct ObjectTableCreateInfoNVX 
+      public struct ObjectTableCreateInfoNVX 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public UInt32 objectCount;
-         public ObjectEntryTypeNVX* pObjectEntryTypes;
-         public IntPtr pObjectEntryCounts;
-         public ObjectEntryUsageFlagsNVX* pObjectEntryUsageFlags;
+         public ObjectEntryTypeNVX pObjectEntryTypes;
+         public UInt32 pObjectEntryCounts;
+         public ObjectEntryUsageFlagsNVX pObjectEntryUsageFlags;
          public UInt32 maxUniformBuffersPerDescriptor;
          public UInt32 maxStorageBuffersPerDescriptor;
          public UInt32 maxStorageImagesPerDescriptor;
@@ -205,26 +207,26 @@ namespace Vulkan
 
       #region functions
       //external functions we need to get from the device
-      //void vkCmdProcessCommandsNVX(VkCommandBuffer  commandBuffer, const VkCmdProcessCommandsInfoNVX *  pProcessCommandsInfo);
-      //void vkCmdReserveSpaceForCommandsNVX(VkCommandBuffer  commandBuffer, const VkCmdReserveSpaceForCommandsInfoNVX *  pReserveSpaceInfo);
-      //VkResult vkCreateIndirectCommandsLayoutNVX(VkDevice  device, const VkIndirectCommandsLayoutCreateInfoNVX *  pCreateInfo, const VkAllocationCallbacks *  pAllocator, VkIndirectCommandsLayoutNVX *  pIndirectCommandsLayout);
-      //void vkDestroyIndirectCommandsLayoutNVX(VkDevice  device, VkIndirectCommandsLayoutNVX  indirectCommandsLayout, const VkAllocationCallbacks *  pAllocator);
-      //VkResult vkCreateObjectTableNVX(VkDevice  device, const VkObjectTableCreateInfoNVX *  pCreateInfo, const VkAllocationCallbacks *  pAllocator, VkObjectTableNVX *  pObjectTable);
-      //void vkDestroyObjectTableNVX(VkDevice  device, VkObjectTableNVX  objectTable, const VkAllocationCallbacks *  pAllocator);
-      //VkResult vkRegisterObjectsNVX(VkDevice  device, VkObjectTableNVX  objectTable, uint32_t  objectCount, const VkObjectTableEntryNVX * const*  ppObjectTableEntries, const uint32_t *  pObjectIndices);
-      //VkResult vkUnregisterObjectsNVX(VkDevice  device, VkObjectTableNVX  objectTable, uint32_t  objectCount, const VkObjectEntryTypeNVX *  pObjectEntryTypes, const uint32_t *  pObjectIndices);
-      //void vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX(VkPhysicalDevice  physicalDevice, VkDeviceGeneratedCommandsFeaturesNVX *  pFeatures, VkDeviceGeneratedCommandsLimitsNVX *  pLimits);
+      //void vkCmdProcessCommandsNVX(VkCommandBuffer commandBuffer, VkCmdProcessCommandsInfoNVX* pProcessCommandsInfo);
+      //void vkCmdReserveSpaceForCommandsNVX(VkCommandBuffer commandBuffer, VkCmdReserveSpaceForCommandsInfoNVX* pReserveSpaceInfo);
+      //VkResult vkCreateIndirectCommandsLayoutNVX(VkDevice device, VkIndirectCommandsLayoutCreateInfoNVX* pCreateInfo, VkAllocationCallbacks* pAllocator, VkIndirectCommandsLayoutNVX* pIndirectCommandsLayout);
+      //void vkDestroyIndirectCommandsLayoutNVX(VkDevice device, VkIndirectCommandsLayoutNVX indirectCommandsLayout, VkAllocationCallbacks* pAllocator);
+      //VkResult vkCreateObjectTableNVX(VkDevice device, VkObjectTableCreateInfoNVX* pCreateInfo, VkAllocationCallbacks* pAllocator, VkObjectTableNVX* pObjectTable);
+      //void vkDestroyObjectTableNVX(VkDevice device, VkObjectTableNVX objectTable, VkAllocationCallbacks* pAllocator);
+      //VkResult vkRegisterObjectsNVX(VkDevice device, VkObjectTableNVX objectTable, uint32_t objectCount, VkObjectTableEntryNVX ppObjectTableEntries, uint32_t* pObjectIndices);
+      //VkResult vkUnregisterObjectsNVX(VkDevice device, VkObjectTableNVX objectTable, uint32_t objectCount, VkObjectEntryTypeNVX* pObjectEntryTypes, uint32_t* pObjectIndices);
+      //void vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX(VkPhysicalDevice physicalDevice, VkDeviceGeneratedCommandsFeaturesNVX* pFeatures, VkDeviceGeneratedCommandsLimitsNVX* pLimits);
       
       //delegate definitions
-      public delegate void CmdProcessCommandsNVXDelegate(CommandBuffer commandBuffer, ref CmdProcessCommandsInfoNVX pProcessCommandsInfos);
-      public delegate void CmdReserveSpaceForCommandsNVXDelegate(CommandBuffer commandBuffer, ref CmdReserveSpaceForCommandsInfoNVX pReserveSpaceInfos);
-      public delegate Result CreateIndirectCommandsLayoutNVXDelegate(Device device, ref IndirectCommandsLayoutCreateInfoNVX pCreateInfo, AllocationCallbacks pAllocator, ref IndirectCommandsLayoutNVX pIndirectCommandsLayouts);
-      public delegate void DestroyIndirectCommandsLayoutNVXDelegate(Device device, IndirectCommandsLayoutNVX indirectCommandsLayout, AllocationCallbacks pAllocators);
-      public delegate Result CreateObjectTableNVXDelegate(Device device, ref ObjectTableCreateInfoNVX pCreateInfo, AllocationCallbacks pAllocator, ref ObjectTableNVX pObjectTables);
-      public delegate void DestroyObjectTableNVXDelegate(Device device, ObjectTableNVX objectTable, AllocationCallbacks pAllocators);
-      public delegate Result RegisterObjectsNVXDelegate(Device device, ObjectTableNVX objectTable, UInt32 objectCount, ref ObjectTableEntryNVX ppObjectTableEntries, ref UInt32 pObjectIndicess);
-      public delegate Result UnregisterObjectsNVXDelegate(Device device, ObjectTableNVX objectTable, UInt32 objectCount, ref ObjectEntryTypeNVX pObjectEntryTypes, ref UInt32 pObjectIndicess);
-      public delegate void GetPhysicalDeviceGeneratedCommandsPropertiesNVXDelegate(PhysicalDevice physicalDevice, ref DeviceGeneratedCommandsFeaturesNVX pFeatures, ref DeviceGeneratedCommandsLimitsNVX pLimitss);
+      public delegate void CmdProcessCommandsNVXDelegate(CommandBuffer commandBuffer, ref CmdProcessCommandsInfoNVX pProcessCommandsInfo);
+      public delegate void CmdReserveSpaceForCommandsNVXDelegate(CommandBuffer commandBuffer, ref CmdReserveSpaceForCommandsInfoNVX pReserveSpaceInfo);
+      public delegate Result CreateIndirectCommandsLayoutNVXDelegate(Device device, ref IndirectCommandsLayoutCreateInfoNVX pCreateInfo, ref AllocationCallbacks pAllocator, ref IndirectCommandsLayoutNVX pIndirectCommandsLayout);
+      public delegate void DestroyIndirectCommandsLayoutNVXDelegate(Device device, IndirectCommandsLayoutNVX indirectCommandsLayout, ref AllocationCallbacks pAllocator);
+      public delegate Result CreateObjectTableNVXDelegate(Device device, ref ObjectTableCreateInfoNVX pCreateInfo, ref AllocationCallbacks pAllocator, ref ObjectTableNVX pObjectTable);
+      public delegate void DestroyObjectTableNVXDelegate(Device device, ObjectTableNVX objectTable, ref AllocationCallbacks pAllocator);
+      public delegate Result RegisterObjectsNVXDelegate(Device device, ObjectTableNVX objectTable, UInt32 objectCount, ObjectTableEntryNVX ppObjectTableEntries, ref UInt32 pObjectIndices);
+      public delegate Result UnregisterObjectsNVXDelegate(Device device, ObjectTableNVX objectTable, UInt32 objectCount, ref ObjectEntryTypeNVX pObjectEntryTypes, ref UInt32 pObjectIndices);
+      public delegate void GetPhysicalDeviceGeneratedCommandsPropertiesNVXDelegate(PhysicalDevice physicalDevice, ref DeviceGeneratedCommandsFeaturesNVX pFeatures, ref DeviceGeneratedCommandsLimitsNVX pLimits);
       
       //delegate instances
       public static CmdProcessCommandsNVXDelegate CmdProcessCommandsNVX;
@@ -239,7 +241,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class NVX_device_generated_commands
+      public static class VK_NVX_device_generated_commands
       {
          public static void init(VK.Device device)
          {

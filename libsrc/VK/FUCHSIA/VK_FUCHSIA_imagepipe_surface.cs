@@ -11,10 +11,18 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
+      //no enums
+
+       
       #region flags
+      [Flags]
+      public enum ImagePipeSurfaceCreateFlagsFUCHSIA : int
+      {  
+      };
+      
       #endregion
 
       #region structs
@@ -22,26 +30,26 @@ namespace Vulkan
       public struct ImagePipeSurfaceCreateInfoFUCHSIA 
       {
          public StructureType sType;
-         public IntPtr pNext;
-         public UInt32 flags;
-         public IntPtr imagePipeHandle;
+         public void pNext;
+         public ImagePipeSurfaceCreateFlagsFUCHSIA flags;
+         public zx_handle_t imagePipeHandle;
       };
       
       #endregion
 
       #region functions
       //external functions we need to get from the instance
-      //VkResult vkCreateImagePipeSurfaceFUCHSIA(VkInstance  instance, const VkImagePipeSurfaceCreateInfoFUCHSIA *  pCreateInfo, const VkAllocationCallbacks *  pAllocator, VkSurfaceKHR *  pSurface);
+      //VkResult vkCreateImagePipeSurfaceFUCHSIA(VkInstance instance, VkImagePipeSurfaceCreateInfoFUCHSIA* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface);
       
       //delegate definitions
-      public delegate Result CreateImagePipeSurfaceFUCHSIADelegate(Instance instance, ref ImagePipeSurfaceCreateInfoFUCHSIA pCreateInfo, AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
+      public delegate Result CreateImagePipeSurfaceFUCHSIADelegate(Instance instance, ref ImagePipeSurfaceCreateInfoFUCHSIA pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
       
       //delegate instances
       public static CreateImagePipeSurfaceFUCHSIADelegate CreateImagePipeSurfaceFUCHSIA;
       #endregion
 
       #region interop
-      public static class FUCHSIA_imagepipe_surface
+      public static class VK_FUCHSIA_imagepipe_surface
       {
          public static void init(VK.Instance instance)
          {

@@ -11,18 +11,19 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceSurfaceInfo2KHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public SurfaceKHR surface;
       };
       
@@ -30,7 +31,7 @@ namespace Vulkan
       public struct SurfaceCapabilities2KHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public SurfaceCapabilitiesKHR surfaceCapabilities;
       };
       
@@ -38,7 +39,7 @@ namespace Vulkan
       public struct SurfaceFormat2KHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public SurfaceFormatKHR surfaceFormat;
       };
       
@@ -46,12 +47,12 @@ namespace Vulkan
 
       #region functions
       //external functions we need to get from the instance
-      //VkResult vkGetPhysicalDeviceSurfaceCapabilities2KHR(VkPhysicalDevice  physicalDevice, const VkPhysicalDeviceSurfaceInfo2KHR *  pSurfaceInfo, VkSurfaceCapabilities2KHR *  pSurfaceCapabilities);
-      //VkResult vkGetPhysicalDeviceSurfaceFormats2KHR(VkPhysicalDevice  physicalDevice, const VkPhysicalDeviceSurfaceInfo2KHR *  pSurfaceInfo, uint32_t *  pSurfaceFormatCount, VkSurfaceFormat2KHR *  pSurfaceFormats);
+      //VkResult vkGetPhysicalDeviceSurfaceCapabilities2KHR(VkPhysicalDevice physicalDevice, VkPhysicalDeviceSurfaceInfo2KHR* pSurfaceInfo, VkSurfaceCapabilities2KHR* pSurfaceCapabilities);
+      //VkResult vkGetPhysicalDeviceSurfaceFormats2KHR(VkPhysicalDevice physicalDevice, VkPhysicalDeviceSurfaceInfo2KHR* pSurfaceInfo, uint32_t* pSurfaceFormatCount, VkSurfaceFormat2KHR* pSurfaceFormats);
       
       //delegate definitions
-      public delegate Result GetPhysicalDeviceSurfaceCapabilities2KHRDelegate(PhysicalDevice physicalDevice, ref PhysicalDeviceSurfaceInfo2KHR pSurfaceInfo, ref SurfaceCapabilities2KHR pSurfaceCapabilitiess);
-      public delegate Result GetPhysicalDeviceSurfaceFormats2KHRDelegate(PhysicalDevice physicalDevice, ref PhysicalDeviceSurfaceInfo2KHR pSurfaceInfo, ref UInt32 pSurfaceFormatCount, ref SurfaceFormat2KHR pSurfaceFormatss);
+      public delegate Result GetPhysicalDeviceSurfaceCapabilities2KHRDelegate(PhysicalDevice physicalDevice, ref PhysicalDeviceSurfaceInfo2KHR pSurfaceInfo, ref SurfaceCapabilities2KHR pSurfaceCapabilities);
+      public delegate Result GetPhysicalDeviceSurfaceFormats2KHRDelegate(PhysicalDevice physicalDevice, ref PhysicalDeviceSurfaceInfo2KHR pSurfaceInfo, ref UInt32 pSurfaceFormatCount, ref SurfaceFormat2KHR pSurfaceFormats);
       
       //delegate instances
       public static GetPhysicalDeviceSurfaceCapabilities2KHRDelegate GetPhysicalDeviceSurfaceCapabilities2KHR;
@@ -59,7 +60,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class KHR_get_surface_capabilities2
+      public static class VK_KHR_get_surface_capabilities2
       {
          public static void init(VK.Instance instance)
          {

@@ -11,18 +11,19 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DisplayProperties2KHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public DisplayPropertiesKHR displayProperties;
       };
       
@@ -30,7 +31,7 @@ namespace Vulkan
       public struct DisplayPlaneProperties2KHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public DisplayPlanePropertiesKHR displayPlaneProperties;
       };
       
@@ -38,7 +39,7 @@ namespace Vulkan
       public struct DisplayModeProperties2KHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public DisplayModePropertiesKHR displayModeProperties;
       };
       
@@ -46,7 +47,7 @@ namespace Vulkan
       public struct DisplayPlaneInfo2KHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public DisplayModeKHR mode;
          public UInt32 planeIndex;
       };
@@ -55,7 +56,7 @@ namespace Vulkan
       public struct DisplayPlaneCapabilities2KHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public DisplayPlaneCapabilitiesKHR capabilities;
       };
       
@@ -63,16 +64,16 @@ namespace Vulkan
 
       #region functions
       //external functions we need to get from the instance
-      //VkResult vkGetPhysicalDeviceDisplayProperties2KHR(VkPhysicalDevice  physicalDevice, uint32_t *  pPropertyCount, VkDisplayProperties2KHR *  pProperties);
-      //VkResult vkGetPhysicalDeviceDisplayPlaneProperties2KHR(VkPhysicalDevice  physicalDevice, uint32_t *  pPropertyCount, VkDisplayPlaneProperties2KHR *  pProperties);
-      //VkResult vkGetDisplayModeProperties2KHR(VkPhysicalDevice  physicalDevice, VkDisplayKHR  display, uint32_t *  pPropertyCount, VkDisplayModeProperties2KHR *  pProperties);
-      //VkResult vkGetDisplayPlaneCapabilities2KHR(VkPhysicalDevice  physicalDevice, const VkDisplayPlaneInfo2KHR *  pDisplayPlaneInfo, VkDisplayPlaneCapabilities2KHR *  pCapabilities);
+      //VkResult vkGetPhysicalDeviceDisplayProperties2KHR(VkPhysicalDevice physicalDevice, uint32_t* pPropertyCount, VkDisplayProperties2KHR* pProperties);
+      //VkResult vkGetPhysicalDeviceDisplayPlaneProperties2KHR(VkPhysicalDevice physicalDevice, uint32_t* pPropertyCount, VkDisplayPlaneProperties2KHR* pProperties);
+      //VkResult vkGetDisplayModeProperties2KHR(VkPhysicalDevice physicalDevice, VkDisplayKHR display, uint32_t* pPropertyCount, VkDisplayModeProperties2KHR* pProperties);
+      //VkResult vkGetDisplayPlaneCapabilities2KHR(VkPhysicalDevice physicalDevice, VkDisplayPlaneInfo2KHR* pDisplayPlaneInfo, VkDisplayPlaneCapabilities2KHR* pCapabilities);
       
       //delegate definitions
-      public delegate Result GetPhysicalDeviceDisplayProperties2KHRDelegate(PhysicalDevice physicalDevice, ref UInt32 pPropertyCount, ref DisplayProperties2KHR pPropertiess);
-      public delegate Result GetPhysicalDeviceDisplayPlaneProperties2KHRDelegate(PhysicalDevice physicalDevice, ref UInt32 pPropertyCount, ref DisplayPlaneProperties2KHR pPropertiess);
-      public delegate Result GetDisplayModeProperties2KHRDelegate(PhysicalDevice physicalDevice, DisplayKHR display, ref UInt32 pPropertyCount, ref DisplayModeProperties2KHR pPropertiess);
-      public delegate Result GetDisplayPlaneCapabilities2KHRDelegate(PhysicalDevice physicalDevice, ref DisplayPlaneInfo2KHR pDisplayPlaneInfo, ref DisplayPlaneCapabilities2KHR pCapabilitiess);
+      public delegate Result GetPhysicalDeviceDisplayProperties2KHRDelegate(PhysicalDevice physicalDevice, ref UInt32 pPropertyCount, ref DisplayProperties2KHR pProperties);
+      public delegate Result GetPhysicalDeviceDisplayPlaneProperties2KHRDelegate(PhysicalDevice physicalDevice, ref UInt32 pPropertyCount, ref DisplayPlaneProperties2KHR pProperties);
+      public delegate Result GetDisplayModeProperties2KHRDelegate(PhysicalDevice physicalDevice, DisplayKHR display, ref UInt32 pPropertyCount, ref DisplayModeProperties2KHR pProperties);
+      public delegate Result GetDisplayPlaneCapabilities2KHRDelegate(PhysicalDevice physicalDevice, ref DisplayPlaneInfo2KHR pDisplayPlaneInfo, ref DisplayPlaneCapabilities2KHR pCapabilities);
       
       //delegate instances
       public static GetPhysicalDeviceDisplayProperties2KHRDelegate GetPhysicalDeviceDisplayProperties2KHR;
@@ -82,7 +83,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class KHR_get_display_properties2
+      public static class VK_KHR_get_display_properties2
       {
          public static void init(VK.Instance instance)
          {

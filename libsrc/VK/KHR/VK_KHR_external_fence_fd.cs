@@ -11,18 +11,19 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImportFenceFdInfoKHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public Fence fence;
          public FenceImportFlags flags;
          public ExternalFenceHandleTypeFlags handleType;
@@ -33,7 +34,7 @@ namespace Vulkan
       public struct FenceGetFdInfoKHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public Fence fence;
          public ExternalFenceHandleTypeFlags handleType;
       };
@@ -42,12 +43,12 @@ namespace Vulkan
 
       #region functions
       //external functions we need to get from the device
-      //VkResult vkImportFenceFdKHR(VkDevice  device, const VkImportFenceFdInfoKHR *  pImportFenceFdInfo);
-      //VkResult vkGetFenceFdKHR(VkDevice  device, const VkFenceGetFdInfoKHR *  pGetFdInfo, int *  pFd);
+      //VkResult vkImportFenceFdKHR(VkDevice device, VkImportFenceFdInfoKHR* pImportFenceFdInfo);
+      //VkResult vkGetFenceFdKHR(VkDevice device, VkFenceGetFdInfoKHR* pGetFdInfo, int* pFd);
       
       //delegate definitions
-      public delegate Result ImportFenceFdKHRDelegate(Device device, ref ImportFenceFdInfoKHR pImportFenceFdInfos);
-      public delegate Result GetFenceFdKHRDelegate(Device device, ref FenceGetFdInfoKHR pGetFdInfo, ref Int32 pFds);
+      public delegate Result ImportFenceFdKHRDelegate(Device device, ref ImportFenceFdInfoKHR pImportFenceFdInfo);
+      public delegate Result GetFenceFdKHRDelegate(Device device, ref FenceGetFdInfoKHR pGetFdInfo, ref int pFd);
       
       //delegate instances
       public static ImportFenceFdKHRDelegate ImportFenceFdKHR;
@@ -55,7 +56,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class KHR_external_fence_fd
+      public static class VK_KHR_external_fence_fd
       {
          public static void init(VK.Device device)
          {

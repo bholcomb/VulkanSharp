@@ -11,10 +11,18 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
+      //no enums
+
+       
       #region flags
+      [Flags]
+      public enum XcbSurfaceCreateFlagsKHR : int
+      {  
+      };
+      
       #endregion
 
       #region structs
@@ -22,22 +30,22 @@ namespace Vulkan
       public struct XcbSurfaceCreateInfoKHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
-         public UInt32 flags;
-         public IntPtr connection;
-         public IntPtr window;
+         public void pNext;
+         public XcbSurfaceCreateFlagsKHR flags;
+         public xcb_connection_t connection;
+         public xcb_window_t window;
       };
       
       #endregion
 
       #region functions
       //external functions we need to get from the instance
-      //VkResult vkCreateXcbSurfaceKHR(VkInstance  instance, const VkXcbSurfaceCreateInfoKHR *  pCreateInfo, const VkAllocationCallbacks *  pAllocator, VkSurfaceKHR *  pSurface);
-      //VkBool32 vkGetPhysicalDeviceXcbPresentationSupportKHR(VkPhysicalDevice  physicalDevice, uint32_t  queueFamilyIndex, xcb_connection_t *  connection, xcb_visualid_t  visual_id);
+      //VkResult vkCreateXcbSurfaceKHR(VkInstance instance, VkXcbSurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface);
+      //VkBool32 vkGetPhysicalDeviceXcbPresentationSupportKHR(VkPhysicalDevice physicalDevice, uint32_t queueFamilyIndex, xcb_connection_t* connection, xcb_visualid_t visual_id);
       
       //delegate definitions
-      public delegate Result CreateXcbSurfaceKHRDelegate(Instance instance, ref XcbSurfaceCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
-      public delegate Bool32 GetPhysicalDeviceXcbPresentationSupportKHRDelegate(PhysicalDevice physicalDevice, UInt32 queueFamilyIndex, IntPtr connection, IntPtr visual_ids);
+      public delegate Result CreateXcbSurfaceKHRDelegate(Instance instance, ref XcbSurfaceCreateInfoKHR pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
+      public delegate Bool32 GetPhysicalDeviceXcbPresentationSupportKHRDelegate(PhysicalDevice physicalDevice, UInt32 queueFamilyIndex, ref xcb_connection_t connection, xcb_visualid_t visual_id);
       
       //delegate instances
       public static CreateXcbSurfaceKHRDelegate CreateXcbSurfaceKHR;
@@ -45,7 +53,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class KHR_xcb_surface
+      public static class VK_KHR_xcb_surface
       {
          public static void init(VK.Instance instance)
          {

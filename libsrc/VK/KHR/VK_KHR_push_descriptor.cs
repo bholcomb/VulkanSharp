@@ -11,31 +11,32 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDevicePushDescriptorPropertiesKHR 
       {
          public StructureType sType;
+         public void pNext;
          public UInt32 maxPushDescriptors;
-         public IntPtr pNext;
       };
       
       #endregion
 
       #region functions
       //external functions we need to get from the device
-      //void vkCmdPushDescriptorSetKHR(VkCommandBuffer  commandBuffer, VkPipelineBindPoint  pipelineBindPoint, VkPipelineLayout  layout, uint32_t  set, uint32_t  descriptorWriteCount, const VkWriteDescriptorSet *  pDescriptorWrites);
-      //void vkCmdPushDescriptorSetWithTemplateKHR(VkCommandBuffer  commandBuffer, VkDescriptorUpdateTemplate  descriptorUpdateTemplate, VkPipelineLayout  layout, uint32_t  set, const void *  pData);
+      //void vkCmdPushDescriptorSetKHR(VkCommandBuffer commandBuffer, VkPipelineBindPoint pipelineBindPoint, VkPipelineLayout layout, uint32_t set, uint32_t descriptorWriteCount, VkWriteDescriptorSet* pDescriptorWrites);
+      //void vkCmdPushDescriptorSetWithTemplateKHR(VkCommandBuffer commandBuffer, VkDescriptorUpdateTemplate descriptorUpdateTemplate, VkPipelineLayout layout, uint32_t set, void* pData);
       
       //delegate definitions
-      public delegate void CmdPushDescriptorSetKHRDelegate(CommandBuffer commandBuffer, PipelineBindPoint pipelineBindPoint, PipelineLayout layout, UInt32 set, UInt32 descriptorWriteCount, ref WriteDescriptorSet pDescriptorWritess);
-      public delegate void CmdPushDescriptorSetWithTemplateKHRDelegate(CommandBuffer commandBuffer, DescriptorUpdateTemplate descriptorUpdateTemplate, PipelineLayout layout, UInt32 set, IntPtr pDatas);
+      public delegate void CmdPushDescriptorSetKHRDelegate(CommandBuffer commandBuffer, PipelineBindPoint pipelineBindPoint, PipelineLayout layout, UInt32 set, UInt32 descriptorWriteCount, ref WriteDescriptorSet pDescriptorWrites);
+      public delegate void CmdPushDescriptorSetWithTemplateKHRDelegate(CommandBuffer commandBuffer, DescriptorUpdateTemplate descriptorUpdateTemplate, PipelineLayout layout, UInt32 set, ref void pData);
       
       //delegate instances
       public static CmdPushDescriptorSetKHRDelegate CmdPushDescriptorSetKHR;
@@ -43,7 +44,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class KHR_push_descriptor
+      public static class VK_KHR_push_descriptor
       {
          public static void init(VK.Device device)
          {

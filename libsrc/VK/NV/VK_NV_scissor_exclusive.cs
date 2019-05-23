@@ -11,27 +11,28 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct PipelineViewportExclusiveScissorStateCreateInfoNV 
+      public struct PipelineViewportExclusiveScissorStateCreateInfoNV 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public UInt32 exclusiveScissorCount;
-         public Rect2D* pExclusiveScissors;
+         public Rect2D pExclusiveScissors;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceExclusiveScissorFeaturesNV 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public Bool32 exclusiveScissor;
       };
       
@@ -39,17 +40,17 @@ namespace Vulkan
 
       #region functions
       //external functions we need to get from the device
-      //void vkCmdSetExclusiveScissorNV(VkCommandBuffer  commandBuffer, uint32_t  firstExclusiveScissor, uint32_t  exclusiveScissorCount, const VkRect2D *  pExclusiveScissors);
+      //void vkCmdSetExclusiveScissorNV(VkCommandBuffer commandBuffer, uint32_t firstExclusiveScissor, uint32_t exclusiveScissorCount, VkRect2D* pExclusiveScissors);
       
       //delegate definitions
-      public delegate void CmdSetExclusiveScissorNVDelegate(CommandBuffer commandBuffer, UInt32 firstExclusiveScissor, UInt32 exclusiveScissorCount, ref Rect2D pExclusiveScissorss);
+      public delegate void CmdSetExclusiveScissorNVDelegate(CommandBuffer commandBuffer, UInt32 firstExclusiveScissor, UInt32 exclusiveScissorCount, ref Rect2D pExclusiveScissors);
       
       //delegate instances
       public static CmdSetExclusiveScissorNVDelegate CmdSetExclusiveScissorNV;
       #endregion
 
       #region interop
-      public static class NV_scissor_exclusive
+      public static class VK_NV_scissor_exclusive
       {
          public static void init(VK.Device device)
          {

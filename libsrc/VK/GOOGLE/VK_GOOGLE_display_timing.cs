@@ -11,11 +11,12 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -35,12 +36,12 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct PresentTimesInfoGOOGLE 
+      public struct PresentTimesInfoGOOGLE 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public UInt32 swapchainCount;
-         public PresentTimeGOOGLE* pTimes;
+         public PresentTimeGOOGLE pTimes;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -54,12 +55,12 @@ namespace Vulkan
 
       #region functions
       //external functions we need to get from the device
-      //VkResult vkGetRefreshCycleDurationGOOGLE(VkDevice  device, VkSwapchainKHR  swapchain, VkRefreshCycleDurationGOOGLE *  pDisplayTimingProperties);
-      //VkResult vkGetPastPresentationTimingGOOGLE(VkDevice  device, VkSwapchainKHR  swapchain, uint32_t *  pPresentationTimingCount, VkPastPresentationTimingGOOGLE *  pPresentationTimings);
+      //VkResult vkGetRefreshCycleDurationGOOGLE(VkDevice device, VkSwapchainKHR swapchain, VkRefreshCycleDurationGOOGLE* pDisplayTimingProperties);
+      //VkResult vkGetPastPresentationTimingGOOGLE(VkDevice device, VkSwapchainKHR swapchain, uint32_t* pPresentationTimingCount, VkPastPresentationTimingGOOGLE* pPresentationTimings);
       
       //delegate definitions
-      public delegate Result GetRefreshCycleDurationGOOGLEDelegate(Device device, SwapchainKHR swapchain, ref RefreshCycleDurationGOOGLE pDisplayTimingPropertiess);
-      public delegate Result GetPastPresentationTimingGOOGLEDelegate(Device device, SwapchainKHR swapchain, ref UInt32 pPresentationTimingCount, ref PastPresentationTimingGOOGLE pPresentationTimingss);
+      public delegate Result GetRefreshCycleDurationGOOGLEDelegate(Device device, SwapchainKHR swapchain, ref RefreshCycleDurationGOOGLE pDisplayTimingProperties);
+      public delegate Result GetPastPresentationTimingGOOGLEDelegate(Device device, SwapchainKHR swapchain, ref UInt32 pPresentationTimingCount, ref PastPresentationTimingGOOGLE pPresentationTimings);
       
       //delegate instances
       public static GetRefreshCycleDurationGOOGLEDelegate GetRefreshCycleDurationGOOGLE;
@@ -67,7 +68,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class GOOGLE_display_timing
+      public static class VK_GOOGLE_display_timing
       {
          public static void init(VK.Device device)
          {

@@ -11,18 +11,19 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImportSemaphoreFdInfoKHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public Semaphore semaphore;
          public SemaphoreImportFlags flags;
          public ExternalSemaphoreHandleTypeFlags handleType;
@@ -33,7 +34,7 @@ namespace Vulkan
       public struct SemaphoreGetFdInfoKHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public Semaphore semaphore;
          public ExternalSemaphoreHandleTypeFlags handleType;
       };
@@ -42,12 +43,12 @@ namespace Vulkan
 
       #region functions
       //external functions we need to get from the device
-      //VkResult vkImportSemaphoreFdKHR(VkDevice  device, const VkImportSemaphoreFdInfoKHR *  pImportSemaphoreFdInfo);
-      //VkResult vkGetSemaphoreFdKHR(VkDevice  device, const VkSemaphoreGetFdInfoKHR *  pGetFdInfo, int *  pFd);
+      //VkResult vkImportSemaphoreFdKHR(VkDevice device, VkImportSemaphoreFdInfoKHR* pImportSemaphoreFdInfo);
+      //VkResult vkGetSemaphoreFdKHR(VkDevice device, VkSemaphoreGetFdInfoKHR* pGetFdInfo, int* pFd);
       
       //delegate definitions
-      public delegate Result ImportSemaphoreFdKHRDelegate(Device device, ref ImportSemaphoreFdInfoKHR pImportSemaphoreFdInfos);
-      public delegate Result GetSemaphoreFdKHRDelegate(Device device, ref SemaphoreGetFdInfoKHR pGetFdInfo, ref Int32 pFds);
+      public delegate Result ImportSemaphoreFdKHRDelegate(Device device, ref ImportSemaphoreFdInfoKHR pImportSemaphoreFdInfo);
+      public delegate Result GetSemaphoreFdKHRDelegate(Device device, ref SemaphoreGetFdInfoKHR pGetFdInfo, ref int pFd);
       
       //delegate instances
       public static ImportSemaphoreFdKHRDelegate ImportSemaphoreFdKHR;
@@ -55,7 +56,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class KHR_external_semaphore_fd
+      public static class VK_KHR_external_semaphore_fd
       {
          public static void init(VK.Device device)
          {

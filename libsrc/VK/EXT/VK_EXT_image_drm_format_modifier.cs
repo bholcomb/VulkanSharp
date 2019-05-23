@@ -11,20 +11,21 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct DrmFormatModifierPropertiesListEXT 
+      public struct DrmFormatModifierPropertiesListEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public UInt32 drmFormatModifierCount;
-         public DrmFormatModifierPropertiesEXT* pDrmFormatModifierProperties;
+         public DrmFormatModifierPropertiesEXT pDrmFormatModifierProperties;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -36,40 +37,40 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct PhysicalDeviceImageDrmFormatModifierInfoEXT 
+      public struct PhysicalDeviceImageDrmFormatModifierInfoEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public UInt64 drmFormatModifier;
          public SharingMode sharingMode;
          public UInt32 queueFamilyIndexCount;
-         public UInt32* pQueueFamilyIndices;
+         public UInt32 pQueueFamilyIndices;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct ImageDrmFormatModifierListCreateInfoEXT 
+      public struct ImageDrmFormatModifierListCreateInfoEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public UInt32 drmFormatModifierCount;
-         public UInt64* pDrmFormatModifiers;
+         public UInt64 pDrmFormatModifiers;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct ImageDrmFormatModifierExplicitCreateInfoEXT 
+      public struct ImageDrmFormatModifierExplicitCreateInfoEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public UInt64 drmFormatModifier;
          public UInt32 drmFormatModifierPlaneCount;
-         public SubresourceLayout* pPlaneLayouts;
+         public SubresourceLayout pPlaneLayouts;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImageDrmFormatModifierPropertiesEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public UInt64 drmFormatModifier;
       };
       
@@ -77,17 +78,17 @@ namespace Vulkan
 
       #region functions
       //external functions we need to get from the device
-      //VkResult vkGetImageDrmFormatModifierPropertiesEXT(VkDevice  device, VkImage  image, VkImageDrmFormatModifierPropertiesEXT *  pProperties);
+      //VkResult vkGetImageDrmFormatModifierPropertiesEXT(VkDevice device, VkImage image, VkImageDrmFormatModifierPropertiesEXT* pProperties);
       
       //delegate definitions
-      public delegate Result GetImageDrmFormatModifierPropertiesEXTDelegate(Device device, Image image, ref ImageDrmFormatModifierPropertiesEXT pPropertiess);
+      public delegate Result GetImageDrmFormatModifierPropertiesEXTDelegate(Device device, Image image, ref ImageDrmFormatModifierPropertiesEXT pProperties);
       
       //delegate instances
       public static GetImageDrmFormatModifierPropertiesEXTDelegate GetImageDrmFormatModifierPropertiesEXT;
       #endregion
 
       #region interop
-      public static class EXT_image_drm_format_modifier
+      public static class VK_EXT_image_drm_format_modifier
       {
          public static void init(VK.Device device)
          {

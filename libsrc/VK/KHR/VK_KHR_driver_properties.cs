@@ -11,8 +11,8 @@ namespace Vulkan
    
    public static partial class VK
    {
-      const int MAX_DRIVER_NAME_SIZE_KHR = 256;
-      const int MAX_DRIVER_INFO_SIZE_KHR = 256;
+      //no handles
+      
 
       #region enums
       public enum DriverIdKHR : int
@@ -28,13 +28,11 @@ namespace Vulkan
          ArmProprietaryKhr = 9,
          GooglePastelKhr = 10,
          GgpProprietaryKhr = 11,
-         
       };
       
       #endregion
 
-      #region flags
-      #endregion
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -47,49 +45,18 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct PhysicalDeviceDriverPropertiesKHR 
+      public struct PhysicalDeviceDriverPropertiesKHR 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public DriverIdKHR driverID;
-         fixed byte _driverName[(int)VK.MAX_DRIVER_NAME_SIZE_KHR];
+         public char driverName;
+         public char driverInfo;
          public ConformanceVersionKHR conformanceVersion;
-         fixed byte _driverInfo[(int)VK.MAX_DRIVER_INFO_SIZE_KHR];
-
-         public string driverName
-         {
-            get
-            {
-               fixed (byte* p = _driverName)
-               {
-                  return Marshal.PtrToStringAnsi((IntPtr)p);
-               }
-            }
-         }
-
-         public string driverInfo
-         {
-            get
-            {
-               fixed (byte* p = _driverInfo)
-               {
-                  return Marshal.PtrToStringAnsi((IntPtr)p);
-               }
-            }
-         }
       };
       
       #endregion
 
-      #region functions
-      //external functions we need to get from the device
-      
-      //delegate definitions
-      
-      //delegate instances
-      #endregion
-
-      #region interop
-      #endregion
+      //no functions
    }
 }

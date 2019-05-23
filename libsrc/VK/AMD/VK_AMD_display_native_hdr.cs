@@ -11,26 +11,27 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
-      #region flags
-      #endregion
+      //no enums
+
+      //no bitfields
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DisplayNativeHdrSurfaceCapabilitiesAMD 
       {
          public StructureType sType;
+         public void pNext;
          public Bool32 localDimmingSupport;
-         public IntPtr pNext;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SwapchainDisplayNativeHdrCreateInfoAMD 
       {
          public StructureType sType;
-         public IntPtr pNext;
+         public void pNext;
          public Bool32 localDimmingEnable;
       };
       
@@ -38,17 +39,17 @@ namespace Vulkan
 
       #region functions
       //external functions we need to get from the device
-      //void vkSetLocalDimmingAMD(VkDevice  device, VkSwapchainKHR  swapChain, VkBool32  localDimmingEnable);
+      //void vkSetLocalDimmingAMD(VkDevice device, VkSwapchainKHR swapChain, VkBool32 localDimmingEnable);
       
       //delegate definitions
-      public delegate void SetLocalDimmingAMDDelegate(Device device, SwapchainKHR swapChain, Bool32 localDimmingEnables);
+      public delegate void SetLocalDimmingAMDDelegate(Device device, SwapchainKHR swapChain, Bool32 localDimmingEnable);
       
       //delegate instances
       public static SetLocalDimmingAMDDelegate SetLocalDimmingAMD;
       #endregion
 
       #region interop
-      public static class AMD_display_native_hdr
+      public static class VK_AMD_display_native_hdr
       {
          public static void init(VK.Device device)
          {

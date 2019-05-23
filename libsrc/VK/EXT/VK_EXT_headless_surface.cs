@@ -11,10 +11,18 @@ namespace Vulkan
    
    public static partial class VK
    {
-      #region enums
-      #endregion
+      //no handles
+      
 
+      //no enums
+
+       
       #region flags
+      [Flags]
+      public enum HeadlessSurfaceCreateFlagsEXT : int
+      {  
+      };
+      
       #endregion
 
       #region structs
@@ -22,25 +30,25 @@ namespace Vulkan
       public struct HeadlessSurfaceCreateInfoEXT 
       {
          public StructureType sType;
-         public IntPtr pNext;
-         public UInt32 flags;
+         public void pNext;
+         public HeadlessSurfaceCreateFlagsEXT flags;
       };
       
       #endregion
 
       #region functions
       //external functions we need to get from the instance
-      //VkResult vkCreateHeadlessSurfaceEXT(VkInstance  instance, const VkHeadlessSurfaceCreateInfoEXT *  pCreateInfo, const VkAllocationCallbacks *  pAllocator, VkSurfaceKHR *  pSurface);
+      //VkResult vkCreateHeadlessSurfaceEXT(VkInstance instance, VkHeadlessSurfaceCreateInfoEXT* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface);
       
       //delegate definitions
-      public delegate Result CreateHeadlessSurfaceEXTDelegate(Instance instance, ref HeadlessSurfaceCreateInfoEXT pCreateInfo, AllocationCallbacks pAllocator, ref SurfaceKHR pSurfaces);
+      public delegate Result CreateHeadlessSurfaceEXTDelegate(Instance instance, ref HeadlessSurfaceCreateInfoEXT pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
       
       //delegate instances
       public static CreateHeadlessSurfaceEXTDelegate CreateHeadlessSurfaceEXT;
       #endregion
 
       #region interop
-      public static class EXT_headless_surface
+      public static class VK_EXT_headless_surface
       {
          public static void init(VK.Instance instance)
          {
