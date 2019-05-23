@@ -35,6 +35,7 @@ namespace Vulkan
          public IntPtr pView;          
       };
       
+      
       #endregion
 
       #region functions

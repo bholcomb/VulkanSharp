@@ -20,13 +20,14 @@ namespace Vulkan
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct ImageFormatListCreateInfoKHR 
+      public unsafe struct ImageFormatListCreateInfoKHR 
       {
          public StructureType sType;          
          public IntPtr pNext;          
          public UInt32 viewFormatCount;          
          public Format* pViewFormats;          
       };
+      
       
       #endregion
 

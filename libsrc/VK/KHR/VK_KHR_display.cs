@@ -114,6 +114,7 @@ namespace Vulkan
          public Extent2D imageExtent;  //size of the images to use with this surface 
       };
       
+      
       #endregion
 
       #region functions

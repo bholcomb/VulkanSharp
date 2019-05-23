@@ -42,7 +42,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PipelineDiscardRectangleStateCreateInfoEXT 
+      public unsafe struct PipelineDiscardRectangleStateCreateInfoEXT 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -51,6 +51,7 @@ namespace Vulkan
          public UInt32 discardRectangleCount;          
          public Rect2D* pDiscardRectangles;          
       };
+      
       
       #endregion
 

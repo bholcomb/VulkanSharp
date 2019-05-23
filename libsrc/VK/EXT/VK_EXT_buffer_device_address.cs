@@ -45,6 +45,7 @@ namespace Vulkan
          public DeviceAddress deviceAddress;          
       };
       
+      
       #endregion
 
       #region functions

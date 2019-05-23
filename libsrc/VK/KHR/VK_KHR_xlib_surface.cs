@@ -27,7 +27,7 @@ namespace Vulkan
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct XlibSurfaceCreateInfoKHR 
+      public unsafe struct XlibSurfaceCreateInfoKHR 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -35,6 +35,7 @@ namespace Vulkan
          public Display* dpy;          
          public Window window;          
       };
+      
       
       #endregion
 

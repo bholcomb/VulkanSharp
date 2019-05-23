@@ -27,6 +27,7 @@ namespace Vulkan
          public Bool32 cornerSampledImage;          
       };
       
+      
       #endregion
 
       //no functions

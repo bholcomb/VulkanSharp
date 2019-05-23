@@ -32,7 +32,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct ExportFenceWin32HandleInfoKHR 
+      public unsafe struct ExportFenceWin32HandleInfoKHR 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -49,6 +49,7 @@ namespace Vulkan
          public Fence fence;          
          public ExternalFenceHandleTypeFlags handleType;          
       };
+      
       
       #endregion
 

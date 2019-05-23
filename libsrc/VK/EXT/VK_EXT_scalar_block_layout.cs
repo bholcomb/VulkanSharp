@@ -27,6 +27,7 @@ namespace Vulkan
          public Bool32 scalarBlockLayout;          
       };
       
+      
       #endregion
 
       //no functions

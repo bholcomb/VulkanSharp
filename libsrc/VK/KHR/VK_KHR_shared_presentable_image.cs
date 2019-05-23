@@ -27,6 +27,7 @@ namespace Vulkan
          public ImageUsageFlags sharedPresentSupportedUsageFlags;  //Supported image usage flags if swapchain created using a shared present mode 
       };
       
+      
       #endregion
 
       #region functions

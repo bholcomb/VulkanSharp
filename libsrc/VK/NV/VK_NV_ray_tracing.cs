@@ -95,7 +95,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct RayTracingPipelineCreateInfoNV 
+      public unsafe struct RayTracingPipelineCreateInfoNV 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -157,7 +157,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct AccelerationStructureInfoNV 
+      public unsafe struct AccelerationStructureInfoNV 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -178,7 +178,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct BindAccelerationStructureMemoryInfoNV 
+      public unsafe struct BindAccelerationStructureMemoryInfoNV 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -190,7 +190,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct WriteDescriptorSetAccelerationStructureNV 
+      public unsafe struct WriteDescriptorSetAccelerationStructureNV 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -221,6 +221,7 @@ namespace Vulkan
          public UInt64 maxTriangleCount;          
          public UInt32 maxDescriptorSetAccelerationStructures;          
       };
+      
       
       #endregion
 

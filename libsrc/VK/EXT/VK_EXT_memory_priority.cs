@@ -35,6 +35,7 @@ namespace Vulkan
          public float priority;          
       };
       
+      
       #endregion
 
       //no functions

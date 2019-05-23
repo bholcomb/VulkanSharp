@@ -86,17 +86,18 @@ namespace Vulkan
 
       {{if (#ext.bitmasks > 0) then }}       
       #region flags
-      {{for k,bitmaskName in pairs(ext.bitmasks) do 
-         local bitmask = types.bitmasks[bitmaskName]
-         bitmaskName = string.gsub(bitmaskName, "Vk", "") }}
+        {{for k,bitmaskName in pairs(ext.bitmasks) do 
+           local bitmask = types.bitmasks[bitmaskName]
+           bitmaskName = string.gsub(bitmaskName, "Vk", "") 
+           print(bitmaskName)}}
       [Flags]
       public enum {{= bitmaskName}} : int
       {  
-         {{for kk,vv in pairs(bitmask.bits) do 
-            if(type(kk)=="number") then }}
+          {{for kk,vv in pairs(bitmask.bits) do 
+             if(type(kk)=="number") then }}
          {{= sanitizeEnumName(vv.name, bitmaskName)}} = 1 << {{= vv.bitpos}},
             {{end}}
-         {{end}}
+          {{end}}
       };
       
       {{end}}
@@ -107,38 +108,73 @@ namespace Vulkan
 
       {{if (#ext.structs > 0 or #ext.unions > 0) then }}
       #region structs
-      {{for k,v in pairs(ext.structs) do
-        local struct = types.structs[v] }}
+        {{for k,sName in pairs(ext.structs) do
+          local struct = types.structs[sName]
+          local needsUnsafe = false
+          for i = 1,#struct.members do 
+            local m = struct.members[i]
+              if((m.pointer == true and (m.type ~= "char" and m.type ~= "void")) or m.array == true) then 
+               needsUnsafe = true
+              end
+          end }}
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct {{= sanitizeTypeName(v)}} 
+         {{if (needsUnsafe == true ) then }}
+      public unsafe struct {{= sanitizeTypeName(sName)}} 
+         {{else}}
+      public struct {{= sanitizeTypeName(sName)}} 
+         {{end}}
       {
-         {{for kk,vv in pairs(struct) do
-           if (vv.array == true) then }}
-         public fixed {{= sanitizeType(vv.type, vv.pointer, vv.doublePointer)}} {{= sanitizeTypeName(vv.name)}}[{{= sanitizeArrayLength(vv.arrayLength)}}]; {{if vv.comment ~= nil then}} //{{= vv.comment}} 
-         {{else}}
+         {{for i=1,#struct.members do
+            local m = struct.members[i]
+            if (m.array == true) then }}
+         public fixed {{= sanitizeType(m.type, m.pointer, m.doublePointer)}} {{= sanitizeTypeName(m.name)}}[{{= sanitizeArrayLength(m.arrayLength)}}]; {{if m.comment ~= nil then}} //{{= m.comment}} 
+              {{else}}
          
-         {{end}}
-         {{else}}
-         public {{= sanitizeType(vv.type, vv.pointer, vv.doublePointer)}} {{= sanitizeTypeName(vv.name)}}; {{if vv.comment ~= nil then}} //{{= vv.comment}} 
-         {{else}}
+              {{end}}
+           {{else}}
+         public {{= sanitizeType(m.type, m.pointer, m.doublePointer)}} {{= sanitizeTypeName(m.name)}}; {{if m.comment ~= nil then}} //{{= m.comment}} 
+              {{else}}
          
-         {{end}}
-         {{end}}
+              {{end}}
+           {{end}}
          {{end}}
       };
       
-      {{end}}
-      {{for k,v in pairs(ext.unions) do
-        local struct = types.unions[v]}}
+        {{end}}
+      
+        {{for k,sName in pairs(ext.unions) do
+            local struct = types.unions[sName]
+            local needsUnsafe = false
+            for i = 1,#struct.members do 
+              local m = struct.members[i]
+              if((m.pointer == true and (m.type ~= "char" and m.type ~= "void")) or m.array == true) then 
+                needsUnsafe = true
+              end
+            end }}
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct {{= sanitizeTypeName(v)}} 
+           {{if (needsUnsafe == true ) then }}
+      public unsafe struct {{= sanitizeTypeName(sName)}} 
+           {{else}}
+      public struct {{= sanitizeTypeName(sName)}} 
+           {{end}}
       {
-         {{for kk,vv in pairs(struct) do }}
-         public {{= sanitizeType(vv.type) }} {{= sanitizeTypeName(vv.name)}};
-         {{end }}
+           {{for i=1,#struct.members do
+              local m = struct.members[i]
+              if (m.array == true) then }}
+         public fixed {{= sanitizeType(m.type, m.pointer, m.doublePointer)}} {{= sanitizeTypeName(m.name)}}[{{= sanitizeArrayLength(m.arrayLength)}}]; {{if m.comment ~= nil then}} //{{= m.comment}} 
+                {{else}}
+         
+                {{end}}
+              {{else}}
+         public {{= sanitizeType(m.type, m.pointer, m.doublePointer)}} {{= sanitizeTypeName(m.name)}}; {{if m.comment ~= nil then}} //{{= m.comment}} 
+                {{else}}
+         
+              {{end}}
+           {{end}}
+         {{end}}
       };
       
-      {{end}}
+        {{end}}
       #endregion
       {{else}}
       //no structs

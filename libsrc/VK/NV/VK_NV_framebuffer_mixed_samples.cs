@@ -36,7 +36,7 @@ namespace Vulkan
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PipelineCoverageModulationStateCreateInfoNV 
+      public unsafe struct PipelineCoverageModulationStateCreateInfoNV 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -46,6 +46,7 @@ namespace Vulkan
          public UInt32 coverageModulationTableCount;          
          public float* pCoverageModulationTable;          
       };
+      
       
       #endregion
 

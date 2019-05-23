@@ -44,6 +44,7 @@ namespace Vulkan
          public DeviceSize minImportedHostPointerAlignment;          
       };
       
+      
       #endregion
 
       #region functions
@@ -51,7 +52,7 @@ namespace Vulkan
       //VkResult vkGetMemoryHostPointerPropertiesEXT(VkDevice device, VkExternalMemoryHandleTypeFlags handleType, void* pHostPointer, VkMemoryHostPointerPropertiesEXT* pMemoryHostPointerProperties);
       
       //delegate definitions
-      public delegate Result GetMemoryHostPointerPropertiesEXTDelegate(Device device, ExternalMemoryHandleTypeFlags handleType, ref void pHostPointer, ref MemoryHostPointerPropertiesEXT pMemoryHostPointerProperties);
+      public delegate Result GetMemoryHostPointerPropertiesEXTDelegate(Device device, ExternalMemoryHandleTypeFlags handleType, IntPtr pHostPointer, ref MemoryHostPointerPropertiesEXT pMemoryHostPointerProperties);
       
       //delegate instances
       public static GetMemoryHostPointerPropertiesEXTDelegate GetMemoryHostPointerPropertiesEXT;

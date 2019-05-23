@@ -35,6 +35,7 @@ namespace Vulkan
          public Bool32 representativeFragmentTestEnable;          
       };
       
+      
       #endregion
 
       //no functions

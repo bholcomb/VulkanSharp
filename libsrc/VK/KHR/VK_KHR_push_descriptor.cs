@@ -27,6 +27,7 @@ namespace Vulkan
          public UInt32 maxPushDescriptors;          
       };
       
+      
       #endregion
 
       #region functions

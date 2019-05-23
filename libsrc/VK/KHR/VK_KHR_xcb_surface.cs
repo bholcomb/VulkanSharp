@@ -27,7 +27,7 @@ namespace Vulkan
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct XcbSurfaceCreateInfoKHR 
+      public unsafe struct XcbSurfaceCreateInfoKHR 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -35,6 +35,7 @@ namespace Vulkan
          public xcb_connection_t* connection;          
          public xcb_window_t window;          
       };
+      
       
       #endregion
 

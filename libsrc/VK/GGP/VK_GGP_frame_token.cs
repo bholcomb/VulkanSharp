@@ -27,6 +27,7 @@ namespace Vulkan
          public GgpFrameToken frameToken;          
       };
       
+      
       #endregion
 
       //no functions

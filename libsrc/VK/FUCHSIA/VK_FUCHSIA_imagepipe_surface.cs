@@ -35,6 +35,7 @@ namespace Vulkan
          public zx_handle_t imagePipeHandle;          
       };
       
+      
       #endregion
 
       #region functions

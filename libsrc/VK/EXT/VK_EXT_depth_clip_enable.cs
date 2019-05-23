@@ -43,6 +43,7 @@ namespace Vulkan
          public Bool32 depthClipEnable;          
       };
       
+      
       #endregion
 
       //no functions

@@ -27,6 +27,7 @@ namespace Vulkan
          public Bool32 imageFootprint;          
       };
       
+      
       #endregion
 
       //no functions

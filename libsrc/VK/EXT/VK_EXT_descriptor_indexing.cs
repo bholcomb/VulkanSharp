@@ -31,7 +31,7 @@ namespace Vulkan
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct DescriptorSetLayoutBindingFlagsCreateInfoEXT 
+      public unsafe struct DescriptorSetLayoutBindingFlagsCreateInfoEXT 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -97,7 +97,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct DescriptorSetVariableDescriptorCountAllocateInfoEXT 
+      public unsafe struct DescriptorSetVariableDescriptorCountAllocateInfoEXT 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -112,6 +112,7 @@ namespace Vulkan
          public IntPtr pNext;          
          public UInt32 maxVariableDescriptorCount;          
       };
+      
       
       #endregion
 

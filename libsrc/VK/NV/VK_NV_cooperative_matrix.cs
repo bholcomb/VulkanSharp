@@ -75,6 +75,7 @@ namespace Vulkan
          public ShaderStageFlags cooperativeMatrixSupportedStages;          
       };
       
+      
       #endregion
 
       #region functions

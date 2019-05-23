@@ -28,6 +28,7 @@ namespace Vulkan
          public Bool32 computeDerivativeGroupLinear;          
       };
       
+      
       #endregion
 
       //no functions

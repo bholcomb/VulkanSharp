@@ -20,13 +20,14 @@ namespace Vulkan
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PhysicalDeviceMemoryBudgetPropertiesEXT 
+      public unsafe struct PhysicalDeviceMemoryBudgetPropertiesEXT 
       {
          public StructureType sType;          
          public IntPtr pNext;          
-         public fixed DeviceSize heapBudget[(int)VK.MAX_MEMORY_HEAPS];          
-         public fixed DeviceSize heapUsage[(int)VK.MAX_MEMORY_HEAPS];          
+         public fixed UInt64/*DeviceSize*/ heapBudget[(int)VK.MAX_MEMORY_HEAPS];          
+         public fixed UInt64/*DeviceSize*/ heapUsage[(int)VK.MAX_MEMORY_HEAPS];          
       };
+      
       
       #endregion
 

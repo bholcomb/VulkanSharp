@@ -20,7 +20,7 @@ namespace Vulkan
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PresentRegionsKHR 
+      public unsafe struct PresentRegionsKHR 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -29,7 +29,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PresentRegionKHR 
+      public unsafe struct PresentRegionKHR 
       {
          public UInt32 rectangleCount;  //Number of rectangles in pRectangles 
          public RectLayerKHR* pRectangles;  //Array of rectangles that have changed in a swapchain's image(s) 
@@ -42,6 +42,7 @@ namespace Vulkan
          public Extent2D extent;  //Dimensions of a rectangle that has not changed, in pixels of a presentation images 
          public UInt32 layer;  //Layer of a swapchain's image(s), for stereoscopic-3D images 
       };
+      
       
       #endregion
 

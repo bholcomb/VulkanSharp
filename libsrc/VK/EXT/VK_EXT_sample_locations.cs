@@ -27,7 +27,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct SampleLocationsInfoEXT 
+      public unsafe struct SampleLocationsInfoEXT 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -52,7 +52,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct RenderPassSampleLocationsBeginInfoEXT 
+      public unsafe struct RenderPassSampleLocationsBeginInfoEXT 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -72,7 +72,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PhysicalDeviceSampleLocationsPropertiesEXT 
+      public unsafe struct PhysicalDeviceSampleLocationsPropertiesEXT 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -90,6 +90,7 @@ namespace Vulkan
          public IntPtr pNext;          
          public Extent2D maxSampleLocationGridSize;          
       };
+      
       
       #endregion
 

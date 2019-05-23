@@ -27,13 +27,14 @@ namespace Vulkan
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct AndroidSurfaceCreateInfoKHR 
+      public unsafe struct AndroidSurfaceCreateInfoKHR 
       {
          public StructureType sType;          
          public IntPtr pNext;          
          public AndroidSurfaceCreateFlagsKHR flags;          
          public ANativeWindow* window;          
       };
+      
       
       #endregion
 

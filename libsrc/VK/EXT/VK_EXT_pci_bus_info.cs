@@ -30,6 +30,7 @@ namespace Vulkan
          public UInt32 pciFunction;          
       };
       
+      
       #endregion
 
       //no functions

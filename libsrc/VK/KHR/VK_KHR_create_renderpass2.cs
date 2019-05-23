@@ -20,7 +20,7 @@ namespace Vulkan
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct RenderPassCreateInfo2KHR 
+      public unsafe struct RenderPassCreateInfo2KHR 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -52,7 +52,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct SubpassDescription2KHR 
+      public unsafe struct SubpassDescription2KHR 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -108,6 +108,7 @@ namespace Vulkan
          public StructureType sType;          
          public IntPtr pNext;          
       };
+      
       
       #endregion
 

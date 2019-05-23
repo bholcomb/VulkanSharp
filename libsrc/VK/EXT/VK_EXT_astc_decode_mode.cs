@@ -35,6 +35,7 @@ namespace Vulkan
          public Bool32 decodeModeSharedExponent;          
       };
       
+      
       #endregion
 
       //no functions

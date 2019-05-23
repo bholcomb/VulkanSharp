@@ -27,7 +27,7 @@ namespace Vulkan
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct WaylandSurfaceCreateInfoKHR 
+      public unsafe struct WaylandSurfaceCreateInfoKHR 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -35,6 +35,7 @@ namespace Vulkan
          public wl_display* display;          
          public wl_surface* surface;          
       };
+      
       
       #endregion
 

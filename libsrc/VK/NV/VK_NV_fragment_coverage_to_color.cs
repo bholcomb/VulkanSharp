@@ -36,6 +36,7 @@ namespace Vulkan
          public UInt32 coverageToColorLocation;          
       };
       
+      
       #endregion
 
       //no functions

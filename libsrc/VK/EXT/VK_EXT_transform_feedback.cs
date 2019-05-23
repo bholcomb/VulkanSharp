@@ -61,6 +61,7 @@ namespace Vulkan
          public UInt32 rasterizationStream;          
       };
       
+      
       #endregion
 
       #region functions

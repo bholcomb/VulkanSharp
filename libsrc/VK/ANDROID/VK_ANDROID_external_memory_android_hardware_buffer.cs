@@ -50,13 +50,13 @@ namespace Vulkan
          public ChromaLocation suggestedXChromaOffset;          
          public ChromaLocation suggestedYChromaOffset;          
       };
-      
+
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct ImportAndroidHardwareBufferInfoANDROID 
+      public unsafe struct ImportAndroidHardwareBufferInfoANDROID
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
-         public AHardwareBuffer* buffer;          
+         public StructureType sType;
+         public IntPtr pNext;
+         public IntPtr /* AHardwareBuffer* */ buffer;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -75,6 +75,7 @@ namespace Vulkan
          public UInt64 externalFormat;          
       };
       
+      
       #endregion
 
       #region functions
@@ -83,8 +84,8 @@ namespace Vulkan
       //VkResult vkGetMemoryAndroidHardwareBufferANDROID(VkDevice device, VkMemoryGetAndroidHardwareBufferInfoANDROID* pInfo, AHardwareBuffer pBuffer);
       
       //delegate definitions
-      public delegate Result GetAndroidHardwareBufferPropertiesANDROIDDelegate(Device device, ref AHardwareBuffer buffer, ref AndroidHardwareBufferPropertiesANDROID pProperties);
-      public delegate Result GetMemoryAndroidHardwareBufferANDROIDDelegate(Device device, ref MemoryGetAndroidHardwareBufferInfoANDROID pInfo, AHardwareBuffer pBuffer);
+      public delegate Result GetAndroidHardwareBufferPropertiesANDROIDDelegate(Device device, IntPtr buffer, ref AndroidHardwareBufferPropertiesANDROID pProperties);
+      public delegate Result GetMemoryAndroidHardwareBufferANDROIDDelegate(Device device, ref MemoryGetAndroidHardwareBufferInfoANDROID pInfo, IntPtr pBuffer);
       
       //delegate instances
       public static GetAndroidHardwareBufferPropertiesANDROIDDelegate GetAndroidHardwareBufferPropertiesANDROID;

@@ -85,6 +85,7 @@ namespace Vulkan
          public IntPtr pUserData;  //User data provided to callback function 
       };
       
+      
       #endregion
 
       #region functions

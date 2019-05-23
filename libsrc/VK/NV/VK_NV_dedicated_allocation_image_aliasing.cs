@@ -27,6 +27,7 @@ namespace Vulkan
          public Bool32 dedicatedAllocationImageAliasing;          
       };
       
+      
       #endregion
 
       //no functions

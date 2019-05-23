@@ -27,6 +27,7 @@ namespace Vulkan
          public ImageUsageFlags stencilUsage;          
       };
       
+      
       #endregion
 
       //no functions

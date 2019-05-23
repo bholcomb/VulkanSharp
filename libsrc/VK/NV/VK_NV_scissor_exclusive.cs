@@ -20,7 +20,7 @@ namespace Vulkan
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PipelineViewportExclusiveScissorStateCreateInfoNV 
+      public unsafe struct PipelineViewportExclusiveScissorStateCreateInfoNV 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -35,6 +35,7 @@ namespace Vulkan
          public IntPtr pNext;          
          public Bool32 exclusiveScissor;          
       };
+      
       
       #endregion
 

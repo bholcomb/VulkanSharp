@@ -60,6 +60,7 @@ namespace Vulkan
          public float extraPrimitiveOverestimationSize;          
       };
       
+      
       #endregion
 
       //no functions

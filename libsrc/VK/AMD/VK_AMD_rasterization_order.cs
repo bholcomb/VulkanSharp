@@ -34,6 +34,7 @@ namespace Vulkan
          public RasterizationOrderAMD rasterizationOrder;  //Rasterization order to use for the pipeline 
       };
       
+      
       #endregion
 
       //no functions

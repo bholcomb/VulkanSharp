@@ -45,7 +45,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PhysicalDeviceDriverPropertiesKHR 
+      public unsafe struct PhysicalDeviceDriverPropertiesKHR 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -54,6 +54,7 @@ namespace Vulkan
          public fixed char driverInfo[(int)VK.MAX_DRIVER_INFO_SIZE_KHR];          
          public ConformanceVersionKHR conformanceVersion;          
       };
+      
       
       #endregion
 

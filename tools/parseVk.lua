@@ -113,7 +113,7 @@ function parseTypes()
             end
          end
          
-         types.unions[n] = members
+         types.unions[n] = {members = members}
       elseif(v.category == "struct" and v.alias == nil) then
          local n = v.name
          types.info[n] = { type = "structs", reference = "unreferenced"} 
@@ -155,7 +155,7 @@ function parseTypes()
             end
          end
          
-         types.structs[n] = members
+         types.structs[n] = {members = members}
       end
    end
 end
@@ -270,9 +270,9 @@ function refDataType(structName, ref, uniqueTable)
    
    local s = types[t.type][structName]
    if(t.type == "structs" or t.type=="unions") then
-      for i = 1, #s do
-         if(s[i].type ~= structName) then 
-            refDataType(s[i].type, ref, uniqueTable)
+      for i = 1, #s.members do
+         if(s.members[i].type ~= structName) then 
+            refDataType(s.members[i].type, ref, uniqueTable)
          end
       end
    end

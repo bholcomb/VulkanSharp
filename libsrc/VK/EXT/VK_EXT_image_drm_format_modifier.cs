@@ -20,7 +20,7 @@ namespace Vulkan
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct DrmFormatModifierPropertiesListEXT 
+      public unsafe struct DrmFormatModifierPropertiesListEXT 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -37,7 +37,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PhysicalDeviceImageDrmFormatModifierInfoEXT 
+      public unsafe struct PhysicalDeviceImageDrmFormatModifierInfoEXT 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -48,7 +48,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct ImageDrmFormatModifierListCreateInfoEXT 
+      public unsafe struct ImageDrmFormatModifierListCreateInfoEXT 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -57,7 +57,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct ImageDrmFormatModifierExplicitCreateInfoEXT 
+      public unsafe struct ImageDrmFormatModifierExplicitCreateInfoEXT 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -73,6 +73,7 @@ namespace Vulkan
          public IntPtr pNext;          
          public UInt64 drmFormatModifier;          
       };
+      
       
       #endregion
 

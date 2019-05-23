@@ -52,6 +52,7 @@ namespace Vulkan
          public ValidationCacheEXT validationCache;          
       };
       
+      
       #endregion
 
       #region functions
@@ -65,7 +66,7 @@ namespace Vulkan
       public delegate Result CreateValidationCacheEXTDelegate(Device device, ref ValidationCacheCreateInfoEXT pCreateInfo, ref AllocationCallbacks pAllocator, ref ValidationCacheEXT pValidationCache);
       public delegate void DestroyValidationCacheEXTDelegate(Device device, ValidationCacheEXT validationCache, ref AllocationCallbacks pAllocator);
       public delegate Result MergeValidationCachesEXTDelegate(Device device, ValidationCacheEXT dstCache, UInt32 srcCacheCount, ref ValidationCacheEXT pSrcCaches);
-      public delegate Result GetValidationCacheDataEXTDelegate(Device device, ValidationCacheEXT validationCache, ref UInt32 pDataSize, ref void pData);
+      public delegate Result GetValidationCacheDataEXTDelegate(Device device, ValidationCacheEXT validationCache, ref UInt32 pDataSize, IntPtr pData);
       
       //delegate instances
       public static CreateValidationCacheEXTDelegate CreateValidationCacheEXT;

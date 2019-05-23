@@ -69,6 +69,7 @@ namespace Vulkan
          public SurfaceCounterFlagsEXT surfaceCounters;          
       };
       
+      
       #endregion
 
       #region functions

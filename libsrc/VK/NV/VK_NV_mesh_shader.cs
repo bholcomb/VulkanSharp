@@ -29,7 +29,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PhysicalDeviceMeshShaderPropertiesNV 
+      public unsafe struct PhysicalDeviceMeshShaderPropertiesNV 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -54,6 +54,7 @@ namespace Vulkan
          public UInt32 taskCount;          
          public UInt32 firstTask;          
       };
+      
       
       #endregion
 

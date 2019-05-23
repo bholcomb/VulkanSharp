@@ -38,7 +38,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct ShaderStatisticsInfoAMD 
+      public unsafe struct ShaderStatisticsInfoAMD 
       {
          public ShaderStageFlags shaderStageMask;          
          public ShaderResourceUsageAMD resourceUsage;          
@@ -48,6 +48,7 @@ namespace Vulkan
          public UInt32 numAvailableSgprs;          
          public fixed UInt32 computeWorkGroupSize[3];          
       };
+      
       
       #endregion
 

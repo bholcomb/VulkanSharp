@@ -34,6 +34,7 @@ namespace Vulkan
          public HeadlessSurfaceCreateFlagsEXT flags;          
       };
       
+      
       #endregion
 
       #region functions

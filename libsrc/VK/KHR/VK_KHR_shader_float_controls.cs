@@ -43,6 +43,7 @@ namespace Vulkan
          public Bool32 shaderRoundingModeRTZFloat64;          
       };
       
+      
       #endregion
 
       //no functions

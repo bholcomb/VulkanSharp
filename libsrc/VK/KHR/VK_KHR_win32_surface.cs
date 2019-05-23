@@ -36,6 +36,7 @@ namespace Vulkan
          public HWND hwnd;          
       };
       
+      
       #endregion
 
       #region functions

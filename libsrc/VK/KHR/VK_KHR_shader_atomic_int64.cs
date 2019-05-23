@@ -28,6 +28,7 @@ namespace Vulkan
          public Bool32 shaderSharedInt64Atomics;          
       };
       
+      
       #endregion
 
       //no functions

@@ -30,7 +30,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct ExportMemoryWin32HandleInfoKHR 
+      public unsafe struct ExportMemoryWin32HandleInfoKHR 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -55,6 +55,7 @@ namespace Vulkan
          public DeviceMemory memory;          
          public ExternalMemoryHandleTypeFlags handleType;          
       };
+      
       
       #endregion
 

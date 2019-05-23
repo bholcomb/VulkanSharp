@@ -58,6 +58,7 @@ namespace Vulkan
          public BlendOverlapEXT blendOverlap;          
       };
       
+      
       #endregion
 
       //no functions

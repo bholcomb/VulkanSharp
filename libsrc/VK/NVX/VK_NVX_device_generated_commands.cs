@@ -100,7 +100,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct IndirectCommandsLayoutCreateInfoNVX 
+      public unsafe struct IndirectCommandsLayoutCreateInfoNVX 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -111,7 +111,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct CmdProcessCommandsInfoNVX 
+      public unsafe struct CmdProcessCommandsInfoNVX 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -138,7 +138,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct ObjectTableCreateInfoNVX 
+      public unsafe struct ObjectTableCreateInfoNVX 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -202,6 +202,7 @@ namespace Vulkan
          public PipelineLayout pipelineLayout;          
          public ShaderStageFlags stageFlags;          
       };
+      
       
       #endregion
 

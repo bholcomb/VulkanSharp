@@ -29,6 +29,7 @@ namespace Vulkan
          public Bool32 vulkanMemoryModelAvailabilityVisibilityChains;          
       };
       
+      
       #endregion
 
       //no functions

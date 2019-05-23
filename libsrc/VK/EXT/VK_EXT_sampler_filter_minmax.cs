@@ -44,6 +44,7 @@ namespace Vulkan
          public Bool32 filterMinmaxImageComponentMapping;          
       };
       
+      
       #endregion
 
       //no functions

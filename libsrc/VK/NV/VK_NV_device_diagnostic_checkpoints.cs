@@ -36,6 +36,7 @@ namespace Vulkan
          public IntPtr pCheckpointMarker;          
       };
       
+      
       #endregion
 
       #region functions

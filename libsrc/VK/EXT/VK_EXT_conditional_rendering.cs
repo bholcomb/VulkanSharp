@@ -54,6 +54,7 @@ namespace Vulkan
          public Bool32 conditionalRenderingEnable;  //Whether this secondary command buffer may be executed during an active conditional rendering 
       };
       
+      
       #endregion
 
       #region functions

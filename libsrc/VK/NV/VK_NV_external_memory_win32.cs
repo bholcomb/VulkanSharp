@@ -29,13 +29,14 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct ExportMemoryWin32HandleInfoNV 
+      public unsafe struct ExportMemoryWin32HandleInfoNV 
       {
          public StructureType sType;          
          public IntPtr pNext;          
          public SECURITY_ATTRIBUTES* pAttributes;          
          public DWORD dwAccess;          
       };
+      
       
       #endregion
 

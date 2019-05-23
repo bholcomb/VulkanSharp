@@ -27,6 +27,7 @@ namespace Vulkan
          public Bool32 supportsTextureGatherLODBiasAMD;          
       };
       
+      
       #endregion
 
       //no functions

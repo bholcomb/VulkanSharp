@@ -20,7 +20,7 @@ namespace Vulkan
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct Win32KeyedMutexAcquireReleaseInfoKHR 
+      public unsafe struct Win32KeyedMutexAcquireReleaseInfoKHR 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -32,6 +32,7 @@ namespace Vulkan
          public DeviceMemory* pReleaseSyncs;          
          public UInt64* pReleaseKeys;          
       };
+      
       
       #endregion
 

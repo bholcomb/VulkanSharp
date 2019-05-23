@@ -36,6 +36,7 @@ namespace Vulkan
          public Bool32 filterCubicMinmax;          
       };
       
+      
       #endregion
 
       //no functions

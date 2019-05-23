@@ -35,6 +35,7 @@ namespace Vulkan
          public ExternalMemoryHandleTypeFlagsNV handleTypes;          
       };
       
+      
       #endregion
 
       //no functions

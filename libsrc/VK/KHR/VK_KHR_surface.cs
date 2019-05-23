@@ -99,6 +99,7 @@ namespace Vulkan
          public ColorSpaceKHR colorSpace;  //and color space for the surface 
       };
       
+      
       #endregion
 
       #region functions

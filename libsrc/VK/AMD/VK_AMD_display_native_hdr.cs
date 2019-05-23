@@ -35,6 +35,7 @@ namespace Vulkan
          public Bool32 localDimmingEnable;          
       };
       
+      
       #endregion
 
       #region functions

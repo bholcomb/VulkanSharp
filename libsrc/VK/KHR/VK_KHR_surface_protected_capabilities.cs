@@ -27,6 +27,7 @@ namespace Vulkan
          public Bool32 supportsProtected;  //Represents if surface can be protected 
       };
       
+      
       #endregion
 
       //no functions

@@ -28,6 +28,7 @@ namespace Vulkan
          public Bool32 shaderInt8;          
       };
       
+      
       #endregion
 
       //no functions

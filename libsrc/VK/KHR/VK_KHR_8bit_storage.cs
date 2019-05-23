@@ -29,6 +29,7 @@ namespace Vulkan
          public Bool32 storagePushConstant8;  //8-bit integer variables supported in PushConstant 
       };
       
+      
       #endregion
 
       //no functions

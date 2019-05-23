@@ -45,6 +45,7 @@ namespace Vulkan
          public ExternalMemoryHandleTypeFlags handleType;          
       };
       
+      
       #endregion
 
       #region functions

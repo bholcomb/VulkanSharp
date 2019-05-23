@@ -32,7 +32,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct ExportSemaphoreWin32HandleInfoKHR 
+      public unsafe struct ExportSemaphoreWin32HandleInfoKHR 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -42,7 +42,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct D3D12FenceSubmitInfoKHR 
+      public unsafe struct D3D12FenceSubmitInfoKHR 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -60,6 +60,7 @@ namespace Vulkan
          public Semaphore semaphore;          
          public ExternalSemaphoreHandleTypeFlags handleType;          
       };
+      
       
       #endregion
 

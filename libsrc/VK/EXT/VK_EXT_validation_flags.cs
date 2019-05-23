@@ -27,13 +27,14 @@ namespace Vulkan
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct ValidationFlagsEXT 
+      public unsafe struct ValidationFlagsEXT 
       {
          public StructureType sType;  //Must be VK_STRUCTURE_TYPE_VALIDATION_FLAGS_EXT 
          public IntPtr pNext;          
          public UInt32 disabledValidationCheckCount;  //Number of validation checks to disable 
-         public ValidationCheckEXT* pDisabledValidationChecks;  //Validation checks to disable 
+         public IntPtr /*ValidationCheckEXT* */ pDisabledValidationChecks;  //Validation checks to disable 
       };
+      
       
       #endregion
 

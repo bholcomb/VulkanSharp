@@ -49,8 +49,9 @@ namespace Vulkan
       {
          public StructureType sType;          
          public IntPtr pNext;          
-         public HMONITOR hmonitor;          
+         public IntPtr /*HMONITOR*/ hmonitor;          
       };
+      
       
       #endregion
 

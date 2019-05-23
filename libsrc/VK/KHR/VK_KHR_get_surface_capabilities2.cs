@@ -43,6 +43,7 @@ namespace Vulkan
          public SurfaceFormatKHR surfaceFormat;          
       };
       
+      
       #endregion
 
       #region functions

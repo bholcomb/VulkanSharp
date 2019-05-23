@@ -29,6 +29,7 @@ namespace Vulkan
          public Sampler sampler;          
       };
       
+      
       #endregion
 
       #region functions

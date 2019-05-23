@@ -36,6 +36,7 @@ namespace Vulkan
          public QueueGlobalPriorityEXT globalPriority;          
       };
       
+      
       #endregion
 
       //no functions

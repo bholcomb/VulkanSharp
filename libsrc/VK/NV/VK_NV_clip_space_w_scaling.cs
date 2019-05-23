@@ -27,7 +27,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PipelineViewportWScalingStateCreateInfoNV 
+      public unsafe struct PipelineViewportWScalingStateCreateInfoNV 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -35,6 +35,7 @@ namespace Vulkan
          public UInt32 viewportCount;          
          public ViewportWScalingNV* pViewportWScalings;          
       };
+      
       
       #endregion
 

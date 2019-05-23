@@ -45,14 +45,14 @@ namespace Vulkan
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct ShadingRatePaletteNV 
+      public unsafe struct ShadingRatePaletteNV 
       {
          public UInt32 shadingRatePaletteEntryCount;          
          public ShadingRatePaletteEntryNV* pShadingRatePaletteEntries;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PipelineViewportShadingRateImageStateCreateInfoNV 
+      public unsafe struct PipelineViewportShadingRateImageStateCreateInfoNV 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -89,7 +89,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct CoarseSampleOrderCustomNV 
+      public unsafe struct CoarseSampleOrderCustomNV 
       {
          public ShadingRatePaletteEntryNV shadingRate;          
          public UInt32 sampleCount;          
@@ -98,7 +98,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PipelineViewportCoarseSampleOrderStateCreateInfoNV 
+      public unsafe struct PipelineViewportCoarseSampleOrderStateCreateInfoNV 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -106,6 +106,7 @@ namespace Vulkan
          public UInt32 customSampleOrderCount;          
          public CoarseSampleOrderCustomNV* pCustomSampleOrders;          
       };
+      
       
       #endregion
 

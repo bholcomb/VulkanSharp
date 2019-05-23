@@ -44,6 +44,7 @@ namespace Vulkan
          public Buffer buffer;  //Buffer that this allocation will be bound to 
       };
       
+      
       #endregion
 
       //no functions

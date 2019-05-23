@@ -29,6 +29,7 @@ namespace Vulkan
          public Bool32 persistent;  //For smart displays, use buffered mode.  If the display properties member "persistentMode" is VK_FALSE, this member must always be VK_FALSE. 
       };
       
+      
       #endregion
 
       #region functions

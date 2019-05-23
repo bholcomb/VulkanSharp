@@ -35,6 +35,7 @@ namespace Vulkan
          public GgpStreamDescriptor streamDescriptor;          
       };
       
+      
       #endregion
 
       #region functions

@@ -36,7 +36,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PresentTimesInfoGOOGLE 
+      public unsafe struct PresentTimesInfoGOOGLE 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -50,6 +50,7 @@ namespace Vulkan
          public UInt32 presentID;  //Application-provided identifier 
          public UInt64 desiredPresentTime;  //Earliest time an image should be presented 
       };
+      
       
       #endregion
 

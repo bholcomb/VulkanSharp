@@ -35,7 +35,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PipelineVertexInputDivisorStateCreateInfoEXT 
+      public unsafe struct PipelineVertexInputDivisorStateCreateInfoEXT 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -51,6 +51,7 @@ namespace Vulkan
          public Bool32 vertexAttributeInstanceRateDivisor;          
          public Bool32 vertexAttributeInstanceRateZeroDivisor;          
       };
+      
       
       #endregion
 

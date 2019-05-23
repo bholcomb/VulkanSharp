@@ -57,6 +57,7 @@ namespace Vulkan
          public UInt32 maxInlineUniformBlockBindings;          
       };
       
+      
       #endregion
 
       //no functions

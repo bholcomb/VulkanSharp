@@ -73,7 +73,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct DebugUtilsLabelEXT 
+      public unsafe struct DebugUtilsLabelEXT 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -82,7 +82,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct DebugUtilsMessengerCallbackDataEXT 
+      public unsafe struct DebugUtilsMessengerCallbackDataEXT 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -109,6 +109,7 @@ namespace Vulkan
          public DebugUtilsMessengerCallbackEXT pfnUserCallback;          
          public IntPtr pUserData;          
       };
+      
       
       #endregion
 

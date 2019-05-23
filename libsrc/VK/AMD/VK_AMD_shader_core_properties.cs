@@ -40,6 +40,7 @@ namespace Vulkan
          public UInt32 vgprAllocationGranularity;  //VGPRs are allocated in groups of this size 
       };
       
+      
       #endregion
 
       //no functions

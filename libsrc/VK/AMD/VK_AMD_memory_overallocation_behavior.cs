@@ -35,6 +35,7 @@ namespace Vulkan
          public MemoryOverallocationBehaviorAMD overallocationBehavior;          
       };
       
+      
       #endregion
 
       //no functions

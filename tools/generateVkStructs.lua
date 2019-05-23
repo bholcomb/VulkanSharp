@@ -15,10 +15,11 @@ namespace Vulkan
    {
       #region structs
       {{for k,sName in pairs(api.structs) do
-        local s = types.structs[sName]
+        local struct = types.structs[sName]
         local needsUnsafe = false
-        for i = 1,#s do 
-          if((s[i].pointer == true and (s[i].type ~= "char" and s[i].type ~= "void")) or s[i].array == true) then 
+        for i = 1,#struct.members do 
+          local m = struct.members[i]
+          if((m.pointer == true and (m.type ~= "char" and m.type ~= "void")) or m.array == true) then 
              needsUnsafe = true
           end
         end }}
@@ -29,14 +30,15 @@ namespace Vulkan
       public struct {{= sanitizeTypeName(sName)}} 
       {{end}}
       {
-         {{for i=1,#s do
-           if (s[i].array == true) then }}
-         public fixed {{= sanitizeType(s[i].type, s[i].pointer, s[i].doublePointer)}} {{= sanitizeTypeName(s[i].name)}}[{{= sanitizeArrayLength(s[i].arrayLength)}}]; {{if s[i].comment ~= nil then}} //{{= s[i].comment}} 
+          {{for i=1,#struct.members do
+            local m = struct.members[i]
+            if (m.array == true) then }}
+         public fixed {{= sanitizeType(m.type, m.pointer, m.doublePointer)}} {{= sanitizeTypeName(m.name)}}[{{= sanitizeArrayLength(m.arrayLength)}}]; {{if m.comment ~= nil then}} //{{= m.comment}} 
          {{else}}
          
          {{end}}
          {{else}}
-         public {{= sanitizeType(s[i].type, s[i].pointer, s[i].doublePointer)}} {{= sanitizeTypeName(s[i].name)}}; {{if s[i].comment ~= nil then}} //{{= s[i].comment}} 
+         public {{= sanitizeType(m.type, m.pointer, m.doublePointer)}} {{= sanitizeTypeName(m.name)}}; {{if m.comment ~= nil then}} //{{= m.comment}} 
          {{else}}
          
          {{end}}
@@ -49,10 +51,11 @@ namespace Vulkan
       
       #region unions
       {{for k,sName in pairs(api.unions) do
-        local s = types.unions[sName]
+        local struct = types.unions[sName]
         local needsUnsafe = false
-        for i = 1,#s do 
-          if((s[i].pointer == true and (s[i].type ~= "char" and s[i].type ~= "void")) or s[i].array == true) then 
+        for i = 1,#struct.members do 
+          local m = struct.members[i]
+          if((m.pointer == true and (m.type ~= "char" and m.type ~= "void")) or m.array == true) then 
              needsUnsafe = true
           end
         end }}
@@ -63,14 +66,15 @@ namespace Vulkan
       public struct {{= sanitizeTypeName(sName)}} 
       {{end}}
       {
-         {{for i=1,#s do
-           if (s[i].array == true) then }}
-         public fixed {{= sanitizeType(s[i].type, s[i].pointer)}} {{= sanitizeTypeName(s[i].name)}}[{{= sanitizeArrayLength(s[i].arrayLength)}}];  {{if s[i].comment ~= nil then}} //{{= s[i].comment}}
+         {{for i=1,#struct.members do
+            local m = struct.members[i]
+            if (m.array == true) then }}
+         public fixed {{= sanitizeType(m.type, m.pointer)}} {{= sanitizeTypeName(m.name)}}[{{= sanitizeArrayLength(m.arrayLength)}}];  {{if m.comment ~= nil then}} //{{= m.comment}}
          {{else}}
          
          {{end}}
          {{else}}
-         public {{= sanitizeType(s[i].type, s[i].pointer)}} {{= sanitizeTypeName(s[i].name)}};  {{if s[i].comment ~= nil then}} //{{= s[i].comment}} 
+         public {{= sanitizeType(m.type, m.pointer)}} {{= sanitizeTypeName(m.name)}};  {{if m.comment ~= nil then}} //{{= m.comment}} 
          {{else}}
          
          {{end}}

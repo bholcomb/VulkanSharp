@@ -60,6 +60,7 @@ namespace Vulkan
          public DisplayPlaneCapabilitiesKHR capabilities;          
       };
       
+      
       #endregion
 
       #region functions

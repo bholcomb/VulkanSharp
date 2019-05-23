@@ -47,6 +47,7 @@ namespace Vulkan
          public AttachmentReference fragmentDensityMapAttachment;          
       };
       
+      
       #endregion
 
       //no functions

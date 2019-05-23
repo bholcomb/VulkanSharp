@@ -35,6 +35,7 @@ namespace Vulkan
          public IntPtr window;          
       };
       
+      
       #endregion
 
       #region functions

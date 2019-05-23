@@ -27,13 +27,14 @@ namespace Vulkan
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct MetalSurfaceCreateInfoEXT 
+      public unsafe struct MetalSurfaceCreateInfoEXT 
       {
          public StructureType sType;          
          public IntPtr pNext;          
          public MetalSurfaceCreateFlagsEXT flags;          
-         public CAMetalLayer* pLayer;          
+         public IntPtr /*CAMetalLayer* */ pLayer;          
       };
+      
       
       #endregion
 

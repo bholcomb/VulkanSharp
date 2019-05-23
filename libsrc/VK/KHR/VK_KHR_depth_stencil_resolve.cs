@@ -31,7 +31,7 @@ namespace Vulkan
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct SubpassDescriptionDepthStencilResolveKHR 
+      public unsafe struct SubpassDescriptionDepthStencilResolveKHR 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -50,6 +50,7 @@ namespace Vulkan
          public Bool32 independentResolveNone;  //depth and stencil resolve modes can be set independently if one of them is none 
          public Bool32 independentResolve;  //depth and stencil resolve modes can be set independently 
       };
+      
       
       #endregion
 

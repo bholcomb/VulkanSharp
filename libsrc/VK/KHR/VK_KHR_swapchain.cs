@@ -41,7 +41,7 @@ namespace Vulkan
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct SwapchainCreateInfoKHR 
+      public unsafe struct SwapchainCreateInfoKHR 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -64,7 +64,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PresentInfoKHR 
+      public unsafe struct PresentInfoKHR 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -106,7 +106,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct DeviceGroupPresentCapabilitiesKHR 
+      public unsafe struct DeviceGroupPresentCapabilitiesKHR 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -115,7 +115,7 @@ namespace Vulkan
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct DeviceGroupPresentInfoKHR 
+      public unsafe struct DeviceGroupPresentInfoKHR 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -131,6 +131,7 @@ namespace Vulkan
          public IntPtr pNext;          
          public DeviceGroupPresentModeFlagsKHR modes;          
       };
+      
       
       #endregion
 

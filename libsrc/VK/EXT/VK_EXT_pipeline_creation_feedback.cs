@@ -30,7 +30,7 @@ namespace Vulkan
 
       #region structs
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PipelineCreationFeedbackCreateInfoEXT 
+      public unsafe struct PipelineCreationFeedbackCreateInfoEXT 
       {
          public StructureType sType;          
          public IntPtr pNext;          
@@ -45,6 +45,7 @@ namespace Vulkan
          public PipelineCreationFeedbackFlagsEXT flags;          
          public UInt64 duration;          
       };
+      
       
       #endregion
 

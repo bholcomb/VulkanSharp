@@ -39,6 +39,7 @@ namespace Vulkan
          public ExternalSemaphoreHandleTypeFlags handleType;          
       };
       
+      
       #endregion
 
       #region functions

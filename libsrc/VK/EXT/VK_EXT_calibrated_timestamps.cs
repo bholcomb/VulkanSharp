@@ -36,6 +36,7 @@ namespace Vulkan
          public TimeDomainEXT timeDomain;          
       };
       
+      
       #endregion
 
       #region functions

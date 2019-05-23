@@ -39,6 +39,7 @@ namespace Vulkan
          public ExternalFenceHandleTypeFlags handleType;          
       };
       
+      
       #endregion
 
       #region functions
