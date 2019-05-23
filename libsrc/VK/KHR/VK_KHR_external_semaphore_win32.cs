@@ -27,8 +27,8 @@ namespace Vulkan
          public Semaphore semaphore;          
          public SemaphoreImportFlags flags;          
          public ExternalSemaphoreHandleTypeFlags handleType;          
-         public HANDLE handle;          
-         public LPCWSTR name;          
+         public IntPtr/*HANDLE*/ handle;          
+         public string/*LPCWSTR*/ name;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -36,9 +36,9 @@ namespace Vulkan
       {
          public StructureType sType;          
          public IntPtr pNext;          
-         public SECURITY_ATTRIBUTES* pAttributes;          
-         public DWORD dwAccess;          
-         public LPCWSTR name;          
+         public IntPtr/*SECURITY_ATTRIBUTES**/ pAttributes;          
+         public UInt32/*DWORD*/ dwAccess;          
+         public string/*LPCWSTR*/ name;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]

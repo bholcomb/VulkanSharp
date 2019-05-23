@@ -24,7 +24,7 @@ namespace Vulkan
       {
          public StructureType sType;          
          public IntPtr pNext;          
-         public GgpFrameToken frameToken;          
+         public IntPtr/*GgpFrameToken*/ frameToken;          
       };
       
       

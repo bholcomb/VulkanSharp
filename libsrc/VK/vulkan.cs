@@ -142,11 +142,37 @@ namespace Vulkan
 		}
 	}
 
-	#endregion
+   [StructLayout(LayoutKind.Sequential)]
+   public struct DeviceAddress
+   {
+      UInt64 value;
 
-	#region DLL Loading
+      public static implicit operator DeviceAddress(UInt64 iValue)
+      {
+         return new DeviceAddress { value = iValue };
+      }
 
-	public class DllLoader
+      public static implicit operator DeviceAddress(uint iValue)
+      {
+         return new DeviceAddress { value = iValue };
+      }
+
+      public static implicit operator DeviceAddress(int iValue)
+      {
+         return new DeviceAddress { value = (ulong)iValue };
+      }
+
+      public static implicit operator UInt64(DeviceAddress size)
+      {
+         return size.value;
+      }
+   }
+
+   #endregion
+
+   #region DLL Loading
+
+   public class DllLoader
 	{
 		IntPtr myDllPtr { get; set; }
 

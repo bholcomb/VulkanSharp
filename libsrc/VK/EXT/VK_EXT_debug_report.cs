@@ -97,7 +97,7 @@ namespace Vulkan
       //delegate definitions
       public delegate Result CreateDebugReportCallbackEXTDelegate(Instance instance, ref DebugReportCallbackCreateInfoEXT pCreateInfo, ref AllocationCallbacks pAllocator, ref DebugReportCallbackEXT pCallback);
       public delegate void DestroyDebugReportCallbackEXTDelegate(Instance instance, DebugReportCallbackEXT callback, ref AllocationCallbacks pAllocator);
-      public delegate void DebugReportMessageEXTDelegate(Instance instance, DebugReportFlagsEXT flags, DebugReportObjectTypeEXT objectType, UInt64 object, UInt32 location, Int32 messageCode, ref char pLayerPrefix, ref char pMessage);
+      public delegate void DebugReportMessageEXTDelegate(Instance instance, DebugReportFlagsEXT flags, DebugReportObjectTypeEXT objectType, UInt64 obj, UInt32 location, Int32 messageCode, string pLayerPrefix, string pMessage);
       
       //delegate instances
       public static CreateDebugReportCallbackEXTDelegate CreateDebugReportCallbackEXT;

@@ -57,7 +57,7 @@ namespace Vulkan
       //VkResult vkGetShaderInfoAMD(VkDevice device, VkPipeline pipeline, VkShaderStageFlags shaderStage, VkShaderInfoTypeAMD infoType, size_t* pInfoSize, void* pInfo);
       
       //delegate definitions
-      public delegate Result GetShaderInfoAMDDelegate(Device device, Pipeline pipeline, ShaderStageFlags shaderStage, ShaderInfoTypeAMD infoType, ref UInt32 pInfoSize, ref void pInfo);
+      public delegate Result GetShaderInfoAMDDelegate(Device device, Pipeline pipeline, ShaderStageFlags shaderStage, ShaderInfoTypeAMD infoType, ref UInt32 pInfoSize, IntPtr pInfo);
       
       //delegate instances
       public static GetShaderInfoAMDDelegate GetShaderInfoAMD;

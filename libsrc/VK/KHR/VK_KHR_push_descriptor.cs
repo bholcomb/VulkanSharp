@@ -37,7 +37,7 @@ namespace Vulkan
       
       //delegate definitions
       public delegate void CmdPushDescriptorSetKHRDelegate(CommandBuffer commandBuffer, PipelineBindPoint pipelineBindPoint, PipelineLayout layout, UInt32 set, UInt32 descriptorWriteCount, ref WriteDescriptorSet pDescriptorWrites);
-      public delegate void CmdPushDescriptorSetWithTemplateKHRDelegate(CommandBuffer commandBuffer, DescriptorUpdateTemplate descriptorUpdateTemplate, PipelineLayout layout, UInt32 set, ref void pData);
+      public delegate void CmdPushDescriptorSetWithTemplateKHRDelegate(CommandBuffer commandBuffer, DescriptorUpdateTemplate descriptorUpdateTemplate, PipelineLayout layout, UInt32 set, IntPtr pData);
       
       //delegate instances
       public static CmdPushDescriptorSetKHRDelegate CmdPushDescriptorSetKHR;

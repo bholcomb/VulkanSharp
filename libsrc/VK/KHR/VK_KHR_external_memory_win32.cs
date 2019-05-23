@@ -25,8 +25,8 @@ namespace Vulkan
          public StructureType sType;          
          public IntPtr pNext;          
          public ExternalMemoryHandleTypeFlags handleType;          
-         public HANDLE handle;          
-         public LPCWSTR name;          
+         public IntPtr/*HANDLE*/ handle;          
+         public string/*LPCWSTR*/ name;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -34,9 +34,9 @@ namespace Vulkan
       {
          public StructureType sType;          
          public IntPtr pNext;          
-         public SECURITY_ATTRIBUTES* pAttributes;          
-         public DWORD dwAccess;          
-         public LPCWSTR name;          
+         public IntPtr/*SECURITY_ATTRIBUTES**/ pAttributes;          
+         public UInt32/*DWORD*/ dwAccess;          
+         public string/*LPCWSTR*/ name;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -65,8 +65,8 @@ namespace Vulkan
       //VkResult vkGetMemoryWin32HandlePropertiesKHR(VkDevice device, VkExternalMemoryHandleTypeFlags handleType, HANDLE handle, VkMemoryWin32HandlePropertiesKHR* pMemoryWin32HandleProperties);
       
       //delegate definitions
-      public delegate Result GetMemoryWin32HandleKHRDelegate(Device device, ref MemoryGetWin32HandleInfoKHR pGetWin32HandleInfo, ref HANDLE pHandle);
-      public delegate Result GetMemoryWin32HandlePropertiesKHRDelegate(Device device, ExternalMemoryHandleTypeFlags handleType, HANDLE handle, ref MemoryWin32HandlePropertiesKHR pMemoryWin32HandleProperties);
+      public delegate Result GetMemoryWin32HandleKHRDelegate(Device device, ref MemoryGetWin32HandleInfoKHR pGetWin32HandleInfo, ref IntPtr pHandle);
+      public delegate Result GetMemoryWin32HandlePropertiesKHRDelegate(Device device, ExternalMemoryHandleTypeFlags handleType, IntPtr handle, ref MemoryWin32HandlePropertiesKHR pMemoryWin32HandleProperties);
       
       //delegate instances
       public static GetMemoryWin32HandleKHRDelegate GetMemoryWin32HandleKHR;

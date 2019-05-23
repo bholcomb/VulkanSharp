@@ -101,7 +101,7 @@ namespace Vulkan
          public IntPtr pNext;          
          public PipelineCreateFlags flags;  //Pipeline creation flags 
          public UInt32 stageCount;          
-         public PipelineShaderStageCreateInfo* pStages;  //One entry for each active shader stage 
+         public IntPtr/*PipelineShaderStageCreateInfo**/ pStages;  //One entry for each active shader stage 
          public UInt32 groupCount;          
          public RayTracingShaderGroupCreateInfoNV* pGroups;          
          public UInt32 maxRecursionDepth;          
@@ -243,14 +243,14 @@ namespace Vulkan
       //delegate definitions
       public delegate Result CreateAccelerationStructureNVDelegate(Device device, ref AccelerationStructureCreateInfoNV pCreateInfo, ref AllocationCallbacks pAllocator, ref AccelerationStructureNV pAccelerationStructure);
       public delegate void DestroyAccelerationStructureNVDelegate(Device device, AccelerationStructureNV accelerationStructure, ref AllocationCallbacks pAllocator);
-      public delegate void GetAccelerationStructureMemoryRequirementsNVDelegate(Device device, ref AccelerationStructureMemoryRequirementsInfoNV pInfo, ref MemoryRequirements2KHR pMemoryRequirements);
+      public delegate void GetAccelerationStructureMemoryRequirementsNVDelegate(Device device, ref AccelerationStructureMemoryRequirementsInfoNV pInfo, ref MemoryRequirements2 pMemoryRequirements);
       public delegate Result BindAccelerationStructureMemoryNVDelegate(Device device, UInt32 bindInfoCount, ref BindAccelerationStructureMemoryInfoNV pBindInfos);
       public delegate void CmdBuildAccelerationStructureNVDelegate(CommandBuffer commandBuffer, ref AccelerationStructureInfoNV pInfo, Buffer instanceData, DeviceSize instanceOffset, Bool32 update, AccelerationStructureNV dst, AccelerationStructureNV src, Buffer scratch, DeviceSize scratchOffset);
       public delegate void CmdCopyAccelerationStructureNVDelegate(CommandBuffer commandBuffer, AccelerationStructureNV dst, AccelerationStructureNV src, CopyAccelerationStructureModeNV mode);
       public delegate void CmdTraceRaysNVDelegate(CommandBuffer commandBuffer, Buffer raygenShaderBindingTableBuffer, DeviceSize raygenShaderBindingOffset, Buffer missShaderBindingTableBuffer, DeviceSize missShaderBindingOffset, DeviceSize missShaderBindingStride, Buffer hitShaderBindingTableBuffer, DeviceSize hitShaderBindingOffset, DeviceSize hitShaderBindingStride, Buffer callableShaderBindingTableBuffer, DeviceSize callableShaderBindingOffset, DeviceSize callableShaderBindingStride, UInt32 width, UInt32 height, UInt32 depth);
       public delegate Result CreateRayTracingPipelinesNVDelegate(Device device, PipelineCache pipelineCache, UInt32 createInfoCount, ref RayTracingPipelineCreateInfoNV pCreateInfos, ref AllocationCallbacks pAllocator, ref Pipeline pPipelines);
-      public delegate Result GetRayTracingShaderGroupHandlesNVDelegate(Device device, Pipeline pipeline, UInt32 firstGroup, UInt32 groupCount, UInt32 dataSize, ref void pData);
-      public delegate Result GetAccelerationStructureHandleNVDelegate(Device device, AccelerationStructureNV accelerationStructure, UInt32 dataSize, ref void pData);
+      public delegate Result GetRayTracingShaderGroupHandlesNVDelegate(Device device, Pipeline pipeline, UInt32 firstGroup, UInt32 groupCount, UInt32 dataSize, IntPtr pData);
+      public delegate Result GetAccelerationStructureHandleNVDelegate(Device device, AccelerationStructureNV accelerationStructure, UInt32 dataSize, IntPtr pData);
       public delegate void CmdWriteAccelerationStructuresPropertiesNVDelegate(CommandBuffer commandBuffer, UInt32 accelerationStructureCount, ref AccelerationStructureNV pAccelerationStructures, QueryType queryType, QueryPool queryPool, UInt32 firstQuery);
       public delegate Result CompileDeferredNVDelegate(Device device, Pipeline pipeline, UInt32 shader);
       

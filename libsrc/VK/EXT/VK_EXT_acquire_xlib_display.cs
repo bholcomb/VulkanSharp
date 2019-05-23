@@ -26,8 +26,8 @@ namespace Vulkan
       //VkResult vkGetRandROutputDisplayEXT(VkPhysicalDevice physicalDevice, Display* dpy, RROutput rrOutput, VkDisplayKHR* pDisplay);
       
       //delegate definitions
-      public delegate Result AcquireXlibDisplayEXTDelegate(PhysicalDevice physicalDevice, ref Display dpy, DisplayKHR display);
-      public delegate Result GetRandROutputDisplayEXTDelegate(PhysicalDevice physicalDevice, ref Display dpy, RROutput rrOutput, ref DisplayKHR pDisplay);
+      public delegate Result AcquireXlibDisplayEXTDelegate(PhysicalDevice physicalDevice, IntPtr/*Display*/ dpy, DisplayKHR display);
+      public delegate Result GetRandROutputDisplayEXTDelegate(PhysicalDevice physicalDevice, IntPtr/*Display*/ dpy, IntPtr/*RROutput*/ rrOutput, ref DisplayKHR pDisplay);
       
       //delegate instances
       public static AcquireXlibDisplayEXTDelegate AcquireXlibDisplayEXT;

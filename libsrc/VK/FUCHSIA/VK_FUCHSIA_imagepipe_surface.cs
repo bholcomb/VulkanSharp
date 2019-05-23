@@ -32,7 +32,7 @@ namespace Vulkan
          public StructureType sType;          
          public IntPtr pNext;          
          public ImagePipeSurfaceCreateFlagsFUCHSIA flags;          
-         public zx_handle_t imagePipeHandle;          
+         public IntPtr/*zx_handle_t*/ imagePipeHandle;          
       };
       
       

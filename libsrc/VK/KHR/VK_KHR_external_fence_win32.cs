@@ -27,8 +27,8 @@ namespace Vulkan
          public Fence fence;          
          public FenceImportFlags flags;          
          public ExternalFenceHandleTypeFlags handleType;          
-         public HANDLE handle;          
-         public LPCWSTR name;          
+         public IntPtr/*HANDLE*/ handle;          
+         public string/*LPCWSTR*/ name;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -36,9 +36,9 @@ namespace Vulkan
       {
          public StructureType sType;          
          public IntPtr pNext;          
-         public SECURITY_ATTRIBUTES* pAttributes;          
-         public DWORD dwAccess;          
-         public LPCWSTR name;          
+         public IntPtr/*SECURITY_ATTRIBUTES**/ pAttributes;          
+         public UInt32/*DWORD*/ dwAccess;          
+         public string/*LPCWSTR*/ name;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -60,7 +60,7 @@ namespace Vulkan
       
       //delegate definitions
       public delegate Result ImportFenceWin32HandleKHRDelegate(Device device, ref ImportFenceWin32HandleInfoKHR pImportFenceWin32HandleInfo);
-      public delegate Result GetFenceWin32HandleKHRDelegate(Device device, ref FenceGetWin32HandleInfoKHR pGetWin32HandleInfo, ref HANDLE pHandle);
+      public delegate Result GetFenceWin32HandleKHRDelegate(Device device, ref FenceGetWin32HandleInfoKHR pGetWin32HandleInfo, ref IntPtr pHandle);
       
       //delegate instances
       public static ImportFenceWin32HandleKHRDelegate ImportFenceWin32HandleKHR;

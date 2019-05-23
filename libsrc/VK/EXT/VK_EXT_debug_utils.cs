@@ -13,12 +13,16 @@ namespace Vulkan
    {
       #region handles
       [StructLayout(LayoutKind.Sequential)] public struct DebugUtilsMessengerEXT { public UInt64 native; }
-      #endregion 
-      
+      #endregion
+
+      #region function pointers
+      [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+      public delegate Bool32 DebugUtilsMessengerCallbackEXT(DebugUtilsMessageSeverityFlagsEXT messageSeverity, DebugUtilsMessageTypeFlagsEXT messageTypes, ref DebugUtilsMessengerCallbackDataEXT pCallbackData, IntPtr pUserData);
+      #endregion
 
       //no enums
 
-       
+
       #region flags
       [Flags]
       public enum DebugUtilsMessengerCallbackDataFlagsEXT : int
@@ -91,11 +95,11 @@ namespace Vulkan
          public Int32 messageIdNumber;          
          public string pMessage;          
          public UInt32 queueLabelCount;          
-         public DebugUtilsLabelEXT* pQueueLabels;          
+         public IntPtr/*DebugUtilsLabelEXT**/ pQueueLabels;          
          public UInt32 cmdBufLabelCount;          
-         public DebugUtilsLabelEXT* pCmdBufLabels;          
+         public IntPtr/*DebugUtilsLabelEXT**/ pCmdBufLabels;          
          public UInt32 objectCount;          
-         public DebugUtilsObjectNameInfoEXT* pObjects;          
+         public IntPtr/*DebugUtilsObjectNameInfoEXT**/ pObjects;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]

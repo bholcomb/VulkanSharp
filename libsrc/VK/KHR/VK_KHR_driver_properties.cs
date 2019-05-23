@@ -11,8 +11,11 @@ namespace Vulkan
    
    public static partial class VK
    {
+      const UInt32 MAX_DRIVER_NAME_SIZE_KHR = 256;
+      const UInt32 MAX_DRIVER_INFO_SIZE_KHR = 256;
+
       //no handles
-      
+
 
       #region enums
       public enum DriverIdKHR : int

@@ -32,8 +32,8 @@ namespace Vulkan
          public StructureType sType;          
          public IntPtr pNext;          
          public WaylandSurfaceCreateFlagsKHR flags;          
-         public wl_display* display;          
-         public wl_surface* surface;          
+         public IntPtr/*wl_display**/ display;          
+         public IntPtr/*wl_surface**/ surface;          
       };
       
       
@@ -46,7 +46,7 @@ namespace Vulkan
       
       //delegate definitions
       public delegate Result CreateWaylandSurfaceKHRDelegate(Instance instance, ref WaylandSurfaceCreateInfoKHR pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
-      public delegate Bool32 GetPhysicalDeviceWaylandPresentationSupportKHRDelegate(PhysicalDevice physicalDevice, UInt32 queueFamilyIndex, ref wl_display display);
+      public delegate Bool32 GetPhysicalDeviceWaylandPresentationSupportKHRDelegate(PhysicalDevice physicalDevice, UInt32 queueFamilyIndex, IntPtr display);
       
       //delegate instances
       public static CreateWaylandSurfaceKHRDelegate CreateWaylandSurfaceKHR;

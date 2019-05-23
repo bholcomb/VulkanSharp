@@ -32,8 +32,8 @@ namespace Vulkan
          public StructureType sType;          
          public IntPtr pNext;          
          public XcbSurfaceCreateFlagsKHR flags;          
-         public xcb_connection_t* connection;          
-         public xcb_window_t window;          
+         public IntPtr/*xcb_connection_t**/ connection;          
+         public IntPtr/*xcb_window_t*/ window;          
       };
       
       
@@ -46,7 +46,7 @@ namespace Vulkan
       
       //delegate definitions
       public delegate Result CreateXcbSurfaceKHRDelegate(Instance instance, ref XcbSurfaceCreateInfoKHR pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
-      public delegate Bool32 GetPhysicalDeviceXcbPresentationSupportKHRDelegate(PhysicalDevice physicalDevice, UInt32 queueFamilyIndex, ref xcb_connection_t connection, xcb_visualid_t visual_id);
+      public delegate Bool32 GetPhysicalDeviceXcbPresentationSupportKHRDelegate(PhysicalDevice physicalDevice, UInt32 queueFamilyIndex, IntPtr connection, IntPtr visual_id);
       
       //delegate instances
       public static CreateXcbSurfaceKHRDelegate CreateXcbSurfaceKHR;

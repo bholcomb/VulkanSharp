@@ -32,8 +32,8 @@ namespace Vulkan
          public StructureType sType;          
          public IntPtr pNext;          
          public XlibSurfaceCreateFlagsKHR flags;          
-         public Display* dpy;          
-         public Window window;          
+         public IntPtr/*Display**/ dpy;          
+         public IntPtr/*Window*/ window;          
       };
       
       
@@ -46,7 +46,7 @@ namespace Vulkan
       
       //delegate definitions
       public delegate Result CreateXlibSurfaceKHRDelegate(Instance instance, ref XlibSurfaceCreateInfoKHR pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
-      public delegate Bool32 GetPhysicalDeviceXlibPresentationSupportKHRDelegate(PhysicalDevice physicalDevice, UInt32 queueFamilyIndex, ref Display dpy, VisualID visualID);
+      public delegate Bool32 GetPhysicalDeviceXlibPresentationSupportKHRDelegate(PhysicalDevice physicalDevice, UInt32 queueFamilyIndex, IntPtr dpy, IntPtr visualID);
       
       //delegate instances
       public static CreateXlibSurfaceKHRDelegate CreateXlibSurfaceKHR;

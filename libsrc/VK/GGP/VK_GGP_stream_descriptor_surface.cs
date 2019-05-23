@@ -32,7 +32,7 @@ namespace Vulkan
          public StructureType sType;          
          public IntPtr pNext;          
          public StreamDescriptorSurfaceCreateFlagsGGP flags;          
-         public GgpStreamDescriptor streamDescriptor;          
+         public IntPtr/*GgpStreamDescriptor*/ streamDescriptor;          
       };
       
       

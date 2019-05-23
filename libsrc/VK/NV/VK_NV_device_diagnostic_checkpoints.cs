@@ -45,7 +45,7 @@ namespace Vulkan
       //void vkGetQueueCheckpointDataNV(VkQueue queue, uint32_t* pCheckpointDataCount, VkCheckpointDataNV* pCheckpointData);
       
       //delegate definitions
-      public delegate void CmdSetCheckpointNVDelegate(CommandBuffer commandBuffer, ref void pCheckpointMarker);
+      public delegate void CmdSetCheckpointNVDelegate(CommandBuffer commandBuffer, IntPtr pCheckpointMarker);
       public delegate void GetQueueCheckpointDataNVDelegate(Queue queue, ref UInt32 pCheckpointDataCount, ref CheckpointDataNV pCheckpointData);
       
       //delegate instances

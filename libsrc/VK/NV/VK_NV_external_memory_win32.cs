@@ -25,7 +25,7 @@ namespace Vulkan
          public StructureType sType;          
          public IntPtr pNext;          
          public ExternalMemoryHandleTypeFlagsNV handleType;          
-         public HANDLE handle;          
+         public IntPtr/*HANDLE*/ handle;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -33,8 +33,8 @@ namespace Vulkan
       {
          public StructureType sType;          
          public IntPtr pNext;          
-         public SECURITY_ATTRIBUTES* pAttributes;          
-         public DWORD dwAccess;          
+         public IntPtr/*SECURITY_ATTRIBUTES**/ pAttributes;          
+         public UInt32/*DWORD*/ dwAccess;          
       };
       
       
@@ -45,7 +45,7 @@ namespace Vulkan
       //VkResult vkGetMemoryWin32HandleNV(VkDevice device, VkDeviceMemory memory, VkExternalMemoryHandleTypeFlagsNV handleType, HANDLE* pHandle);
       
       //delegate definitions
-      public delegate Result GetMemoryWin32HandleNVDelegate(Device device, DeviceMemory memory, ExternalMemoryHandleTypeFlagsNV handleType, ref HANDLE pHandle);
+      public delegate Result GetMemoryWin32HandleNVDelegate(Device device, DeviceMemory memory, ExternalMemoryHandleTypeFlagsNV handleType, ref IntPtr pHandle);
       
       //delegate instances
       public static GetMemoryWin32HandleNVDelegate GetMemoryWin32HandleNV;
