@@ -14,7 +14,7 @@ namespace Vulkan
          public StructureType sType;          
          public IntPtr pNext;          
          public InstanceCreateFlags flags;          
-         public ApplicationInfo* pApplicationInfo;          
+         //public ApplicationInfo* pApplicationInfo;          
          public UInt32 enabledLayerCount;          
          public IntPtr ppEnabledLayerNames;  //Ordered list of layer names to be enabled 
          public UInt32 enabledExtensionCount;          
@@ -278,9 +278,9 @@ namespace Vulkan
       public unsafe struct PhysicalDeviceMemoryProperties 
       {
          public UInt32 memoryTypeCount;          
-         public fixed MemoryType memoryTypes[(int)VK.MAX_MEMORY_TYPES];          
+         //public fixed MemoryType memoryTypes[(int)VK.MAX_MEMORY_TYPES];          
          public UInt32 memoryHeapCount;          
-         public fixed MemoryHeap memoryHeaps[(int)VK.MAX_MEMORY_HEAPS];          
+         //public fixed MemoryHeap memoryHeaps[(int)VK.MAX_MEMORY_HEAPS];          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -625,7 +625,7 @@ namespace Vulkan
          public IntPtr pNext;          
          public PipelineCreateFlags flags;  //Pipeline creation flags 
          public UInt32 stageCount;          
-         public PipelineShaderStageCreateInfo* pStages;  //One entry for each active shader stage 
+         //public PipelineShaderStageCreateInfo* pStages;  //One entry for each active shader stage 
          public PipelineVertexInputStateCreateInfo* pVertexInputState;          
          public PipelineInputAssemblyStateCreateInfo* pInputAssemblyState;          
          public PipelineTessellationStateCreateInfo* pTessellationState;          
@@ -790,7 +790,7 @@ namespace Vulkan
          public SampleCountFlags rasterizationSamples;  //Number of samples used for rasterization 
          public Bool32 sampleShadingEnable;  //optional (GL45) 
          public float minSampleShading;  //optional (GL45) 
-         public SampleMask* pSampleMask;  //Array of sampleMask words 
+         //public SampleMask* pSampleMask;  //Array of sampleMask words 
          public Bool32 alphaToCoverageEnable;          
          public Bool32 alphaToOneEnable;          
       };
@@ -1156,9 +1156,9 @@ namespace Vulkan
       public unsafe struct ImageBlit 
       {
          public ImageSubresourceLayers srcSubresource;          
-         public fixed Offset3D srcOffsets[2];  //Specified in pixels for both compressed and uncompressed images 
+         //public fixed Offset3D srcOffsets[2];  //Specified in pixels for both compressed and uncompressed images 
          public ImageSubresourceLayers dstSubresource;          
-         public fixed Offset3D dstOffsets[2];  //Specified in pixels for both compressed and uncompressed images 
+         //public fixed Offset3D dstOffsets[2];  //Specified in pixels for both compressed and uncompressed images 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -1431,7 +1431,7 @@ namespace Vulkan
          public StructureType sType;          
          public IntPtr pNext;          
          public UInt32 physicalDeviceCount;          
-         public fixed PhysicalDevice physicalDevices[(int)VK.MAX_DEVICE_GROUP_SIZE];          
+         //public fixed PhysicalDevice physicalDevices[(int)VK.MAX_DEVICE_GROUP_SIZE];          
          public Bool32 subsetAllocation;          
       };
       

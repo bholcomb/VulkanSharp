@@ -71,7 +71,7 @@ namespace Vulkan
       
       //delegate definitions
       public delegate Result ImportSemaphoreWin32HandleKHRDelegate(Device device, ref ImportSemaphoreWin32HandleInfoKHR pImportSemaphoreWin32HandleInfo);
-      public delegate Result GetSemaphoreWin32HandleKHRDelegate(Device device, ref SemaphoreGetWin32HandleInfoKHR pGetWin32HandleInfo, ref HANDLE pHandle);
+      public delegate Result GetSemaphoreWin32HandleKHRDelegate(Device device, ref SemaphoreGetWin32HandleInfoKHR pGetWin32HandleInfo, ref IntPtr pHandle);
       
       //delegate instances
       public static ImportSemaphoreWin32HandleKHRDelegate ImportSemaphoreWin32HandleKHR;

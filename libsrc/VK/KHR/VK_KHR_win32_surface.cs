@@ -32,8 +32,8 @@ namespace Vulkan
          public StructureType sType;          
          public IntPtr pNext;          
          public Win32SurfaceCreateFlagsKHR flags;          
-         public HINSTANCE hinstance;          
-         public HWND hwnd;          
+         public IntPtr/*HINSTANCE*/ hinstance;          
+         public IntPtr/*HWND*/ hwnd;          
       };
       
       

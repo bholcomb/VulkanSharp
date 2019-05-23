@@ -32,7 +32,7 @@ namespace Vulkan
          public StructureType sType;          
          public IntPtr pNext;          
          public AndroidSurfaceCreateFlagsKHR flags;          
-         public ANativeWindow* window;          
+         public IntPtr/*ANativeWindow**/ window;          
       };
       
       
