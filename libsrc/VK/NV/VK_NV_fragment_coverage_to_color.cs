@@ -29,11 +29,11 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineCoverageToColorStateCreateInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public PipelineCoverageToColorStateCreateFlagsNV flags;
-         public Bool32 coverageToColorEnable;
-         public UInt32 coverageToColorLocation;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public PipelineCoverageToColorStateCreateFlagsNV flags;          
+         public Bool32 coverageToColorEnable;          
+         public UInt32 coverageToColorLocation;          
       };
       
       #endregion

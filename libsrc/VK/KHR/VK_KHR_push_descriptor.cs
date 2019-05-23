@@ -22,9 +22,9 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDevicePushDescriptorPropertiesKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 maxPushDescriptors;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 maxPushDescriptors;          
       };
       
       #endregion

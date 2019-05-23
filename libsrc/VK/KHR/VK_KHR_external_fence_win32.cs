@@ -22,32 +22,32 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImportFenceWin32HandleInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public Fence fence;
-         public FenceImportFlags flags;
-         public ExternalFenceHandleTypeFlags handleType;
-         public HANDLE handle;
-         public LPCWSTR name;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Fence fence;          
+         public FenceImportFlags flags;          
+         public ExternalFenceHandleTypeFlags handleType;          
+         public HANDLE handle;          
+         public LPCWSTR name;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ExportFenceWin32HandleInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public SECURITY_ATTRIBUTES pAttributes;
-         public DWORD dwAccess;
-         public LPCWSTR name;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public SECURITY_ATTRIBUTES* pAttributes;          
+         public DWORD dwAccess;          
+         public LPCWSTR name;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct FenceGetWin32HandleInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public Fence fence;
-         public ExternalFenceHandleTypeFlags handleType;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Fence fence;          
+         public ExternalFenceHandleTypeFlags handleType;          
       };
       
       #endregion

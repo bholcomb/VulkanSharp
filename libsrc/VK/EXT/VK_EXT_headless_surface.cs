@@ -29,9 +29,9 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct HeadlessSurfaceCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public HeadlessSurfaceCreateFlagsEXT flags;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public HeadlessSurfaceCreateFlagsEXT flags;          
       };
       
       #endregion

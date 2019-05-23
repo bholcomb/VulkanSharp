@@ -22,42 +22,42 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DisplayProperties2KHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public DisplayPropertiesKHR displayProperties;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DisplayPropertiesKHR displayProperties;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DisplayPlaneProperties2KHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public DisplayPlanePropertiesKHR displayPlaneProperties;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DisplayPlanePropertiesKHR displayPlaneProperties;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DisplayModeProperties2KHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public DisplayModePropertiesKHR displayModeProperties;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DisplayModePropertiesKHR displayModeProperties;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DisplayPlaneInfo2KHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public DisplayModeKHR mode;
-         public UInt32 planeIndex;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DisplayModeKHR mode;          
+         public UInt32 planeIndex;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DisplayPlaneCapabilities2KHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public DisplayPlaneCapabilitiesKHR capabilities;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DisplayPlaneCapabilitiesKHR capabilities;          
       };
       
       #endregion

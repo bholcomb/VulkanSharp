@@ -22,17 +22,17 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceRepresentativeFragmentTestFeaturesNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 representativeFragmentTest;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 representativeFragmentTest;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineRepresentativeFragmentTestStateCreateInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 representativeFragmentTestEnable;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 representativeFragmentTestEnable;          
       };
       
       #endregion

@@ -79,7 +79,7 @@ namespace Vulkan
       };
       
       {{end}}
-      #end region
+      #endregion
    }
 }
 ]]

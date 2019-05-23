@@ -30,9 +30,9 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DeviceMemoryOverallocationCreateInfoAMD 
       {
-         public StructureType sType;
-         public void pNext;
-         public MemoryOverallocationBehaviorAMD overallocationBehavior;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public MemoryOverallocationBehaviorAMD overallocationBehavior;          
       };
       
       #endregion

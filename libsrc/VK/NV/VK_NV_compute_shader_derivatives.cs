@@ -22,10 +22,10 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceComputeShaderDerivativesFeaturesNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 computeDerivativeGroupQuads;
-         public Bool32 computeDerivativeGroupLinear;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 computeDerivativeGroupQuads;          
+         public Bool32 computeDerivativeGroupLinear;          
       };
       
       #endregion

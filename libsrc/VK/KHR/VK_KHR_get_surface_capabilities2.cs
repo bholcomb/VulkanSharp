@@ -22,25 +22,25 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceSurfaceInfo2KHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public SurfaceKHR surface;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public SurfaceKHR surface;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SurfaceCapabilities2KHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public SurfaceCapabilitiesKHR surfaceCapabilities;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public SurfaceCapabilitiesKHR surfaceCapabilities;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SurfaceFormat2KHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public SurfaceFormatKHR surfaceFormat;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public SurfaceFormatKHR surfaceFormat;          
       };
       
       #endregion

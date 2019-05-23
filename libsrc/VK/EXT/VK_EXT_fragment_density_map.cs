@@ -22,29 +22,29 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceFragmentDensityMapFeaturesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 fragmentDensityMap;
-         public Bool32 fragmentDensityMapDynamic;
-         public Bool32 fragmentDensityMapNonSubsampledImages;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 fragmentDensityMap;          
+         public Bool32 fragmentDensityMapDynamic;          
+         public Bool32 fragmentDensityMapNonSubsampledImages;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceFragmentDensityMapPropertiesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public Extent2D minFragmentDensityTexelSize;
-         public Extent2D maxFragmentDensityTexelSize;
-         public Bool32 fragmentDensityInvocations;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Extent2D minFragmentDensityTexelSize;          
+         public Extent2D maxFragmentDensityTexelSize;          
+         public Bool32 fragmentDensityInvocations;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct RenderPassFragmentDensityMapCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public AttachmentReference fragmentDensityMapAttachment;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public AttachmentReference fragmentDensityMapAttachment;          
       };
       
       #endregion

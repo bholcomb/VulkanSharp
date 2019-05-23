@@ -22,9 +22,9 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PresentFrameTokenGGP 
       {
-         public StructureType sType;
-         public void pNext;
-         public GgpFrameToken frameToken;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public GgpFrameToken frameToken;          
       };
       
       #endregion

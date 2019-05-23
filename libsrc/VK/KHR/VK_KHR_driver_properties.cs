@@ -38,21 +38,21 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ConformanceVersionKHR 
       {
-         public byte major;
-         public byte minor;
-         public byte subminor;
-         public byte patch;
+         public byte major;          
+         public byte minor;          
+         public byte subminor;          
+         public byte patch;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceDriverPropertiesKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public DriverIdKHR driverID;
-         public char driverName;
-         public char driverInfo;
-         public ConformanceVersionKHR conformanceVersion;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DriverIdKHR driverID;          
+         public fixed char driverName[(int)VK.MAX_DRIVER_NAME_SIZE_KHR];          
+         public fixed char driverInfo[(int)VK.MAX_DRIVER_INFO_SIZE_KHR];          
+         public ConformanceVersionKHR conformanceVersion;          
       };
       
       #endregion

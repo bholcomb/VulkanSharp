@@ -30,18 +30,18 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SamplerReductionModeCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public SamplerReductionModeEXT reductionMode;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public SamplerReductionModeEXT reductionMode;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceSamplerFilterMinmaxPropertiesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 filterMinmaxSingleComponentFormats;
-         public Bool32 filterMinmaxImageComponentMapping;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 filterMinmaxSingleComponentFormats;          
+         public Bool32 filterMinmaxImageComponentMapping;          
       };
       
       #endregion

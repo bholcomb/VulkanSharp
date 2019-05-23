@@ -47,64 +47,64 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ShadingRatePaletteNV 
       {
-         public UInt32 shadingRatePaletteEntryCount;
-         public ShadingRatePaletteEntryNV pShadingRatePaletteEntries;
+         public UInt32 shadingRatePaletteEntryCount;          
+         public ShadingRatePaletteEntryNV* pShadingRatePaletteEntries;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineViewportShadingRateImageStateCreateInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 shadingRateImageEnable;
-         public UInt32 viewportCount;
-         public ShadingRatePaletteNV pShadingRatePalettes;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 shadingRateImageEnable;          
+         public UInt32 viewportCount;          
+         public ShadingRatePaletteNV* pShadingRatePalettes;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceShadingRateImageFeaturesNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 shadingRateImage;
-         public Bool32 shadingRateCoarseSampleOrder;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 shadingRateImage;          
+         public Bool32 shadingRateCoarseSampleOrder;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceShadingRateImagePropertiesNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public Extent2D shadingRateTexelSize;
-         public UInt32 shadingRatePaletteSize;
-         public UInt32 shadingRateMaxCoarseSamples;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Extent2D shadingRateTexelSize;          
+         public UInt32 shadingRatePaletteSize;          
+         public UInt32 shadingRateMaxCoarseSamples;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct CoarseSampleLocationNV 
       {
-         public UInt32 pixelX;
-         public UInt32 pixelY;
-         public UInt32 sample;
+         public UInt32 pixelX;          
+         public UInt32 pixelY;          
+         public UInt32 sample;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct CoarseSampleOrderCustomNV 
       {
-         public ShadingRatePaletteEntryNV shadingRate;
-         public UInt32 sampleCount;
-         public UInt32 sampleLocationCount;
-         public CoarseSampleLocationNV pSampleLocations;
+         public ShadingRatePaletteEntryNV shadingRate;          
+         public UInt32 sampleCount;          
+         public UInt32 sampleLocationCount;          
+         public CoarseSampleLocationNV* pSampleLocations;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineViewportCoarseSampleOrderStateCreateInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public CoarseSampleOrderTypeNV sampleOrderType;
-         public UInt32 customSampleOrderCount;
-         public CoarseSampleOrderCustomNV pCustomSampleOrders;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public CoarseSampleOrderTypeNV sampleOrderType;          
+         public UInt32 customSampleOrderCount;          
+         public CoarseSampleOrderCustomNV* pCustomSampleOrders;          
       };
       
       #endregion

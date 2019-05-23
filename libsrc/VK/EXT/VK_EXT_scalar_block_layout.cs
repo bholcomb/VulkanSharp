@@ -22,9 +22,9 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceScalarBlockLayoutFeaturesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 scalarBlockLayout;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 scalarBlockLayout;          
       };
       
       #endregion

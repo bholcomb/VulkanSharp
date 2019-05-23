@@ -22,26 +22,26 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImportMemoryHostPointerInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public ExternalMemoryHandleTypeFlags handleType;
-         public void pHostPointer;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public ExternalMemoryHandleTypeFlags handleType;          
+         public IntPtr pHostPointer;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MemoryHostPointerPropertiesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 memoryTypeBits;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 memoryTypeBits;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceExternalMemoryHostPropertiesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public DeviceSize minImportedHostPointerAlignment;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DeviceSize minImportedHostPointerAlignment;          
       };
       
       #endregion

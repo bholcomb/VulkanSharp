@@ -29,11 +29,11 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct WaylandSurfaceCreateInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public WaylandSurfaceCreateFlagsKHR flags;
-         public wl_display display;
-         public wl_surface surface;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public WaylandSurfaceCreateFlagsKHR flags;          
+         public wl_display* display;          
+         public wl_surface* surface;          
       };
       
       #endregion

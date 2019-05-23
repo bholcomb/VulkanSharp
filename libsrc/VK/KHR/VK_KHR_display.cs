@@ -46,72 +46,72 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DisplayPropertiesKHR 
       {
-         public DisplayKHR display;
-         public char displayName;
-         public Extent2D physicalDimensions;
-         public Extent2D physicalResolution;
-         public SurfaceTransformFlagsKHR supportedTransforms;
-         public Bool32 planeReorderPossible;
-         public Bool32 persistentContent;
+         public DisplayKHR display;  //Handle of the display object 
+         public string displayName;  //Name of the display 
+         public Extent2D physicalDimensions;  //In millimeters? 
+         public Extent2D physicalResolution;  //Max resolution for CRT? 
+         public SurfaceTransformFlagsKHR supportedTransforms;  //one or more bits from VkSurfaceTransformFlagsKHR 
+         public Bool32 planeReorderPossible;  //VK_TRUE if the overlay plane's z-order can be changed on this display. 
+         public Bool32 persistentContent;  //VK_TRUE if this is a "smart" display that supports self-refresh/internal buffering. 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DisplayModeParametersKHR 
       {
-         public Extent2D visibleRegion;
-         public UInt32 refreshRate;
+         public Extent2D visibleRegion;  //Visible scanout region. 
+         public UInt32 refreshRate;  //Number of times per second the display is updated. 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DisplayModePropertiesKHR 
       {
-         public DisplayModeKHR displayMode;
-         public DisplayModeParametersKHR parameters;
+         public DisplayModeKHR displayMode;  //Handle of this display mode. 
+         public DisplayModeParametersKHR parameters;  //The parameters this mode uses. 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DisplayModeCreateInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public DisplayModeCreateFlagsKHR flags;
-         public DisplayModeParametersKHR parameters;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DisplayModeCreateFlagsKHR flags;          
+         public DisplayModeParametersKHR parameters;  //The parameters this mode uses. 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DisplayPlaneCapabilitiesKHR 
       {
-         public DisplayPlaneAlphaFlagsKHR supportedAlpha;
-         public Offset2D minSrcPosition;
-         public Offset2D maxSrcPosition;
-         public Extent2D minSrcExtent;
-         public Extent2D maxSrcExtent;
-         public Offset2D minDstPosition;
-         public Offset2D maxDstPosition;
-         public Extent2D minDstExtent;
-         public Extent2D maxDstExtent;
+         public DisplayPlaneAlphaFlagsKHR supportedAlpha;  //Types of alpha blending supported, if any. 
+         public Offset2D minSrcPosition;  //Does the plane have any position and extent restrictions? 
+         public Offset2D maxSrcPosition;          
+         public Extent2D minSrcExtent;          
+         public Extent2D maxSrcExtent;          
+         public Offset2D minDstPosition;          
+         public Offset2D maxDstPosition;          
+         public Extent2D minDstExtent;          
+         public Extent2D maxDstExtent;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DisplayPlanePropertiesKHR 
       {
-         public DisplayKHR currentDisplay;
-         public UInt32 currentStackIndex;
+         public DisplayKHR currentDisplay;  //Display the plane is currently associated with.  Will be VK_NULL_HANDLE if the plane is not in use. 
+         public UInt32 currentStackIndex;  //Current z-order of the plane. 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DisplaySurfaceCreateInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public DisplaySurfaceCreateFlagsKHR flags;
-         public DisplayModeKHR displayMode;
-         public UInt32 planeIndex;
-         public UInt32 planeStackIndex;
-         public SurfaceTransformFlagsKHR transform;
-         public float globalAlpha;
-         public DisplayPlaneAlphaFlagsKHR alphaMode;
-         public Extent2D imageExtent;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DisplaySurfaceCreateFlagsKHR flags;          
+         public DisplayModeKHR displayMode;  //The mode to use when displaying this surface 
+         public UInt32 planeIndex;  //The plane on which this surface appears.  Must be between 0 and the value returned by vkGetPhysicalDeviceDisplayPlanePropertiesKHR() in pPropertyCount. 
+         public UInt32 planeStackIndex;  //The z-order of the plane. 
+         public SurfaceTransformFlagsKHR transform;  //Transform to apply to the images as part of the scanout operation 
+         public float globalAlpha;  //Global alpha value.  Must be between 0 and 1, inclusive.  Ignored if alphaMode is not VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR 
+         public DisplayPlaneAlphaFlagsKHR alphaMode;  //What type of alpha blending to use.  Must be a bit from vkGetDisplayPlanePropertiesKHR::supportedAlpha. 
+         public Extent2D imageExtent;  //size of the images to use with this surface 
       };
       
       #endregion

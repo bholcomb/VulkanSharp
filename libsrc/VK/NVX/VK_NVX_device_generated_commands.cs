@@ -65,142 +65,142 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DeviceGeneratedCommandsFeaturesNVX 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 computeBindingPointSupport;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 computeBindingPointSupport;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DeviceGeneratedCommandsLimitsNVX 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 maxIndirectCommandsLayoutTokenCount;
-         public UInt32 maxObjectEntryCounts;
-         public UInt32 minSequenceCountBufferOffsetAlignment;
-         public UInt32 minSequenceIndexBufferOffsetAlignment;
-         public UInt32 minCommandsTokenBufferOffsetAlignment;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 maxIndirectCommandsLayoutTokenCount;          
+         public UInt32 maxObjectEntryCounts;          
+         public UInt32 minSequenceCountBufferOffsetAlignment;          
+         public UInt32 minSequenceIndexBufferOffsetAlignment;          
+         public UInt32 minCommandsTokenBufferOffsetAlignment;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct IndirectCommandsTokenNVX 
       {
-         public IndirectCommandsTokenTypeNVX tokenType;
-         public Buffer buffer;
-         public DeviceSize offset;
+         public IndirectCommandsTokenTypeNVX tokenType;          
+         public Buffer buffer;  //buffer containing tableEntries and additional data for indirectCommands 
+         public DeviceSize offset;  //offset from the base address of the buffer 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct IndirectCommandsLayoutTokenNVX 
       {
-         public IndirectCommandsTokenTypeNVX tokenType;
-         public UInt32 bindingUnit;
-         public UInt32 dynamicCount;
-         public UInt32 divisor;
+         public IndirectCommandsTokenTypeNVX tokenType;          
+         public UInt32 bindingUnit;  //Binding unit for vertex attribute / descriptor set, offset for pushconstants 
+         public UInt32 dynamicCount;  //Number of variable dynamic values for descriptor set / push constants 
+         public UInt32 divisor;  //Rate the which the array is advanced per element (must be power of 2, minimum 1) 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct IndirectCommandsLayoutCreateInfoNVX 
       {
-         public StructureType sType;
-         public void pNext;
-         public PipelineBindPoint pipelineBindPoint;
-         public IndirectCommandsLayoutUsageFlagsNVX flags;
-         public UInt32 tokenCount;
-         public IndirectCommandsLayoutTokenNVX pTokens;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public PipelineBindPoint pipelineBindPoint;          
+         public IndirectCommandsLayoutUsageFlagsNVX flags;          
+         public UInt32 tokenCount;          
+         public IndirectCommandsLayoutTokenNVX* pTokens;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct CmdProcessCommandsInfoNVX 
       {
-         public StructureType sType;
-         public void pNext;
-         public ObjectTableNVX objectTable;
-         public IndirectCommandsLayoutNVX indirectCommandsLayout;
-         public UInt32 indirectCommandsTokenCount;
-         public IndirectCommandsTokenNVX pIndirectCommandsTokens;
-         public UInt32 maxSequencesCount;
-         public CommandBuffer targetCommandBuffer;
-         public Buffer sequencesCountBuffer;
-         public DeviceSize sequencesCountOffset;
-         public Buffer sequencesIndexBuffer;
-         public DeviceSize sequencesIndexOffset;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public ObjectTableNVX objectTable;          
+         public IndirectCommandsLayoutNVX indirectCommandsLayout;          
+         public UInt32 indirectCommandsTokenCount;          
+         public IndirectCommandsTokenNVX* pIndirectCommandsTokens;          
+         public UInt32 maxSequencesCount;          
+         public CommandBuffer targetCommandBuffer;          
+         public Buffer sequencesCountBuffer;          
+         public DeviceSize sequencesCountOffset;          
+         public Buffer sequencesIndexBuffer;          
+         public DeviceSize sequencesIndexOffset;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct CmdReserveSpaceForCommandsInfoNVX 
       {
-         public StructureType sType;
-         public void pNext;
-         public ObjectTableNVX objectTable;
-         public IndirectCommandsLayoutNVX indirectCommandsLayout;
-         public UInt32 maxSequencesCount;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public ObjectTableNVX objectTable;          
+         public IndirectCommandsLayoutNVX indirectCommandsLayout;          
+         public UInt32 maxSequencesCount;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ObjectTableCreateInfoNVX 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 objectCount;
-         public ObjectEntryTypeNVX pObjectEntryTypes;
-         public UInt32 pObjectEntryCounts;
-         public ObjectEntryUsageFlagsNVX pObjectEntryUsageFlags;
-         public UInt32 maxUniformBuffersPerDescriptor;
-         public UInt32 maxStorageBuffersPerDescriptor;
-         public UInt32 maxStorageImagesPerDescriptor;
-         public UInt32 maxSampledImagesPerDescriptor;
-         public UInt32 maxPipelineLayouts;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 objectCount;          
+         public ObjectEntryTypeNVX* pObjectEntryTypes;          
+         public UInt32* pObjectEntryCounts;          
+         public ObjectEntryUsageFlagsNVX* pObjectEntryUsageFlags;          
+         public UInt32 maxUniformBuffersPerDescriptor;          
+         public UInt32 maxStorageBuffersPerDescriptor;          
+         public UInt32 maxStorageImagesPerDescriptor;          
+         public UInt32 maxSampledImagesPerDescriptor;          
+         public UInt32 maxPipelineLayouts;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ObjectTableEntryNVX 
       {
-         public ObjectEntryTypeNVX type;
-         public ObjectEntryUsageFlagsNVX flags;
+         public ObjectEntryTypeNVX type;          
+         public ObjectEntryUsageFlagsNVX flags;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ObjectTablePipelineEntryNVX 
       {
-         public ObjectEntryTypeNVX type;
-         public ObjectEntryUsageFlagsNVX flags;
-         public Pipeline pipeline;
+         public ObjectEntryTypeNVX type;          
+         public ObjectEntryUsageFlagsNVX flags;          
+         public Pipeline pipeline;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ObjectTableDescriptorSetEntryNVX 
       {
-         public ObjectEntryTypeNVX type;
-         public ObjectEntryUsageFlagsNVX flags;
-         public PipelineLayout pipelineLayout;
-         public DescriptorSet descriptorSet;
+         public ObjectEntryTypeNVX type;          
+         public ObjectEntryUsageFlagsNVX flags;          
+         public PipelineLayout pipelineLayout;          
+         public DescriptorSet descriptorSet;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ObjectTableVertexBufferEntryNVX 
       {
-         public ObjectEntryTypeNVX type;
-         public ObjectEntryUsageFlagsNVX flags;
-         public Buffer buffer;
+         public ObjectEntryTypeNVX type;          
+         public ObjectEntryUsageFlagsNVX flags;          
+         public Buffer buffer;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ObjectTableIndexBufferEntryNVX 
       {
-         public ObjectEntryTypeNVX type;
-         public ObjectEntryUsageFlagsNVX flags;
-         public Buffer buffer;
-         public IndexType indexType;
+         public ObjectEntryTypeNVX type;          
+         public ObjectEntryUsageFlagsNVX flags;          
+         public Buffer buffer;          
+         public IndexType indexType;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ObjectTablePushConstantEntryNVX 
       {
-         public ObjectEntryTypeNVX type;
-         public ObjectEntryUsageFlagsNVX flags;
-         public PipelineLayout pipelineLayout;
-         public ShaderStageFlags stageFlags;
+         public ObjectEntryTypeNVX type;          
+         public ObjectEntryUsageFlagsNVX flags;          
+         public PipelineLayout pipelineLayout;          
+         public ShaderStageFlags stageFlags;          
       };
       
       #endregion

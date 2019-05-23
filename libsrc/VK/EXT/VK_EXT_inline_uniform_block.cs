@@ -22,39 +22,39 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceInlineUniformBlockFeaturesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 inlineUniformBlock;
-         public Bool32 descriptorBindingInlineUniformBlockUpdateAfterBind;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 inlineUniformBlock;          
+         public Bool32 descriptorBindingInlineUniformBlockUpdateAfterBind;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceInlineUniformBlockPropertiesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 maxInlineUniformBlockSize;
-         public UInt32 maxPerStageDescriptorInlineUniformBlocks;
-         public UInt32 maxPerStageDescriptorUpdateAfterBindInlineUniformBlocks;
-         public UInt32 maxDescriptorSetInlineUniformBlocks;
-         public UInt32 maxDescriptorSetUpdateAfterBindInlineUniformBlocks;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 maxInlineUniformBlockSize;          
+         public UInt32 maxPerStageDescriptorInlineUniformBlocks;          
+         public UInt32 maxPerStageDescriptorUpdateAfterBindInlineUniformBlocks;          
+         public UInt32 maxDescriptorSetInlineUniformBlocks;          
+         public UInt32 maxDescriptorSetUpdateAfterBindInlineUniformBlocks;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct WriteDescriptorSetInlineUniformBlockEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 dataSize;
-         public void pData;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 dataSize;          
+         public IntPtr pData;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DescriptorPoolInlineUniformBlockCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 maxInlineUniformBlockBindings;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 maxInlineUniformBlockBindings;          
       };
       
       #endregion

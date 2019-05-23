@@ -22,17 +22,17 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceMemoryPriorityFeaturesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 memoryPriority;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 memoryPriority;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MemoryPriorityAllocateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public float priority;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public float priority;          
       };
       
       #endregion

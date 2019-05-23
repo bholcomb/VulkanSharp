@@ -22,57 +22,57 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AndroidHardwareBufferUsageANDROID 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt64 androidHardwareBufferUsage;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt64 androidHardwareBufferUsage;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AndroidHardwareBufferPropertiesANDROID 
       {
-         public StructureType sType;
-         public void pNext;
-         public DeviceSize allocationSize;
-         public UInt32 memoryTypeBits;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DeviceSize allocationSize;          
+         public UInt32 memoryTypeBits;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AndroidHardwareBufferFormatPropertiesANDROID 
       {
-         public StructureType sType;
-         public void pNext;
-         public Format format;
-         public UInt64 externalFormat;
-         public FormatFeatureFlags formatFeatures;
-         public ComponentMapping samplerYcbcrConversionComponents;
-         public SamplerYcbcrModelConversion suggestedYcbcrModel;
-         public SamplerYcbcrRange suggestedYcbcrRange;
-         public ChromaLocation suggestedXChromaOffset;
-         public ChromaLocation suggestedYChromaOffset;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Format format;          
+         public UInt64 externalFormat;          
+         public FormatFeatureFlags formatFeatures;          
+         public ComponentMapping samplerYcbcrConversionComponents;          
+         public SamplerYcbcrModelConversion suggestedYcbcrModel;          
+         public SamplerYcbcrRange suggestedYcbcrRange;          
+         public ChromaLocation suggestedXChromaOffset;          
+         public ChromaLocation suggestedYChromaOffset;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImportAndroidHardwareBufferInfoANDROID 
       {
-         public StructureType sType;
-         public void pNext;
-         public AHardwareBuffer buffer;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public AHardwareBuffer* buffer;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MemoryGetAndroidHardwareBufferInfoANDROID 
       {
-         public StructureType sType;
-         public void pNext;
-         public DeviceMemory memory;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DeviceMemory memory;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ExternalFormatANDROID 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt64 externalFormat;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt64 externalFormat;          
       };
       
       #endregion

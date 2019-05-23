@@ -22,33 +22,33 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct RefreshCycleDurationGOOGLE 
       {
-         public UInt64 refreshDuration;
+         public UInt64 refreshDuration;  //Number of nanoseconds from the start of one refresh cycle to the next 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PastPresentationTimingGOOGLE 
       {
-         public UInt32 presentID;
-         public UInt64 desiredPresentTime;
-         public UInt64 actualPresentTime;
-         public UInt64 earliestPresentTime;
-         public UInt64 presentMargin;
+         public UInt32 presentID;  //Application-provided identifier, previously given to vkQueuePresentKHR 
+         public UInt64 desiredPresentTime;  //Earliest time an image should have been presented, previously given to vkQueuePresentKHR 
+         public UInt64 actualPresentTime;  //Time the image was actually displayed 
+         public UInt64 earliestPresentTime;  //Earliest time the image could have been displayed 
+         public UInt64 presentMargin;  //How early vkQueuePresentKHR was processed vs. how soon it needed to be and make earliestPresentTime 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PresentTimesInfoGOOGLE 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 swapchainCount;
-         public PresentTimeGOOGLE pTimes;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 swapchainCount;  //Copy of VkPresentInfoKHR::swapchainCount 
+         public PresentTimeGOOGLE* pTimes;  //The earliest times to present images 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PresentTimeGOOGLE 
       {
-         public UInt32 presentID;
-         public UInt64 desiredPresentTime;
+         public UInt32 presentID;  //Application-provided identifier 
+         public UInt64 desiredPresentTime;  //Earliest time an image should be presented 
       };
       
       #endregion

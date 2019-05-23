@@ -22,18 +22,18 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct QueueFamilyCheckpointPropertiesNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public PipelineStageFlags checkpointExecutionStageMask;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public PipelineStageFlags checkpointExecutionStageMask;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct CheckpointDataNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public PipelineStageFlags stage;
-         public void pCheckpointMarker;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public PipelineStageFlags stage;          
+         public IntPtr pCheckpointMarker;          
       };
       
       #endregion

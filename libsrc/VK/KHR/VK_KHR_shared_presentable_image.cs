@@ -22,9 +22,9 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SharedPresentSurfaceCapabilitiesKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public ImageUsageFlags sharedPresentSupportedUsageFlags;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public ImageUsageFlags sharedPresentSupportedUsageFlags;  //Supported image usage flags if swapchain created using a shared present mode 
       };
       
       #endregion

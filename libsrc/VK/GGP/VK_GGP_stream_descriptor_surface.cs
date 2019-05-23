@@ -29,10 +29,10 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct StreamDescriptorSurfaceCreateInfoGGP 
       {
-         public StructureType sType;
-         public void pNext;
-         public StreamDescriptorSurfaceCreateFlagsGGP flags;
-         public GgpStreamDescriptor streamDescriptor;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public StreamDescriptorSurfaceCreateFlagsGGP flags;          
+         public GgpStreamDescriptor streamDescriptor;          
       };
       
       #endregion

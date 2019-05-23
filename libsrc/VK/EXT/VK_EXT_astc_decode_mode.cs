@@ -22,17 +22,17 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImageViewASTCDecodeModeEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public Format decodeMode;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Format decodeMode;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceASTCDecodeFeaturesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 decodeModeSharedExponent;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 decodeModeSharedExponent;          
       };
       
       #endregion

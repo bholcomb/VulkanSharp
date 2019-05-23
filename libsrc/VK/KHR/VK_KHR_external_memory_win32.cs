@@ -22,38 +22,38 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImportMemoryWin32HandleInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public ExternalMemoryHandleTypeFlags handleType;
-         public HANDLE handle;
-         public LPCWSTR name;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public ExternalMemoryHandleTypeFlags handleType;          
+         public HANDLE handle;          
+         public LPCWSTR name;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ExportMemoryWin32HandleInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public SECURITY_ATTRIBUTES pAttributes;
-         public DWORD dwAccess;
-         public LPCWSTR name;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public SECURITY_ATTRIBUTES* pAttributes;          
+         public DWORD dwAccess;          
+         public LPCWSTR name;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MemoryWin32HandlePropertiesKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 memoryTypeBits;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 memoryTypeBits;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MemoryGetWin32HandleInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public DeviceMemory memory;
-         public ExternalMemoryHandleTypeFlags handleType;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DeviceMemory memory;          
+         public ExternalMemoryHandleTypeFlags handleType;          
       };
       
       #endregion

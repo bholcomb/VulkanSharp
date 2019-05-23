@@ -43,93 +43,93 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SwapchainCreateInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public SwapchainCreateFlagsKHR flags;
-         public SurfaceKHR surface;
-         public UInt32 minImageCount;
-         public Format imageFormat;
-         public ColorSpaceKHR imageColorSpace;
-         public Extent2D imageExtent;
-         public UInt32 imageArrayLayers;
-         public ImageUsageFlags imageUsage;
-         public SharingMode imageSharingMode;
-         public UInt32 queueFamilyIndexCount;
-         public UInt32 pQueueFamilyIndices;
-         public SurfaceTransformFlagsKHR preTransform;
-         public CompositeAlphaFlagsKHR compositeAlpha;
-         public PresentModeKHR presentMode;
-         public Bool32 clipped;
-         public SwapchainKHR oldSwapchain;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public SwapchainCreateFlagsKHR flags;          
+         public SurfaceKHR surface;  //The swapchain's target surface 
+         public UInt32 minImageCount;  //Minimum number of presentation images the application needs 
+         public Format imageFormat;  //Format of the presentation images 
+         public ColorSpaceKHR imageColorSpace;  //Colorspace of the presentation images 
+         public Extent2D imageExtent;  //Dimensions of the presentation images 
+         public UInt32 imageArrayLayers;  //Determines the number of views for multiview/stereo presentation 
+         public ImageUsageFlags imageUsage;  //Bits indicating how the presentation images will be used 
+         public SharingMode imageSharingMode;  //Sharing mode used for the presentation images 
+         public UInt32 queueFamilyIndexCount;  //Number of queue families having access to the images in case of concurrent sharing mode 
+         public UInt32* pQueueFamilyIndices;  //Array of queue family indices having access to the images in case of concurrent sharing mode 
+         public SurfaceTransformFlagsKHR preTransform;  //The transform, relative to the device's natural orientation, applied to the image content prior to presentation 
+         public CompositeAlphaFlagsKHR compositeAlpha;  //The alpha blending mode used when compositing this surface with other surfaces in the window system 
+         public PresentModeKHR presentMode;  //Which presentation mode to use for presents on this swap chain 
+         public Bool32 clipped;  //Specifies whether presentable images may be affected by window clip regions 
+         public SwapchainKHR oldSwapchain;  //Existing swap chain to replace, if any 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PresentInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 waitSemaphoreCount;
-         public Semaphore pWaitSemaphores;
-         public UInt32 swapchainCount;
-         public SwapchainKHR pSwapchains;
-         public UInt32 pImageIndices;
-         public Result pResults;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 waitSemaphoreCount;  //Number of semaphores to wait for before presenting 
+         public Semaphore* pWaitSemaphores;  //Semaphores to wait for before presenting 
+         public UInt32 swapchainCount;  //Number of swapchains to present in this call 
+         public SwapchainKHR* pSwapchains;  //Swapchains to present an image from 
+         public UInt32* pImageIndices;  //Indices of which presentable images to present 
+         public Result* pResults;  //Optional (i.e. if non-NULL) VkResult for each swapchain 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImageSwapchainCreateInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public SwapchainKHR swapchain;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public SwapchainKHR swapchain;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct BindImageMemorySwapchainInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public SwapchainKHR swapchain;
-         public UInt32 imageIndex;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public SwapchainKHR swapchain;          
+         public UInt32 imageIndex;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AcquireNextImageInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public SwapchainKHR swapchain;
-         public UInt64 timeout;
-         public Semaphore semaphore;
-         public Fence fence;
-         public UInt32 deviceMask;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public SwapchainKHR swapchain;          
+         public UInt64 timeout;          
+         public Semaphore semaphore;          
+         public Fence fence;          
+         public UInt32 deviceMask;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DeviceGroupPresentCapabilitiesKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 presentMask;
-         public DeviceGroupPresentModeFlagsKHR modes;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public fixed UInt32 presentMask[(int)VK.MAX_DEVICE_GROUP_SIZE];          
+         public DeviceGroupPresentModeFlagsKHR modes;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DeviceGroupPresentInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 swapchainCount;
-         public UInt32 pDeviceMasks;
-         public DeviceGroupPresentModeFlagsKHR mode;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 swapchainCount;          
+         public UInt32* pDeviceMasks;          
+         public DeviceGroupPresentModeFlagsKHR mode;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DeviceGroupSwapchainCreateInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public DeviceGroupPresentModeFlagsKHR modes;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DeviceGroupPresentModeFlagsKHR modes;          
       };
       
       #endregion

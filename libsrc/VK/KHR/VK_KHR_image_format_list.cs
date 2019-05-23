@@ -22,10 +22,10 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImageFormatListCreateInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 viewFormatCount;
-         public Format pViewFormats;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 viewFormatCount;          
+         public Format* pViewFormats;          
       };
       
       #endregion

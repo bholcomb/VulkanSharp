@@ -22,19 +22,19 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImportMemoryWin32HandleInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public ExternalMemoryHandleTypeFlagsNV handleType;
-         public HANDLE handle;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public ExternalMemoryHandleTypeFlagsNV handleType;          
+         public HANDLE handle;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ExportMemoryWin32HandleInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public SECURITY_ATTRIBUTES pAttributes;
-         public DWORD dwAccess;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public SECURITY_ATTRIBUTES* pAttributes;          
+         public DWORD dwAccess;          
       };
       
       #endregion

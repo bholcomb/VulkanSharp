@@ -53,61 +53,61 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DebugUtilsObjectNameInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public ObjectType objectType;
-         public UInt64 objectHandle;
-         public char pObjectName;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public ObjectType objectType;          
+         public UInt64 objectHandle;          
+         public string pObjectName;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DebugUtilsObjectTagInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public ObjectType objectType;
-         public UInt64 objectHandle;
-         public UInt64 tagName;
-         public UInt32 tagSize;
-         public void pTag;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public ObjectType objectType;          
+         public UInt64 objectHandle;          
+         public UInt64 tagName;          
+         public UInt32 tagSize;          
+         public IntPtr pTag;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DebugUtilsLabelEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public char pLabelName;
-         public float color;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public string pLabelName;          
+         public fixed float color[4];          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DebugUtilsMessengerCallbackDataEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public DebugUtilsMessengerCallbackDataFlagsEXT flags;
-         public char pMessageIdName;
-         public Int32 messageIdNumber;
-         public char pMessage;
-         public UInt32 queueLabelCount;
-         public DebugUtilsLabelEXT pQueueLabels;
-         public UInt32 cmdBufLabelCount;
-         public DebugUtilsLabelEXT pCmdBufLabels;
-         public UInt32 objectCount;
-         public DebugUtilsObjectNameInfoEXT pObjects;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DebugUtilsMessengerCallbackDataFlagsEXT flags;          
+         public string pMessageIdName;          
+         public Int32 messageIdNumber;          
+         public string pMessage;          
+         public UInt32 queueLabelCount;          
+         public DebugUtilsLabelEXT* pQueueLabels;          
+         public UInt32 cmdBufLabelCount;          
+         public DebugUtilsLabelEXT* pCmdBufLabels;          
+         public UInt32 objectCount;          
+         public DebugUtilsObjectNameInfoEXT* pObjects;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DebugUtilsMessengerCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public DebugUtilsMessengerCreateFlagsEXT flags;
-         public DebugUtilsMessageSeverityFlagsEXT messageSeverity;
-         public DebugUtilsMessageTypeFlagsEXT messageType;
-         public DebugUtilsMessengerCallbackEXT pfnUserCallback;
-         public void pUserData;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DebugUtilsMessengerCreateFlagsEXT flags;          
+         public DebugUtilsMessageSeverityFlagsEXT messageSeverity;          
+         public DebugUtilsMessageTypeFlagsEXT messageType;          
+         public DebugUtilsMessengerCallbackEXT pfnUserCallback;          
+         public IntPtr pUserData;          
       };
       
       #endregion

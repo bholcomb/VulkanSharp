@@ -38,13 +38,13 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineCoverageModulationStateCreateInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public PipelineCoverageModulationStateCreateFlagsNV flags;
-         public CoverageModulationModeNV coverageModulationMode;
-         public Bool32 coverageModulationTableEnable;
-         public UInt32 coverageModulationTableCount;
-         public float pCoverageModulationTable;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public PipelineCoverageModulationStateCreateFlagsNV flags;          
+         public CoverageModulationModeNV coverageModulationMode;          
+         public Bool32 coverageModulationTableEnable;          
+         public UInt32 coverageModulationTableCount;          
+         public float* pCoverageModulationTable;          
       };
       
       #endregion

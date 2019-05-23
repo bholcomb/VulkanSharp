@@ -22,73 +22,73 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SampleLocationEXT 
       {
-         public float x;
-         public float y;
+         public float x;          
+         public float y;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SampleLocationsInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public SampleCountFlags sampleLocationsPerPixel;
-         public Extent2D sampleLocationGridSize;
-         public UInt32 sampleLocationsCount;
-         public SampleLocationEXT pSampleLocations;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public SampleCountFlags sampleLocationsPerPixel;          
+         public Extent2D sampleLocationGridSize;          
+         public UInt32 sampleLocationsCount;          
+         public SampleLocationEXT* pSampleLocations;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AttachmentSampleLocationsEXT 
       {
-         public UInt32 attachmentIndex;
-         public SampleLocationsInfoEXT sampleLocationsInfo;
+         public UInt32 attachmentIndex;          
+         public SampleLocationsInfoEXT sampleLocationsInfo;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SubpassSampleLocationsEXT 
       {
-         public UInt32 subpassIndex;
-         public SampleLocationsInfoEXT sampleLocationsInfo;
+         public UInt32 subpassIndex;          
+         public SampleLocationsInfoEXT sampleLocationsInfo;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct RenderPassSampleLocationsBeginInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 attachmentInitialSampleLocationsCount;
-         public AttachmentSampleLocationsEXT pAttachmentInitialSampleLocations;
-         public UInt32 postSubpassSampleLocationsCount;
-         public SubpassSampleLocationsEXT pPostSubpassSampleLocations;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 attachmentInitialSampleLocationsCount;          
+         public AttachmentSampleLocationsEXT* pAttachmentInitialSampleLocations;          
+         public UInt32 postSubpassSampleLocationsCount;          
+         public SubpassSampleLocationsEXT* pPostSubpassSampleLocations;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineSampleLocationsStateCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 sampleLocationsEnable;
-         public SampleLocationsInfoEXT sampleLocationsInfo;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 sampleLocationsEnable;          
+         public SampleLocationsInfoEXT sampleLocationsInfo;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceSampleLocationsPropertiesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public SampleCountFlags sampleLocationSampleCounts;
-         public Extent2D maxSampleLocationGridSize;
-         public float sampleLocationCoordinateRange;
-         public UInt32 sampleLocationSubPixelBits;
-         public Bool32 variableSampleLocations;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public SampleCountFlags sampleLocationSampleCounts;          
+         public Extent2D maxSampleLocationGridSize;          
+         public fixed float sampleLocationCoordinateRange[2];          
+         public UInt32 sampleLocationSubPixelBits;          
+         public Bool32 variableSampleLocations;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MultisamplePropertiesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public Extent2D maxSampleLocationGridSize;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Extent2D maxSampleLocationGridSize;          
       };
       
       #endregion

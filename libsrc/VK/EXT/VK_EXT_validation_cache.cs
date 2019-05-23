@@ -37,19 +37,19 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ValidationCacheCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public ValidationCacheCreateFlagsEXT flags;
-         public UInt32 initialDataSize;
-         public void pInitialData;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public ValidationCacheCreateFlagsEXT flags;          
+         public UInt32 initialDataSize;          
+         public IntPtr pInitialData;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ShaderModuleValidationCacheCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public ValidationCacheEXT validationCache;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public ValidationCacheEXT validationCache;          
       };
       
       #endregion

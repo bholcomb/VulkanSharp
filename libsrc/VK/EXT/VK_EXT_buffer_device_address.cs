@@ -22,27 +22,27 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceBufferDeviceAddressFeaturesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 bufferDeviceAddress;
-         public Bool32 bufferDeviceAddressCaptureReplay;
-         public Bool32 bufferDeviceAddressMultiDevice;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 bufferDeviceAddress;          
+         public Bool32 bufferDeviceAddressCaptureReplay;          
+         public Bool32 bufferDeviceAddressMultiDevice;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct BufferDeviceAddressInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public Buffer buffer;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Buffer buffer;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct BufferDeviceAddressCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public DeviceAddress deviceAddress;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DeviceAddress deviceAddress;          
       };
       
       #endregion

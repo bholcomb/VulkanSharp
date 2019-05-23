@@ -22,34 +22,34 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceVertexAttributeDivisorPropertiesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 maxVertexAttribDivisor;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 maxVertexAttribDivisor;  //max value of vertex attribute divisor 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct VertexInputBindingDivisorDescriptionEXT 
       {
-         public UInt32 binding;
-         public UInt32 divisor;
+         public UInt32 binding;          
+         public UInt32 divisor;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineVertexInputDivisorStateCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 vertexBindingDivisorCount;
-         public VertexInputBindingDivisorDescriptionEXT pVertexBindingDivisors;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 vertexBindingDivisorCount;          
+         public VertexInputBindingDivisorDescriptionEXT* pVertexBindingDivisors;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceVertexAttributeDivisorFeaturesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 vertexAttributeInstanceRateDivisor;
-         public Bool32 vertexAttributeInstanceRateZeroDivisor;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 vertexAttributeInstanceRateDivisor;          
+         public Bool32 vertexAttributeInstanceRateZeroDivisor;          
       };
       
       #endregion

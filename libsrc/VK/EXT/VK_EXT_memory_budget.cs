@@ -22,10 +22,10 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceMemoryBudgetPropertiesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public DeviceSize heapBudget;
-         public DeviceSize heapUsage;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public fixed DeviceSize heapBudget[(int)VK.MAX_MEMORY_HEAPS];          
+         public fixed DeviceSize heapUsage[(int)VK.MAX_MEMORY_HEAPS];          
       };
       
       #endregion

@@ -22,9 +22,9 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImageStencilUsageCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public ImageUsageFlags stencilUsage;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public ImageUsageFlags stencilUsage;          
       };
       
       #endregion

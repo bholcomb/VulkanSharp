@@ -31,25 +31,25 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SurfaceFullScreenExclusiveInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public FullScreenExclusiveEXT fullScreenExclusive;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public FullScreenExclusiveEXT fullScreenExclusive;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SurfaceCapabilitiesFullScreenExclusiveEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 fullScreenExclusiveSupported;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 fullScreenExclusiveSupported;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SurfaceFullScreenExclusiveWin32InfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public HMONITOR hmonitor;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public HMONITOR hmonitor;          
       };
       
       #endregion

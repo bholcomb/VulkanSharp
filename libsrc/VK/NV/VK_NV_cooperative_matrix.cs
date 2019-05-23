@@ -46,33 +46,33 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct CooperativeMatrixPropertiesNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 MSize;
-         public UInt32 NSize;
-         public UInt32 KSize;
-         public ComponentTypeNV AType;
-         public ComponentTypeNV BType;
-         public ComponentTypeNV CType;
-         public ComponentTypeNV DType;
-         public ScopeNV scope;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 MSize;          
+         public UInt32 NSize;          
+         public UInt32 KSize;          
+         public ComponentTypeNV AType;          
+         public ComponentTypeNV BType;          
+         public ComponentTypeNV CType;          
+         public ComponentTypeNV DType;          
+         public ScopeNV scope;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceCooperativeMatrixFeaturesNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 cooperativeMatrix;
-         public Bool32 cooperativeMatrixRobustBufferAccess;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 cooperativeMatrix;          
+         public Bool32 cooperativeMatrixRobustBufferAccess;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceCooperativeMatrixPropertiesNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public ShaderStageFlags cooperativeMatrixSupportedStages;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public ShaderStageFlags cooperativeMatrixSupportedStages;          
       };
       
       #endregion

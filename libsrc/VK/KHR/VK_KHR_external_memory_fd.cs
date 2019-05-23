@@ -22,27 +22,27 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImportMemoryFdInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public ExternalMemoryHandleTypeFlags handleType;
-         public int fd;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public ExternalMemoryHandleTypeFlags handleType;          
+         public int fd;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MemoryFdPropertiesKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 memoryTypeBits;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 memoryTypeBits;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MemoryGetFdInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public DeviceMemory memory;
-         public ExternalMemoryHandleTypeFlags handleType;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DeviceMemory memory;          
+         public ExternalMemoryHandleTypeFlags handleType;          
       };
       
       #endregion

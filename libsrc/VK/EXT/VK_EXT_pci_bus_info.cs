@@ -22,12 +22,12 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDevicePCIBusInfoPropertiesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 pciDomain;
-         public UInt32 pciBus;
-         public UInt32 pciDevice;
-         public UInt32 pciFunction;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 pciDomain;          
+         public UInt32 pciBus;          
+         public UInt32 pciDevice;          
+         public UInt32 pciFunction;          
       };
       
       #endregion

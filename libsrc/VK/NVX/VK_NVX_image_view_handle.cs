@@ -22,11 +22,11 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImageViewHandleInfoNVX 
       {
-         public StructureType sType;
-         public void pNext;
-         public ImageView imageView;
-         public DescriptorType descriptorType;
-         public Sampler sampler;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public ImageView imageView;          
+         public DescriptorType descriptorType;          
+         public Sampler sampler;          
       };
       
       #endregion

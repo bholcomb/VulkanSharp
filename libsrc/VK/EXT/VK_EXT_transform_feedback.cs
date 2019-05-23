@@ -29,36 +29,36 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceTransformFeedbackFeaturesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 transformFeedback;
-         public Bool32 geometryStreams;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 transformFeedback;          
+         public Bool32 geometryStreams;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceTransformFeedbackPropertiesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 maxTransformFeedbackStreams;
-         public UInt32 maxTransformFeedbackBuffers;
-         public DeviceSize maxTransformFeedbackBufferSize;
-         public UInt32 maxTransformFeedbackStreamDataSize;
-         public UInt32 maxTransformFeedbackBufferDataSize;
-         public UInt32 maxTransformFeedbackBufferDataStride;
-         public Bool32 transformFeedbackQueries;
-         public Bool32 transformFeedbackStreamsLinesTriangles;
-         public Bool32 transformFeedbackRasterizationStreamSelect;
-         public Bool32 transformFeedbackDraw;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 maxTransformFeedbackStreams;          
+         public UInt32 maxTransformFeedbackBuffers;          
+         public DeviceSize maxTransformFeedbackBufferSize;          
+         public UInt32 maxTransformFeedbackStreamDataSize;          
+         public UInt32 maxTransformFeedbackBufferDataSize;          
+         public UInt32 maxTransformFeedbackBufferDataStride;          
+         public Bool32 transformFeedbackQueries;          
+         public Bool32 transformFeedbackStreamsLinesTriangles;          
+         public Bool32 transformFeedbackRasterizationStreamSelect;          
+         public Bool32 transformFeedbackDraw;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineRasterizationStateStreamCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public PipelineRasterizationStateStreamCreateFlagsEXT flags;
-         public UInt32 rasterizationStream;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public PipelineRasterizationStateStreamCreateFlagsEXT flags;          
+         public UInt32 rasterizationStream;          
       };
       
       #endregion

@@ -22,9 +22,9 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceFragmentShaderBarycentricFeaturesNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 fragmentShaderBarycentric;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 fragmentShaderBarycentric;          
       };
       
       #endregion

@@ -22,18 +22,18 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ViewportWScalingNV 
       {
-         public float xcoeff;
-         public float ycoeff;
+         public float xcoeff;          
+         public float ycoeff;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineViewportWScalingStateCreateInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 viewportWScalingEnable;
-         public UInt32 viewportCount;
-         public ViewportWScalingNV pViewportWScalings;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 viewportWScalingEnable;          
+         public UInt32 viewportCount;          
+         public ViewportWScalingNV* pViewportWScalings;          
       };
       
       #endregion

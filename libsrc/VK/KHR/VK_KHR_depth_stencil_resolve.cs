@@ -33,22 +33,22 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SubpassDescriptionDepthStencilResolveKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public ResolveModeFlagsKHR depthResolveMode;
-         public ResolveModeFlagsKHR stencilResolveMode;
-         public AttachmentReference2KHR pDepthStencilResolveAttachment;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public ResolveModeFlagsKHR depthResolveMode;  //depth resolve mode 
+         public ResolveModeFlagsKHR stencilResolveMode;  //stencil resolve mode 
+         public AttachmentReference2KHR* pDepthStencilResolveAttachment;  //depth/stencil resolve attachment 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceDepthStencilResolvePropertiesKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public ResolveModeFlagsKHR supportedDepthResolveModes;
-         public ResolveModeFlagsKHR supportedStencilResolveModes;
-         public Bool32 independentResolveNone;
-         public Bool32 independentResolve;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public ResolveModeFlagsKHR supportedDepthResolveModes;  //supported depth resolve modes 
+         public ResolveModeFlagsKHR supportedStencilResolveModes;  //supported stencil resolve modes 
+         public Bool32 independentResolveNone;  //depth and stencil resolve modes can be set independently if one of them is none 
+         public Bool32 independentResolve;  //depth and stencil resolve modes can be set independently 
       };
       
       #endregion

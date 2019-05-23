@@ -29,11 +29,11 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct XcbSurfaceCreateInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public XcbSurfaceCreateFlagsKHR flags;
-         public xcb_connection_t connection;
-         public xcb_window_t window;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public XcbSurfaceCreateFlagsKHR flags;          
+         public xcb_connection_t* connection;          
+         public xcb_window_t window;          
       };
       
       #endregion

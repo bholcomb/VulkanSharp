@@ -22,9 +22,9 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceYcbcrImageArraysFeaturesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 ycbcrImageArrays;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 ycbcrImageArrays;          
       };
       
       #endregion

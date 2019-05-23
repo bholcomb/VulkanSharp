@@ -29,10 +29,10 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AndroidSurfaceCreateInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public AndroidSurfaceCreateFlagsKHR flags;
-         public ANativeWindow window;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public AndroidSurfaceCreateFlagsKHR flags;          
+         public ANativeWindow* window;          
       };
       
       #endregion

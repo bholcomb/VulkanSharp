@@ -29,10 +29,10 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MetalSurfaceCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public MetalSurfaceCreateFlagsEXT flags;
-         public CAMetalLayer pLayer;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public MetalSurfaceCreateFlagsEXT flags;          
+         public CAMetalLayer* pLayer;          
       };
       
       #endregion

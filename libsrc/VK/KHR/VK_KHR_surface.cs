@@ -80,23 +80,23 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SurfaceCapabilitiesKHR 
       {
-         public UInt32 minImageCount;
-         public UInt32 maxImageCount;
-         public Extent2D currentExtent;
-         public Extent2D minImageExtent;
-         public Extent2D maxImageExtent;
-         public UInt32 maxImageArrayLayers;
-         public SurfaceTransformFlagsKHR supportedTransforms;
-         public SurfaceTransformFlagsKHR currentTransform;
-         public CompositeAlphaFlagsKHR supportedCompositeAlpha;
-         public ImageUsageFlags supportedUsageFlags;
+         public UInt32 minImageCount;  //Supported minimum number of images for the surface 
+         public UInt32 maxImageCount;  //Supported maximum number of images for the surface, 0 for unlimited 
+         public Extent2D currentExtent;  //Current image width and height for the surface, (0, 0) if undefined 
+         public Extent2D minImageExtent;  //Supported minimum image width and height for the surface 
+         public Extent2D maxImageExtent;  //Supported maximum image width and height for the surface 
+         public UInt32 maxImageArrayLayers;  //Supported maximum number of image layers for the surface 
+         public SurfaceTransformFlagsKHR supportedTransforms;  //1 or more bits representing the transforms supported 
+         public SurfaceTransformFlagsKHR currentTransform;  //The surface's current transform relative to the device's natural orientation 
+         public CompositeAlphaFlagsKHR supportedCompositeAlpha;  //1 or more bits representing the alpha compositing modes supported 
+         public ImageUsageFlags supportedUsageFlags;  //Supported image usage flags for the surface 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SurfaceFormatKHR 
       {
-         public Format format;
-         public ColorSpaceKHR colorSpace;
+         public Format format;  //Supported pair of rendering format 
+         public ColorSpaceKHR colorSpace;  //and color space for the surface 
       };
       
       #endregion

@@ -22,9 +22,9 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SurfaceProtectedCapabilitiesKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 supportsProtected;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 supportsProtected;  //Represents if surface can be protected 
       };
       
       #endregion

@@ -22,37 +22,37 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceMeshShaderFeaturesNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 taskShader;
-         public Bool32 meshShader;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 taskShader;          
+         public Bool32 meshShader;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceMeshShaderPropertiesNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 maxDrawMeshTasksCount;
-         public UInt32 maxTaskWorkGroupInvocations;
-         public UInt32 maxTaskWorkGroupSize;
-         public UInt32 maxTaskTotalMemorySize;
-         public UInt32 maxTaskOutputCount;
-         public UInt32 maxMeshWorkGroupInvocations;
-         public UInt32 maxMeshWorkGroupSize;
-         public UInt32 maxMeshTotalMemorySize;
-         public UInt32 maxMeshOutputVertices;
-         public UInt32 maxMeshOutputPrimitives;
-         public UInt32 maxMeshMultiviewViewCount;
-         public UInt32 meshOutputPerVertexGranularity;
-         public UInt32 meshOutputPerPrimitiveGranularity;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 maxDrawMeshTasksCount;          
+         public UInt32 maxTaskWorkGroupInvocations;          
+         public fixed UInt32 maxTaskWorkGroupSize[3];          
+         public UInt32 maxTaskTotalMemorySize;          
+         public UInt32 maxTaskOutputCount;          
+         public UInt32 maxMeshWorkGroupInvocations;          
+         public fixed UInt32 maxMeshWorkGroupSize[3];          
+         public UInt32 maxMeshTotalMemorySize;          
+         public UInt32 maxMeshOutputVertices;          
+         public UInt32 maxMeshOutputPrimitives;          
+         public UInt32 maxMeshMultiviewViewCount;          
+         public UInt32 meshOutputPerVertexGranularity;          
+         public UInt32 meshOutputPerPrimitiveGranularity;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DrawMeshTasksIndirectCommandNV 
       {
-         public UInt32 taskCount;
-         public UInt32 firstTask;
+         public UInt32 taskCount;          
+         public UInt32 firstTask;          
       };
       
       #endregion

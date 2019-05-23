@@ -22,23 +22,23 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct HdrMetadataEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public XYColorEXT displayPrimaryRed;
-         public XYColorEXT displayPrimaryGreen;
-         public XYColorEXT displayPrimaryBlue;
-         public XYColorEXT whitePoint;
-         public float maxLuminance;
-         public float minLuminance;
-         public float maxContentLightLevel;
-         public float maxFrameAverageLightLevel;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public XYColorEXT displayPrimaryRed;  //Display primary's Red 
+         public XYColorEXT displayPrimaryGreen;  //Display primary's Green 
+         public XYColorEXT displayPrimaryBlue;  //Display primary's Blue 
+         public XYColorEXT whitePoint;  //Display primary's Blue 
+         public float maxLuminance;  //Display maximum luminance 
+         public float minLuminance;  //Display minimum luminance 
+         public float maxContentLightLevel;  //Content maximum luminance 
+         public float maxFrameAverageLightLevel;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct XYColorEXT 
       {
-         public float x;
-         public float y;
+         public float x;          
+         public float y;          
       };
       
       #endregion

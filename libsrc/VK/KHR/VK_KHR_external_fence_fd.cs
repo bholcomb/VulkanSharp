@@ -22,21 +22,21 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImportFenceFdInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public Fence fence;
-         public FenceImportFlags flags;
-         public ExternalFenceHandleTypeFlags handleType;
-         public int fd;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Fence fence;          
+         public FenceImportFlags flags;          
+         public ExternalFenceHandleTypeFlags handleType;          
+         public int fd;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct FenceGetFdInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public Fence fence;
-         public ExternalFenceHandleTypeFlags handleType;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Fence fence;          
+         public ExternalFenceHandleTypeFlags handleType;          
       };
       
       #endregion

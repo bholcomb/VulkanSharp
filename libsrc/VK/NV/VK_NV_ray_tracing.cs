@@ -85,141 +85,141 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct RayTracingShaderGroupCreateInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public RayTracingShaderGroupTypeNV type;
-         public UInt32 generalShader;
-         public UInt32 closestHitShader;
-         public UInt32 anyHitShader;
-         public UInt32 intersectionShader;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public RayTracingShaderGroupTypeNV type;          
+         public UInt32 generalShader;          
+         public UInt32 closestHitShader;          
+         public UInt32 anyHitShader;          
+         public UInt32 intersectionShader;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct RayTracingPipelineCreateInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public PipelineCreateFlags flags;
-         public UInt32 stageCount;
-         public PipelineShaderStageCreateInfo pStages;
-         public UInt32 groupCount;
-         public RayTracingShaderGroupCreateInfoNV pGroups;
-         public UInt32 maxRecursionDepth;
-         public PipelineLayout layout;
-         public Pipeline basePipelineHandle;
-         public Int32 basePipelineIndex;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public PipelineCreateFlags flags;  //Pipeline creation flags 
+         public UInt32 stageCount;          
+         public PipelineShaderStageCreateInfo* pStages;  //One entry for each active shader stage 
+         public UInt32 groupCount;          
+         public RayTracingShaderGroupCreateInfoNV* pGroups;          
+         public UInt32 maxRecursionDepth;          
+         public PipelineLayout layout;  //Interface layout of the pipeline 
+         public Pipeline basePipelineHandle;  //If VK_PIPELINE_CREATE_DERIVATIVE_BIT is set and this value is nonzero, it specifies the handle of the base pipeline this is a derivative of 
+         public Int32 basePipelineIndex;  //If VK_PIPELINE_CREATE_DERIVATIVE_BIT is set and this value is not -1, it specifies an index into pCreateInfos of the base pipeline this is a derivative of 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct GeometryTrianglesNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public Buffer vertexData;
-         public DeviceSize vertexOffset;
-         public UInt32 vertexCount;
-         public DeviceSize vertexStride;
-         public Format vertexFormat;
-         public Buffer indexData;
-         public DeviceSize indexOffset;
-         public UInt32 indexCount;
-         public IndexType indexType;
-         public Buffer transformData;
-         public DeviceSize transformOffset;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Buffer vertexData;          
+         public DeviceSize vertexOffset;          
+         public UInt32 vertexCount;          
+         public DeviceSize vertexStride;          
+         public Format vertexFormat;          
+         public Buffer indexData;          
+         public DeviceSize indexOffset;          
+         public UInt32 indexCount;          
+         public IndexType indexType;          
+         public Buffer transformData;  //Optional reference to array of floats representing a 3x4 row major affine transformation matrix. 
+         public DeviceSize transformOffset;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct GeometryAABBNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public Buffer aabbData;
-         public UInt32 numAABBs;
-         public UInt32 stride;
-         public DeviceSize offset;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Buffer aabbData;          
+         public UInt32 numAABBs;          
+         public UInt32 stride;  //Stride in bytes between AABBs 
+         public DeviceSize offset;  //Offset in bytes of the first AABB in aabbData 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct GeometryDataNV 
       {
-         public GeometryTrianglesNV triangles;
-         public GeometryAABBNV aabbs;
+         public GeometryTrianglesNV triangles;          
+         public GeometryAABBNV aabbs;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct GeometryNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public GeometryTypeNV geometryType;
-         public GeometryDataNV geometry;
-         public GeometryFlagsNV flags;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public GeometryTypeNV geometryType;          
+         public GeometryDataNV geometry;          
+         public GeometryFlagsNV flags;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AccelerationStructureInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public AccelerationStructureTypeNV type;
-         public BuildAccelerationStructureFlagsNV flags;
-         public UInt32 instanceCount;
-         public UInt32 geometryCount;
-         public GeometryNV pGeometries;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public AccelerationStructureTypeNV type;          
+         public BuildAccelerationStructureFlagsNV flags;          
+         public UInt32 instanceCount;          
+         public UInt32 geometryCount;          
+         public GeometryNV* pGeometries;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AccelerationStructureCreateInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public DeviceSize compactedSize;
-         public AccelerationStructureInfoNV info;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DeviceSize compactedSize;          
+         public AccelerationStructureInfoNV info;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct BindAccelerationStructureMemoryInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public AccelerationStructureNV accelerationStructure;
-         public DeviceMemory memory;
-         public DeviceSize memoryOffset;
-         public UInt32 deviceIndexCount;
-         public UInt32 pDeviceIndices;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public AccelerationStructureNV accelerationStructure;          
+         public DeviceMemory memory;          
+         public DeviceSize memoryOffset;          
+         public UInt32 deviceIndexCount;          
+         public UInt32* pDeviceIndices;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct WriteDescriptorSetAccelerationStructureNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 accelerationStructureCount;
-         public AccelerationStructureNV pAccelerationStructures;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 accelerationStructureCount;          
+         public AccelerationStructureNV* pAccelerationStructures;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AccelerationStructureMemoryRequirementsInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public AccelerationStructureMemoryRequirementsTypeNV type;
-         public AccelerationStructureNV accelerationStructure;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public AccelerationStructureMemoryRequirementsTypeNV type;          
+         public AccelerationStructureNV accelerationStructure;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceRayTracingPropertiesNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 shaderGroupHandleSize;
-         public UInt32 maxRecursionDepth;
-         public UInt32 maxShaderGroupStride;
-         public UInt32 shaderGroupBaseAlignment;
-         public UInt64 maxGeometryCount;
-         public UInt64 maxInstanceCount;
-         public UInt64 maxTriangleCount;
-         public UInt32 maxDescriptorSetAccelerationStructures;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 shaderGroupHandleSize;          
+         public UInt32 maxRecursionDepth;          
+         public UInt32 maxShaderGroupStride;          
+         public UInt32 shaderGroupBaseAlignment;          
+         public UInt64 maxGeometryCount;          
+         public UInt64 maxInstanceCount;          
+         public UInt64 maxTriangleCount;          
+         public UInt32 maxDescriptorSetAccelerationStructures;          
       };
       
       #endregion

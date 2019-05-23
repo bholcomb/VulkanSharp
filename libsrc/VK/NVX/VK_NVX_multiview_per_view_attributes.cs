@@ -22,9 +22,9 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 perViewPositionAllComponents;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 perViewPositionAllComponents;          
       };
       
       #endregion

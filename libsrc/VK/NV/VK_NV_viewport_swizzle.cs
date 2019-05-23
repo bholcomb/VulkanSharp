@@ -42,20 +42,20 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ViewportSwizzleNV 
       {
-         public ViewportCoordinateSwizzleNV x;
-         public ViewportCoordinateSwizzleNV y;
-         public ViewportCoordinateSwizzleNV z;
-         public ViewportCoordinateSwizzleNV w;
+         public ViewportCoordinateSwizzleNV x;          
+         public ViewportCoordinateSwizzleNV y;          
+         public ViewportCoordinateSwizzleNV z;          
+         public ViewportCoordinateSwizzleNV w;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineViewportSwizzleStateCreateInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public PipelineViewportSwizzleStateCreateFlagsNV flags;
-         public UInt32 viewportCount;
-         public ViewportSwizzleNV pViewportSwizzles;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public PipelineViewportSwizzleStateCreateFlagsNV flags;          
+         public UInt32 viewportCount;          
+         public ViewportSwizzleNV* pViewportSwizzles;          
       };
       
       #endregion

@@ -29,10 +29,10 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImagePipeSurfaceCreateInfoFUCHSIA 
       {
-         public StructureType sType;
-         public void pNext;
-         public ImagePipeSurfaceCreateFlagsFUCHSIA flags;
-         public zx_handle_t imagePipeHandle;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public ImagePipeSurfaceCreateFlagsFUCHSIA flags;          
+         public zx_handle_t imagePipeHandle;          
       };
       
       #endregion

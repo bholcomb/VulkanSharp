@@ -22,17 +22,17 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DisplayNativeHdrSurfaceCapabilitiesAMD 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 localDimmingSupport;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 localDimmingSupport;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SwapchainDisplayNativeHdrCreateInfoAMD 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 localDimmingEnable;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 localDimmingEnable;          
       };
       
       #endregion

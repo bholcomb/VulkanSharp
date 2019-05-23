@@ -22,11 +22,11 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceVulkanMemoryModelFeaturesKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 vulkanMemoryModel;
-         public Bool32 vulkanMemoryModelDeviceScope;
-         public Bool32 vulkanMemoryModelAvailabilityVisibilityChains;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 vulkanMemoryModel;          
+         public Bool32 vulkanMemoryModelDeviceScope;          
+         public Bool32 vulkanMemoryModelAvailabilityVisibilityChains;          
       };
       
       #endregion

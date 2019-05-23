@@ -30,23 +30,23 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ShaderResourceUsageAMD 
       {
-         public UInt32 numUsedVgprs;
-         public UInt32 numUsedSgprs;
-         public UInt32 ldsSizePerLocalWorkGroup;
-         public UInt32 ldsUsageSizeInBytes;
-         public UInt32 scratchMemUsageInBytes;
+         public UInt32 numUsedVgprs;          
+         public UInt32 numUsedSgprs;          
+         public UInt32 ldsSizePerLocalWorkGroup;          
+         public UInt32 ldsUsageSizeInBytes;          
+         public UInt32 scratchMemUsageInBytes;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ShaderStatisticsInfoAMD 
       {
-         public ShaderStageFlags shaderStageMask;
-         public ShaderResourceUsageAMD resourceUsage;
-         public UInt32 numPhysicalVgprs;
-         public UInt32 numPhysicalSgprs;
-         public UInt32 numAvailableVgprs;
-         public UInt32 numAvailableSgprs;
-         public UInt32 computeWorkGroupSize;
+         public ShaderStageFlags shaderStageMask;          
+         public ShaderResourceUsageAMD resourceUsage;          
+         public UInt32 numPhysicalVgprs;          
+         public UInt32 numPhysicalSgprs;          
+         public UInt32 numAvailableVgprs;          
+         public UInt32 numAvailableSgprs;          
+         public fixed UInt32 computeWorkGroupSize[3];          
       };
       
       #endregion

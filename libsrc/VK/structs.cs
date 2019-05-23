@@ -138,8 +138,8 @@ namespace Vulkan
          public UInt32 vendorID;          
          public UInt32 deviceID;          
          public PhysicalDeviceType deviceType;          
-         public fixed char deviceName[VK.MAX_PHYSICAL_DEVICE_NAME_SIZE];          
-         public fixed byte pipelineCacheUUID[VK.UUID_SIZE];          
+         public fixed char deviceName[(int)VK.MAX_PHYSICAL_DEVICE_NAME_SIZE];          
+         public fixed byte pipelineCacheUUID[(int)VK.UUID_SIZE];          
          public PhysicalDeviceLimits limits;          
          public PhysicalDeviceSparseProperties sparseProperties;          
       };
@@ -278,9 +278,9 @@ namespace Vulkan
       public unsafe struct PhysicalDeviceMemoryProperties 
       {
          public UInt32 memoryTypeCount;          
-         public fixed MemoryType memoryTypes[VK.MAX_MEMORY_TYPES];          
+         public fixed MemoryType memoryTypes[(int)VK.MAX_MEMORY_TYPES];          
          public UInt32 memoryHeapCount;          
-         public fixed MemoryHeap memoryHeaps[VK.MAX_MEMORY_HEAPS];          
+         public fixed MemoryHeap memoryHeaps[(int)VK.MAX_MEMORY_HEAPS];          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -326,17 +326,17 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct ExtensionProperties 
       {
-         public fixed char extensionName[VK.MAX_EXTENSION_NAME_SIZE];  //extension name 
+         public fixed char extensionName[(int)VK.MAX_EXTENSION_NAME_SIZE];  //extension name 
          public UInt32 specVersion;  //version of the extension specification implemented 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct LayerProperties 
       {
-         public fixed char layerName[VK.MAX_EXTENSION_NAME_SIZE];  //layer name 
+         public fixed char layerName[(int)VK.MAX_EXTENSION_NAME_SIZE];  //layer name 
          public UInt32 specVersion;  //version of the layer specification implemented 
          public UInt32 implementationVersion;  //build or release version of the layer's library 
-         public fixed char description[VK.MAX_DESCRIPTION_SIZE];  //Free-form description of the layer 
+         public fixed char description[(int)VK.MAX_DESCRIPTION_SIZE];  //Free-form description of the layer 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -1431,7 +1431,7 @@ namespace Vulkan
          public StructureType sType;          
          public IntPtr pNext;          
          public UInt32 physicalDeviceCount;          
-         public fixed PhysicalDevice physicalDevices[VK.MAX_DEVICE_GROUP_SIZE];          
+         public fixed PhysicalDevice physicalDevices[(int)VK.MAX_DEVICE_GROUP_SIZE];          
          public Bool32 subsetAllocation;          
       };
       
@@ -1808,9 +1808,9 @@ namespace Vulkan
       {
          public StructureType sType;          
          public IntPtr pNext;          
-         public fixed byte deviceUUID[VK.UUID_SIZE];          
-         public fixed byte driverUUID[VK.UUID_SIZE];          
-         public fixed byte deviceLUID[VK.LUID_SIZE];          
+         public fixed byte deviceUUID[(int)VK.UUID_SIZE];          
+         public fixed byte driverUUID[(int)VK.UUID_SIZE];          
+         public fixed byte deviceLUID[(int)VK.LUID_SIZE];          
          public UInt32 deviceNodeMask;          
          public Bool32 deviceLUIDValid;          
       };
@@ -1934,6 +1934,6 @@ namespace Vulkan
          public ClearDepthStencilValue depthStencil;           
       };
       
-      #end region
+      #endregion
    }
 }

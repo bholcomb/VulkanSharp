@@ -31,9 +31,9 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct CalibratedTimestampInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public TimeDomainEXT timeDomain;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public TimeDomainEXT timeDomain;          
       };
       
       #endregion

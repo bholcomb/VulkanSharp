@@ -22,17 +22,17 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ExternalMemoryImageCreateInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public ExternalMemoryHandleTypeFlagsNV handleTypes;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public ExternalMemoryHandleTypeFlagsNV handleTypes;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ExportMemoryAllocateInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public ExternalMemoryHandleTypeFlagsNV handleTypes;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public ExternalMemoryHandleTypeFlagsNV handleTypes;          
       };
       
       #endregion

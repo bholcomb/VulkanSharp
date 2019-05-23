@@ -32,18 +32,18 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineCreationFeedbackCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public PipelineCreationFeedbackEXT pPipelineCreationFeedback;
-         public UInt32 pipelineStageCreationFeedbackCount;
-         public PipelineCreationFeedbackEXT pPipelineStageCreationFeedbacks;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public PipelineCreationFeedbackEXT* pPipelineCreationFeedback;  //Output pipeline creation feedback. 
+         public UInt32 pipelineStageCreationFeedbackCount;          
+         public PipelineCreationFeedbackEXT* pPipelineStageCreationFeedbacks;  //One entry for each shader stage specified in the parent Vk*PipelineCreateInfo struct 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineCreationFeedbackEXT 
       {
-         public PipelineCreationFeedbackFlagsEXT flags;
-         public UInt64 duration;
+         public PipelineCreationFeedbackFlagsEXT flags;          
+         public UInt64 duration;          
       };
       
       #endregion

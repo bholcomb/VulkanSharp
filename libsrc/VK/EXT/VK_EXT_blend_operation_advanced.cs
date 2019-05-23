@@ -30,32 +30,32 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceBlendOperationAdvancedFeaturesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 advancedBlendCoherentOperations;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 advancedBlendCoherentOperations;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceBlendOperationAdvancedPropertiesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 advancedBlendMaxColorAttachments;
-         public Bool32 advancedBlendIndependentBlend;
-         public Bool32 advancedBlendNonPremultipliedSrcColor;
-         public Bool32 advancedBlendNonPremultipliedDstColor;
-         public Bool32 advancedBlendCorrelatedOverlap;
-         public Bool32 advancedBlendAllOperations;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 advancedBlendMaxColorAttachments;          
+         public Bool32 advancedBlendIndependentBlend;          
+         public Bool32 advancedBlendNonPremultipliedSrcColor;          
+         public Bool32 advancedBlendNonPremultipliedDstColor;          
+         public Bool32 advancedBlendCorrelatedOverlap;          
+         public Bool32 advancedBlendAllOperations;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineColorBlendAdvancedStateCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 srcPremultiplied;
-         public Bool32 dstPremultiplied;
-         public BlendOverlapEXT blendOverlap;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 srcPremultiplied;          
+         public Bool32 dstPremultiplied;          
+         public BlendOverlapEXT blendOverlap;          
       };
       
       #endregion

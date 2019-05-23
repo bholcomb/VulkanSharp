@@ -31,9 +31,9 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DeviceQueueGlobalPriorityCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public QueueGlobalPriorityEXT globalPriority;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public QueueGlobalPriorityEXT globalPriority;          
       };
       
       #endregion

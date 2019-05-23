@@ -22,43 +22,43 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImportSemaphoreWin32HandleInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public Semaphore semaphore;
-         public SemaphoreImportFlags flags;
-         public ExternalSemaphoreHandleTypeFlags handleType;
-         public HANDLE handle;
-         public LPCWSTR name;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Semaphore semaphore;          
+         public SemaphoreImportFlags flags;          
+         public ExternalSemaphoreHandleTypeFlags handleType;          
+         public HANDLE handle;          
+         public LPCWSTR name;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ExportSemaphoreWin32HandleInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public SECURITY_ATTRIBUTES pAttributes;
-         public DWORD dwAccess;
-         public LPCWSTR name;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public SECURITY_ATTRIBUTES* pAttributes;          
+         public DWORD dwAccess;          
+         public LPCWSTR name;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct D3D12FenceSubmitInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 waitSemaphoreValuesCount;
-         public UInt64 pWaitSemaphoreValues;
-         public UInt32 signalSemaphoreValuesCount;
-         public UInt64 pSignalSemaphoreValues;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 waitSemaphoreValuesCount;          
+         public UInt64* pWaitSemaphoreValues;          
+         public UInt32 signalSemaphoreValuesCount;          
+         public UInt64* pSignalSemaphoreValues;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SemaphoreGetWin32HandleInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public Semaphore semaphore;
-         public ExternalSemaphoreHandleTypeFlags handleType;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Semaphore semaphore;          
+         public ExternalSemaphoreHandleTypeFlags handleType;          
       };
       
       #endregion

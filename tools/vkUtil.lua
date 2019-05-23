@@ -71,7 +71,7 @@ function sanitizeEnumName(name, filter)
 end
 
 function sanitizeArrayLength(name)
-   local n = string.gsub(name, "^VK_", "VK.")
+   local n = string.gsub(name, "^VK_", "(int)VK.")
    return n
 end
 

@@ -22,56 +22,56 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DrmFormatModifierPropertiesListEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 drmFormatModifierCount;
-         public DrmFormatModifierPropertiesEXT pDrmFormatModifierProperties;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 drmFormatModifierCount;          
+         public DrmFormatModifierPropertiesEXT* pDrmFormatModifierProperties;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DrmFormatModifierPropertiesEXT 
       {
-         public UInt64 drmFormatModifier;
-         public UInt32 drmFormatModifierPlaneCount;
-         public FormatFeatureFlags drmFormatModifierTilingFeatures;
+         public UInt64 drmFormatModifier;          
+         public UInt32 drmFormatModifierPlaneCount;          
+         public FormatFeatureFlags drmFormatModifierTilingFeatures;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceImageDrmFormatModifierInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt64 drmFormatModifier;
-         public SharingMode sharingMode;
-         public UInt32 queueFamilyIndexCount;
-         public UInt32 pQueueFamilyIndices;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt64 drmFormatModifier;          
+         public SharingMode sharingMode;          
+         public UInt32 queueFamilyIndexCount;          
+         public UInt32* pQueueFamilyIndices;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImageDrmFormatModifierListCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 drmFormatModifierCount;
-         public UInt64 pDrmFormatModifiers;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 drmFormatModifierCount;          
+         public UInt64* pDrmFormatModifiers;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImageDrmFormatModifierExplicitCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt64 drmFormatModifier;
-         public UInt32 drmFormatModifierPlaneCount;
-         public SubresourceLayout pPlaneLayouts;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt64 drmFormatModifier;          
+         public UInt32 drmFormatModifierPlaneCount;          
+         public SubresourceLayout* pPlaneLayouts;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImageDrmFormatModifierPropertiesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt64 drmFormatModifier;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt64 drmFormatModifier;          
       };
       
       #endregion

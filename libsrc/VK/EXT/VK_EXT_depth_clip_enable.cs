@@ -29,18 +29,18 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceDepthClipEnableFeaturesEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 depthClipEnable;
+         public StructureType sType;          
+         public IntPtr pNext;  //Pointer to next structure 
+         public Bool32 depthClipEnable;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineRasterizationDepthClipStateCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public PipelineRasterizationDepthClipStateCreateFlagsEXT flags;
-         public Bool32 depthClipEnable;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public PipelineRasterizationDepthClipStateCreateFlagsEXT flags;          
+         public Bool32 depthClipEnable;          
       };
       
       #endregion

@@ -29,10 +29,10 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MacOSSurfaceCreateInfoMVK 
       {
-         public StructureType sType;
-         public void pNext;
-         public MacOSSurfaceCreateFlagsMVK flags;
-         public void pView;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public MacOSSurfaceCreateFlagsMVK flags;          
+         public IntPtr pView;          
       };
       
       #endregion

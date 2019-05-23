@@ -22,10 +22,10 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceShaderAtomicInt64FeaturesKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 shaderBufferInt64Atomics;
-         public Bool32 shaderSharedInt64Atomics;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 shaderBufferInt64Atomics;          
+         public Bool32 shaderSharedInt64Atomics;          
       };
       
       #endregion

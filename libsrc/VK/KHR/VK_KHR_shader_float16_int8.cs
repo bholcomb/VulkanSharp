@@ -22,10 +22,10 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceFloat16Int8FeaturesKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 shaderFloat16;
-         public Bool32 shaderInt8;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 shaderFloat16;          
+         public Bool32 shaderInt8;          
       };
       
       #endregion

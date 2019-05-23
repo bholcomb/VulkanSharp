@@ -29,10 +29,10 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ViSurfaceCreateInfoNN 
       {
-         public StructureType sType;
-         public void pNext;
-         public ViSurfaceCreateFlagsNN flags;
-         public void window;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public ViSurfaceCreateFlagsNN flags;          
+         public IntPtr window;          
       };
       
       #endregion

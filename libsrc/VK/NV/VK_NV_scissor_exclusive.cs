@@ -22,18 +22,18 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineViewportExclusiveScissorStateCreateInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 exclusiveScissorCount;
-         public Rect2D pExclusiveScissors;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 exclusiveScissorCount;          
+         public Rect2D* pExclusiveScissors;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceExclusiveScissorFeaturesNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 exclusiveScissor;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 exclusiveScissor;          
       };
       
       #endregion

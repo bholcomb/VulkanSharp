@@ -29,11 +29,11 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct Win32SurfaceCreateInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public Win32SurfaceCreateFlagsKHR flags;
-         public HINSTANCE hinstance;
-         public HWND hwnd;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Win32SurfaceCreateFlagsKHR flags;          
+         public HINSTANCE hinstance;          
+         public HWND hwnd;          
       };
       
       #endregion

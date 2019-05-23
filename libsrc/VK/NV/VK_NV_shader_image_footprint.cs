@@ -22,9 +22,9 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceShaderImageFootprintFeaturesNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 imageFootprint;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 imageFootprint;          
       };
       
       #endregion

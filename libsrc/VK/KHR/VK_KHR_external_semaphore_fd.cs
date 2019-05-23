@@ -22,21 +22,21 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImportSemaphoreFdInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public Semaphore semaphore;
-         public SemaphoreImportFlags flags;
-         public ExternalSemaphoreHandleTypeFlags handleType;
-         public int fd;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Semaphore semaphore;          
+         public SemaphoreImportFlags flags;          
+         public ExternalSemaphoreHandleTypeFlags handleType;          
+         public int fd;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SemaphoreGetFdInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public Semaphore semaphore;
-         public ExternalSemaphoreHandleTypeFlags handleType;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Semaphore semaphore;          
+         public ExternalSemaphoreHandleTypeFlags handleType;          
       };
       
       #endregion

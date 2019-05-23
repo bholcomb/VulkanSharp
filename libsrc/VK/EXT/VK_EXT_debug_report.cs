@@ -78,11 +78,11 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DebugReportCallbackCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public DebugReportFlagsEXT flags;
-         public DebugReportCallbackEXT pfnCallback;
-         public void pUserData;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DebugReportFlagsEXT flags;  //Indicates which events call this callback 
+         public DebugReportCallbackEXT pfnCallback;  //Function pointer of a callback function 
+         public IntPtr pUserData;  //User data provided to callback function 
       };
       
       #endregion

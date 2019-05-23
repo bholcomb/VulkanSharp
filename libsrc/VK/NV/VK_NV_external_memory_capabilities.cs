@@ -41,10 +41,10 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ExternalImageFormatPropertiesNV 
       {
-         public ImageFormatProperties imageFormatProperties;
-         public ExternalMemoryFeatureFlagsNV externalMemoryFeatures;
-         public ExternalMemoryHandleTypeFlagsNV exportFromImportedHandleTypes;
-         public ExternalMemoryHandleTypeFlagsNV compatibleHandleTypes;
+         public ImageFormatProperties imageFormatProperties;          
+         public ExternalMemoryFeatureFlagsNV externalMemoryFeatures;          
+         public ExternalMemoryHandleTypeFlagsNV exportFromImportedHandleTypes;          
+         public ExternalMemoryHandleTypeFlagsNV compatibleHandleTypes;          
       };
       
       #endregion

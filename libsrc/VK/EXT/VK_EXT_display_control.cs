@@ -40,33 +40,33 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DisplayPowerInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public DisplayPowerStateEXT powerState;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DisplayPowerStateEXT powerState;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DeviceEventInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public DeviceEventTypeEXT deviceEvent;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DeviceEventTypeEXT deviceEvent;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DisplayEventInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public DisplayEventTypeEXT displayEvent;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public DisplayEventTypeEXT displayEvent;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SwapchainCounterCreateInfoEXT 
       {
-         public StructureType sType;
-         public void pNext;
-         public SurfaceCounterFlagsEXT surfaceCounters;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public SurfaceCounterFlagsEXT surfaceCounters;          
       };
       
       #endregion

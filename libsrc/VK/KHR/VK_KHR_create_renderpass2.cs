@@ -22,91 +22,91 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct RenderPassCreateInfo2KHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public RenderPassCreateFlags flags;
-         public UInt32 attachmentCount;
-         public AttachmentDescription2KHR pAttachments;
-         public UInt32 subpassCount;
-         public SubpassDescription2KHR pSubpasses;
-         public UInt32 dependencyCount;
-         public SubpassDependency2KHR pDependencies;
-         public UInt32 correlatedViewMaskCount;
-         public UInt32 pCorrelatedViewMasks;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public RenderPassCreateFlags flags;          
+         public UInt32 attachmentCount;          
+         public AttachmentDescription2KHR* pAttachments;          
+         public UInt32 subpassCount;          
+         public SubpassDescription2KHR* pSubpasses;          
+         public UInt32 dependencyCount;          
+         public SubpassDependency2KHR* pDependencies;          
+         public UInt32 correlatedViewMaskCount;          
+         public UInt32* pCorrelatedViewMasks;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AttachmentDescription2KHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public AttachmentDescriptionFlags flags;
-         public Format format;
-         public SampleCountFlags samples;
-         public AttachmentLoadOp loadOp;
-         public AttachmentStoreOp storeOp;
-         public AttachmentLoadOp stencilLoadOp;
-         public AttachmentStoreOp stencilStoreOp;
-         public ImageLayout initialLayout;
-         public ImageLayout finalLayout;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public AttachmentDescriptionFlags flags;          
+         public Format format;          
+         public SampleCountFlags samples;          
+         public AttachmentLoadOp loadOp;  //Load operation for color or depth data 
+         public AttachmentStoreOp storeOp;  //Store operation for color or depth data 
+         public AttachmentLoadOp stencilLoadOp;  //Load operation for stencil data 
+         public AttachmentStoreOp stencilStoreOp;  //Store operation for stencil data 
+         public ImageLayout initialLayout;          
+         public ImageLayout finalLayout;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SubpassDescription2KHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public SubpassDescriptionFlags flags;
-         public PipelineBindPoint pipelineBindPoint;
-         public UInt32 viewMask;
-         public UInt32 inputAttachmentCount;
-         public AttachmentReference2KHR pInputAttachments;
-         public UInt32 colorAttachmentCount;
-         public AttachmentReference2KHR pColorAttachments;
-         public AttachmentReference2KHR pResolveAttachments;
-         public AttachmentReference2KHR pDepthStencilAttachment;
-         public UInt32 preserveAttachmentCount;
-         public UInt32 pPreserveAttachments;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public SubpassDescriptionFlags flags;          
+         public PipelineBindPoint pipelineBindPoint;          
+         public UInt32 viewMask;          
+         public UInt32 inputAttachmentCount;          
+         public AttachmentReference2KHR* pInputAttachments;          
+         public UInt32 colorAttachmentCount;          
+         public AttachmentReference2KHR* pColorAttachments;          
+         public AttachmentReference2KHR* pResolveAttachments;          
+         public AttachmentReference2KHR* pDepthStencilAttachment;          
+         public UInt32 preserveAttachmentCount;          
+         public UInt32* pPreserveAttachments;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AttachmentReference2KHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 attachment;
-         public ImageLayout layout;
-         public ImageAspectFlags aspectMask;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 attachment;          
+         public ImageLayout layout;          
+         public ImageAspectFlags aspectMask;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SubpassDependency2KHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 srcSubpass;
-         public UInt32 dstSubpass;
-         public PipelineStageFlags srcStageMask;
-         public PipelineStageFlags dstStageMask;
-         public AccessFlags srcAccessMask;
-         public AccessFlags dstAccessMask;
-         public DependencyFlags dependencyFlags;
-         public Int32 viewOffset;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 srcSubpass;          
+         public UInt32 dstSubpass;          
+         public PipelineStageFlags srcStageMask;          
+         public PipelineStageFlags dstStageMask;          
+         public AccessFlags srcAccessMask;          
+         public AccessFlags dstAccessMask;          
+         public DependencyFlags dependencyFlags;          
+         public Int32 viewOffset;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SubpassBeginInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public SubpassContents contents;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public SubpassContents contents;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SubpassEndInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
+         public StructureType sType;          
+         public IntPtr pNext;          
       };
       
       #endregion

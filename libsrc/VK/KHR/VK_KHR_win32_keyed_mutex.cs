@@ -22,15 +22,15 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct Win32KeyedMutexAcquireReleaseInfoKHR 
       {
-         public StructureType sType;
-         public void pNext;
-         public UInt32 acquireCount;
-         public DeviceMemory pAcquireSyncs;
-         public UInt64 pAcquireKeys;
-         public UInt32 pAcquireTimeouts;
-         public UInt32 releaseCount;
-         public DeviceMemory pReleaseSyncs;
-         public UInt64 pReleaseKeys;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public UInt32 acquireCount;          
+         public DeviceMemory* pAcquireSyncs;          
+         public UInt64* pAcquireKeys;          
+         public UInt32* pAcquireTimeouts;          
+         public UInt32 releaseCount;          
+         public DeviceMemory* pReleaseSyncs;          
+         public UInt64* pReleaseKeys;          
       };
       
       #endregion

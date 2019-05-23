@@ -22,26 +22,26 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DedicatedAllocationImageCreateInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 dedicatedAllocation;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 dedicatedAllocation;  //Whether this image uses a dedicated allocation 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DedicatedAllocationBufferCreateInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public Bool32 dedicatedAllocation;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Bool32 dedicatedAllocation;  //Whether this buffer uses a dedicated allocation 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DedicatedAllocationMemoryAllocateInfoNV 
       {
-         public StructureType sType;
-         public void pNext;
-         public Image image;
-         public Buffer buffer;
+         public StructureType sType;          
+         public IntPtr pNext;          
+         public Image image;  //Image that this allocation will be bound to 
+         public Buffer buffer;  //Buffer that this allocation will be bound to 
       };
       
       #endregion

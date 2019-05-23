@@ -112,9 +112,19 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct {{= sanitizeTypeName(v)}} 
       {
-         {{for kk,vv in pairs(struct) do }}
-         public {{= sanitizeType(vv.type) }} {{= sanitizeTypeName(vv.name)}};
-         {{end }}
+         {{for kk,vv in pairs(struct) do
+           if (vv.array == true) then }}
+         public fixed {{= sanitizeType(vv.type, vv.pointer, vv.doublePointer)}} {{= sanitizeTypeName(vv.name)}}[{{= sanitizeArrayLength(vv.arrayLength)}}]; {{if vv.comment ~= nil then}} //{{= vv.comment}} 
+         {{else}}
+         
+         {{end}}
+         {{else}}
+         public {{= sanitizeType(vv.type, vv.pointer, vv.doublePointer)}} {{= sanitizeTypeName(vv.name)}}; {{if vv.comment ~= nil then}} //{{= vv.comment}} 
+         {{else}}
+         
+         {{end}}
+         {{end}}
+         {{end}}
       };
       
       {{end}}
@@ -216,6 +226,7 @@ function generateExtensions()
          sanitizeFunctionName = sanitizeFunctionName,
          sanitizeType = sanitizeType,
          sanitizeTypeName = sanitizeTypeName,
+         sanitizeArrayLength = sanitizeArrayLength,
          print = print
       }
       
