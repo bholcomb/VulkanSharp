@@ -11,44 +11,43 @@ namespace Vulkan
    public static partial class VK
    {
       #region enums
-      {{for k,v in pairs(enums) do
-         if(v.extension == nil) then
-            k = string.gsub(k, "Vk", "") --remove leading Vk from all names
-            local lastExtension = "Core"
+      {{for k,enumName in pairs(api.enums) do
+         local e = types.enums[enumName]
+         local lastExtension = "Core"
+         enumName = string.gsub(enumName, "Vk", "") --remove leading Vk from all names
       }}    
-      public enum {{= k}}: int
+      public enum {{= enumName}}: int
       {  
-         {{for kk,vv in pairs(v) do
+         {{for kk,vv in pairs(e.values) do
             if(lastExtension ~= (vv.extension or "Core")) then
                lastExtension = (vv.extension or "Core")}}
           //{{= vv.extension}}
             {{end}}
-         {{= sanitizeEnumName(vv.name, k)}} = {{= vv.value}},
+         {{= sanitizeEnumName(vv.name, enumName)}} = {{= vv.value}},
          {{end}}
       };
-         {{end}}
       {{end}}
       #endregion
       
       #region bitmasks
-      {{for k,v in pairs(bitmasks) do 
-         if(v.extension == nil) then
-            k = string.gsub(k, "Vk", "") --remove leading Vk from all names
-            local lastExtension = "Core"
+      {{for k,name in pairs(api.bitmasks) do 
+         local b = types.bitmasks[name]
+         local lastExtension = "Core"
+         name = string.gsub(name, "Vk", "") --remove leading Vk from all name
       }}
       [Flags]
-      public enum {{= k}} : int
+      public enum {{= name}} : int
       {  
-            {{for kk,vv in pairs(v) do
-               if(lastExtension ~= (vv.extension or "Core")) then
-                  lastExtension = (vv.extension or "Core")}}
+         {{for kk,vv in pairs(b.bits) do
+             if(lastExtension ~= (vv.extension or "Core")) then
+                lastExtension = (vv.extension or "Core")}}
           //{{= vv.extension}}
                {{end}}
-          {{= sanitizeEnumName(vv.name, k)}} =  1 << {{= vv.bitpos}},
-            {{end}}
+          {{= sanitizeEnumName(vv.name, name)}} =  1 << {{= vv.bitpos}},
+          {{end}}
       };
-         {{end}}
-      {{end}}      
+      
+      {{end}}
       #endregion
    }
 }
@@ -59,8 +58,8 @@ templates.file = liluat.compile(file)
 
 function generateEnums()   
    local values = {
-      enums = enums, 
-      bitmasks = bitmasks, 
+      api = api, 
+      types = types, 
       sanitizeEnumName = sanitizeEnumName,
    }
 

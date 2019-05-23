@@ -1,5 +1,34 @@
+
 function trim(s)
-   return (s:gsub("^%s*(.-)%s*$", "%1"))
+   s = s:gsub("^%s*(.-)%s*$", "%1")
+   s = s:gsub("[\r\n]", "")
+   return s
+end
+
+function dump(o, nb)
+  if nb == nil then
+    nb = 1
+  end
+   if type(o) == 'table' then
+      local s = ''
+      for i = 1, nb + 1, 1 do
+        s = s .. "    "
+      end
+      s = '{\n'
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+          for i = 1, nb, 1 do
+            s = s .. "    "
+          end
+         s = s .. '['..k..'] = ' .. dump(v, nb + 1) .. ',\n'
+      end
+      for i = 1, nb, 1 do
+        s = s .. "    "
+      end
+      return s .. '}'
+   else
+      return tostring(o)
+   end
 end
 
 function sanitizeEnumName(name, filter)
@@ -41,8 +70,13 @@ function sanitizeEnumName(name, filter)
    return n
 end
 
+function sanitizeArrayLength(name)
+   local n = string.gsub(name, "^VK_", "VK.")
+   return n
+end
+
 function sanitizeFunctionName(name)
-   local n = string.gsub(name, "vk", "") --remove beginning vk
+   local n = string.gsub(name, "^vk", "") --remove beginning vk
    
    n = string.gsub(n, "^%l", string.lower)
    
@@ -50,16 +84,27 @@ function sanitizeFunctionName(name)
 end
 
 function sanitizeTypeName(name)
-   local n = string.gsub(name, "Vk", "") --remove beginning vk   
+   local n = string.gsub(name, "^Vk", "") --remove beginning vk   
    
    return n
 end
 
-function sanitizeType(name)
-   local n = string.gsub(name, "Vk", "") --remove beginning vk   
+function sanitizeType(name, isPointer, isDoublePointer)
+   local n = trim(name)
+   if isPointer == true then
+      n =  n.."*" 
+  end
+  
+  if(isDoublePointer == true) then
+     return "IntPtr"
+  end
+
+   
+   n = string.gsub(n, "^Vk", "") --remove beginning vk   
+   n = string.gsub(n, "^PFN_vk", "") --remove beginning function pointer prefix
    n = string.gsub(n, "const ", "")
    n = string.gsub(n, "struct ", "")
-   n = string.gsub(n, "void %*", "IntPtr")
+   n = string.gsub(n, "void%*", "IntPtr")
    n = string.gsub(n, "uint32_t", "UInt32")   
    n = string.gsub(n, "int32_t", "Int32")
    n = string.gsub(n, "uint64_t", "UInt64")
@@ -67,7 +112,9 @@ function sanitizeType(name)
    n = string.gsub(n, "uint8_t", "byte")
    n = string.gsub(n, "int8_t", "sbyte")
    n = string.gsub(n, "size_t", "UInt32")
-   n = string.gsub(n, "char *", "string")
+   n = string.gsub(n, "char%*", "string")
+   
+   
    
    return trim(n)
 

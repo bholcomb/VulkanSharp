@@ -1,32 +1,8 @@
 require ("LuaXML")
 
-local vk = xml.load("vk.xml")
+dofile("vkUtil.lua")
 
-function dump(o, nb)
-  if nb == nil then
-    nb = 1
-  end
-   if type(o) == 'table' then
-      local s = ''
-      for i = 1, nb + 1, 1 do
-        s = s .. "    "
-      end
-      s = '{\n'
-      for k,v in pairs(o) do
-         if type(k) ~= 'number' then k = '"'..k..'"' end
-          for i = 1, nb, 1 do
-            s = s .. "    "
-          end
-         s = s .. '['..k..'] = ' .. dump(v, nb + 1) .. ',\n'
-      end
-      for i = 1, nb, 1 do
-        s = s .. "    "
-      end
-      return s .. '}'
-   else
-      return tostring(o)
-   end
-end
+local vk = xml.load("vk.xml")
 
 commands = {}
 api = {}
@@ -67,31 +43,51 @@ function parseTypes()
    types.enums = {}
    types.structs = {}
    types.unions = {}
-   types.type = {}
+   types.info = {}
+   types.funcpointers = {}
    
    for k,v in pairs(t) do
       if(v.category == "bitmask" and v.alias == nil) then 
          local n = getNameTag(v)
          local t = getTypeTag(v)
          types.bitmasks[n] = {type = t, bits = {}}
-         types.type[n] = "bitmask"
+         types.info[n] = { type = "bitmasks", reference = "unreferenced"}
       elseif(v.category == "handle" and v.alias == nil) then
          local n = getNameTag(v)
          local t = getTypeTag(v)
-         types.handles[n] = t
-         types.type[n] = "handle"
+         types.handles[n] = {type = t}
+         types.info[n] = { type = "handles", reference = "unreferenced"}
       elseif(v.category == "enum" and v.alias == nil) then
          local n = v.name
          if(string.find(n, "FlagBits") == nil) then
             types.enums[n] = {values = {}}
-            types.type[n] = "enum"
+            types.info[n] = { type = "enums", reference = "unreferenced"}
          end
       elseif(v.category == "funcpointer" and v.alias == nil) then
          local n = getNameTag(v)
-         types.type[n] = "functionPointer"
+         local _,_, rt = string.find(v[1], "typedef (.+) %(VKAPI_PTR")
+         types.info[n] = { type = "funcpointers", reference = "unreferenced"}
+         local params = {}
+         for i = 1,#v do
+            if(type(v[i]) == "table" and v[i]:tag()=="type") then
+               local param = {}
+               param.type = v[i][1]
+               param.name = v[i + 1]
+               param.name = trim(param.name)
+               param.name = string.gsub(param.name, ",", "")
+               param.name = string.gsub(param.name, "%);", "")
+               if(string.find(param.name, "*")) then 
+                  param.name = string.gsub(param.name, "*", "") 
+                  param.pointer = true
+               end
+               param.name = trim(param.name)
+               table.insert(params, param)
+            end
+         end
+         types.funcpointers[n] = {returnType = rt, params=params}
       elseif(v.category == "union" and v.alias == nil) then
          local n = v.name
-         types.type[n] = "union"
+         types.info[n] = { type = "unions", reference = "unreferenced"}
          local members = {}
          for i = 1,#v do
             local memdef = v[i]
@@ -120,7 +116,7 @@ function parseTypes()
          types.unions[n] = members
       elseif(v.category == "struct" and v.alias == nil) then
          local n = v.name
-         types.type[n] = "struct" 
+         types.info[n] = { type = "structs", reference = "unreferenced"} 
          local members = {}
          for i = 1,#v do
             local memdef = v[i]
@@ -149,6 +145,8 @@ function parseTypes()
                      if(val ~= nil) then
                         member.array = true
                         member.arrayLength = val
+                     elseif(string.find(memdef[j], "* const *")) then
+                        member.doublePointer = true
                      end
                   end
                end
@@ -261,6 +259,42 @@ function parseBitmasks()
    end
 end
 
+function refDataType(structName, ref, uniqueTable)
+   local t = types.info[structName]
+   if(t == nil ) then return end
+   
+   if(t.reference == "unreferenced") then
+      t.reference = ref
+      addUnique(uniqueTable[t.type], structName)
+   end
+   
+   local s = types[t.type][structName]
+   if(t.type == "structs" or t.type=="unions") then
+      for i = 1, #s do
+         if(s[i].type ~= structName) then 
+            refDataType(s[i].type, ref, uniqueTable)
+         end
+      end
+   end
+   
+   if(t.type == "funcpointers") then
+      for i=1,#s.params do
+         if(s.params[i].type ~= structName) then 
+            refDataType(s.params[i].type, ref, uniqueTable)
+         end
+      end
+   end
+end
+
+function addUnique(t, val)
+   for k,v in pairs(t) do
+      if(v == val) then return end
+   end
+   
+   table.insert(t, val)
+end
+
+
 function parseExtensions()  
    local exts = vk:find("extensions")
    for k,ext in pairs(exts) do
@@ -272,6 +306,8 @@ function parseExtensions()
             extension.handles = {}
             extension.enums = {}
             extension.bitmasks = {}
+            extension.funcpointers = {}
+            extension.unions = {}
             extension.name = ext.name
             extension.number = ext.number
             extension.type = ext.type
@@ -300,21 +336,15 @@ function parseExtensions()
                            table.insert(extension.commands, r.name)
                            
                            local c = commands[r.name]
-                           local rt = types.type[c.returnType] 
+                           local rt = types.info[c.returnType]
+                           refDataType(c.returnType, extension.name, extension)
+                           
+                           for i=1,#c.params do
+                              refDataType(c.params[i].type, extension.name, extension)
+                           end
                         end
-                     elseif(type(r) == "table" and r:tag() == "type") then
-                        if(types.structs[r.name] ~=nil) then
-                           types.structs[r.name].extension = ext.name
-                           table.insert(extension.structs, r.name)
-                        elseif(types.enums[r.name] ~= nil) then
-                           types.enums[r.name].extension = ext.name
-                           table.insert(extension.enums, r.name)
-                        elseif(types.bitmasks[r.name] ~= nil) then
-                           types.bitmasks[r.name].extension = ext.name
-                           table.insert(extension.bitmasks, r.name)
-                        elseif(types.handles[r.name] ~= nil) then
-                           table.insert(extension.handles, r.name)
-                        end
+                     elseif(type(r) == "table" and r:tag() == "type") then                        
+                        refDataType(r.name, extension.name, extension)
                      end
                   end
                end
@@ -323,19 +353,19 @@ function parseExtensions()
             --look for enums
             for k,v in pairs(types.enums) do
                if(v.extension == extension.name) then
-                  table.insert(extension.enums, k)
+                  addUnique(extension.enums, k)
                end
             end
             --look for bitmasks
             for k,v in pairs(types.bitmasks) do
                if(v.extension == extension.name) then
-                  table.insert(extension.bitmasks, k)
+                  addUnique(extension.bitmasks, k)
                end
             end
             --look for structs
             for k,v in pairs(types.structs) do
                if(v.extension == extension.name) then
-                  table.insert(extension.structs, k)
+                  addUnique(extension.structs, k)
                end
             end
             
@@ -345,13 +375,6 @@ function parseExtensions()
    end
 end
 
-function addUnique(t, val)
-   for k,v in pairs(t) do
-      if(v == val) then return end
-   end
-   
-   table.insert(t, val)
-end
 
 function parseApi()
    api.commands = {}
@@ -361,18 +384,6 @@ function parseApi()
    api.unions = {}
    api.funcpointers = {}
    api.handles = {}
-   
-   function addType(typename)
-      local t = types.type[typename]
-      if(t == nil) then return end
-      
-      if(t == "handle") then addUnique(api.handles, typename) end
-      if(t == "enum") then addUnique(api.enums, typename) end
-      if(t == "bitmask") then addUnique(api.bitmasks, typename) end
-      if(t == "union") then addUnique(api.unions, typename) end
-      if(t == "struct") then addUnique(api.structs, typename) end
-      if(t == "funcpointer") then addUnique(api.funcpointers, typename) end
-   end
    
    for k,v in pairs(vk) do 
       if(type(v) == "table" and v:tag() == "feature") then
@@ -385,28 +396,22 @@ function parseApi()
                      table.insert(api.commands, r.name)
                      
                      local c = commands[r.name]
-                     addType(c.returnType)
+                     refDataType(c.returnType, "core", api)
                      for n,m in pairs(c.params) do
-                        addType(m.type)
+                        refDataType(m.type, "core", api)
                      end
                   elseif(type(r) == "table" and r:tag() == "enum") then
                      if(r.extends ~= nil and r.bitpos == nil and r.alias == nil) then
                         local val = 1000000000 + (r.extnumber * 1000) + r.offset
                         table.insert(types.enums[r.extends].values, {name = r.name, value = val})
-                        addType(r.extends)
+                        refDataType(r.extends, "core", api)
                      elseif(r.extends ~= nil and r.bitpos ~= nil and r.alias == nil) then
                         local flagName = string.gsub(r.extends, "FlagBits", "Flags")
                         table.insert(types.bitmasks[flagName].bits, {name = r.name, bitpos = r.bitpos})
-                        addType(r.extends)
+                        refDataType(r.extends, "core", api)
                      end
                    elseif(type(r) == "table" and r:tag() == "type" and r.alias == nil) then
-                     addType(r.name)
-                     local s = types.structs[r.name]
-                     if(s ~= nil) then
-                        for i=1,#s do
-                           addType(s[i].type)
-                        end
-                     end
+                     refDataType(r.name, "core", api)
                   end
                end
             end
@@ -424,9 +429,11 @@ parseApi()
 parseExtensions()
 
 if(arg[1] == "-p") then
-   print(dump(tags))
-   print(dump(types))
-   print(dump(commands))
-   print(dump(api))
-   print(dump(extensions))
+   local vk = {}
+   vk.tags = tags
+   vk.types = types
+   vk.commands = commands
+   vk.api = api
+   vk.extensions = extensions
+   print("vk="..dump(vk))
 end

@@ -2,23 +2,29 @@ dofile("parseVk.lua")
 dofile("vkUtil.lua")
 
 local liluat = require("liluat")
-
-
 cfunc = [[
 {{local params = ""
-  for k,v in pairs(f.params) do}}
-{{   params = params..v.type.." "..v.name}}
-{{   if(k < #f.params) then params = params..", " end 
+  for k,v in pairs(f.params) do
+    if(v.pointer == true) then
+      params = params..v.type.."* "..v.name
+    else
+      params = params..v.type.." "..v.name
+    end
+   if(k < #f.params) then params = params..", " end 
   end}}
 //{{= f.returnType}} {{= f.name}}({{= params}});]]
 
 delegate = [[
 {{local params = ""
-  for k,v in pairs(f.params) do }}
-{{   params = params..sanitizeType(v.type).." "..sanitizeTypeName(v.name)}}
-{{   if(k < #f.params) then params = params..", " end 
+  for k,v in pairs(f.params) do
+    if(v.pointer == true) then 
+      params = params.."ref "..sanitizeType(v.type).." "..sanitizeTypeName(v.name)
+    else
+      params = params..sanitizeType(v.type).." "..sanitizeTypeName(v.name)
+    end
+    if(k < #f.params) then params = params..", " end 
    end}}
-public delegate {{= sanitizeType(f.returnType)}} {{= sanitizeFunctionName(f.name)}}Delegate({{= params}}s);]]
+public delegate {{= sanitizeType(f.returnType)}} {{= sanitizeFunctionName(f.name)}}Delegate({{= params}});]]
 
 file = [[
 using System;
@@ -27,12 +33,12 @@ using System.Security;
 
 namespace Vulkan
 {
-   {{if ext.type == "instance" then}}
+   {{if (ext.type == "instance") then}}
    public static partial class InstanceExtensions
    {
       public const string {{= ext.name}} = "{{= ext.name}}";
    };
-   {{elseif ext.type == "device" then}}
+   {{elseif (ext.type == "device") then}}
    public static partial class DeviceExtensions
    {
       public const string {{= ext.name}} = "{{= ext.name}}";
@@ -41,53 +47,88 @@ namespace Vulkan
    
    public static partial class VK
    {
+      {{if (#ext.handles > 0) then}}
+      #region handles
+      {{for k,v in pairs(ext.handles) do}}
+      [StructLayout(LayoutKind.Sequential)] public struct {{= sanitizeTypeName(v)}} { public UInt64 native; }
+      {{end}}
+      #endregion 
+      {{else}}
+      //no handles
+      {{end}}
+      
+
+      {{if(#ext.enums > 0) then }}
       #region enums
-      {{for k,v in pairs(ext.enums) do }}
-         {{local enum = enums[v]}}
-         {{local enumFilter = string.gsub(v, "Vk", "") }}
-      public enum {{= enumFilter}} : int
+       {{for k,enumName in pairs(ext.enums) do
+         local e = types.enums[enumName]
+         enumName = string.gsub(enumName, "Vk", "") }}
+      public enum {{= enumName}} : int
       {  
-         {{for kk,vv in pairs(enum) do 
+         {{for kk,vv in pairs(e.values) do 
             if(type(kk)=="number") then }}
-         {{= sanitizeEnumName(vv.name, enumFilter)}} = {{= vv.value}},
+         {{= sanitizeEnumName(vv.name, enumName)}} = {{= vv.value}},
             {{end}}
          {{end}}
       };
       
-      {{end}}
+       {{end}}
       #endregion
+      {{else}}
+      //no enums
+      {{end}}
 
+      {{if (#ext.bitmasks > 0) then }}       
       #region flags
-      {{for k,v in pairs(ext.bitmasks) do }}
-      {{local bitmask = bitmasks[v]}}
-      {{local bitmaskFilter = string.gsub(k, "Vk", "") }}
+      {{for k,bitmaskName in pairs(ext.bitmasks) do 
+         local bitmask = types.bitmasks[bitmaskName]
+         bitmaskName = string.gsub(bitmaskName, "Vk", "") }}
       [Flags]
-      public enum {{= bitmaskFilter}} : int
+      public enum {{= bitmaskName}} : int
       {  
-         {{for kk,vv in pairs(bitmask) do 
+         {{for kk,vv in pairs(bitmask.bits) do 
             if(type(kk)=="number") then }}
-         {{= sanitizeEnumName(vv.name,bitmaskFilter)}} = 1 << {{= vv.bitpos}},
+         {{= sanitizeEnumName(vv.name, bitmaskName)}} = 1 << {{= vv.bitpos}},
             {{end}}
          {{end}}
       };
       
       {{end}}
       #endregion
+      {{else}}
+      //no bitfields
+      {{end}}
 
+      {{if (#ext.structs > 0 or #ext.unions > 0) then }}
       #region structs
-      {{for k,v in pairs(ext.structs) do }}
-      {{local struct = structs[v]}}
+      {{for k,v in pairs(ext.structs) do
+        local struct = types.structs[v] }}
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct {{= sanitizeTypeName(struct.name)}} 
+      public struct {{= sanitizeTypeName(v)}} 
       {
-         {{for kk,vv in pairs(struct.fields) do }}
+         {{for kk,vv in pairs(struct) do }}
+         public {{= sanitizeType(vv.type) }} {{= sanitizeTypeName(vv.name)}};
+         {{end }}
+      };
+      
+      {{end}}
+      {{for k,v in pairs(ext.unions) do
+        local struct = types.unions[v]}}
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+      public struct {{= sanitizeTypeName(v)}} 
+      {
+         {{for kk,vv in pairs(struct) do }}
          public {{= sanitizeType(vv.type) }} {{= sanitizeTypeName(vv.name)}};
          {{end }}
       };
       
       {{end}}
       #endregion
+      {{else}}
+      //no structs
+      {{end}}
 
+      {{if (#ext.commands > 0) then}}
       #region functions
       //external functions we need to get from the {{= ext.type}}
       {{for k,v in pairs(ext.commands) do
@@ -109,8 +150,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      {{if(#ext.commands > 0 ) then 
-         if ext.type == "instance" then}}
+      {{if ext.type == "instance" then}}
       public static class {{= ext.name}}
       {
          public static void init(VK.Instance instance)
@@ -132,9 +172,11 @@ namespace Vulkan
             {{end}}
          }
       }
-         {{end}}
       {{end}}
       #endregion
+      {{else}}
+      //no functions
+      {{end}}
    }
 }
 ]]
@@ -160,11 +202,9 @@ function generateExtensions()
    for k,v in pairs(extensions) do
       local values = {
          ext = v, 
-         enums = enums, 
-         bitmasks = bitmasks, 
-         commands = commands,
-         structs = structs,
+         types = types,
          templates = templates,
+         commands = commands,
          liluat = liluat,
          sanitizeEnumName = sanitizeEnumName,
          sanitizeFunctionName = sanitizeFunctionName,
@@ -173,7 +213,7 @@ function generateExtensions()
          print = print
       }
       
-      local ret = liluat.render(templates.file, values, {reference = true})
+      local ret = liluat.render(templates.file, values)
       
       if(v.author == nil) then v.author = "KHR" end
      
