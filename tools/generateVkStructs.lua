@@ -99,6 +99,7 @@ function generateStructs()
 
    local ret = liluat.render(templates.file, values)
    
+   print("Writing file: structs.cs")
    local file = io.open("structs.cs", "w")
    file:write(ret)
    file:close()

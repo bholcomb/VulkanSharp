@@ -1,8 +1,31 @@
 dofile("parseVk.lua")
 dofile("vkUtil.lua")
 
-templates = {
-   file=[[
+local liluat = require("liluat")
+
+func = [[
+{{local csparams = ""
+  local cparams = ""
+  for k,v in pairs(f.params) do
+    if(v.pointer == true) then
+      cparams = cparams..v.type.."* "..v.name
+      csparams = csparams.."ref "..sanitizeType(v.type)..v.name
+    else
+      cparams = cparams..v.type.." "..v.name
+      csparams = csparams..sanitizeType(v.type).." "..sanitizeTypeName(v.name)
+    end
+    
+    if(k < #f.params) then 
+      cparams = cparams..", " 
+      csparams = csparams..", "
+    end 
+  end}}
+      //{{= f.returnType}} {{= f.name}}({{= cparams}});
+      [DllImport(VulkanLibrary, EntryPoint = "{{= f.name}}", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+      public static extern {{= sanitizeType(f.returnType)}} {{= sanitizeFunctionName(f.name)}}({{= csparams}});
+]]
+
+file=[[
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -11,100 +34,49 @@ namespace Vulkan
 {
    public static partial class VK
    {
-COMMANDS
+      {{local currentGroup = ""
+        local newGroup = false
+        for k,v in pairs(api.commands) do
+          local c = commands[v]}}
+      {{if (currentGroup ~= "" and currentGroup ~= c.group) then}}
+      #endregion
+      {{end}}
+
+      {{if currentGroup ~= c.group then 
+         currentGroup = c.group}}
+      #region {{= currentGroup}}
+      {{end}}
+{{= liluat.render(templates.func, {f=c, sanitizeType = sanitizeType, sanitizeTypeName = sanitizeTypeName, sanitizeFunctionName = sanitizeFunctionName}) }}
+      {{if(k == #api.commands) then }}
+      #endregion
+      {{end}}
+      {{end}}
    }
 }
-]],
-   
-   commandGroup = [[
-      #region CMD_GROUP
+]]
 
-COMMANDS
-
-      #endregion
-]],
-   
-   command = [[
-      //C_RETURN_TYPE C_FUNC_NAME(C_PARAMS);
-      [DllImport(VulkanLibrary, EntryPoint = "C_FUNC_NAME", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern RETURN_TYPE FUNC_NAME(PARAMS);
-
-]],
-   
-   param = "PARAM_TYPE PARAM_NAME"
-   
-}
-
+templates = {}
+templates.func = liluat.compile(func)
+templates.file = liluat.compile(file)
 
 function generateCommands()
    local ret = templates.file
    
-   --build up enums
-   local allCmds = ""
+   local values = {
+         types = types,
+         api = api,
+         templates = templates,
+         commands = commands,
+         liluat = liluat,
+         sanitizeFunctionName = sanitizeFunctionName,
+         sanitizeType = sanitizeType,
+         sanitizeTypeName = sanitizeTypeName,
+         print = print
+   }
    
-   local currentGroup = ""
-   local groupCmds = ""
+   local ret = liluat.render(templates.file, values)
    
-   for k,v in pairs(api.commands) do      
-      if( k == 1 ) then
-         currentGroup = v.group
-      end
-      
-      if(currentGroup ~= v.group) then --end of a group
-         cmdGroup = templates.commandGroup         
-         cmdGroup = string.gsub(cmdGroup, "CMD_GROUP", currentGroup)
-         cmdGroup = string.gsub(cmdGroup, "COMMANDS", groupCmds)         
-         
-         allCmds = allCmds .. cmdGroup
-         
-         groupCmds = ""
-         currentGroup = v.group
-      end
-      
-      local cmd = templates.command
-      cmd = string.gsub(cmd, "C_RETURN_TYPE", v.returnType)
-      cmd = string.gsub(cmd, "C_FUNC_NAME", v.name)
-      local cparams = ""
-      for kk,vv in pairs(v.params) do
-         local p = templates.param
-         p = string.gsub(p, "PARAM_TYPE", vv.type)
-         p = string.gsub(p, "PARAM_NAME", vv.name)
-         
-         if(kk < #v.params) then
-            p = p..", "
-         end
-         
-         cparams = cparams..p
-      end      
-      
-      cmd = string.gsub(cmd, "C_PARAMS", cparams)
-      
-      
-      
-      cmd = string.gsub(cmd, "FUNC_NAME", sanitizeFunctionName(v.name))
-      cmd = string.gsub(cmd, "RETURN_TYPE", sanitizeTypeName(v.returnType))
-      local params = ""
-      for kk,vv in pairs(v.params) do
-         local p = templates.param
-         p = string.gsub(p, "PARAM_TYPE", sanitizeType(vv.type))
-         p = string.gsub(p, "PARAM_NAME", sanitizeTypeName(vv.name))
-         
-         if(kk < #v.params) then
-            p = p..", "
-         end
-         
-         params = params..p
-      end      
-      
-      cmd = string.gsub(cmd, "PARAMS", params)
-      
-      groupCmds = groupCmds .. cmd
-   end
-   
-   allCmds = allCmds .. groupCmds
-   
-   ret = string.gsub(ret, "COMMANDS", allCmds)   
-   
+   print("Writing file: functions.cs")
    local file = io.open("functions.cs", "w")
    file:write(ret)
    file:close()

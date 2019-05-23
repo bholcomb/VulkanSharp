@@ -65,6 +65,7 @@ function generateEnums()
 
    local ret = liluat.render(templates.file, values)
    
+   print("Writing file: enums.cs")
    local file = io.open("enums.cs", "w")
    file:write(ret)
    file:close()

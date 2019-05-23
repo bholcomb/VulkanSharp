@@ -2,6 +2,7 @@ dofile("parseVk.lua")
 dofile("vkUtil.lua")
 
 local liluat = require("liluat")
+
 cfunc = [[
 {{local params = ""
   for k,v in pairs(f.params) do
@@ -49,8 +50,13 @@ namespace Vulkan
    {
       {{if (#ext.handles > 0) then}}
       #region handles
-      {{for k,v in pairs(ext.handles) do}}
+      {{for k,v in pairs(ext.handles) do
+         local h = types.handles[v]
+         if(h.type == "VK_DEFINE_HANDLE") then }}
+      [StructLayout(LayoutKind.Sequential)] public struct {{= sanitizeTypeName(v)}} { public IntPtr native; }
+         {{else}}
       [StructLayout(LayoutKind.Sequential)] public struct {{= sanitizeTypeName(v)}} { public UInt64 native; }
+         {{end}}
       {{end}}
       #endregion 
       {{else}}
