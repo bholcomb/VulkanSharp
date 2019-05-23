@@ -22,8 +22,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImportFenceFdInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Fence fence;          
          public FenceImportFlags flags;          
          public ExternalFenceHandleTypeFlags handleType;          
@@ -33,8 +33,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct FenceGetFdInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Fence fence;          
          public ExternalFenceHandleTypeFlags handleType;          
       };

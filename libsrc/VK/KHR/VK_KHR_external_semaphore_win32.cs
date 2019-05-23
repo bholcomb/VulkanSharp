@@ -22,8 +22,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImportSemaphoreWin32HandleInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Semaphore semaphore;          
          public SemaphoreImportFlags flags;          
          public ExternalSemaphoreHandleTypeFlags handleType;          
@@ -34,8 +34,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct ExportSemaphoreWin32HandleInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public IntPtr/*SECURITY_ATTRIBUTES**/ pAttributes;          
          public UInt32/*DWORD*/ dwAccess;          
          public string/*LPCWSTR*/ name;          
@@ -44,8 +44,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct D3D12FenceSubmitInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 waitSemaphoreValuesCount;          
          public UInt64* pWaitSemaphoreValues;          
          public UInt32 signalSemaphoreValuesCount;          
@@ -55,8 +55,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SemaphoreGetWin32HandleInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Semaphore semaphore;          
          public ExternalSemaphoreHandleTypeFlags handleType;          
       };

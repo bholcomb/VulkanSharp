@@ -32,8 +32,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PipelineCreationFeedbackCreateInfoEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineCreationFeedbackEXT* pPipelineCreationFeedback;  //Output pipeline creation feedback. 
          public UInt32 pipelineStageCreationFeedbackCount;          
          public PipelineCreationFeedbackEXT* pPipelineStageCreationFeedbacks;  //One entry for each shader stage specified in the parent Vk*PipelineCreateInfo struct 

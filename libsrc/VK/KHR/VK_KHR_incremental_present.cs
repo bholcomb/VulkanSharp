@@ -22,8 +22,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PresentRegionsKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 swapchainCount;  //Copy of VkPresentInfoKHR::swapchainCount 
          public PresentRegionKHR* pRegions;  //The regions that have changed 
       };

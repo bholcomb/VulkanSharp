@@ -30,8 +30,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ConditionalRenderingBeginInfoEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Buffer buffer;          
          public DeviceSize offset;          
          public ConditionalRenderingFlagsEXT flags;          
@@ -40,8 +40,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceConditionalRenderingFeaturesEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 conditionalRendering;          
          public Bool32 inheritedConditionalRendering;          
       };
@@ -49,8 +49,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct CommandBufferInheritanceConditionalRenderingInfoEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 conditionalRenderingEnable;  //Whether this secondary command buffer may be executed during an active conditional rendering 
       };
       

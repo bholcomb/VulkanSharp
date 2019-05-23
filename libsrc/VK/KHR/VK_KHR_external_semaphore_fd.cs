@@ -22,8 +22,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImportSemaphoreFdInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Semaphore semaphore;          
          public SemaphoreImportFlags flags;          
          public ExternalSemaphoreHandleTypeFlags handleType;          
@@ -33,8 +33,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SemaphoreGetFdInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Semaphore semaphore;          
          public ExternalSemaphoreHandleTypeFlags handleType;          
       };

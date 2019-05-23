@@ -29,8 +29,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct Win32SurfaceCreateInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Win32SurfaceCreateFlagsKHR flags;          
          public IntPtr/*HINSTANCE*/ hinstance;          
          public IntPtr/*HWND*/ hwnd;          

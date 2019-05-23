@@ -29,8 +29,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceTransformFeedbackFeaturesEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 transformFeedback;          
          public Bool32 geometryStreams;          
       };
@@ -38,8 +38,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceTransformFeedbackPropertiesEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 maxTransformFeedbackStreams;          
          public UInt32 maxTransformFeedbackBuffers;          
          public DeviceSize maxTransformFeedbackBufferSize;          
@@ -55,8 +55,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineRasterizationStateStreamCreateInfoEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineRasterizationStateStreamCreateFlagsEXT flags;          
          public UInt32 rasterizationStream;          
       };

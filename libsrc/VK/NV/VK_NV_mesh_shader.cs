@@ -22,8 +22,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceMeshShaderFeaturesNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 taskShader;          
          public Bool32 meshShader;          
       };
@@ -31,8 +31,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PhysicalDeviceMeshShaderPropertiesNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 maxDrawMeshTasksCount;          
          public UInt32 maxTaskWorkGroupInvocations;          
          public fixed UInt32 maxTaskWorkGroupSize[3];          

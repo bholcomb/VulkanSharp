@@ -30,8 +30,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SurfaceCapabilities2EXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 minImageCount;  //Supported minimum number of images for the surface 
          public UInt32 maxImageCount;  //Supported maximum number of images for the surface, 0 for unlimited 
          public Extent2D currentExtent;  //Current image width and height for the surface, (0, 0) if undefined 

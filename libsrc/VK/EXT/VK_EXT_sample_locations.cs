@@ -29,8 +29,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct SampleLocationsInfoEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public SampleCountFlags sampleLocationsPerPixel;          
          public Extent2D sampleLocationGridSize;          
          public UInt32 sampleLocationsCount;          
@@ -54,8 +54,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct RenderPassSampleLocationsBeginInfoEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 attachmentInitialSampleLocationsCount;          
          public AttachmentSampleLocationsEXT* pAttachmentInitialSampleLocations;          
          public UInt32 postSubpassSampleLocationsCount;          
@@ -65,8 +65,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineSampleLocationsStateCreateInfoEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 sampleLocationsEnable;          
          public SampleLocationsInfoEXT sampleLocationsInfo;          
       };
@@ -74,8 +74,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PhysicalDeviceSampleLocationsPropertiesEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public SampleCountFlags sampleLocationSampleCounts;          
          public Extent2D maxSampleLocationGridSize;          
          public fixed float sampleLocationCoordinateRange[2];          
@@ -86,8 +86,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MultisamplePropertiesEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Extent2D maxSampleLocationGridSize;          
       };
       

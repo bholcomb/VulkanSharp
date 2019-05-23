@@ -22,8 +22,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceInlineUniformBlockFeaturesEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 inlineUniformBlock;          
          public Bool32 descriptorBindingInlineUniformBlockUpdateAfterBind;          
       };
@@ -31,8 +31,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceInlineUniformBlockPropertiesEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 maxInlineUniformBlockSize;          
          public UInt32 maxPerStageDescriptorInlineUniformBlocks;          
          public UInt32 maxPerStageDescriptorUpdateAfterBindInlineUniformBlocks;          
@@ -43,8 +43,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct WriteDescriptorSetInlineUniformBlockEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 dataSize;          
          public IntPtr pData;          
       };
@@ -52,8 +52,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DescriptorPoolInlineUniformBlockCreateInfoEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 maxInlineUniformBlockBindings;          
       };
       

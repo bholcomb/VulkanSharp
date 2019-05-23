@@ -65,16 +65,16 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DeviceGeneratedCommandsFeaturesNVX 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 computeBindingPointSupport;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DeviceGeneratedCommandsLimitsNVX 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 maxIndirectCommandsLayoutTokenCount;          
          public UInt32 maxObjectEntryCounts;          
          public UInt32 minSequenceCountBufferOffsetAlignment;          
@@ -102,8 +102,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct IndirectCommandsLayoutCreateInfoNVX 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineBindPoint pipelineBindPoint;          
          public IndirectCommandsLayoutUsageFlagsNVX flags;          
          public UInt32 tokenCount;          
@@ -113,8 +113,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct CmdProcessCommandsInfoNVX 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ObjectTableNVX objectTable;          
          public IndirectCommandsLayoutNVX indirectCommandsLayout;          
          public UInt32 indirectCommandsTokenCount;          
@@ -130,8 +130,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct CmdReserveSpaceForCommandsInfoNVX 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ObjectTableNVX objectTable;          
          public IndirectCommandsLayoutNVX indirectCommandsLayout;          
          public UInt32 maxSequencesCount;          
@@ -140,8 +140,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct ObjectTableCreateInfoNVX 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 objectCount;          
          public ObjectEntryTypeNVX* pObjectEntryTypes;          
          public UInt32* pObjectEntryCounts;          

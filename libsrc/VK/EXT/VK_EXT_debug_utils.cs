@@ -57,8 +57,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DebugUtilsObjectNameInfoEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ObjectType objectType;          
          public UInt64 objectHandle;          
          public string pObjectName;          
@@ -67,8 +67,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DebugUtilsObjectTagInfoEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ObjectType objectType;          
          public UInt64 objectHandle;          
          public UInt64 tagName;          
@@ -79,8 +79,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct DebugUtilsLabelEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public string pLabelName;          
          public fixed float color[4];          
       };
@@ -88,8 +88,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct DebugUtilsMessengerCallbackDataEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public DebugUtilsMessengerCallbackDataFlagsEXT flags;          
          public string pMessageIdName;          
          public Int32 messageIdNumber;          
@@ -105,8 +105,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DebugUtilsMessengerCreateInfoEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public DebugUtilsMessengerCreateFlagsEXT flags;          
          public DebugUtilsMessageSeverityFlagsEXT messageSeverity;          
          public DebugUtilsMessageTypeFlagsEXT messageType;          

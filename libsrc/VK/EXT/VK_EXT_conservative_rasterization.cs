@@ -37,8 +37,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceConservativeRasterizationPropertiesEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;  //Pointer to next structure 
+         public StructureType type;          
+         public IntPtr next;  //Pointer to next structure 
          public float primitiveOverestimationSize;  //The size in pixels the primitive is enlarged at each edge during conservative rasterization 
          public float maxExtraPrimitiveOverestimationSize;  //The maximum additional overestimation the client can specify in the pipeline state 
          public float extraPrimitiveOverestimationSizeGranularity;  //The granularity of extra overestimation sizes the implementations supports between 0 and maxExtraOverestimationSize 
@@ -53,8 +53,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineRasterizationConservativeStateCreateInfoEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineRasterizationConservativeStateCreateFlagsEXT flags;          
          public ConservativeRasterizationModeEXT conservativeRasterizationMode;          
          public float extraPrimitiveOverestimationSize;          

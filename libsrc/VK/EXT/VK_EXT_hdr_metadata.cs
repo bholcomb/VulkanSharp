@@ -22,8 +22,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct HdrMetadataEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public XYColorEXT displayPrimaryRed;  //Display primary's Red 
          public XYColorEXT displayPrimaryGreen;  //Display primary's Green 
          public XYColorEXT displayPrimaryBlue;  //Display primary's Blue 

@@ -29,8 +29,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineRasterizationStateRasterizationOrderAMD 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public RasterizationOrderAMD rasterizationOrder;  //Rasterization order to use for the pipeline 
       };
       

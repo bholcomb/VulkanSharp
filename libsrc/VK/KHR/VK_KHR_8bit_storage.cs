@@ -22,8 +22,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDevice8BitStorageFeaturesKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 storageBuffer8BitAccess;  //8-bit integer variables supported in StorageBuffer 
          public Bool32 uniformAndStorageBuffer8BitAccess;  //8-bit integer variables supported in StorageBuffer and Uniform 
          public Bool32 storagePushConstant8;  //8-bit integer variables supported in PushConstant 

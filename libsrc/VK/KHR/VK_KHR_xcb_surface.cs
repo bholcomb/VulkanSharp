@@ -29,8 +29,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct XcbSurfaceCreateInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public XcbSurfaceCreateFlagsKHR flags;          
          public IntPtr/*xcb_connection_t**/ connection;          
          public IntPtr/*xcb_window_t*/ window;          

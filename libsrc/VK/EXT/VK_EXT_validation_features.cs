@@ -40,8 +40,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct ValidationFeaturesEXT 
       {
-         public StructureType sType;  //Must be VK_STRUCTURE_TYPE_VALIDATION_FEATURES_EXT 
-         public IntPtr pNext;          
+         public StructureType type;  //Must be VK_STRUCTURE_TYPE_VALIDATION_FEATURES_EXT 
+         public IntPtr next;          
          public UInt32 enabledValidationFeatureCount;  //Number of validation features to enable 
          public IntPtr /*ValidationFeatureEnableEXT* */ pEnabledValidationFeatures;  //Validation features to enable 
          public UInt32 disabledValidationFeatureCount;  //Number of validation features to disable 

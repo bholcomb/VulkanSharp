@@ -9,7 +9,7 @@ func = [[
   for k,v in pairs(f.params) do
     if(v.pointer == true) then
       cparams = cparams..v.type.."* "..v.name
-      csparams = csparams.."ref "..sanitizeType(v.type)..v.name
+      csparams = csparams.."ref "..sanitizeType(v.type).." "..sanitizeTypeName(v.name)
     else
       cparams = cparams..v.type.." "..v.name
       csparams = csparams..sanitizeType(v.type).." "..sanitizeTypeName(v.name)

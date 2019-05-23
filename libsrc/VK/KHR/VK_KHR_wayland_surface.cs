@@ -29,8 +29,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct WaylandSurfaceCreateInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public WaylandSurfaceCreateFlagsKHR flags;          
          public IntPtr/*wl_display**/ display;          
          public IntPtr/*wl_surface**/ surface;          

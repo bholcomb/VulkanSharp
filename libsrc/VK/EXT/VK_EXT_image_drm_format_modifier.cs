@@ -22,8 +22,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct DrmFormatModifierPropertiesListEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 drmFormatModifierCount;          
          public DrmFormatModifierPropertiesEXT* pDrmFormatModifierProperties;          
       };
@@ -39,8 +39,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PhysicalDeviceImageDrmFormatModifierInfoEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt64 drmFormatModifier;          
          public SharingMode sharingMode;          
          public UInt32 queueFamilyIndexCount;          
@@ -50,8 +50,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct ImageDrmFormatModifierListCreateInfoEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 drmFormatModifierCount;          
          public UInt64* pDrmFormatModifiers;          
       };
@@ -59,8 +59,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct ImageDrmFormatModifierExplicitCreateInfoEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt64 drmFormatModifier;          
          public UInt32 drmFormatModifierPlaneCount;          
          public SubresourceLayout* pPlaneLayouts;          
@@ -69,8 +69,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImageDrmFormatModifierPropertiesEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt64 drmFormatModifier;          
       };
       

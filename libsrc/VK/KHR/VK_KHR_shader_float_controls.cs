@@ -22,8 +22,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceFloatControlsPropertiesKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 separateDenormSettings;          
          public Bool32 separateRoundingModeSettings;          
          public Bool32 shaderSignedZeroInfNanPreserveFloat16;          

@@ -22,8 +22,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceShaderCorePropertiesAMD 
       {
-         public StructureType sType;          
-         public IntPtr pNext;  //Pointer to next structure 
+         public StructureType type;          
+         public IntPtr next;  //Pointer to next structure 
          public UInt32 shaderEngineCount;  //number of shader engines 
          public UInt32 shaderArraysPerEngineCount;  //number of shader arrays 
          public UInt32 computeUnitsPerShaderArray;  //number of CUs per shader array 

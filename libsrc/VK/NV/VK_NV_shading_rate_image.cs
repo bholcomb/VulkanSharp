@@ -54,8 +54,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PipelineViewportShadingRateImageStateCreateInfoNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 shadingRateImageEnable;          
          public UInt32 viewportCount;          
          public ShadingRatePaletteNV* pShadingRatePalettes;          
@@ -64,8 +64,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceShadingRateImageFeaturesNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 shadingRateImage;          
          public Bool32 shadingRateCoarseSampleOrder;          
       };
@@ -73,8 +73,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceShadingRateImagePropertiesNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Extent2D shadingRateTexelSize;          
          public UInt32 shadingRatePaletteSize;          
          public UInt32 shadingRateMaxCoarseSamples;          
@@ -100,8 +100,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PipelineViewportCoarseSampleOrderStateCreateInfoNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public CoarseSampleOrderTypeNV sampleOrderType;          
          public UInt32 customSampleOrderCount;          
          public CoarseSampleOrderCustomNV* pCustomSampleOrders;          

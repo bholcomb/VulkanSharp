@@ -38,8 +38,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PresentTimesInfoGOOGLE 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 swapchainCount;  //Copy of VkPresentInfoKHR::swapchainCount 
          public PresentTimeGOOGLE* pTimes;  //The earliest times to present images 
       };

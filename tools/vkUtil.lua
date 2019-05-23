@@ -85,6 +85,8 @@ end
 
 function sanitizeTypeName(name)
    local n = string.gsub(name, "^Vk", "") --remove beginning vk   
+   if(n == "event") then return "_event" end
+   if(n == "object") then return "_object" end
    
    return n
 end
@@ -93,13 +95,12 @@ function sanitizeType(name, isPointer, isDoublePointer)
    local n = trim(name)
    if isPointer == true then
       n =  n.."*" 
-  end
+   end
   
-  if(isDoublePointer == true) then
+   if(isDoublePointer == true) then
      return "IntPtr"
-  end
+   end
 
-   
    n = string.gsub(n, "^Vk", "") --remove beginning vk   
    n = string.gsub(n, "^PFN_vk", "") --remove beginning function pointer prefix
    n = string.gsub(n, "const ", "")
@@ -113,9 +114,6 @@ function sanitizeType(name, isPointer, isDoublePointer)
    n = string.gsub(n, "int8_t", "sbyte")
    n = string.gsub(n, "size_t", "UInt32")
    n = string.gsub(n, "char%*", "string")
-   
-   
-   
-   return trim(n)
 
+   return trim(n)
 end

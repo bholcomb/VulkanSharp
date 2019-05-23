@@ -85,9 +85,9 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct RayTracingShaderGroupCreateInfoNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
-         public RayTracingShaderGroupTypeNV type;          
+         public StructureType type;          
+         public IntPtr next;          
+         public RayTracingShaderGroupTypeNV groupType;          
          public UInt32 generalShader;          
          public UInt32 closestHitShader;          
          public UInt32 anyHitShader;          
@@ -97,8 +97,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct RayTracingPipelineCreateInfoNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineCreateFlags flags;  //Pipeline creation flags 
          public UInt32 stageCount;          
          public IntPtr/*PipelineShaderStageCreateInfo**/ pStages;  //One entry for each active shader stage 
@@ -113,8 +113,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct GeometryTrianglesNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Buffer vertexData;          
          public DeviceSize vertexOffset;          
          public UInt32 vertexCount;          
@@ -131,8 +131,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct GeometryAABBNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Buffer aabbData;          
          public UInt32 numAABBs;          
          public UInt32 stride;  //Stride in bytes between AABBs 
@@ -149,8 +149,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct GeometryNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public GeometryTypeNV geometryType;          
          public GeometryDataNV geometry;          
          public GeometryFlagsNV flags;          
@@ -159,9 +159,9 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct AccelerationStructureInfoNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
-         public AccelerationStructureTypeNV type;          
+         public StructureType type;          
+         public IntPtr next;          
+         public AccelerationStructureTypeNV accelerationType;          
          public BuildAccelerationStructureFlagsNV flags;          
          public UInt32 instanceCount;          
          public UInt32 geometryCount;          
@@ -171,8 +171,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AccelerationStructureCreateInfoNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public DeviceSize compactedSize;          
          public AccelerationStructureInfoNV info;          
       };
@@ -180,8 +180,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct BindAccelerationStructureMemoryInfoNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public AccelerationStructureNV accelerationStructure;          
          public DeviceMemory memory;          
          public DeviceSize memoryOffset;          
@@ -192,8 +192,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct WriteDescriptorSetAccelerationStructureNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 accelerationStructureCount;          
          public AccelerationStructureNV* pAccelerationStructures;          
       };
@@ -201,17 +201,17 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AccelerationStructureMemoryRequirementsInfoNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
-         public AccelerationStructureMemoryRequirementsTypeNV type;          
+         public StructureType type;          
+         public IntPtr next;          
+         public AccelerationStructureMemoryRequirementsTypeNV memoryRequirementsType;          
          public AccelerationStructureNV accelerationStructure;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceRayTracingPropertiesNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 shaderGroupHandleSize;          
          public UInt32 maxRecursionDepth;          
          public UInt32 maxShaderGroupStride;          

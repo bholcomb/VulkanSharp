@@ -50,8 +50,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PhysicalDeviceDriverPropertiesKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public DriverIdKHR driverID;          
          public fixed char driverName[(int)VK.MAX_DRIVER_NAME_SIZE_KHR];          
          public fixed char driverInfo[(int)VK.MAX_DRIVER_INFO_SIZE_KHR];          

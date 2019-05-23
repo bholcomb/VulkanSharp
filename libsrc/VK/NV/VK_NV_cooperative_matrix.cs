@@ -46,8 +46,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct CooperativeMatrixPropertiesNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 MSize;          
          public UInt32 NSize;          
          public UInt32 KSize;          
@@ -61,8 +61,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceCooperativeMatrixFeaturesNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 cooperativeMatrix;          
          public Bool32 cooperativeMatrixRobustBufferAccess;          
       };
@@ -70,8 +70,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceCooperativeMatrixPropertiesNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ShaderStageFlags cooperativeMatrixSupportedStages;          
       };
       

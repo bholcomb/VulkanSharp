@@ -22,8 +22,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct RenderPassCreateInfo2KHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public RenderPassCreateFlags flags;          
          public UInt32 attachmentCount;          
          public AttachmentDescription2KHR* pAttachments;          
@@ -38,8 +38,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AttachmentDescription2KHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public AttachmentDescriptionFlags flags;          
          public Format format;          
          public SampleCountFlags samples;          
@@ -54,8 +54,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct SubpassDescription2KHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public SubpassDescriptionFlags flags;          
          public PipelineBindPoint pipelineBindPoint;          
          public UInt32 viewMask;          
@@ -72,8 +72,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AttachmentReference2KHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 attachment;          
          public ImageLayout layout;          
          public ImageAspectFlags aspectMask;          
@@ -82,8 +82,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SubpassDependency2KHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 srcSubpass;          
          public UInt32 dstSubpass;          
          public PipelineStageFlags srcStageMask;          
@@ -97,16 +97,16 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SubpassBeginInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public SubpassContents contents;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SubpassEndInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
       };
       
       

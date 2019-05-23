@@ -29,8 +29,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct AndroidSurfaceCreateInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public AndroidSurfaceCreateFlagsKHR flags;          
          public IntPtr/*ANativeWindow**/ window;          
       };

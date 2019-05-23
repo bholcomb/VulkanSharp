@@ -38,8 +38,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PipelineCoverageModulationStateCreateInfoNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineCoverageModulationStateCreateFlagsNV flags;          
          public CoverageModulationModeNV coverageModulationMode;          
          public Bool32 coverageModulationTableEnable;          

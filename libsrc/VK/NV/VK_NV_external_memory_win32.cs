@@ -22,8 +22,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImportMemoryWin32HandleInfoNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ExternalMemoryHandleTypeFlagsNV handleType;          
          public IntPtr/*HANDLE*/ handle;          
       };
@@ -31,8 +31,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct ExportMemoryWin32HandleInfoNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public IntPtr/*SECURITY_ATTRIBUTES**/ pAttributes;          
          public UInt32/*DWORD*/ dwAccess;          
       };

@@ -22,8 +22,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DisplayPresentInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Rect2D srcRect;  //Rectangle within the presentable image to read pixel data from when presenting to the display. 
          public Rect2D dstRect;  //Rectangle within the current display mode's visible region to display srcRectangle in. 
          public Bool32 persistent;  //For smart displays, use buffered mode.  If the display properties member "persistentMode" is VK_FALSE, this member must always be VK_FALSE. 

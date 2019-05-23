@@ -22,8 +22,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImportFenceWin32HandleInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Fence fence;          
          public FenceImportFlags flags;          
          public ExternalFenceHandleTypeFlags handleType;          
@@ -34,8 +34,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct ExportFenceWin32HandleInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public IntPtr/*SECURITY_ATTRIBUTES**/ pAttributes;          
          public UInt32/*DWORD*/ dwAccess;          
          public string/*LPCWSTR*/ name;          
@@ -44,8 +44,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct FenceGetWin32HandleInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Fence fence;          
          public ExternalFenceHandleTypeFlags handleType;          
       };

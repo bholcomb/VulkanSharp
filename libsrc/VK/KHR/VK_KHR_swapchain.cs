@@ -43,8 +43,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct SwapchainCreateInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public SwapchainCreateFlagsKHR flags;          
          public SurfaceKHR surface;  //The swapchain's target surface 
          public UInt32 minImageCount;  //Minimum number of presentation images the application needs 
@@ -66,8 +66,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PresentInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 waitSemaphoreCount;  //Number of semaphores to wait for before presenting 
          public Semaphore* pWaitSemaphores;  //Semaphores to wait for before presenting 
          public UInt32 swapchainCount;  //Number of swapchains to present in this call 
@@ -79,16 +79,16 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImageSwapchainCreateInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public SwapchainKHR swapchain;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct BindImageMemorySwapchainInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public SwapchainKHR swapchain;          
          public UInt32 imageIndex;          
       };
@@ -96,8 +96,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AcquireNextImageInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public SwapchainKHR swapchain;          
          public UInt64 timeout;          
          public Semaphore semaphore;          
@@ -108,8 +108,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct DeviceGroupPresentCapabilitiesKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public fixed UInt32 presentMask[(int)VK.MAX_DEVICE_GROUP_SIZE];          
          public DeviceGroupPresentModeFlagsKHR modes;          
       };
@@ -117,8 +117,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct DeviceGroupPresentInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 swapchainCount;          
          public UInt32* pDeviceMasks;          
          public DeviceGroupPresentModeFlagsKHR mode;          
@@ -127,8 +127,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DeviceGroupSwapchainCreateInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public DeviceGroupPresentModeFlagsKHR modes;          
       };
       

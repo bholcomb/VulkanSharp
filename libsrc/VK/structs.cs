@@ -11,8 +11,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct InstanceCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public InstanceCreateFlags flags;          
          //public ApplicationInfo* pApplicationInfo;          
          public UInt32 enabledLayerCount;          
@@ -24,8 +24,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ApplicationInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public string pApplicationName;          
          public UInt32 applicationVersion;          
          public string pEngineName;          
@@ -300,8 +300,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct DeviceCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public DeviceCreateFlags flags;          
          public UInt32 queueCreateInfoCount;          
          public DeviceQueueCreateInfo* pQueueCreateInfos;          
@@ -315,8 +315,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct DeviceQueueCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public DeviceQueueCreateFlags flags;          
          public UInt32 queueFamilyIndex;          
          public UInt32 queueCount;          
@@ -342,8 +342,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct SubmitInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 waitSemaphoreCount;          
          public Semaphore* pWaitSemaphores;          
          public PipelineStageFlags* pWaitDstStageMask;          
@@ -356,8 +356,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MemoryAllocateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public DeviceSize allocationSize;  //Size of memory allocation 
          public UInt32 memoryTypeIndex;  //Index of the of the memory type to allocate from 
       };
@@ -365,8 +365,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MappedMemoryRange 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public DeviceMemory memory;  //Mapped memory object 
          public DeviceSize offset;  //Offset within the memory object where the range starts 
          public DeviceSize size;  //Size of the range within the memory object 
@@ -401,8 +401,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct BindSparseInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 waitSemaphoreCount;          
          public Semaphore* pWaitSemaphores;          
          public UInt32 bufferBindCount;          
@@ -479,32 +479,32 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct FenceCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public FenceCreateFlags flags;  //Fence creation flags 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SemaphoreCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public SemaphoreCreateFlags flags;  //Semaphore creation flags 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct EventCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public EventCreateFlags flags;  //Event creation flags 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct QueryPoolCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public QueryPoolCreateFlags flags;          
          public QueryType queryType;          
          public UInt32 queryCount;          
@@ -514,8 +514,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct BufferCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public BufferCreateFlags flags;  //Buffer creation flags 
          public DeviceSize size;  //Specified in bytes 
          public BufferUsageFlags usage;  //Buffer usage flags 
@@ -527,8 +527,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct BufferViewCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public BufferViewCreateFlags flags;          
          public Buffer buffer;          
          public Format format;  //Optionally specifies format of elements 
@@ -539,8 +539,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct ImageCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ImageCreateFlags flags;  //Image creation flags 
          public ImageType imageType;          
          public Format format;          
@@ -569,8 +569,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImageViewCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ImageViewCreateFlags flags;          
          public Image image;          
          public ImageViewType viewType;          
@@ -601,8 +601,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct ShaderModuleCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ShaderModuleCreateFlags flags;          
          public UInt32 codeSize;  //Specified in bytes 
          public UInt32* pCode;  //Binary code of size codeSize 
@@ -611,8 +611,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineCacheCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineCacheCreateFlags flags;          
          public UInt32 initialDataSize;  //Size of initial data to populate cache, in bytes 
          public IntPtr pInitialData;  //Initial data to populate cache 
@@ -621,8 +621,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct GraphicsPipelineCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineCreateFlags flags;  //Pipeline creation flags 
          public UInt32 stageCount;          
          //public PipelineShaderStageCreateInfo* pStages;  //One entry for each active shader stage 
@@ -645,8 +645,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PipelineShaderStageCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineShaderStageCreateFlags flags;          
          public ShaderStageFlags stage;  //Shader stage 
          public ShaderModule module;  //Module containing entry point 
@@ -674,8 +674,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PipelineVertexInputStateCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineVertexInputStateCreateFlags flags;          
          public UInt32 vertexBindingDescriptionCount;  //number of bindings 
          public VertexInputBindingDescription* pVertexBindingDescriptions;          
@@ -703,8 +703,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineInputAssemblyStateCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineInputAssemblyStateCreateFlags flags;          
          public PrimitiveTopology topology;          
          public Bool32 primitiveRestartEnable;          
@@ -713,8 +713,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineTessellationStateCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineTessellationStateCreateFlags flags;          
          public UInt32 patchControlPoints;          
       };
@@ -722,8 +722,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PipelineViewportStateCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineViewportStateCreateFlags flags;          
          public UInt32 viewportCount;          
          public Viewport* pViewports;          
@@ -766,8 +766,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineRasterizationStateCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineRasterizationStateCreateFlags flags;          
          public Bool32 depthClampEnable;          
          public Bool32 rasterizerDiscardEnable;          
@@ -784,8 +784,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PipelineMultisampleStateCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineMultisampleStateCreateFlags flags;          
          public SampleCountFlags rasterizationSamples;  //Number of samples used for rasterization 
          public Bool32 sampleShadingEnable;  //optional (GL45) 
@@ -798,8 +798,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineDepthStencilStateCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineDepthStencilStateCreateFlags flags;          
          public Bool32 depthTestEnable;          
          public Bool32 depthWriteEnable;          
@@ -827,8 +827,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PipelineColorBlendStateCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineColorBlendStateCreateFlags flags;          
          public Bool32 logicOpEnable;          
          public LogicOp logicOp;          
@@ -853,8 +853,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PipelineDynamicStateCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineDynamicStateCreateFlags flags;          
          public UInt32 dynamicStateCount;          
          public DynamicState* pDynamicStates;          
@@ -863,8 +863,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ComputePipelineCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineCreateFlags flags;  //Pipeline creation flags 
          public PipelineShaderStageCreateInfo stage;          
          public PipelineLayout layout;  //Interface layout of the pipeline 
@@ -875,8 +875,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PipelineLayoutCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineLayoutCreateFlags flags;          
          public UInt32 setLayoutCount;  //Number of descriptor sets interfaced by the pipeline 
          public DescriptorSetLayout* pSetLayouts;  //Array of setCount number of descriptor set layout objects defining the layout of the 
@@ -895,8 +895,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SamplerCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public SamplerCreateFlags flags;          
          public Filter magFilter;  //Filter mode for magnification 
          public Filter minFilter;  //Filter mode for minifiation 
@@ -918,8 +918,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct DescriptorSetLayoutCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public DescriptorSetLayoutCreateFlags flags;          
          public UInt32 bindingCount;  //Number of bindings in the descriptor set layout 
          public DescriptorSetLayoutBinding* pBindings;  //Array of descriptor set layout bindings 
@@ -938,8 +938,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct DescriptorPoolCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public DescriptorPoolCreateFlags flags;          
          public UInt32 maxSets;          
          public UInt32 poolSizeCount;          
@@ -956,8 +956,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct DescriptorSetAllocateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public DescriptorPool descriptorPool;          
          public UInt32 descriptorSetCount;          
          public DescriptorSetLayout* pSetLayouts;          
@@ -966,8 +966,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct WriteDescriptorSet 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public DescriptorSet dstSet;  //Destination descriptor set 
          public UInt32 dstBinding;  //Binding within the destination descriptor set to write 
          public UInt32 dstArrayElement;  //Array element within the destination binding to write 
@@ -997,8 +997,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct CopyDescriptorSet 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public DescriptorSet srcSet;  //Source descriptor set 
          public UInt32 srcBinding;  //Binding within the source descriptor set to copy from 
          public UInt32 srcArrayElement;  //Array element within the source binding to copy from 
@@ -1011,8 +1011,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct FramebufferCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public FramebufferCreateFlags flags;          
          public RenderPass renderPass;          
          public UInt32 attachmentCount;          
@@ -1025,8 +1025,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct RenderPassCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public RenderPassCreateFlags flags;          
          public UInt32 attachmentCount;          
          public AttachmentDescription* pAttachments;          
@@ -1087,8 +1087,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct CommandPoolCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public CommandPoolCreateFlags flags;  //Command pool creation flags 
          public UInt32 queueFamilyIndex;          
       };
@@ -1096,8 +1096,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct CommandBufferAllocateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public CommandPool commandPool;          
          public CommandBufferLevel level;          
          public UInt32 commandBufferCount;          
@@ -1106,8 +1106,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct CommandBufferBeginInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public CommandBufferUsageFlags flags;  //Command buffer usage flags 
          public CommandBufferInheritanceInfo* pInheritanceInfo;  //Pointer to inheritance info for secondary command buffers 
       };
@@ -1115,8 +1115,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct CommandBufferInheritanceInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public RenderPass renderPass;  //Render pass for secondary command buffers 
          public UInt32 subpass;          
          public Framebuffer framebuffer;  //Framebuffer for secondary command buffers 
@@ -1208,8 +1208,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MemoryBarrier 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public AccessFlags srcAccessMask;  //Memory accesses from the source of the dependency to synchronize 
          public AccessFlags dstAccessMask;  //Memory accesses from the destination of the dependency to synchronize 
       };
@@ -1217,8 +1217,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct BufferMemoryBarrier 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public AccessFlags srcAccessMask;  //Memory accesses from the source of the dependency to synchronize 
          public AccessFlags dstAccessMask;  //Memory accesses from the destination of the dependency to synchronize 
          public UInt32 srcQueueFamilyIndex;  //Queue family to transition ownership from 
@@ -1231,8 +1231,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImageMemoryBarrier 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public AccessFlags srcAccessMask;  //Memory accesses from the source of the dependency to synchronize 
          public AccessFlags dstAccessMask;  //Memory accesses from the destination of the dependency to synchronize 
          public ImageLayout oldLayout;  //Current layout of the image 
@@ -1246,8 +1246,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct RenderPassBeginInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public RenderPass renderPass;          
          public Framebuffer framebuffer;          
          public Rect2D renderArea;          
@@ -1285,22 +1285,22 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct BaseOutStructure 
       {
-         public StructureType sType;          
+         public StructureType type;          
          public BaseOutStructure* pNext;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct BaseInStructure 
       {
-         public StructureType sType;          
+         public StructureType type;          
          public BaseInStructure* pNext;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceSubgroupProperties 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 subgroupSize;  //The size of a subgroup for this queue. 
          public ShaderStageFlags supportedStages;  //Bitfield of what shader stages support subgroup operations 
          public SubgroupFeatureFlags supportedOperations;  //Bitfield of what subgroup operations are supported. 
@@ -1310,8 +1310,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct BindBufferMemoryInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Buffer buffer;          
          public DeviceMemory memory;          
          public DeviceSize memoryOffset;          
@@ -1320,8 +1320,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct BindImageMemoryInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Image image;          
          public DeviceMemory memory;          
          public DeviceSize memoryOffset;          
@@ -1330,8 +1330,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDevice16BitStorageFeatures 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 storageBuffer16BitAccess;  //16-bit integer/floating-point variables supported in BufferBlock 
          public Bool32 uniformAndStorageBuffer16BitAccess;  //16-bit integer/floating-point variables supported in BufferBlock and Block 
          public Bool32 storagePushConstant16;  //16-bit integer/floating-point variables supported in PushConstant 
@@ -1341,8 +1341,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MemoryDedicatedRequirements 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 prefersDedicatedAllocation;          
          public Bool32 requiresDedicatedAllocation;          
       };
@@ -1350,8 +1350,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MemoryDedicatedAllocateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Image image;  //Image that this allocation will be bound to 
          public Buffer buffer;  //Buffer that this allocation will be bound to 
       };
@@ -1359,8 +1359,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MemoryAllocateFlagsInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public MemoryAllocateFlags flags;          
          public UInt32 deviceMask;          
       };
@@ -1368,8 +1368,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct DeviceGroupRenderPassBeginInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 deviceMask;          
          public UInt32 deviceRenderAreaCount;          
          public Rect2D* pDeviceRenderAreas;          
@@ -1378,16 +1378,16 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DeviceGroupCommandBufferBeginInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 deviceMask;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct DeviceGroupSubmitInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 waitSemaphoreCount;          
          public UInt32* pWaitSemaphoreDeviceIndices;          
          public UInt32 commandBufferCount;          
@@ -1399,8 +1399,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DeviceGroupBindSparseInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 resourceDeviceIndex;          
          public UInt32 memoryDeviceIndex;          
       };
@@ -1408,8 +1408,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct BindBufferMemoryDeviceGroupInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 deviceIndexCount;          
          public UInt32* pDeviceIndices;          
       };
@@ -1417,8 +1417,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct BindImageMemoryDeviceGroupInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 deviceIndexCount;          
          public UInt32* pDeviceIndices;          
          public UInt32 splitInstanceBindRegionCount;          
@@ -1428,8 +1428,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PhysicalDeviceGroupProperties 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 physicalDeviceCount;          
          //public fixed PhysicalDevice physicalDevices[(int)VK.MAX_DEVICE_GROUP_SIZE];          
          public Bool32 subsetAllocation;          
@@ -1438,8 +1438,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct DeviceGroupDeviceCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 physicalDeviceCount;          
          public PhysicalDevice* pPhysicalDevices;          
       };
@@ -1447,82 +1447,82 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct BufferMemoryRequirementsInfo2 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Buffer buffer;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImageMemoryRequirementsInfo2 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Image image;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImageSparseMemoryRequirementsInfo2 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Image image;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MemoryRequirements2 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public MemoryRequirements memoryRequirements;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SparseImageMemoryRequirements2 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public SparseImageMemoryRequirements memoryRequirements;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceFeatures2 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PhysicalDeviceFeatures features;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceProperties2 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PhysicalDeviceProperties properties;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct FormatProperties2 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public FormatProperties formatProperties;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImageFormatProperties2 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ImageFormatProperties imageFormatProperties;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceImageFormatInfo2 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Format format;          
-         public ImageType type;          
+         public ImageType imageType;          
          public ImageTiling tiling;          
          public ImageUsageFlags usage;          
          public ImageCreateFlags flags;          
@@ -1531,34 +1531,34 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct QueueFamilyProperties2 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public QueueFamilyProperties queueFamilyProperties;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceMemoryProperties2 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PhysicalDeviceMemoryProperties memoryProperties;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SparseImageFormatProperties2 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public SparseImageFormatProperties properties;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceSparseImageFormatInfo2 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Format format;          
-         public ImageType type;          
+         public ImageType imageType;          
          public SampleCountFlags samples;          
          public ImageUsageFlags usage;          
          public ImageTiling tiling;          
@@ -1567,16 +1567,16 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDevicePointClippingProperties 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PointClippingBehavior pointClippingBehavior;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct RenderPassInputAttachmentAspectCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 aspectReferenceCount;          
          public InputAttachmentAspectReference* pAspectReferences;          
       };
@@ -1592,24 +1592,24 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImageViewUsageCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ImageUsageFlags usage;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineTessellationDomainOriginStateCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public TessellationDomainOrigin domainOrigin;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct RenderPassMultiviewCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 subpassCount;          
          public UInt32* pViewMasks;          
          public UInt32 dependencyCount;          
@@ -1621,8 +1621,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceMultiviewFeatures 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 multiview;  //Multiple views in a renderpass 
          public Bool32 multiviewGeometryShader;  //Multiple views in a renderpass w/ geometry shader 
          public Bool32 multiviewTessellationShader;  //Multiple views in a renderpass w/ tessellation shader 
@@ -1631,8 +1631,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceMultiviewProperties 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 maxMultiviewViewCount;  //max number of views in a subpass 
          public UInt32 maxMultiviewInstanceIndex;  //max instance index for a draw in a multiview subpass 
       };
@@ -1640,8 +1640,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceVariablePointersFeatures 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 variablePointersStorageBuffer;          
          public Bool32 variablePointers;          
       };
@@ -1649,24 +1649,24 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceProtectedMemoryFeatures 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 protectedMemory;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceProtectedMemoryProperties 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 protectedNoFault;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DeviceQueueInfo2 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public DeviceQueueCreateFlags flags;          
          public UInt32 queueFamilyIndex;          
          public UInt32 queueIndex;          
@@ -1675,16 +1675,16 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ProtectedSubmitInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 protectedSubmit;  //Submit protected command buffers 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SamplerYcbcrConversionCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Format format;          
          public SamplerYcbcrModelConversion ycbcrModel;          
          public SamplerYcbcrRange ycbcrRange;          
@@ -1698,48 +1698,48 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SamplerYcbcrConversionInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public SamplerYcbcrConversion conversion;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct BindImagePlaneMemoryInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ImageAspectFlags planeAspect;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ImagePlaneMemoryRequirementsInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ImageAspectFlags planeAspect;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceSamplerYcbcrConversionFeatures 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 samplerYcbcrConversion;  //Sampler color conversion supported 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct SamplerYcbcrConversionImageFormatProperties 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 combinedImageSamplerDescriptorCount;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct DescriptorUpdateTemplateCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public DescriptorUpdateTemplateCreateFlags flags;          
          public UInt32 descriptorUpdateEntryCount;  //Number of descriptor update entries to use for the update template 
          public DescriptorUpdateTemplateEntry* pDescriptorUpdateEntries;  //Descriptor update entries for the template 
@@ -1772,24 +1772,24 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceExternalImageFormatInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ExternalMemoryHandleTypeFlags handleType;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ExternalImageFormatProperties 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ExternalMemoryProperties externalMemoryProperties;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceExternalBufferInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public BufferCreateFlags flags;          
          public BufferUsageFlags usage;          
          public ExternalMemoryHandleTypeFlags handleType;          
@@ -1798,16 +1798,16 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ExternalBufferProperties 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ExternalMemoryProperties externalMemoryProperties;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PhysicalDeviceIDProperties 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public fixed byte deviceUUID[(int)VK.UUID_SIZE];          
          public fixed byte driverUUID[(int)VK.UUID_SIZE];          
          public fixed byte deviceLUID[(int)VK.LUID_SIZE];          
@@ -1818,40 +1818,40 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ExternalMemoryImageCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ExternalMemoryHandleTypeFlags handleTypes;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ExternalMemoryBufferCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ExternalMemoryHandleTypeFlags handleTypes;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ExportMemoryAllocateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ExternalMemoryHandleTypeFlags handleTypes;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceExternalFenceInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ExternalFenceHandleTypeFlags handleType;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ExternalFenceProperties 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ExternalFenceHandleTypeFlags exportFromImportedHandleTypes;          
          public ExternalFenceHandleTypeFlags compatibleHandleTypes;          
          public ExternalFenceFeatureFlags externalFenceFeatures;          
@@ -1860,32 +1860,32 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ExportFenceCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ExternalFenceHandleTypeFlags handleTypes;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ExportSemaphoreCreateInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ExternalSemaphoreHandleTypeFlags handleTypes;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceExternalSemaphoreInfo 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ExternalSemaphoreHandleTypeFlags handleType;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ExternalSemaphoreProperties 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public ExternalSemaphoreHandleTypeFlags exportFromImportedHandleTypes;          
          public ExternalSemaphoreHandleTypeFlags compatibleHandleTypes;          
          public ExternalSemaphoreFeatureFlags externalSemaphoreFeatures;          
@@ -1894,8 +1894,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceMaintenance3Properties 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 maxPerSetDescriptors;          
          public DeviceSize maxMemoryAllocationSize;          
       };
@@ -1903,16 +1903,16 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DescriptorSetLayoutSupport 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 supported;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceShaderDrawParametersFeatures 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 shaderDrawParameters;          
       };
       

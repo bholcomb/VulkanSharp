@@ -51,8 +51,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PipelineViewportSwizzleStateCreateInfoNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineViewportSwizzleStateCreateFlagsNV flags;          
          public UInt32 viewportCount;          
          public ViewportSwizzleNV* pViewportSwizzles;          

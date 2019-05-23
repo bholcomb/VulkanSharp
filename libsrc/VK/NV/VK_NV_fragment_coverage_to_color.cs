@@ -29,8 +29,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineCoverageToColorStateCreateInfoNV 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineCoverageToColorStateCreateFlagsNV flags;          
          public Bool32 coverageToColorEnable;          
          public UInt32 coverageToColorLocation;          

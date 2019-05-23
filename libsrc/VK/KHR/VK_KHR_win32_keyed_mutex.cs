@@ -22,8 +22,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct Win32KeyedMutexAcquireReleaseInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 acquireCount;          
          public DeviceMemory* pAcquireSyncs;          
          public UInt64* pAcquireKeys;          

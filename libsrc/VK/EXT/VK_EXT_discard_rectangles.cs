@@ -36,16 +36,16 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceDiscardRectanglePropertiesEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 maxDiscardRectangles;  //max number of active discard rectangles 
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PipelineDiscardRectangleStateCreateInfoEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public PipelineDiscardRectangleStateCreateFlagsEXT flags;          
          public DiscardRectangleModeEXT discardRectangleMode;          
          public UInt32 discardRectangleCount;          

@@ -33,8 +33,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct DescriptorSetLayoutBindingFlagsCreateInfoEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 bindingCount;          
          public DescriptorBindingFlagsEXT* pBindingFlags;          
       };
@@ -42,8 +42,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceDescriptorIndexingFeaturesEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 shaderInputAttachmentArrayDynamicIndexing;          
          public Bool32 shaderUniformTexelBufferArrayDynamicIndexing;          
          public Bool32 shaderStorageTexelBufferArrayDynamicIndexing;          
@@ -69,8 +69,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceDescriptorIndexingPropertiesEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 maxUpdateAfterBindDescriptorsInAllPools;          
          public Bool32 shaderUniformBufferArrayNonUniformIndexingNative;          
          public Bool32 shaderSampledImageArrayNonUniformIndexingNative;          
@@ -99,8 +99,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct DescriptorSetVariableDescriptorCountAllocateInfoEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 descriptorSetCount;          
          public UInt32* pDescriptorCounts;          
       };
@@ -108,8 +108,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DescriptorSetVariableDescriptorCountLayoutSupportEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 maxVariableDescriptorCount;          
       };
       

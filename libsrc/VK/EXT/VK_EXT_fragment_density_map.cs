@@ -22,8 +22,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceFragmentDensityMapFeaturesEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 fragmentDensityMap;          
          public Bool32 fragmentDensityMapDynamic;          
          public Bool32 fragmentDensityMapNonSubsampledImages;          
@@ -32,8 +32,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceFragmentDensityMapPropertiesEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Extent2D minFragmentDensityTexelSize;          
          public Extent2D maxFragmentDensityTexelSize;          
          public Bool32 fragmentDensityInvocations;          
@@ -42,8 +42,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct RenderPassFragmentDensityMapCreateInfoEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public AttachmentReference fragmentDensityMapAttachment;          
       };
       

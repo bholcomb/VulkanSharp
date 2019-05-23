@@ -22,16 +22,16 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AndroidHardwareBufferUsageANDROID 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt64 androidHardwareBufferUsage;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AndroidHardwareBufferPropertiesANDROID 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public DeviceSize allocationSize;          
          public UInt32 memoryTypeBits;          
       };
@@ -39,8 +39,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct AndroidHardwareBufferFormatPropertiesANDROID 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Format format;          
          public UInt64 externalFormat;          
          public FormatFeatureFlags formatFeatures;          
@@ -54,24 +54,24 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct ImportAndroidHardwareBufferInfoANDROID
       {
-         public StructureType sType;
-         public IntPtr pNext;
+         public StructureType type;
+         public IntPtr next;
          public IntPtr /* AHardwareBuffer* */ buffer;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MemoryGetAndroidHardwareBufferInfoANDROID 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public DeviceMemory memory;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ExternalFormatANDROID 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt64 externalFormat;          
       };
       

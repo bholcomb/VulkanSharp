@@ -30,16 +30,16 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceBlendOperationAdvancedFeaturesEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 advancedBlendCoherentOperations;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PhysicalDeviceBlendOperationAdvancedPropertiesEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public UInt32 advancedBlendMaxColorAttachments;          
          public Bool32 advancedBlendIndependentBlend;          
          public Bool32 advancedBlendNonPremultipliedSrcColor;          
@@ -51,8 +51,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct PipelineColorBlendAdvancedStateCreateInfoEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public Bool32 srcPremultiplied;          
          public Bool32 dstPremultiplied;          
          public BlendOverlapEXT blendOverlap;          

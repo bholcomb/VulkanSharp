@@ -22,8 +22,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct PhysicalDeviceMemoryBudgetPropertiesEXT 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public fixed UInt64/*DeviceSize*/ heapBudget[(int)VK.MAX_MEMORY_HEAPS];          
          public fixed UInt64/*DeviceSize*/ heapUsage[(int)VK.MAX_MEMORY_HEAPS];          
       };

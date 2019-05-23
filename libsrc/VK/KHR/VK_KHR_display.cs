@@ -72,8 +72,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DisplayModeCreateInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public DisplayModeCreateFlagsKHR flags;          
          public DisplayModeParametersKHR parameters;  //The parameters this mode uses. 
       };
@@ -102,8 +102,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct DisplaySurfaceCreateInfoKHR 
       {
-         public StructureType sType;          
-         public IntPtr pNext;          
+         public StructureType type;          
+         public IntPtr next;          
          public DisplaySurfaceCreateFlagsKHR flags;          
          public DisplayModeKHR displayMode;  //The mode to use when displaying this surface 
          public UInt32 planeIndex;  //The plane on which this surface appears.  Must be between 0 and the value returned by vkGetPhysicalDeviceDisplayPlanePropertiesKHR() in pPropertyCount. 
