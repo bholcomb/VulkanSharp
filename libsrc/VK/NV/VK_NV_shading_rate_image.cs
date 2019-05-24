@@ -128,7 +128,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_NV_shading_rate_image
+      public static class NV_shading_rate_image
       {
          public static void init(VK.Device device)
          {

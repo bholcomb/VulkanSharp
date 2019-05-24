@@ -76,7 +76,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_full_screen_exclusive
+      public static class EXT_full_screen_exclusive
       {
          public static void init(VK.Device device)
          {

@@ -298,7 +298,7 @@ end
 function parseExtensions()  
    local exts = vk:find("extensions")
    for k,ext in pairs(exts) do
-      if(type(ext) == "table" and ext.tag ~= nil and ext:tag() == "extension" and ext.promotedto == nil) then
+      if(type(ext) == "table" and ext.tag ~= nil and ext:tag() == "extension" and ext.promotedto == nil and ext.deprecatedby == nil) then
          if(ext.supported == "vulkan") then
             local extension = {}
             extension.commands = {}

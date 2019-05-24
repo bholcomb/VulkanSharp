@@ -50,7 +50,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_AMD_display_native_hdr
+      public static class AMD_display_native_hdr
       {
          public static void init(VK.Device device)
          {

@@ -68,7 +68,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_KHR_external_fence_win32
+      public static class KHR_external_fence_win32
       {
          public static void init(VK.Device device)
          {

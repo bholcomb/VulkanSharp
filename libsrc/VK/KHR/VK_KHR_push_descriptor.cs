@@ -45,7 +45,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_KHR_push_descriptor
+      public static class KHR_push_descriptor
       {
          public static void init(VK.Device device)
          {

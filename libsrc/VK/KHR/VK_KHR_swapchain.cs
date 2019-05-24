@@ -23,18 +23,18 @@ namespace Vulkan
       [Flags]
       public enum SwapchainCreateFlagsKHR : int
       {  
-         SwapchainCreateSplitInstanceBindRegionsBitKhr = 1 << 0,
-         SwapchainCreateProtectedBitKhr = 1 << 1,
-         SwapchainCreateMutableFormatBitKhr = 1 << 2,
+         SplitInstanceBindRegionsBitKhr = 1 << 0,
+         ProtectedBitKhr = 1 << 1,
+         MutableFormatBitKhr = 1 << 2,
       };
       
       [Flags]
       public enum DeviceGroupPresentModeFlagsKHR : int
       {  
-         DeviceGroupPresentModeLocalBitKhr = 1 << 0,
-         DeviceGroupPresentModeRemoteBitKhr = 1 << 1,
-         DeviceGroupPresentModeSumBitKhr = 1 << 2,
-         DeviceGroupPresentModeLocalMultiDeviceBitKhr = 1 << 3,
+         LocalBitKhr = 1 << 0,
+         RemoteBitKhr = 1 << 1,
+         SumBitKhr = 1 << 2,
+         LocalMultiDeviceBitKhr = 1 << 3,
       };
       
       #endregion
@@ -171,7 +171,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_KHR_swapchain
+      public static class KHR_swapchain
       {
          public static void init(VK.Device device)
          {

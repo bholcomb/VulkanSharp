@@ -24,10 +24,10 @@ namespace Vulkan
       [Flags]
       public enum DisplayPlaneAlphaFlagsKHR : int
       {  
-         DisplayPlaneAlphaOpaqueBitKhr = 1 << 0,
-         DisplayPlaneAlphaGlobalBitKhr = 1 << 1,
-         DisplayPlaneAlphaPerPixelBitKhr = 1 << 2,
-         DisplayPlaneAlphaPerPixelPremultipliedBitKhr = 1 << 3,
+         OpaqueBitKhr = 1 << 0,
+         GlobalBitKhr = 1 << 1,
+         PerPixelBitKhr = 1 << 2,
+         PerPixelPremultipliedBitKhr = 1 << 3,
       };
       
       [Flags]
@@ -147,7 +147,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_KHR_display
+      public static class KHR_display
       {
          public static void init(VK.Instance instance)
          {

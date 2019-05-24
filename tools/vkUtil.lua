@@ -87,6 +87,8 @@ function sanitizeTypeName(name)
    local n = string.gsub(name, "^Vk", "") --remove beginning vk   
    if(n == "event") then return "_event" end
    if(n == "object") then return "_object" end
+   if(n == "sType") then return "type" end
+   if(n == "pNext") then return "next" end
    
    return n
 end

@@ -21,10 +21,10 @@ namespace Vulkan
       [Flags]
       public enum ResolveModeFlagsKHR : int
       {  
-         ResolveModeSampleZeroBitKhr = 1 << 0,
-         ResolveModeAverageBitKhr = 1 << 1,
-         ResolveModeMinBitKhr = 1 << 2,
-         ResolveModeMaxBitKhr = 1 << 3,
+         SampleZeroBitKhr = 1 << 0,
+         AverageBitKhr = 1 << 1,
+         MinBitKhr = 1 << 2,
+         MaxBitKhr = 1 << 3,
       };
       
       #endregion

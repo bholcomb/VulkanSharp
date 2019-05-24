@@ -49,7 +49,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_headless_surface
+      public static class EXT_headless_surface
       {
          public static void init(VK.Instance instance)
          {

@@ -46,17 +46,17 @@ namespace Vulkan
       [Flags]
       public enum IndirectCommandsLayoutUsageFlagsNVX : int
       {  
-         IndirectCommandsLayoutUsageUnorderedSequencesBitNvx = 1 << 0,
-         IndirectCommandsLayoutUsageSparseSequencesBitNvx = 1 << 1,
-         IndirectCommandsLayoutUsageEmptyExecutionsBitNvx = 1 << 2,
-         IndirectCommandsLayoutUsageIndexedSequencesBitNvx = 1 << 3,
+         UnorderedSequencesBitNvx = 1 << 0,
+         SparseSequencesBitNvx = 1 << 1,
+         EmptyExecutionsBitNvx = 1 << 2,
+         IndexedSequencesBitNvx = 1 << 3,
       };
       
       [Flags]
       public enum ObjectEntryUsageFlagsNVX : int
       {  
-         ObjectEntryUsageGraphicsBitNvx = 1 << 0,
-         ObjectEntryUsageComputeBitNvx = 1 << 1,
+         GraphicsBitNvx = 1 << 0,
+         ComputeBitNvx = 1 << 1,
       };
       
       #endregion
@@ -242,7 +242,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_NVX_device_generated_commands
+      public static class NVX_device_generated_commands
       {
          public static void init(VK.Device device)
          {

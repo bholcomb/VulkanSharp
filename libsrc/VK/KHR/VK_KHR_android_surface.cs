@@ -50,7 +50,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_KHR_android_surface
+      public static class KHR_android_surface
       {
          public static void init(VK.Instance instance)
          {

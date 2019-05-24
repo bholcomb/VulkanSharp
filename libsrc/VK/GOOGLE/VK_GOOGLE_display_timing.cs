@@ -69,7 +69,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_GOOGLE_display_timing
+      public static class GOOGLE_display_timing
       {
          public static void init(VK.Device device)
          {

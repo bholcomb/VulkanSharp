@@ -59,7 +59,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_external_memory_host
+      public static class EXT_external_memory_host
       {
          public static void init(VK.Device device)
          {

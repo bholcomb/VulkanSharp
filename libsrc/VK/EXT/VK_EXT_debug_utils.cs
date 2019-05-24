@@ -37,18 +37,18 @@ namespace Vulkan
       [Flags]
       public enum DebugUtilsMessageSeverityFlagsEXT : int
       {  
-         DebugUtilsMessageSeverityVerboseBitExt = 1 << 0,
-         DebugUtilsMessageSeverityInfoBitExt = 1 << 4,
-         DebugUtilsMessageSeverityWarningBitExt = 1 << 8,
-         DebugUtilsMessageSeverityErrorBitExt = 1 << 12,
+         VerboseBitExt = 1 << 0,
+         InfoBitExt = 1 << 4,
+         WarningBitExt = 1 << 8,
+         ErrorBitExt = 1 << 12,
       };
       
       [Flags]
       public enum DebugUtilsMessageTypeFlagsEXT : int
       {  
-         DebugUtilsMessageTypeGeneralBitExt = 1 << 0,
-         DebugUtilsMessageTypeValidationBitExt = 1 << 1,
-         DebugUtilsMessageTypePerformanceBitExt = 1 << 2,
+         GeneralBitExt = 1 << 0,
+         ValidationBitExt = 1 << 1,
+         PerformanceBitExt = 1 << 2,
       };
       
       #endregion
@@ -159,7 +159,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_debug_utils
+      public static class EXT_debug_utils
       {
          public static void init(VK.Instance instance)
          {

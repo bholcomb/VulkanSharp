@@ -1197,672 +1197,672 @@ namespace Vulkan
          DescriptorSet = 0,
       };
       #endregion
-      
+
       #region bitmasks
       [Flags]
       public enum InstanceCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum FormatFeatureFlags : int
-      {  
-          FormatFeatureSampledImageBit =  1 << 0,
-          FormatFeatureStorageImageBit =  1 << 1,
-          FormatFeatureStorageImageAtomicBit =  1 << 2,
-          FormatFeatureUniformTexelBufferBit =  1 << 3,
-          FormatFeatureStorageTexelBufferBit =  1 << 4,
-          FormatFeatureStorageTexelBufferAtomicBit =  1 << 5,
-          FormatFeatureVertexBufferBit =  1 << 6,
-          FormatFeatureColorAttachmentBit =  1 << 7,
-          FormatFeatureColorAttachmentBlendBit =  1 << 8,
-          FormatFeatureDepthStencilAttachmentBit =  1 << 9,
-          FormatFeatureBlitSrcBit =  1 << 10,
-          FormatFeatureBlitDstBit =  1 << 11,
-          FormatFeatureSampledImageFilterLinearBit =  1 << 12,
-          FormatFeatureTransferSrcBit =  1 << 14,
-          FormatFeatureTransferDstBit =  1 << 15,
-          FormatFeatureMidpointChromaSamplesBit =  1 << 17,
-          FormatFeatureSampledImageYcbcrConversionLinearFilterBit =  1 << 18,
-          FormatFeatureSampledImageYcbcrConversionSeparateReconstructionFilterBit =  1 << 19,
-          FormatFeatureSampledImageYcbcrConversionChromaReconstructionExplicitBit =  1 << 20,
-          FormatFeatureSampledImageYcbcrConversionChromaReconstructionExplicitForceableBit =  1 << 21,
-          FormatFeatureDisjointBit =  1 << 22,
-          FormatFeatureCositedChromaSamplesBit =  1 << 23,
-          //VK_IMG_filter_cubic
-          FormatFeatureSampledImageFilterCubicBitImg =  1 << 13,
-          //VK_EXT_sampler_filter_minmax
-          FormatFeatureSampledImageFilterMinmaxBitExt =  1 << 16,
-          //VK_EXT_fragment_density_map
-          FormatFeatureFragmentDensityMapBitExt =  1 << 24,
+      {
+         SampledImageBit = 1 << 0,
+         StorageImageBit = 1 << 1,
+         StorageImageAtomicBit = 1 << 2,
+         UniformTexelBufferBit = 1 << 3,
+         StorageTexelBufferBit = 1 << 4,
+         StorageTexelBufferAtomicBit = 1 << 5,
+         VertexBufferBit = 1 << 6,
+         ColorAttachmentBit = 1 << 7,
+         ColorAttachmentBlendBit = 1 << 8,
+         DepthStencilAttachmentBit = 1 << 9,
+         BlitSrcBit = 1 << 10,
+         BlitDstBit = 1 << 11,
+         SampledImageFilterLinearBit = 1 << 12,
+         TransferSrcBit = 1 << 14,
+         TransferDstBit = 1 << 15,
+         MidpointChromaSamplesBit = 1 << 17,
+         SampledImageYcbcrConversionLinearFilterBit = 1 << 18,
+         SampledImageYcbcrConversionSeparateReconstructionFilterBit = 1 << 19,
+         SampledImageYcbcrConversionChromaReconstructionExplicitBit = 1 << 20,
+         SampledImageYcbcrConversionChromaReconstructionExplicitForceableBit = 1 << 21,
+         DisjointBit = 1 << 22,
+         CositedChromaSamplesBit = 1 << 23,
+         //VK_IMG_filter_cubic
+         SampledImageFilterCubicBitImg = 1 << 13,
+         //VK_EXT_sampler_filter_minmax
+         SampledImageFilterMinmaxBitExt = 1 << 16,
+         //VK_EXT_fragment_density_map
+         FragmentDensityMapBitExt = 1 << 24,
       };
-      
+
       [Flags]
       public enum ImageUsageFlags : int
-      {  
-          ImageUsageTransferSrcBit =  1 << 0,
-          ImageUsageTransferDstBit =  1 << 1,
-          ImageUsageSampledBit =  1 << 2,
-          ImageUsageStorageBit =  1 << 3,
-          ImageUsageColorAttachmentBit =  1 << 4,
-          ImageUsageDepthStencilAttachmentBit =  1 << 5,
-          ImageUsageTransientAttachmentBit =  1 << 6,
-          ImageUsageInputAttachmentBit =  1 << 7,
-          //VK_NV_shading_rate_image
-          ImageUsageShadingRateImageBitNv =  1 << 8,
-          //VK_EXT_fragment_density_map
-          ImageUsageFragmentDensityMapBitExt =  1 << 9,
+      {
+         TransferSrcBit = 1 << 0,
+         TransferDstBit = 1 << 1,
+         SampledBit = 1 << 2,
+         StorageBit = 1 << 3,
+         ColorAttachmentBit = 1 << 4,
+         DepthStencilAttachmentBit = 1 << 5,
+         TransientAttachmentBit = 1 << 6,
+         InputAttachmentBit = 1 << 7,
+         //VK_NV_shading_rate_image
+         ShadingRateImageBitNv = 1 << 8,
+         //VK_EXT_fragment_density_map
+         FragmentDensityMapBitExt = 1 << 9,
       };
-      
+
       [Flags]
       public enum ImageCreateFlags : int
-      {  
-          ImageCreateSparseBindingBit =  1 << 0,
-          ImageCreateSparseResidencyBit =  1 << 1,
-          ImageCreateSparseAliasedBit =  1 << 2,
-          ImageCreateMutableFormatBit =  1 << 3,
-          ImageCreateCubeCompatibleBit =  1 << 4,
-          ImageCreateAliasBit =  1 << 10,
-          ImageCreateSplitInstanceBindRegionsBit =  1 << 6,
-          ImageCreate2dArrayCompatibleBit =  1 << 5,
-          ImageCreateBlockTexelViewCompatibleBit =  1 << 7,
-          ImageCreateExtendedUsageBit =  1 << 8,
-          ImageCreateProtectedBit =  1 << 11,
-          ImageCreateDisjointBit =  1 << 9,
-          //VK_NV_corner_sampled_image
-          ImageCreateCornerSampledBitNv =  1 << 13,
-          //VK_EXT_sample_locations
-          ImageCreateSampleLocationsCompatibleDepthBitExt =  1 << 12,
-          //VK_EXT_fragment_density_map
-          ImageCreateSubsampledBitExt =  1 << 14,
+      {
+         SparseBindingBit = 1 << 0,
+         SparseResidencyBit = 1 << 1,
+         SparseAliasedBit = 1 << 2,
+         MutableFormatBit = 1 << 3,
+         CubeCompatibleBit = 1 << 4,
+         AliasBit = 1 << 10,
+         SplitInstanceBindRegionsBit = 1 << 6,
+         _2dArrayCompatibleBit = 1 << 5,
+         BlockTexelViewCompatibleBit = 1 << 7,
+         ExtendedUsageBit = 1 << 8,
+         ProtectedBit = 1 << 11,
+         DisjointBit = 1 << 9,
+         //VK_NV_corner_sampled_image
+         CornerSampledBitNv = 1 << 13,
+         //VK_EXT_sample_locations
+         SampleLocationsCompatibleDepthBitExt = 1 << 12,
+         //VK_EXT_fragment_density_map
+         SubsampledBitExt = 1 << 14,
       };
-      
+
       [Flags]
       public enum SampleCountFlags : int
-      {  
-          SampleCount1Bit =  1 << 0,
-          SampleCount2Bit =  1 << 1,
-          SampleCount4Bit =  1 << 2,
-          SampleCount8Bit =  1 << 3,
-          SampleCount16Bit =  1 << 4,
-          SampleCount32Bit =  1 << 5,
-          SampleCount64Bit =  1 << 6,
+      {
+         _1Bit = 1 << 0,
+         _2Bit = 1 << 1,
+         _4Bit = 1 << 2,
+         _8Bit = 1 << 3,
+         _16Bit = 1 << 4,
+         _32Bit = 1 << 5,
+         _64Bit = 1 << 6,
       };
-      
+
       [Flags]
       public enum QueueFlags : int
-      {  
-          QueueGraphicsBit =  1 << 0,
-          QueueComputeBit =  1 << 1,
-          QueueTransferBit =  1 << 2,
-          QueueSparseBindingBit =  1 << 3,
-          QueueProtectedBit =  1 << 4,
+      {
+         GraphicsBit = 1 << 0,
+         ComputeBit = 1 << 1,
+         TransferBit = 1 << 2,
+         SparseBindingBit = 1 << 3,
+         ProtectedBit = 1 << 4,
       };
-      
+
       [Flags]
       public enum MemoryPropertyFlags : int
-      {  
-          MemoryPropertyDeviceLocalBit =  1 << 0,
-          MemoryPropertyHostVisibleBit =  1 << 1,
-          MemoryPropertyHostCoherentBit =  1 << 2,
-          MemoryPropertyHostCachedBit =  1 << 3,
-          MemoryPropertyLazilyAllocatedBit =  1 << 4,
-          MemoryPropertyProtectedBit =  1 << 5,
+      {
+         DeviceLocalBit = 1 << 0,
+         HostVisibleBit = 1 << 1,
+         HostCoherentBit = 1 << 2,
+         HostCachedBit = 1 << 3,
+         LazilyAllocatedBit = 1 << 4,
+         ProtectedBit = 1 << 5,
       };
-      
+
       [Flags]
       public enum MemoryHeapFlags : int
-      {  
-          MemoryHeapDeviceLocalBit =  1 << 0,
-          MemoryHeapMultiInstanceBit =  1 << 1,
+      {
+         DeviceLocalBit = 1 << 0,
+         MultiInstanceBit = 1 << 1,
       };
-      
+
       [Flags]
       public enum DeviceCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum DeviceQueueCreateFlags : int
-      {  
-          DeviceQueueCreateProtectedBit =  1 << 0,
+      {
+         ProtectedBit = 1 << 0,
       };
-      
+
       [Flags]
       public enum PipelineStageFlags : int
-      {  
-          PipelineStageTopOfPipeBit =  1 << 0,
-          PipelineStageDrawIndirectBit =  1 << 1,
-          PipelineStageVertexInputBit =  1 << 2,
-          PipelineStageVertexShaderBit =  1 << 3,
-          PipelineStageTessellationControlShaderBit =  1 << 4,
-          PipelineStageTessellationEvaluationShaderBit =  1 << 5,
-          PipelineStageGeometryShaderBit =  1 << 6,
-          PipelineStageFragmentShaderBit =  1 << 7,
-          PipelineStageEarlyFragmentTestsBit =  1 << 8,
-          PipelineStageLateFragmentTestsBit =  1 << 9,
-          PipelineStageColorAttachmentOutputBit =  1 << 10,
-          PipelineStageComputeShaderBit =  1 << 11,
-          PipelineStageTransferBit =  1 << 12,
-          PipelineStageBottomOfPipeBit =  1 << 13,
-          PipelineStageHostBit =  1 << 14,
-          PipelineStageAllGraphicsBit =  1 << 15,
-          PipelineStageAllCommandsBit =  1 << 16,
-          //VK_EXT_transform_feedback
-          PipelineStageTransformFeedbackBitExt =  1 << 24,
-          //VK_EXT_conditional_rendering
-          PipelineStageConditionalRenderingBitExt =  1 << 18,
-          //VK_NVX_device_generated_commands
-          PipelineStageCommandProcessBitNvx =  1 << 17,
-          //VK_NV_shading_rate_image
-          PipelineStageShadingRateImageBitNv =  1 << 22,
-          //VK_NV_ray_tracing
-          PipelineStageRayTracingShaderBitNv =  1 << 21,
-          PipelineStageAccelerationStructureBuildBitNv =  1 << 25,
-          //VK_NV_mesh_shader
-          PipelineStageTaskShaderBitNv =  1 << 19,
-          PipelineStageMeshShaderBitNv =  1 << 20,
-          //VK_EXT_fragment_density_map
-          PipelineStageFragmentDensityProcessBitExt =  1 << 23,
+      {
+         TopOfPipeBit = 1 << 0,
+         DrawIndirectBit = 1 << 1,
+         VertexInputBit = 1 << 2,
+         VertexShaderBit = 1 << 3,
+         TessellationControlShaderBit = 1 << 4,
+         TessellationEvaluationShaderBit = 1 << 5,
+         GeometryShaderBit = 1 << 6,
+         FragmentShaderBit = 1 << 7,
+         EarlyFragmentTestsBit = 1 << 8,
+         LateFragmentTestsBit = 1 << 9,
+         ColorAttachmentOutputBit = 1 << 10,
+         ComputeShaderBit = 1 << 11,
+         TransferBit = 1 << 12,
+         BottomOfPipeBit = 1 << 13,
+         HostBit = 1 << 14,
+         AllGraphicsBit = 1 << 15,
+         AllCommandsBit = 1 << 16,
+         //VK_EXT_transform_feedback
+         TransformFeedbackBitExt = 1 << 24,
+         //VK_EXT_conditional_rendering
+         ConditionalRenderingBitExt = 1 << 18,
+         //VK_NVX_device_generated_commands
+         CommandProcessBitNvx = 1 << 17,
+         //VK_NV_shading_rate_image
+         ShadingRateImageBitNv = 1 << 22,
+         //VK_NV_ray_tracing
+         RayTracingShaderBitNv = 1 << 21,
+         AccelerationStructureBuildBitNv = 1 << 25,
+         //VK_NV_mesh_shader
+         TaskShaderBitNv = 1 << 19,
+         MeshShaderBitNv = 1 << 20,
+         //VK_EXT_fragment_density_map
+         FragmentDensityProcessBitExt = 1 << 23,
       };
-      
+
       [Flags]
       public enum MemoryMapFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum ImageAspectFlags : int
-      {  
-          ImageAspectColorBit =  1 << 0,
-          ImageAspectDepthBit =  1 << 1,
-          ImageAspectStencilBit =  1 << 2,
-          ImageAspectMetadataBit =  1 << 3,
-          ImageAspectPlane0Bit =  1 << 4,
-          ImageAspectPlane1Bit =  1 << 5,
-          ImageAspectPlane2Bit =  1 << 6,
-          //VK_EXT_image_drm_format_modifier
-          ImageAspectMemoryPlane0BitExt =  1 << 7,
-          ImageAspectMemoryPlane1BitExt =  1 << 8,
-          ImageAspectMemoryPlane2BitExt =  1 << 9,
-          ImageAspectMemoryPlane3BitExt =  1 << 10,
+      {
+         ColorBit = 1 << 0,
+         DepthBit = 1 << 1,
+         StencilBit = 1 << 2,
+         MetadataBit = 1 << 3,
+         Plane0Bit = 1 << 4,
+         Plane1Bit = 1 << 5,
+         Plane2Bit = 1 << 6,
+         //VK_EXT_image_drm_format_modifier
+         MemoryPlane0BitExt = 1 << 7,
+         MemoryPlane1BitExt = 1 << 8,
+         MemoryPlane2BitExt = 1 << 9,
+         MemoryPlane3BitExt = 1 << 10,
       };
-      
+
       [Flags]
       public enum SparseImageFormatFlags : int
-      {  
-          SparseImageFormatSingleMiptailBit =  1 << 0,
-          SparseImageFormatAlignedMipSizeBit =  1 << 1,
-          SparseImageFormatNonstandardBlockSizeBit =  1 << 2,
+      {
+         SingleMiptailBit = 1 << 0,
+         AlignedMipSizeBit = 1 << 1,
+         NonstandardBlockSizeBit = 1 << 2,
       };
-      
+
       [Flags]
       public enum SparseMemoryBindFlags : int
-      {  
-          SparseMemoryBindMetadataBit =  1 << 0,
+      {
+         MetadataBit = 1 << 0,
       };
-      
+
       [Flags]
       public enum FenceCreateFlags : int
-      {  
-          FenceCreateSignaledBit =  1 << 0,
+      {
+         SignaledBit = 1 << 0,
       };
-      
+
       [Flags]
       public enum SemaphoreCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum EventCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum QueryPoolCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum QueryPipelineStatisticFlags : int
-      {  
-          QueryPipelineStatisticInputAssemblyVerticesBit =  1 << 0,
-          QueryPipelineStatisticInputAssemblyPrimitivesBit =  1 << 1,
-          QueryPipelineStatisticVertexShaderInvocationsBit =  1 << 2,
-          QueryPipelineStatisticGeometryShaderInvocationsBit =  1 << 3,
-          QueryPipelineStatisticGeometryShaderPrimitivesBit =  1 << 4,
-          QueryPipelineStatisticClippingInvocationsBit =  1 << 5,
-          QueryPipelineStatisticClippingPrimitivesBit =  1 << 6,
-          QueryPipelineStatisticFragmentShaderInvocationsBit =  1 << 7,
-          QueryPipelineStatisticTessellationControlShaderPatchesBit =  1 << 8,
-          QueryPipelineStatisticTessellationEvaluationShaderInvocationsBit =  1 << 9,
-          QueryPipelineStatisticComputeShaderInvocationsBit =  1 << 10,
+      {
+         InputAssemblyVerticesBit = 1 << 0,
+         InputAssemblyPrimitivesBit = 1 << 1,
+         VertexShaderInvocationsBit = 1 << 2,
+         GeometryShaderInvocationsBit = 1 << 3,
+         GeometryShaderPrimitivesBit = 1 << 4,
+         ClippingInvocationsBit = 1 << 5,
+         ClippingPrimitivesBit = 1 << 6,
+         FragmentShaderInvocationsBit = 1 << 7,
+         TessellationControlShaderPatchesBit = 1 << 8,
+         TessellationEvaluationShaderInvocationsBit = 1 << 9,
+         ComputeShaderInvocationsBit = 1 << 10,
       };
-      
+
       [Flags]
       public enum QueryResultFlags : int
-      {  
-          QueryResult64Bit =  1 << 0,
-          QueryResultWaitBit =  1 << 1,
-          QueryResultWithAvailabilityBit =  1 << 2,
-          QueryResultPartialBit =  1 << 3,
+      {
+         _64Bit = 1 << 0,
+         WaitBit = 1 << 1,
+         WithAvailabilityBit = 1 << 2,
+         PartialBit = 1 << 3,
       };
-      
+
       [Flags]
       public enum BufferCreateFlags : int
-      {  
-          BufferCreateSparseBindingBit =  1 << 0,
-          BufferCreateSparseResidencyBit =  1 << 1,
-          BufferCreateSparseAliasedBit =  1 << 2,
-          BufferCreateProtectedBit =  1 << 3,
-          //VK_EXT_buffer_device_address
-          BufferCreateDeviceAddressCaptureReplayBitExt =  1 << 4,
+      {
+         SparseBindingBit = 1 << 0,
+         SparseResidencyBit = 1 << 1,
+         SparseAliasedBit = 1 << 2,
+         ProtectedBit = 1 << 3,
+         //VK_EXT_buffer_device_address
+         DeviceAddressCaptureReplayBitExt = 1 << 4,
       };
-      
+
       [Flags]
       public enum BufferUsageFlags : int
-      {  
-          BufferUsageTransferSrcBit =  1 << 0,
-          BufferUsageTransferDstBit =  1 << 1,
-          BufferUsageUniformTexelBufferBit =  1 << 2,
-          BufferUsageStorageTexelBufferBit =  1 << 3,
-          BufferUsageUniformBufferBit =  1 << 4,
-          BufferUsageStorageBufferBit =  1 << 5,
-          BufferUsageIndexBufferBit =  1 << 6,
-          BufferUsageVertexBufferBit =  1 << 7,
-          BufferUsageIndirectBufferBit =  1 << 8,
-          //VK_EXT_transform_feedback
-          BufferUsageTransformFeedbackBufferBitExt =  1 << 11,
-          BufferUsageTransformFeedbackCounterBufferBitExt =  1 << 12,
-          //VK_EXT_conditional_rendering
-          BufferUsageConditionalRenderingBitExt =  1 << 9,
-          //VK_NV_ray_tracing
-          BufferUsageRayTracingBitNv =  1 << 10,
-          //VK_EXT_buffer_device_address
-          BufferUsageShaderDeviceAddressBitExt =  1 << 17,
+      {
+         TransferSrcBit = 1 << 0,
+         TransferDstBit = 1 << 1,
+         UniformTexelBufferBit = 1 << 2,
+         StorageTexelBufferBit = 1 << 3,
+         UniformBufferBit = 1 << 4,
+         StorageBufferBit = 1 << 5,
+         IndexBufferBit = 1 << 6,
+         VertexBufferBit = 1 << 7,
+         IndirectBufferBit = 1 << 8,
+         //VK_EXT_transform_feedback
+         TransformFeedbackBufferBitExt = 1 << 11,
+         TransformFeedbackCounterBufferBitExt = 1 << 12,
+         //VK_EXT_conditional_rendering
+         ConditionalRenderingBitExt = 1 << 9,
+         //VK_NV_ray_tracing
+         RayTracingBitNv = 1 << 10,
+         //VK_EXT_buffer_device_address
+         ShaderDeviceAddressBitExt = 1 << 17,
       };
-      
+
       [Flags]
       public enum BufferViewCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum ImageViewCreateFlags : int
-      {  
-          //VK_EXT_fragment_density_map
-          ImageViewCreateFragmentDensityMapDynamicBitExt =  1 << 0,
+      {
+         //VK_EXT_fragment_density_map
+         FragmentDensityMapDynamicBitExt = 1 << 0,
       };
-      
+
       [Flags]
       public enum ShaderModuleCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum PipelineCacheCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum PipelineCreateFlags : int
-      {  
-          PipelineCreateDisableOptimizationBit =  1 << 0,
-          PipelineCreateAllowDerivativesBit =  1 << 1,
-          PipelineCreateDerivativeBit =  1 << 2,
-          PipelineCreateViewIndexFromDeviceIndexBit =  1 << 3,
-          PipelineCreateDispatchBase =  1 << 4,
-          //VK_NV_ray_tracing
-          PipelineCreateDeferCompileBitNv =  1 << 5,
+      {
+         DisableOptimizationBit = 1 << 0,
+         AllowDerivativesBit = 1 << 1,
+         DerivativeBit = 1 << 2,
+         ViewIndexFromDeviceIndexBit = 1 << 3,
+         DispatchBase = 1 << 4,
+         //VK_NV_ray_tracing
+         DeferCompileBitNv = 1 << 5,
       };
-      
+
       [Flags]
       public enum PipelineShaderStageCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum ShaderStageFlags : int
-      {  
-          ShaderStageVertexBit =  1 << 0,
-          ShaderStageTessellationControlBit =  1 << 1,
-          ShaderStageTessellationEvaluationBit =  1 << 2,
-          ShaderStageGeometryBit =  1 << 3,
-          ShaderStageFragmentBit =  1 << 4,
-          ShaderStageComputeBit =  1 << 5,
-          //VK_NV_ray_tracing
-          ShaderStageRaygenBitNv =  1 << 8,
-          ShaderStageAnyHitBitNv =  1 << 9,
-          ShaderStageClosestHitBitNv =  1 << 10,
-          ShaderStageMissBitNv =  1 << 11,
-          ShaderStageIntersectionBitNv =  1 << 12,
-          ShaderStageCallableBitNv =  1 << 13,
-          //VK_NV_mesh_shader
-          ShaderStageTaskBitNv =  1 << 6,
-          ShaderStageMeshBitNv =  1 << 7,
+      {
+         VertexBit = 1 << 0,
+         TessellationControlBit = 1 << 1,
+         TessellationEvaluationBit = 1 << 2,
+         GeometryBit = 1 << 3,
+         FragmentBit = 1 << 4,
+         ComputeBit = 1 << 5,
+         //VK_NV_ray_tracing
+         RaygenBitNv = 1 << 8,
+         AnyHitBitNv = 1 << 9,
+         ClosestHitBitNv = 1 << 10,
+         MissBitNv = 1 << 11,
+         IntersectionBitNv = 1 << 12,
+         CallableBitNv = 1 << 13,
+         //VK_NV_mesh_shader
+         TaskBitNv = 1 << 6,
+         MeshBitNv = 1 << 7,
       };
-      
+
       [Flags]
       public enum PipelineVertexInputStateCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum PipelineInputAssemblyStateCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum PipelineTessellationStateCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum PipelineViewportStateCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum PipelineRasterizationStateCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum CullModeFlags : int
-      {  
-          CullModeFrontBit =  1 << 0,
-          CullModeBackBit =  1 << 1,
+      {
+         FrontBit = 1 << 0,
+         BackBit = 1 << 1,
       };
-      
+
       [Flags]
       public enum PipelineMultisampleStateCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum PipelineDepthStencilStateCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum PipelineColorBlendStateCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum ColorComponentFlags : int
-      {  
-          ColorComponentRBit =  1 << 0,
-          ColorComponentGBit =  1 << 1,
-          ColorComponentBBit =  1 << 2,
-          ColorComponentABit =  1 << 3,
+      {
+         RBit = 1 << 0,
+         GBit = 1 << 1,
+         BBit = 1 << 2,
+         ABit = 1 << 3,
       };
-      
+
       [Flags]
       public enum PipelineDynamicStateCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum PipelineLayoutCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum SamplerCreateFlags : int
-      {  
-          //VK_EXT_fragment_density_map
-          SamplerCreateSubsampledBitExt =  1 << 0,
-          SamplerCreateSubsampledCoarseReconstructionBitExt =  1 << 1,
+      {
+         //VK_EXT_fragment_density_map
+         SubsampledBitExt = 1 << 0,
+         SubsampledCoarseReconstructionBitExt = 1 << 1,
       };
-      
+
       [Flags]
       public enum DescriptorSetLayoutCreateFlags : int
-      {  
-          //VK_KHR_push_descriptor
-          DescriptorSetLayoutCreatePushDescriptorBitKhr =  1 << 0,
-          //VK_EXT_descriptor_indexing
-          DescriptorSetLayoutCreateUpdateAfterBindPoolBitExt =  1 << 1,
+      {
+         //VK_KHR_push_descriptor
+         PushDescriptorBitKhr = 1 << 0,
+         //VK_EXT_descriptor_indexing
+         UpdateAfterBindPoolBitExt = 1 << 1,
       };
-      
+
       [Flags]
       public enum DescriptorPoolCreateFlags : int
-      {  
-          DescriptorPoolCreateFreeDescriptorSetBit =  1 << 0,
-          //VK_EXT_descriptor_indexing
-          DescriptorPoolCreateUpdateAfterBindBitExt =  1 << 1,
+      {
+         FreeDescriptorSetBit = 1 << 0,
+         //VK_EXT_descriptor_indexing
+         UpdateAfterBindBitExt = 1 << 1,
       };
-      
+
       [Flags]
       public enum DescriptorPoolResetFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum FramebufferCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum RenderPassCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum AttachmentDescriptionFlags : int
-      {  
-          AttachmentDescriptionMayAliasBit =  1 << 0,
+      {
+         MayAliasBit = 1 << 0,
       };
-      
+
       [Flags]
       public enum SubpassDescriptionFlags : int
-      {  
-          //VK_NVX_multiview_per_view_attributes
-          SubpassDescriptionPerViewAttributesBitNvx =  1 << 0,
-          SubpassDescriptionPerViewPositionXOnlyBitNvx =  1 << 1,
+      {
+         //VK_NVX_multiview_per_view_attributes
+         PerViewAttributesBitNvx = 1 << 0,
+         PerViewPositionXOnlyBitNvx = 1 << 1,
       };
-      
+
       [Flags]
       public enum AccessFlags : int
-      {  
-          AccessIndirectCommandReadBit =  1 << 0,
-          AccessIndexReadBit =  1 << 1,
-          AccessVertexAttributeReadBit =  1 << 2,
-          AccessUniformReadBit =  1 << 3,
-          AccessInputAttachmentReadBit =  1 << 4,
-          AccessShaderReadBit =  1 << 5,
-          AccessShaderWriteBit =  1 << 6,
-          AccessColorAttachmentReadBit =  1 << 7,
-          AccessColorAttachmentWriteBit =  1 << 8,
-          AccessDepthStencilAttachmentReadBit =  1 << 9,
-          AccessDepthStencilAttachmentWriteBit =  1 << 10,
-          AccessTransferReadBit =  1 << 11,
-          AccessTransferWriteBit =  1 << 12,
-          AccessHostReadBit =  1 << 13,
-          AccessHostWriteBit =  1 << 14,
-          AccessMemoryReadBit =  1 << 15,
-          AccessMemoryWriteBit =  1 << 16,
-          //VK_EXT_transform_feedback
-          AccessTransformFeedbackWriteBitExt =  1 << 25,
-          AccessTransformFeedbackCounterReadBitExt =  1 << 26,
-          AccessTransformFeedbackCounterWriteBitExt =  1 << 27,
-          //VK_EXT_conditional_rendering
-          AccessConditionalRenderingReadBitExt =  1 << 20,
-          //VK_NVX_device_generated_commands
-          AccessCommandProcessReadBitNvx =  1 << 17,
-          AccessCommandProcessWriteBitNvx =  1 << 18,
-          //VK_EXT_blend_operation_advanced
-          AccessColorAttachmentReadNoncoherentBitExt =  1 << 19,
-          //VK_NV_shading_rate_image
-          AccessShadingRateImageReadBitNv =  1 << 23,
-          //VK_NV_ray_tracing
-          AccessAccelerationStructureReadBitNv =  1 << 21,
-          AccessAccelerationStructureWriteBitNv =  1 << 22,
-          //VK_EXT_fragment_density_map
-          AccessFragmentDensityMapReadBitExt =  1 << 24,
+      {
+         IndirectCommandReadBit = 1 << 0,
+         IndexReadBit = 1 << 1,
+         VertexAttributeReadBit = 1 << 2,
+         UniformReadBit = 1 << 3,
+         InputAttachmentReadBit = 1 << 4,
+         ShaderReadBit = 1 << 5,
+         ShaderWriteBit = 1 << 6,
+         ColorAttachmentReadBit = 1 << 7,
+         ColorAttachmentWriteBit = 1 << 8,
+         DepthStencilAttachmentReadBit = 1 << 9,
+         DepthStencilAttachmentWriteBit = 1 << 10,
+         TransferReadBit = 1 << 11,
+         TransferWriteBit = 1 << 12,
+         HostReadBit = 1 << 13,
+         HostWriteBit = 1 << 14,
+         MemoryReadBit = 1 << 15,
+         MemoryWriteBit = 1 << 16,
+         //VK_EXT_transform_feedback
+         TransformFeedbackWriteBitExt = 1 << 25,
+         TransformFeedbackCounterReadBitExt = 1 << 26,
+         TransformFeedbackCounterWriteBitExt = 1 << 27,
+         //VK_EXT_conditional_rendering
+         ConditionalRenderingReadBitExt = 1 << 20,
+         //VK_NVX_device_generated_commands
+         CommandProcessReadBitNvx = 1 << 17,
+         CommandProcessWriteBitNvx = 1 << 18,
+         //VK_EXT_blend_operation_advanced
+         ColorAttachmentReadNoncoherentBitExt = 1 << 19,
+         //VK_NV_shading_rate_image
+         ShadingRateImageReadBitNv = 1 << 23,
+         //VK_NV_ray_tracing
+         AccelerationStructureReadBitNv = 1 << 21,
+         AccelerationStructureWriteBitNv = 1 << 22,
+         //VK_EXT_fragment_density_map
+         FragmentDensityMapReadBitExt = 1 << 24,
       };
-      
+
       [Flags]
       public enum DependencyFlags : int
-      {  
-          DependencyByRegionBit =  1 << 0,
-          DependencyDeviceGroupBit =  1 << 2,
-          DependencyViewLocalBit =  1 << 1,
+      {
+         ByRegionBit = 1 << 0,
+         DeviceGroupBit = 1 << 2,
+         ViewLocalBit = 1 << 1,
       };
-      
+
       [Flags]
       public enum CommandPoolCreateFlags : int
-      {  
-          CommandPoolCreateTransientBit =  1 << 0,
-          CommandPoolCreateResetCommandBufferBit =  1 << 1,
-          CommandPoolCreateProtectedBit =  1 << 2,
+      {
+         TransientBit = 1 << 0,
+         ResetCommandBufferBit = 1 << 1,
+         ProtectedBit = 1 << 2,
       };
-      
+
       [Flags]
       public enum CommandPoolResetFlags : int
-      {  
-          CommandPoolResetReleaseResourcesBit =  1 << 0,
+      {
+         ReleaseResourcesBit = 1 << 0,
       };
-      
+
       [Flags]
       public enum CommandBufferUsageFlags : int
-      {  
-          CommandBufferUsageOneTimeSubmitBit =  1 << 0,
-          CommandBufferUsageRenderPassContinueBit =  1 << 1,
-          CommandBufferUsageSimultaneousUseBit =  1 << 2,
+      {
+         OneTimeSubmitBit = 1 << 0,
+         RenderPassContinueBit = 1 << 1,
+         SimultaneousUseBit = 1 << 2,
       };
-      
+
       [Flags]
       public enum QueryControlFlags : int
-      {  
-          QueryControlPreciseBit =  1 << 0,
+      {
+         PreciseBit = 1 << 0,
       };
-      
+
       [Flags]
       public enum CommandBufferResetFlags : int
-      {  
-          CommandBufferResetReleaseResourcesBit =  1 << 0,
+      {
+         ReleaseResourcesBit = 1 << 0,
       };
-      
+
       [Flags]
       public enum StencilFaceFlags : int
-      {  
-          StencilFaceFrontBit =  1 << 0,
-          StencilFaceBackBit =  1 << 1,
+      {
+         FrontBit = 1 << 0,
+         BackBit = 1 << 1,
       };
-      
+
       [Flags]
       public enum SubgroupFeatureFlags : int
-      {  
-          SubgroupFeatureBasicBit =  1 << 0,
-          SubgroupFeatureVoteBit =  1 << 1,
-          SubgroupFeatureArithmeticBit =  1 << 2,
-          SubgroupFeatureBallotBit =  1 << 3,
-          SubgroupFeatureShuffleBit =  1 << 4,
-          SubgroupFeatureShuffleRelativeBit =  1 << 5,
-          SubgroupFeatureClusteredBit =  1 << 6,
-          SubgroupFeatureQuadBit =  1 << 7,
-          //VK_NV_shader_subgroup_partitioned
-          SubgroupFeaturePartitionedBitNv =  1 << 8,
+      {
+         BasicBit = 1 << 0,
+         VoteBit = 1 << 1,
+         ArithmeticBit = 1 << 2,
+         BallotBit = 1 << 3,
+         ShuffleBit = 1 << 4,
+         ShuffleRelativeBit = 1 << 5,
+         ClusteredBit = 1 << 6,
+         QuadBit = 1 << 7,
+         //VK_NV_shader_subgroup_partitioned
+         PartitionedBitNv = 1 << 8,
       };
-      
+
       [Flags]
       public enum PeerMemoryFeatureFlags : int
-      {  
-          PeerMemoryFeatureCopySrcBit =  1 << 0,
-          PeerMemoryFeatureCopyDstBit =  1 << 1,
-          PeerMemoryFeatureGenericSrcBit =  1 << 2,
-          PeerMemoryFeatureGenericDstBit =  1 << 3,
+      {
+         CopySrcBit = 1 << 0,
+         CopyDstBit = 1 << 1,
+         GenericSrcBit = 1 << 2,
+         GenericDstBit = 1 << 3,
       };
-      
+
       [Flags]
       public enum MemoryAllocateFlags : int
-      {  
-          MemoryAllocateDeviceMaskBit =  1 << 0,
+      {
+         DeviceMaskBit = 1 << 0,
       };
-      
+
       [Flags]
       public enum CommandPoolTrimFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum DescriptorUpdateTemplateCreateFlags : int
-      {  
+      {
       };
-      
+
       [Flags]
       public enum ExternalMemoryHandleTypeFlags : int
-      {  
-          ExternalMemoryHandleTypeOpaqueFdBit =  1 << 0,
-          ExternalMemoryHandleTypeOpaqueWin32Bit =  1 << 1,
-          ExternalMemoryHandleTypeOpaqueWin32KmtBit =  1 << 2,
-          ExternalMemoryHandleTypeD3d11TextureBit =  1 << 3,
-          ExternalMemoryHandleTypeD3d11TextureKmtBit =  1 << 4,
-          ExternalMemoryHandleTypeD3d12HeapBit =  1 << 5,
-          ExternalMemoryHandleTypeD3d12ResourceBit =  1 << 6,
-          //VK_EXT_external_memory_dma_buf
-          ExternalMemoryHandleTypeDmaBufBitExt =  1 << 9,
-          //VK_ANDROID_external_memory_android_hardware_buffer
-          ExternalMemoryHandleTypeAndroidHardwareBufferBitAndroid =  1 << 10,
-          //VK_EXT_external_memory_host
-          ExternalMemoryHandleTypeHostAllocationBitExt =  1 << 7,
-          ExternalMemoryHandleTypeHostMappedForeignMemoryBitExt =  1 << 8,
+      {
+         OpaqueFdBit = 1 << 0,
+         OpaqueWin32Bit = 1 << 1,
+         OpaqueWin32KmtBit = 1 << 2,
+         D3d11TextureBit = 1 << 3,
+         D3d11TextureKmtBit = 1 << 4,
+         D3d12HeapBit = 1 << 5,
+         D3d12ResourceBit = 1 << 6,
+         //VK_EXT_external_memory_dma_buf
+         DmaBufBitExt = 1 << 9,
+         //VK_ANDROID_external_memory_android_hardware_buffer
+         AndroidHardwareBufferBitAndroid = 1 << 10,
+         //VK_EXT_external_memory_host
+         HostAllocationBitExt = 1 << 7,
+         HostMappedForeignMemoryBitExt = 1 << 8,
       };
-      
+
       [Flags]
       public enum ExternalMemoryFeatureFlags : int
-      {  
-          ExternalMemoryFeatureDedicatedOnlyBit =  1 << 0,
-          ExternalMemoryFeatureExportableBit =  1 << 1,
-          ExternalMemoryFeatureImportableBit =  1 << 2,
+      {
+         DedicatedOnlyBit = 1 << 0,
+         ExportableBit = 1 << 1,
+         ImportableBit = 1 << 2,
       };
-      
+
       [Flags]
       public enum ExternalFenceHandleTypeFlags : int
-      {  
-          ExternalFenceHandleTypeOpaqueFdBit =  1 << 0,
-          ExternalFenceHandleTypeOpaqueWin32Bit =  1 << 1,
-          ExternalFenceHandleTypeOpaqueWin32KmtBit =  1 << 2,
-          ExternalFenceHandleTypeSyncFdBit =  1 << 3,
+      {
+         OpaqueFdBit = 1 << 0,
+         OpaqueWin32Bit = 1 << 1,
+         OpaqueWin32KmtBit = 1 << 2,
+         SyncFdBit = 1 << 3,
       };
-      
+
       [Flags]
       public enum ExternalFenceFeatureFlags : int
-      {  
-          ExternalFenceFeatureExportableBit =  1 << 0,
-          ExternalFenceFeatureImportableBit =  1 << 1,
+      {
+         ExportableBit = 1 << 0,
+         ImportableBit = 1 << 1,
       };
-      
+
       [Flags]
       public enum FenceImportFlags : int
-      {  
-          FenceImportTemporaryBit =  1 << 0,
+      {
+         TemporaryBit = 1 << 0,
       };
-      
+
       [Flags]
       public enum SemaphoreImportFlags : int
-      {  
-          SemaphoreImportTemporaryBit =  1 << 0,
+      {
+         TemporaryBit = 1 << 0,
       };
-      
+
       [Flags]
       public enum ExternalSemaphoreHandleTypeFlags : int
-      {  
-          ExternalSemaphoreHandleTypeOpaqueFdBit =  1 << 0,
-          ExternalSemaphoreHandleTypeOpaqueWin32Bit =  1 << 1,
-          ExternalSemaphoreHandleTypeOpaqueWin32KmtBit =  1 << 2,
-          ExternalSemaphoreHandleTypeD3d12FenceBit =  1 << 3,
-          ExternalSemaphoreHandleTypeSyncFdBit =  1 << 4,
+      {
+         OpaqueFdBit = 1 << 0,
+         OpaqueWin32Bit = 1 << 1,
+         OpaqueWin32KmtBit = 1 << 2,
+         D3d12FenceBit = 1 << 3,
+         SyncFdBit = 1 << 4,
       };
-      
+
       [Flags]
       public enum ExternalSemaphoreFeatureFlags : int
-      {  
-          ExternalSemaphoreFeatureExportableBit =  1 << 0,
-          ExternalSemaphoreFeatureImportableBit =  1 << 1,
+      {
+         ExportableBit = 1 << 0,
+         ImportableBit = 1 << 1,
       };
-      
+
       #endregion
    }
 }

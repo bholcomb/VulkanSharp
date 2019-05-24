@@ -93,7 +93,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_ANDROID_external_memory_android_hardware_buffer
+      public static class ANDROID_external_memory_android_hardware_buffer
       {
          public static void init(VK.Device device)
          {

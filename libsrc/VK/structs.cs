@@ -8,33 +8,31 @@ namespace Vulkan
    public static partial class VK
    {
       #region structs
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct InstanceCreateInfo 
+      //public instance of object, there is an internal version used in the function
+      public struct InstanceCreateInfo
       {
-         public StructureType type;          
-         public IntPtr next;          
-         public InstanceCreateFlags flags;          
-         //public ApplicationInfo* pApplicationInfo;          
-         public UInt32 enabledLayerCount;          
-         public IntPtr ppEnabledLayerNames;  //Ordered list of layer names to be enabled 
-         public UInt32 enabledExtensionCount;          
-         public IntPtr ppEnabledExtensionNames;  //Extension names to be enabled 
-      };
+         public StructureType type;
+         public IntPtr next;
+         public UInt32 flags;
+         public ApplicationInfo applicationInfo;
+         public List<String> enabledLayerNames;
+         public List<String> enabledExtensionNames;
+      }
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct ApplicationInfo 
       {
          public StructureType type;          
          public IntPtr next;          
-         public string pApplicationName;          
+         public string applicationName;          
          public UInt32 applicationVersion;          
-         public string pEngineName;          
+         public string engineName;          
          public UInt32 engineVersion;          
          public UInt32 apiVersion;          
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct AllocationCallbacks 
+      public class AllocationCallbacks 
       {
          public IntPtr pUserData;          
          public AllocationFunction pfnAllocation;          
@@ -138,10 +136,32 @@ namespace Vulkan
          public UInt32 vendorID;          
          public UInt32 deviceID;          
          public PhysicalDeviceType deviceType;          
-         public fixed char deviceName[(int)VK.MAX_PHYSICAL_DEVICE_NAME_SIZE];          
-         public fixed byte pipelineCacheUUID[(int)VK.UUID_SIZE];          
+         fixed byte _deviceName[(int)VK.MAX_PHYSICAL_DEVICE_NAME_SIZE];          
+         fixed byte _pipelineCacheUUID[(int)VK.UUID_SIZE];          
          public PhysicalDeviceLimits limits;          
-         public PhysicalDeviceSparseProperties sparseProperties;          
+         public PhysicalDeviceSparseProperties sparseProperties;
+
+         public string deviceName
+         {
+            get
+            {
+               fixed (byte* p = _deviceName)
+               {
+                  return Marshal.PtrToStringAnsi((IntPtr)p);
+               }
+            }
+         }
+
+         public string pipelineCacheUuid
+         {
+            get
+            {
+               fixed (byte* p = _pipelineCacheUUID)
+               {
+                  return Marshal.PtrToStringAnsi((IntPtr)p);
+               }
+            }
+         }
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -273,16 +293,17 @@ namespace Vulkan
          public UInt32 timestampValidBits;          
          public Extent3D minImageTransferGranularity;  //Minimum alignment requirement for image transfers 
       };
-      
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct PhysicalDeviceMemoryProperties 
+
+      public struct PhysicalDeviceMemoryProperties
       {
-         public UInt32 memoryTypeCount;          
-         //public fixed MemoryType memoryTypes[(int)VK.MAX_MEMORY_TYPES];          
-         public UInt32 memoryHeapCount;          
-         //public fixed MemoryHeap memoryHeaps[(int)VK.MAX_MEMORY_HEAPS];          
+         public UInt32 memoryTypeCount;
+         [MarshalAs(UnmanagedType.ByValArray, SizeConst = (int)VK.MAX_MEMORY_TYPES)]
+         public MemoryType[] memoryTypes;
+         public UInt32 memoryHeapCount;
+         [MarshalAs(UnmanagedType.ByValArray, SizeConst = (int)VK.MAX_MEMORY_HEAPS)]
+         public MemoryHeap[] memoryHeaps;
       };
-      
+
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MemoryType 
       {
@@ -296,63 +317,89 @@ namespace Vulkan
          public DeviceSize size;  //Available memory in the heap 
          public MemoryHeapFlags flags;  //Flags for the heap 
       };
-      
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct DeviceCreateInfo 
+
+      //public instance of object, there is an internal version used in the function
+      public struct DeviceCreateInfo
       {
-         public StructureType type;          
-         public IntPtr next;          
-         public DeviceCreateFlags flags;          
-         public UInt32 queueCreateInfoCount;          
-         public DeviceQueueCreateInfo* pQueueCreateInfos;          
-         public UInt32 enabledLayerCount;          
-         public IntPtr ppEnabledLayerNames;  //Ordered list of layer names to be enabled 
-         public UInt32 enabledExtensionCount;          
-         public IntPtr ppEnabledExtensionNames;          
-         public PhysicalDeviceFeatures* pEnabledFeatures;          
-      };
-      
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct DeviceQueueCreateInfo 
+         public StructureType type;
+         public IntPtr next;
+         public UInt32 flags;
+         public List<DeviceQueueCreateInfo> queueCreateInfos;
+         public List<string> enabledLayerNames;
+         public List<string> enabledExtensionNames;
+         public PhysicalDeviceFeatures enabledFeatures;
+      }
+
+      [StructLayout(LayoutKind.Sequential)]
+      public struct DeviceQueueCreateInfo
       {
-         public StructureType type;          
-         public IntPtr next;          
-         public DeviceQueueCreateFlags flags;          
-         public UInt32 queueFamilyIndex;          
-         public UInt32 queueCount;          
-         public float* pQueuePriorities;          
-      };
-      
+         public StructureType type;
+         public IntPtr next;
+         public UInt32 flags;
+         public UInt32 queueFamilyIndex;
+         public UInt32 queueCount;
+         public float[] queuePriorities;
+      }
+
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct ExtensionProperties 
       {
-         public fixed char extensionName[(int)VK.MAX_EXTENSION_NAME_SIZE];  //extension name 
+         fixed byte _extensionName[(int)VK.MAX_EXTENSION_NAME_SIZE];  //extension name 
          public UInt32 specVersion;  //version of the extension specification implemented 
+
+         public string extensionName
+         {
+            get
+            {
+               fixed (byte* p = _extensionName)
+               {
+                  return Marshal.PtrToStringAnsi((IntPtr)p);
+               }
+            }
+         }
       };
-      
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct LayerProperties 
+
+      [StructLayout(LayoutKind.Sequential)]
+      public unsafe struct LayerProperties
       {
-         public fixed char layerName[(int)VK.MAX_EXTENSION_NAME_SIZE];  //layer name 
-         public UInt32 specVersion;  //version of the layer specification implemented 
-         public UInt32 implementationVersion;  //build or release version of the layer's library 
-         public fixed char description[(int)VK.MAX_DESCRIPTION_SIZE];  //Free-form description of the layer 
-      };
-      
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct SubmitInfo 
+         fixed byte _layerName[(int)VK.MAX_EXTENSION_NAME_SIZE];
+         public UInt32 specVersion;
+         public UInt32 implementationVersion;
+         fixed byte _description[(int)VK.MAX_EXTENSION_NAME_SIZE];
+
+         public string layerName
+         {
+            get
+            {
+               fixed (byte* p = _layerName)
+               {
+                  return Marshal.PtrToStringAnsi((IntPtr)p);
+               }
+            }
+         }
+
+         public string description
+         {
+            get
+            {
+               fixed (byte* p = _description)
+               {
+                  return Marshal.PtrToStringAnsi((IntPtr)p);
+               }
+            }
+         }
+      }
+
+      public struct SubmitInfo
       {
-         public StructureType type;          
-         public IntPtr next;          
-         public UInt32 waitSemaphoreCount;          
-         public Semaphore* pWaitSemaphores;          
-         public PipelineStageFlags* pWaitDstStageMask;          
-         public UInt32 commandBufferCount;          
-         public CommandBuffer* pCommandBuffers;          
-         public UInt32 signalSemaphoreCount;          
-         public Semaphore* pSignalSemaphores;          
-      };
-      
+         public StructureType type;
+         public IntPtr next;
+         public List<Semaphore> waitSemaphores;
+         public PipelineStageFlags waitDstStageMask;
+         public List<CommandBuffer> commandBuffers;
+         public List<Semaphore> signalSemaphores;
+      }
+
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public struct MemoryAllocateInfo 
       {
@@ -397,24 +444,18 @@ namespace Vulkan
          public Extent3D imageGranularity;          
          public SparseImageFormatFlags flags;          
       };
-      
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct BindSparseInfo 
+
+      public struct BindSparseInfo
       {
-         public StructureType type;          
-         public IntPtr next;          
-         public UInt32 waitSemaphoreCount;          
-         public Semaphore* pWaitSemaphores;          
-         public UInt32 bufferBindCount;          
-         public SparseBufferMemoryBindInfo* pBufferBinds;          
-         public UInt32 imageOpaqueBindCount;          
-         public SparseImageOpaqueMemoryBindInfo* pImageOpaqueBinds;          
-         public UInt32 imageBindCount;          
-         public SparseImageMemoryBindInfo* pImageBinds;          
-         public UInt32 signalSemaphoreCount;          
-         public Semaphore* pSignalSemaphores;          
-      };
-      
+         public StructureType type;
+         public IntPtr pNext;
+         public List<Semaphore> pWaitSemaphores;
+         public List<SparseBufferMemoryBindInfo> pBufferBinds;
+         public List<SparseImageOpaqueMemoryBindInfo> pImageOpaqueBinds;
+         public List<SparseImageMemoryBindInfo> pImageBinds;
+         public List<Semaphore> pSignalSemaphores;
+      }
+
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct SparseBufferMemoryBindInfo 
       {
@@ -625,7 +666,7 @@ namespace Vulkan
          public IntPtr next;          
          public PipelineCreateFlags flags;  //Pipeline creation flags 
          public UInt32 stageCount;          
-         //public PipelineShaderStageCreateInfo* pStages;  //One entry for each active shader stage 
+         public IntPtr/*PipelineShaderStageCreateInfo**/ pStages;  //One entry for each active shader stage 
          public PipelineVertexInputStateCreateInfo* pVertexInputState;          
          public PipelineInputAssemblyStateCreateInfo* pInputAssemblyState;          
          public PipelineTessellationStateCreateInfo* pTessellationState;          
@@ -649,9 +690,9 @@ namespace Vulkan
          public IntPtr next;          
          public PipelineShaderStageCreateFlags flags;          
          public ShaderStageFlags stage;  //Shader stage 
-         public ShaderModule module;  //Module containing entry point 
-         public string pName;  //Null-terminated entry point name 
-         public SpecializationInfo* pSpecializationInfo;          
+         public ShaderModule module;  //Module containing entry point
+         public IntPtr pName;  //Null-terminated entry point name 
+         public IntPtr pSpecializationInfo;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -790,7 +831,7 @@ namespace Vulkan
          public SampleCountFlags rasterizationSamples;  //Number of samples used for rasterization 
          public Bool32 sampleShadingEnable;  //optional (GL45) 
          public float minSampleShading;  //optional (GL45) 
-         //public SampleMask* pSampleMask;  //Array of sampleMask words 
+         public UInt32*/*SampleMask*/ pSampleMask;  //Array of sampleMask words 
          public Bool32 alphaToCoverageEnable;          
          public Bool32 alphaToOneEnable;          
       };
@@ -1155,10 +1196,12 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct ImageBlit 
       {
-         public ImageSubresourceLayers srcSubresource;          
-         //public fixed Offset3D srcOffsets[2];  //Specified in pixels for both compressed and uncompressed images 
-         public ImageSubresourceLayers dstSubresource;          
-         //public fixed Offset3D dstOffsets[2];  //Specified in pixels for both compressed and uncompressed images 
+         public ImageSubresourceLayers srcSubresource;
+         public Offset3D srcOffsets0;
+         public Offset3D srcOffsets1;
+         public ImageSubresourceLayers dstSubresource;
+         public Offset3D dstOffsets0;
+         public Offset3D dstOffsets1;
       };
       
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -1430,8 +1473,9 @@ namespace Vulkan
       {
          public StructureType type;          
          public IntPtr next;          
-         public UInt32 physicalDeviceCount;          
-         //public fixed PhysicalDevice physicalDevices[(int)VK.MAX_DEVICE_GROUP_SIZE];          
+         public UInt32 physicalDeviceCount;
+         [MarshalAs(UnmanagedType.ByValArray, SizeConst = (int)VK.MAX_DEVICE_GROUP_SIZE)]
+         public PhysicalDevice[] physicalDevices;          
          public Bool32 subsetAllocation;          
       };
       

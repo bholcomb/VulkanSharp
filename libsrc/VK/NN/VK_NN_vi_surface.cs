@@ -50,7 +50,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_NN_vi_surface
+      public static class NN_vi_surface
       {
          public static void init(VK.Instance instance)
          {

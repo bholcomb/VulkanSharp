@@ -21,7 +21,7 @@ namespace Vulkan
       [Flags]
       public enum ConditionalRenderingFlagsEXT : int
       {  
-         ConditionalRenderingInvertedBitExt = 1 << 0,
+         InvertedBitExt = 1 << 0,
       };
       
       #endregion
@@ -72,7 +72,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_conditional_rendering
+      public static class EXT_conditional_rendering
       {
          public static void init(VK.Device device)
          {

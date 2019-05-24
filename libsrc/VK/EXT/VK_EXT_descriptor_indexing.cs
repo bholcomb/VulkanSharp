@@ -21,10 +21,10 @@ namespace Vulkan
       [Flags]
       public enum DescriptorBindingFlagsEXT : int
       {  
-         DescriptorBindingUpdateAfterBindBitExt = 1 << 0,
-         DescriptorBindingUpdateUnusedWhilePendingBitExt = 1 << 1,
-         DescriptorBindingPartiallyBoundBitExt = 1 << 2,
-         DescriptorBindingVariableDescriptorCountBitExt = 1 << 3,
+         UpdateAfterBindBitExt = 1 << 0,
+         UpdateUnusedWhilePendingBitExt = 1 << 1,
+         PartiallyBoundBitExt = 1 << 2,
+         VariableDescriptorCountBitExt = 1 << 3,
       };
       
       #endregion

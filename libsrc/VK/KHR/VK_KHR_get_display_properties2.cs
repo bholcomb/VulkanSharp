@@ -84,7 +84,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_KHR_get_display_properties2
+      public static class KHR_get_display_properties2
       {
          public static void init(VK.Instance instance)
          {

@@ -66,7 +66,7 @@ namespace VulkanTest
 
 		Context context = new Context();
 
-		VK.DebugReportCallbackEXT debugCallbackHandle;
+		//VK.DebugReportCallbackEXT debugCallbackHandle;
 
 		IntPtr HInstance;
 		IntPtr Hwnd;
@@ -255,7 +255,7 @@ namespace VulkanTest
 				enabledExtensionNames = new List<string>() {
 					InstanceExtensions.VK_KHR_surface,
 					InstanceExtensions.VK_KHR_win32_surface,
-					InstanceExtensions.VK_EXT_debug_report
+					InstanceExtensions.VK_EXT_debug_utils
 				}
 			};
 
@@ -269,23 +269,23 @@ namespace VulkanTest
 
 		void setupDebugCallback()
 		{
-			Console.WriteLine("Initializing debug report extension");
-			VK.EXT_debug_report.init(context.instance);
-
-         VK.DebugReportCallbackCreateInfoEXT info = new VK.DebugReportCallbackCreateInfoEXT()
-			{
-				type = VK.StructureType.DebugReportCallbackCreateInfoExt,
-				next = IntPtr.Zero,
-				flags = VK.DebugReportFlagsEXT.ErrorBitExt | VK.DebugReportFlagsEXT.WarningBitExt,
-				pfnCallback = debugCallback,
-				pUserData = IntPtr.Zero
-			};
-
-         VK.Result res = VK.CreateDebugReportCallbackEXT(context.instance, ref info, null, out debugCallbackHandle);
-			if (res != VK.Result.Success)
-			{
-				Console.WriteLine("Failed to install debug callback");
-			}
+//			Console.WriteLine("Initializing debug report extension");
+// 			VK.EXT_debug_report.init(context.instance);
+// 
+//          VK.DebugReportCallbackCreateInfoEXT info = new VK.DebugReportCallbackCreateInfoEXT()
+// 			{
+// 				type = VK.StructureType.DebugReportCallbackCreateInfoExt,
+// 				next = IntPtr.Zero,
+// 				flags = VK.DebugReportFlagsEXT.ErrorBitExt | VK.DebugReportFlagsEXT.WarningBitExt,
+// 				pfnCallback = debugCallback,
+// 				pUserData = IntPtr.Zero
+// 			};
+// 
+//          VK.Result res = VK.CreateDebugReportCallbackEXT(context.instance, ref info, null, out debugCallbackHandle);
+// 			if (res != VK.Result.Success)
+// 			{
+// 				Console.WriteLine("Failed to install debug callback");
+// 			}
 		}
 
 		void createSurface()

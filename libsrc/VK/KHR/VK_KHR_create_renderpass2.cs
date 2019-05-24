@@ -133,7 +133,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_KHR_create_renderpass2
+      public static class KHR_create_renderpass2
       {
          public static void init(VK.Device device)
          {

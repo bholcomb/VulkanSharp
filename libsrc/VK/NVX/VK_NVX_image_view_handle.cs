@@ -44,7 +44,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_NVX_image_view_handle
+      public static class NVX_image_view_handle
       {
          public static void init(VK.Device device)
          {

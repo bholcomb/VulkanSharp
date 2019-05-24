@@ -54,7 +54,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_KHR_wayland_surface
+      public static class KHR_wayland_surface
       {
          public static void init(VK.Instance instance)
          {

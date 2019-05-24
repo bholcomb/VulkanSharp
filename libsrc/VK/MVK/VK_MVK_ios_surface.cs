@@ -50,7 +50,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_MVK_ios_surface
+      public static class MVK_ios_surface
       {
          public static void init(VK.Instance instance)
          {

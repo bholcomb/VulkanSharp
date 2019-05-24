@@ -44,7 +44,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_KHR_display_swapchain
+      public static class KHR_display_swapchain
       {
          public static void init(VK.Device device)
          {

@@ -50,7 +50,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_GGP_stream_descriptor_surface
+      public static class GGP_stream_descriptor_surface
       {
          public static void init(VK.Instance instance)
          {

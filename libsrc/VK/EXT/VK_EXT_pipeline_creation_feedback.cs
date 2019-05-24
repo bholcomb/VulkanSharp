@@ -21,9 +21,9 @@ namespace Vulkan
       [Flags]
       public enum PipelineCreationFeedbackFlagsEXT : int
       {  
-         PipelineCreationFeedbackValidBitExt = 1 << 0,
-         PipelineCreationFeedbackApplicationPipelineCacheHitBitExt = 1 << 1,
-         PipelineCreationFeedbackBasePipelineAccelerationBitExt = 1 << 2,
+         ValidBitExt = 1 << 0,
+         ApplicationPipelineCacheHitBitExt = 1 << 1,
+         BasePipelineAccelerationBitExt = 1 << 2,
       };
       
       #endregion

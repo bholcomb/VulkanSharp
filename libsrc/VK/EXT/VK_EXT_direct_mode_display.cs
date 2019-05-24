@@ -32,7 +32,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_direct_mode_display
+      public static class EXT_direct_mode_display
       {
          public static void init(VK.Instance instance)
          {

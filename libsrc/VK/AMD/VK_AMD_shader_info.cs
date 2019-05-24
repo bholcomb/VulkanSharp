@@ -64,7 +64,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_AMD_shader_info
+      public static class AMD_shader_info
       {
          public static void init(VK.Device device)
          {

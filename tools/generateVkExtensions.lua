@@ -89,13 +89,14 @@ namespace Vulkan
         {{for k,bitmaskName in pairs(ext.bitmasks) do 
            local bitmask = types.bitmasks[bitmaskName]
            bitmaskName = string.gsub(bitmaskName, "Vk", "") 
-           print(bitmaskName)}}
+           local _, _, filterName = string.find(bitmaskName, "(.-)Flags")
+      }}
       [Flags]
       public enum {{= bitmaskName}} : int
       {  
           {{for kk,vv in pairs(bitmask.bits) do 
              if(type(kk)=="number") then }}
-         {{= sanitizeEnumName(vv.name, bitmaskName)}} = 1 << {{= vv.bitpos}},
+         {{= sanitizeEnumName(vv.name, filterName)}} = 1 << {{= vv.bitpos}},
             {{end}}
           {{end}}
       };
@@ -203,7 +204,7 @@ namespace Vulkan
 
       #region interop
       {{if ext.type == "instance" then}}
-      public static class {{= ext.name}}
+      public static class {{= string.gsub(ext.name, "^VK_", "")}}
       {
          public static void init(VK.Instance instance)
          {
@@ -214,7 +215,7 @@ namespace Vulkan
          }
       }
       {{elseif ext.type == "device" then}}
-      public static class {{= ext.name}}
+      public static class {{= string.gsub(ext.name, "^VK_", "")}}
       {
          public static void init(VK.Device device)
          {

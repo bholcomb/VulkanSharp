@@ -50,7 +50,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_metal_surface
+      public static class EXT_metal_surface
       {
          public static void init(VK.Instance instance)
          {

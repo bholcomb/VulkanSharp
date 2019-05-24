@@ -89,7 +89,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_image_drm_format_modifier
+      public static class EXT_image_drm_format_modifier
       {
          public static void init(VK.Device device)
          {

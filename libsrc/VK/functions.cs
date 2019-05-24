@@ -10,8 +10,21 @@ namespace Vulkan
       #region Device initialization
       //VkResult vkCreateInstance(VkInstanceCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkInstance* pInstance);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateInstance", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateInstance(ref InstanceCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref Instance pInstance);
+      static unsafe extern Result _CreateInstance(ref _InstanceCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out Instance pInstance);
+      public static Result CreateInstance(InstanceCreateInfo createInfo, out Instance pInstance, AllocationCallbacks alloc = null)
+      {
+         //marshal to the internal structure
+         _InstanceCreateInfo info = new _InstanceCreateInfo(createInfo);
 
+         //call the native function
+         Result ret = _CreateInstance(ref info, alloc, out pInstance);
+
+         //cleanup the marshaling memory
+         info.destroy();
+
+         //return
+         return ret;
+      }
 
       //void vkDestroyInstance(VkInstance instance, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyInstance", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -20,8 +33,14 @@ namespace Vulkan
 
       //VkResult vkEnumeratePhysicalDevices(VkInstance instance, uint32_t* pPhysicalDeviceCount, VkPhysicalDevice* pPhysicalDevices);
       [DllImport(VulkanLibrary, EntryPoint = "vkEnumeratePhysicalDevices", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result EnumeratePhysicalDevices(Instance instance, ref UInt32 pPhysicalDeviceCount, ref PhysicalDevice pPhysicalDevices);
-
+      static extern Result _EnumeratePhysicalDevices(Instance instance, out UInt32 pPhysicalDeviceCount, IntPtr pPhysicalDevices);
+      public unsafe static Result EnumeratePhysicalDevices(Instance instance, ref UInt32 pPhysicalDeviceCount, PhysicalDevice[] pPhysicalDevices)
+      {
+         fixed (PhysicalDevice* ptr = pPhysicalDevices)
+         {
+            return _EnumeratePhysicalDevices(instance, out pPhysicalDeviceCount, (IntPtr)ptr);
+         }
+      }
 
       //void vkGetPhysicalDeviceFeatures(VkPhysicalDevice physicalDevice, VkPhysicalDeviceFeatures* pFeatures);
       [DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceFeatures", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -45,8 +64,14 @@ namespace Vulkan
 
       //void vkGetPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice physicalDevice, uint32_t* pQueueFamilyPropertyCount, VkQueueFamilyProperties* pQueueFamilyProperties);
       [DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceQueueFamilyProperties", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void GetPhysicalDeviceQueueFamilyProperties(PhysicalDevice physicalDevice, ref UInt32 pQueueFamilyPropertyCount, ref QueueFamilyProperties pQueueFamilyProperties);
-
+      static extern void _GetPhysicalDeviceQueueFamilyProperties(PhysicalDevice physicalDevice, out UInt32 pQueueFamilyPropertyCount, IntPtr pQueueFamilyProperties);
+      public unsafe static void GetPhysicalDeviceQueueFamilyProperties(PhysicalDevice physicalDevice, out UInt32 pQueueFamilyPropertyCount, QueueFamilyProperties[] pQueueFamilyProperties)
+      {
+         fixed (QueueFamilyProperties* ptr = pQueueFamilyProperties)
+         {
+            _GetPhysicalDeviceQueueFamilyProperties(physicalDevice, out pQueueFamilyPropertyCount, (IntPtr)ptr);
+         }
+      }
 
       //void vkGetPhysicalDeviceMemoryProperties(VkPhysicalDevice physicalDevice, VkPhysicalDeviceMemoryProperties* pMemoryProperties);
       [DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceMemoryProperties", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -67,8 +92,21 @@ namespace Vulkan
       #region Device commands
       //VkResult vkCreateDevice(VkPhysicalDevice physicalDevice, VkDeviceCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDevice* pDevice);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateDevice", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateDevice(PhysicalDevice physicalDevice, ref DeviceCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref Device pDevice);
+      static extern Result _CreateDevice(PhysicalDevice physicalDevice, ref _DeviceCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out Device pDevice);
+      public static Result CreateDevice(PhysicalDevice physicalDevice, DeviceCreateInfo pCreateInfo, out Device pDevice, AllocationCallbacks pAllocator = null)
+      {
+         //marshal to the internal structure
+         _DeviceCreateInfo info = new _DeviceCreateInfo(pCreateInfo);
 
+         //call the native function
+         Result ret = _CreateDevice(physicalDevice, ref info, pAllocator, out pDevice);
+
+         //cleanup the marshaling memory
+         info.destroy();
+
+         //return
+         return ret;
+      }
 
       //void vkDestroyDevice(VkDevice device, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyDevice", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -79,25 +117,50 @@ namespace Vulkan
       #region Extension discovery commands
       //VkResult vkEnumerateInstanceExtensionProperties(char* pLayerName, uint32_t* pPropertyCount, VkExtensionProperties* pProperties);
       [DllImport(VulkanLibrary, EntryPoint = "vkEnumerateInstanceExtensionProperties", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result EnumerateInstanceExtensionProperties(ref char pLayerName, ref UInt32 pPropertyCount, ref ExtensionProperties pProperties);
-
+      static extern Result _EnumerateInstanceExtensionProperties(string pLayerName, out UInt32 pPropertyCount, IntPtr pProperties);
+      public unsafe static Result EnumerateInstanceExtensionProperties(string pLayerName, out UInt32 pPropertyCount, ExtensionProperties[] pProperties)
+      {
+         fixed (ExtensionProperties* ptr = pProperties)
+         {
+            return _EnumerateInstanceExtensionProperties(pLayerName, out pPropertyCount, (IntPtr)ptr);
+         }
+      }
 
       //VkResult vkEnumerateDeviceExtensionProperties(VkPhysicalDevice physicalDevice, char* pLayerName, uint32_t* pPropertyCount, VkExtensionProperties* pProperties);
       [DllImport(VulkanLibrary, EntryPoint = "vkEnumerateDeviceExtensionProperties", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result EnumerateDeviceExtensionProperties(PhysicalDevice physicalDevice, ref char pLayerName, ref UInt32 pPropertyCount, ref ExtensionProperties pProperties);
-
+      static extern Result _EnumerateDeviceExtensionProperties(PhysicalDevice physicalDevice, string pLayerName, out UInt32 pPropertyCount, IntPtr pProperties);
+      public unsafe static Result EnumerateDeviceExtensionProperties(PhysicalDevice physicalDevice, string pLayerName, out UInt32 pPropertyCount, ExtensionProperties[] pProperties)
+      {
+         fixed (ExtensionProperties* ptr = pProperties)
+         {
+            return _EnumerateDeviceExtensionProperties(physicalDevice, pLayerName, out pPropertyCount, (IntPtr)ptr);
+         }
+      }
       #endregion
 
       #region Layer discovery commands
       //VkResult vkEnumerateInstanceLayerProperties(uint32_t* pPropertyCount, VkLayerProperties* pProperties);
       [DllImport(VulkanLibrary, EntryPoint = "vkEnumerateInstanceLayerProperties", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result EnumerateInstanceLayerProperties(ref UInt32 pPropertyCount, ref LayerProperties pProperties);
+      static extern Result _EnumerateInstanceLayerProperties(out UInt32 pPropertyCount, IntPtr pProperties);
+      public unsafe static Result EnumerateInstanceLayerProperties(out UInt32 pPropertyCount, LayerProperties[] pProperties)
+      {
+         fixed (LayerProperties* ptr = pProperties)
+         {
+            return _EnumerateInstanceLayerProperties(out pPropertyCount, (IntPtr)ptr);
+         }
+      }
 
 
       //VkResult vkEnumerateDeviceLayerProperties(VkPhysicalDevice physicalDevice, uint32_t* pPropertyCount, VkLayerProperties* pProperties);
       [DllImport(VulkanLibrary, EntryPoint = "vkEnumerateDeviceLayerProperties", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result EnumerateDeviceLayerProperties(PhysicalDevice physicalDevice, ref UInt32 pPropertyCount, ref LayerProperties pProperties);
-
+      static extern Result _EnumerateDeviceLayerProperties(PhysicalDevice physicalDevice, out UInt32 pPropertyCount, IntPtr pProperties);
+      public unsafe static Result EnumerateDeviceLayerProperties(PhysicalDevice physicalDevice, out UInt32 pPropertyCount, LayerProperties[] pProperties)
+      {
+         fixed (LayerProperties* ptr = pProperties)
+         {
+            return _EnumerateDeviceLayerProperties(physicalDevice, out pPropertyCount, (IntPtr)ptr);
+         }
+      }
       #endregion
 
       #region queue commands
@@ -108,8 +171,28 @@ namespace Vulkan
 
       //VkResult vkQueueSubmit(VkQueue queue, uint32_t submitCount, VkSubmitInfo* pSubmits, VkFence fence);
       [DllImport(VulkanLibrary, EntryPoint = "vkQueueSubmit", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result QueueSubmit(Queue queue, UInt32 submitCount, ref SubmitInfo pSubmits, Fence fence);
+      static extern Result _QueueSubmit(Queue queue, UInt32 submitCount, IntPtr pSubmits, Fence fence);
+      public unsafe static Result QueueSubmit(Queue queue, UInt32 submitCount, SubmitInfo[] pSubmits, Fence fence)
+      {
+         _SubmitInfo[] s = new _SubmitInfo[pSubmits.Length];
+         for(int i = 0; i < pSubmits.Length; i++)
+         {
+            s[i] = new _SubmitInfo(pSubmits[i]);
+         }
 
+         Result res;
+         fixed (_SubmitInfo* ptr = s)
+         {
+            res = _QueueSubmit(queue, submitCount, (IntPtr)ptr, fence);
+         }
+
+         for(int i = 0; i < pSubmits.Length; i++)
+         {
+            s[i].destroy();
+         }
+
+         return res;
+      }
 
       //VkResult vkQueueWaitIdle(VkQueue queue);
       [DllImport(VulkanLibrary, EntryPoint = "vkQueueWaitIdle", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -125,7 +208,11 @@ namespace Vulkan
       #region Memory commands
       //VkResult vkAllocateMemory(VkDevice device, VkMemoryAllocateInfo* pAllocateInfo, VkAllocationCallbacks* pAllocator, VkDeviceMemory* pMemory);
       [DllImport(VulkanLibrary, EntryPoint = "vkAllocateMemory", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result AllocateMemory(Device device, ref MemoryAllocateInfo pAllocateInfo, ref AllocationCallbacks pAllocator, ref DeviceMemory pMemory);
+      static extern Result _AllocateMemory(Device device, ref MemoryAllocateInfo pAllocateInfo, AllocationCallbacks pAllocator, out DeviceMemory pMemory);
+      public static Result AllocateMemory(Device device, ref MemoryAllocateInfo pAllocateInfo, out DeviceMemory pMemory, AllocationCallbacks pAllocator = null)
+      {
+         return _AllocateMemory(device, ref pAllocateInfo, pAllocator, out pMemory);
+      }
 
 
       //void vkFreeMemory(VkDevice device, VkDeviceMemory memory, VkAllocationCallbacks* pAllocator);
@@ -184,25 +271,62 @@ namespace Vulkan
       #region Sparse resource memory management API commands
       //void vkGetImageSparseMemoryRequirements(VkDevice device, VkImage image, uint32_t* pSparseMemoryRequirementCount, VkSparseImageMemoryRequirements* pSparseMemoryRequirements);
       [DllImport(VulkanLibrary, EntryPoint = "vkGetImageSparseMemoryRequirements", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void GetImageSparseMemoryRequirements(Device device, Image image, ref UInt32 pSparseMemoryRequirementCount, ref SparseImageMemoryRequirements pSparseMemoryRequirements);
-
+      static extern void _GetImageSparseMemoryRequirements(Device device, Image image, out UInt32 pSparseMemoryRequirementCount, IntPtr pSparseMemoryRequirements);
+      public unsafe static void GetImageSparseMemoryRequirements(Device device, Image image, out UInt32 pSparseMemoryRequirementCount, SparseImageMemoryRequirements[] pSparseMemoryRequirements)
+      {
+         fixed (SparseImageMemoryRequirements* ptr = pSparseMemoryRequirements)
+         {
+            _GetImageSparseMemoryRequirements(device, image, out pSparseMemoryRequirementCount, (IntPtr)ptr);
+         }
+      }
 
       //void vkGetPhysicalDeviceSparseImageFormatProperties(VkPhysicalDevice physicalDevice, VkFormat format, VkImageType type, VkSampleCountFlags samples, VkImageUsageFlags usage, VkImageTiling tiling, uint32_t* pPropertyCount, VkSparseImageFormatProperties* pProperties);
       [DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceSparseImageFormatProperties", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void GetPhysicalDeviceSparseImageFormatProperties(PhysicalDevice physicalDevice, Format format, ImageType type, SampleCountFlags samples, ImageUsageFlags usage, ImageTiling tiling, ref UInt32 pPropertyCount, ref SparseImageFormatProperties pProperties);
-
+      static extern void _GetPhysicalDeviceSparseImageFormatProperties(PhysicalDevice physicalDevice, Format format, ImageType type, SampleCountFlags samples, ImageUsageFlags usage, ImageTiling tiling, out UInt32 pPropertyCount, IntPtr pProperties);
+      public unsafe static void GetPhysicalDeviceSparseImageFormatProperties(PhysicalDevice physicalDevice, Format format, ImageType type, SampleCountFlags samples, ImageUsageFlags usage, ImageTiling tiling, out UInt32 pPropertyCount, SparseImageFormatProperties[] pProperties)
+      {
+         fixed (SparseImageFormatProperties* ptr = pProperties)
+         {
+            _GetPhysicalDeviceSparseImageFormatProperties(physicalDevice, format, type, samples, usage, tiling, out pPropertyCount, (IntPtr)ptr);
+         }
+      }
 
       //VkResult vkQueueBindSparse(VkQueue queue, uint32_t bindInfoCount, VkBindSparseInfo* pBindInfo, VkFence fence);
       [DllImport(VulkanLibrary, EntryPoint = "vkQueueBindSparse", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result QueueBindSparse(Queue queue, UInt32 bindInfoCount, ref BindSparseInfo pBindInfo, Fence fence);
+      static extern Result _QueueBindSparse(Queue queue, UInt32 bindInfoCount, IntPtr pBindInfo, Fence fence);
+      public unsafe static Result QueueBindSparse(Queue queue, UInt32 bindInfoCount, BindSparseInfo[] pBindInfo, Fence fence)
+      {
+         //convert to native format
+         _BindSparseInfo[] _bsi = new _BindSparseInfo[pBindInfo.Length];
+         for(int i = 0; i < pBindInfo.Length; i++)
+         {
+            _bsi[i] = new _BindSparseInfo(pBindInfo[i]);
+         }
 
+         Result res;
+         fixed (_BindSparseInfo* ptr = _bsi)
+         {
+            res = _QueueBindSparse(queue, bindInfoCount, (IntPtr)ptr, fence);
+         }
+
+         //cleanup
+         for(int i = 0; i < _bsi.Length; i++)
+         {
+            _bsi[i].destroy();
+         }
+
+         return res;
+      }
       #endregion
 
       #region Fence commands
       //VkResult vkCreateFence(VkDevice device, VkFenceCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkFence* pFence);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateFence", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateFence(Device device, ref FenceCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref Fence pFence);
-
+      static extern Result _CreateFence(Device device, ref FenceCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out Fence pFence);
+      public static Result CreateFence(Device device, ref FenceCreateInfo pCreateInfo, out Fence pFence, AllocationCallbacks pAllocator = null)
+      {
+         return _CreateFence(device, ref pCreateInfo, pAllocator, out pFence);
+      }
 
       //void vkDestroyFence(VkDevice device, VkFence fence, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyFence", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -211,8 +335,14 @@ namespace Vulkan
 
       //VkResult vkResetFences(VkDevice device, uint32_t fenceCount, VkFence* pFences);
       [DllImport(VulkanLibrary, EntryPoint = "vkResetFences", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result ResetFences(Device device, UInt32 fenceCount, ref Fence pFences);
-
+      static extern Result _ResetFences(Device device, UInt32 fenceCount, IntPtr pFences);
+      public unsafe static Result ResetFences(Device device, UInt32 fenceCount, Fence[] pFences)
+      {
+         fixed (Fence* ptr = pFences)
+         {
+            return _ResetFences(device, fenceCount, (IntPtr)ptr);
+         }
+      }
 
       //VkResult vkGetFenceStatus(VkDevice device, VkFence fence);
       [DllImport(VulkanLibrary, EntryPoint = "vkGetFenceStatus", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -221,15 +351,24 @@ namespace Vulkan
 
       //VkResult vkWaitForFences(VkDevice device, uint32_t fenceCount, VkFence* pFences, VkBool32 waitAll, uint64_t timeout);
       [DllImport(VulkanLibrary, EntryPoint = "vkWaitForFences", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result WaitForFences(Device device, UInt32 fenceCount, ref Fence pFences, Bool32 waitAll, UInt64 timeout);
-
+      static extern Result _WaitForFences(Device device, UInt32 fenceCount, IntPtr pFences, Bool32 waitAll, UInt64 timeout);
+      public unsafe static Result WaitForFences(Device device, UInt32 fenceCount, Fence[] pFences, Bool32 waitAll, UInt64 timeout)
+      {
+         fixed (Fence* ptr = pFences)
+         {
+            return _WaitForFences(device, fenceCount, (IntPtr)ptr, waitAll, timeout);
+         }
+      }
       #endregion
 
       #region Queue semaphore commands
       //VkResult vkCreateSemaphore(VkDevice device, VkSemaphoreCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSemaphore* pSemaphore);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateSemaphore", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateSemaphore(Device device, ref SemaphoreCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref Semaphore pSemaphore);
-
+      static extern Result _CreateSemaphore(Device device, ref SemaphoreCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out Semaphore pSemaphore);
+      public static Result CreateSemaphore(Device device, ref SemaphoreCreateInfo pCreateInfo, out Semaphore pSemaphore, AllocationCallbacks pAllocator = null)
+      {
+         return _CreateSemaphore(device, ref pCreateInfo, pAllocator, out pSemaphore);
+      }
 
       //void vkDestroySemaphore(VkDevice device, VkSemaphore semaphore, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroySemaphore", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -240,8 +379,11 @@ namespace Vulkan
       #region Event commands
       //VkResult vkCreateEvent(VkDevice device, VkEventCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkEvent* pEvent);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateEvent", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateEvent(Device device, ref EventCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref Event pEvent);
-
+      static extern Result _CreateEvent(Device device, ref EventCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out Event pEvent);
+      public static Result CreateEvent(Device device, ref EventCreateInfo pCreateInfo, out Event pEvent, AllocationCallbacks pAllocator = null)
+      {
+         return _CreateEvent(device, ref pCreateInfo, pAllocator, out pEvent);
+      }
 
       //void vkDestroyEvent(VkDevice device, VkEvent event, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyEvent", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -267,8 +409,11 @@ namespace Vulkan
       #region Query commands
       //VkResult vkCreateQueryPool(VkDevice device, VkQueryPoolCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkQueryPool* pQueryPool);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateQueryPool", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateQueryPool(Device device, ref QueryPoolCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref QueryPool pQueryPool);
-
+      static extern Result _CreateQueryPool(Device device, ref QueryPoolCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out QueryPool pQueryPool);
+      public static Result CreateQueryPool(Device device, ref QueryPoolCreateInfo pCreateInfo, out QueryPool pQueryPool, AllocationCallbacks pAllocator = null)
+      {
+         return _CreateQueryPool(device, ref pCreateInfo, pAllocator, out pQueryPool);
+      }
 
       //void vkDestroyQueryPool(VkDevice device, VkQueryPool queryPool, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyQueryPool", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -284,8 +429,11 @@ namespace Vulkan
       #region Buffer commands
       //VkResult vkCreateBuffer(VkDevice device, VkBufferCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkBuffer* pBuffer);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateBuffer", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateBuffer(Device device, ref BufferCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref Buffer pBuffer);
-
+      static extern Result _CreateBuffer(Device device, ref BufferCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out Buffer pBuffer);
+      public static Result CreateBuffer(Device device, ref BufferCreateInfo pCreateInfo, out Buffer pBuffer, AllocationCallbacks pAllocator = null)
+      {
+         return _CreateBuffer(device, ref pCreateInfo, pAllocator, out pBuffer);
+      }
 
       //void vkDestroyBuffer(VkDevice device, VkBuffer buffer, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyBuffer", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -296,8 +444,11 @@ namespace Vulkan
       #region Buffer view commands
       //VkResult vkCreateBufferView(VkDevice device, VkBufferViewCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkBufferView* pView);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateBufferView", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateBufferView(Device device, ref BufferViewCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref BufferView pView);
-
+      static extern Result _CreateBufferView(Device device, ref BufferViewCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out BufferView pView);
+      public static Result CreateBufferView(Device device, ref BufferViewCreateInfo pCreateInfo, out BufferView pView, AllocationCallbacks pAllocator = null)
+      {
+         return _CreateBufferView(device, ref pCreateInfo, pAllocator, out pView);
+      }
 
       //void vkDestroyBufferView(VkDevice device, VkBufferView bufferView, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyBufferView", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -308,8 +459,11 @@ namespace Vulkan
       #region Image commands
       //VkResult vkCreateImage(VkDevice device, VkImageCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkImage* pImage);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateImage", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateImage(Device device, ref ImageCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref Image pImage);
-
+      static extern Result _CreateImage(Device device, ref ImageCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out Image pImage);
+      public static Result CreateImage(Device device, ref ImageCreateInfo pCreateInfo, out Image pImage, AllocationCallbacks pAllocator = null)
+      {
+         return _CreateImage(device, ref pCreateInfo, pAllocator, out pImage);
+      }
 
       //void vkDestroyImage(VkDevice device, VkImage image, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyImage", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -325,8 +479,11 @@ namespace Vulkan
       #region Image view commands
       //VkResult vkCreateImageView(VkDevice device, VkImageViewCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkImageView* pView);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateImageView", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateImageView(Device device, ref ImageViewCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref ImageView pView);
-
+      static extern Result _CreateImageView(Device device, ref ImageViewCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out ImageView pView);
+      public static Result CreateImageView(Device device, ref ImageViewCreateInfo pCreateInfo, out ImageView pView, AllocationCallbacks pAllocator = null)
+      {
+         return _CreateImageView(device, ref pCreateInfo, pAllocator, out pView);
+      }
 
       //void vkDestroyImageView(VkDevice device, VkImageView imageView, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyImageView", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -364,20 +521,44 @@ namespace Vulkan
 
       //VkResult vkMergePipelineCaches(VkDevice device, VkPipelineCache dstCache, uint32_t srcCacheCount, VkPipelineCache* pSrcCaches);
       [DllImport(VulkanLibrary, EntryPoint = "vkMergePipelineCaches", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result MergePipelineCaches(Device device, PipelineCache dstCache, UInt32 srcCacheCount, ref PipelineCache pSrcCaches);
-
+      static extern Result _MergePipelineCaches(Device device, PipelineCache dstCache, UInt32 srcCacheCount, IntPtr pSrcCaches);
+      public unsafe static Result MergePipelineCaches(Device device, PipelineCache dstCache, UInt32 srcCacheCount, PipelineCache[] pSrcCaches)
+      {
+         fixed (PipelineCache* ptr = pSrcCaches)
+         {
+            return _MergePipelineCaches(device, dstCache, srcCacheCount, (IntPtr)ptr);
+         }
+      }
       #endregion
 
       #region Pipeline commands
       //VkResult vkCreateGraphicsPipelines(VkDevice device, VkPipelineCache pipelineCache, uint32_t createInfoCount, VkGraphicsPipelineCreateInfo* pCreateInfos, VkAllocationCallbacks* pAllocator, VkPipeline* pPipelines);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateGraphicsPipelines", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateGraphicsPipelines(Device device, PipelineCache pipelineCache, UInt32 createInfoCount, ref GraphicsPipelineCreateInfo pCreateInfos, ref AllocationCallbacks pAllocator, ref Pipeline pPipelines);
-
+      static extern Result _CreateGraphicsPipelines(Device device, PipelineCache pipelineCache, UInt32 createInfoCount, IntPtr pCreateInfos, AllocationCallbacks pAllocator, IntPtr pPipelines);
+      public unsafe static Result CreateGraphicsPipelines(Device device, PipelineCache pipelineCache, UInt32 createInfoCount, GraphicsPipelineCreateInfo[] pCreateInfos, Pipeline[] pPipelines, AllocationCallbacks pAllocator = null)
+      {
+         fixed (GraphicsPipelineCreateInfo* p1 = pCreateInfos)
+         {
+            fixed (Pipeline* p2 = pPipelines)
+            {
+               return _CreateGraphicsPipelines(device, pipelineCache, createInfoCount, (IntPtr)p1, pAllocator, (IntPtr)p2);
+            }
+         }
+      }
 
       //VkResult vkCreateComputePipelines(VkDevice device, VkPipelineCache pipelineCache, uint32_t createInfoCount, VkComputePipelineCreateInfo* pCreateInfos, VkAllocationCallbacks* pAllocator, VkPipeline* pPipelines);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateComputePipelines", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateComputePipelines(Device device, PipelineCache pipelineCache, UInt32 createInfoCount, ref ComputePipelineCreateInfo pCreateInfos, ref AllocationCallbacks pAllocator, ref Pipeline pPipelines);
-
+      static extern Result _CreateComputePipelines(Device device, PipelineCache pipelineCache, UInt32 createInfoCount, IntPtr pCreateInfos, AllocationCallbacks pAllocator, IntPtr pPipelines);
+      public unsafe static Result CreateComputePipelines(Device device, PipelineCache pipelineCache, UInt32 createInfoCount, ComputePipelineCreateInfo[] pCreateInfos, Pipeline[] pPipelines, AllocationCallbacks pAllocator = null)
+      {
+         fixed (ComputePipelineCreateInfo* p1 = pCreateInfos)
+         {
+            fixed (Pipeline* p2 = pPipelines)
+            {
+               return _CreateComputePipelines(device, pipelineCache, createInfoCount, (IntPtr)p1, pAllocator, (IntPtr)p2);
+            }
+         }
+      }
 
       //void vkDestroyPipeline(VkDevice device, VkPipeline pipeline, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyPipeline", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -422,8 +603,11 @@ namespace Vulkan
 
       //VkResult vkCreateDescriptorPool(VkDevice device, VkDescriptorPoolCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDescriptorPool* pDescriptorPool);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateDescriptorPool", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateDescriptorPool(Device device, ref DescriptorPoolCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref DescriptorPool pDescriptorPool);
-
+      static extern Result _CreateDescriptorPool(Device device, ref DescriptorPoolCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out DescriptorPool pDescriptorPool);
+      public static Result CreateDescriptorPool(Device device, ref DescriptorPoolCreateInfo pCreateInfo, out DescriptorPool pDescriptorPool, AllocationCallbacks pAllocator = null)
+      {
+         return _CreateDescriptorPool(device, ref pCreateInfo, pAllocator, out pDescriptorPool);
+      }
 
       //void vkDestroyDescriptorPool(VkDevice device, VkDescriptorPool descriptorPool, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyDescriptorPool", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -437,25 +621,46 @@ namespace Vulkan
 
       //VkResult vkAllocateDescriptorSets(VkDevice device, VkDescriptorSetAllocateInfo* pAllocateInfo, VkDescriptorSet* pDescriptorSets);
       [DllImport(VulkanLibrary, EntryPoint = "vkAllocateDescriptorSets", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result AllocateDescriptorSets(Device device, ref DescriptorSetAllocateInfo pAllocateInfo, ref DescriptorSet pDescriptorSets);
-
+      static extern Result _AllocateDescriptorSets(Device device, ref DescriptorSetAllocateInfo pAllocateInfo, IntPtr pDescriptorSets);
+      public unsafe static Result AllocateDescriptorSets(Device device, ref DescriptorSetAllocateInfo pAllocateInfo, DescriptorSet[] pDescriptorSets)
+      {
+         fixed (DescriptorSet* ptr = pDescriptorSets)
+         {
+            return _AllocateDescriptorSets(device, ref pAllocateInfo, (IntPtr)ptr);
+         }
+      }
 
       //VkResult vkFreeDescriptorSets(VkDevice device, VkDescriptorPool descriptorPool, uint32_t descriptorSetCount, VkDescriptorSet* pDescriptorSets);
       [DllImport(VulkanLibrary, EntryPoint = "vkFreeDescriptorSets", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result FreeDescriptorSets(Device device, DescriptorPool descriptorPool, UInt32 descriptorSetCount, ref DescriptorSet pDescriptorSets);
-
+      static extern Result _FreeDescriptorSets(Device device, DescriptorPool descriptorPool, UInt32 descriptorSetCount, IntPtr pDescriptorSets);
+      public unsafe static Result FreeDescriptorSets(Device device, DescriptorPool descriptorPool, UInt32 descriptorSetCount, DescriptorSet[] pDescriptorSets)
+      {
+         fixed (DescriptorSet* ptr = pDescriptorSets)
+         {
+            return _FreeDescriptorSets(device, descriptorPool, descriptorSetCount, (IntPtr)ptr);
+         }
+      }
 
       //void vkUpdateDescriptorSets(VkDevice device, uint32_t descriptorWriteCount, VkWriteDescriptorSet* pDescriptorWrites, uint32_t descriptorCopyCount, VkCopyDescriptorSet* pDescriptorCopies);
       [DllImport(VulkanLibrary, EntryPoint = "vkUpdateDescriptorSets", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void UpdateDescriptorSets(Device device, UInt32 descriptorWriteCount, ref WriteDescriptorSet pDescriptorWrites, UInt32 descriptorCopyCount, ref CopyDescriptorSet pDescriptorCopies);
-
+      static extern void _UpdateDescriptorSets(Device device, UInt32 descriptorWriteCount, ref WriteDescriptorSet pDescriptorWrites, UInt32 descriptorCopyCount, IntPtr pDescriptorCopies);
+      public unsafe static void UpdateDescriptorSets(Device device, UInt32 descriptorWriteCount, ref WriteDescriptorSet pDescriptorWrites, UInt32 descriptorCopyCount, CopyDescriptorSet[] pDescriptorCopies)
+      {
+         fixed (CopyDescriptorSet* ptr = pDescriptorCopies)
+         {
+            _UpdateDescriptorSets(device, descriptorWriteCount, ref pDescriptorWrites, descriptorCopyCount, (IntPtr)ptr);
+         }
+      }
       #endregion
 
       #region Pass commands
       //VkResult vkCreateFramebuffer(VkDevice device, VkFramebufferCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkFramebuffer* pFramebuffer);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateFramebuffer", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateFramebuffer(Device device, ref FramebufferCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref Framebuffer pFramebuffer);
-
+      static extern Result _CreateFramebuffer(Device device, ref FramebufferCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out Framebuffer pFramebuffer);
+      public static Result CreateFramebuffer(Device device, ref FramebufferCreateInfo pCreateInfo, out Framebuffer pFramebuffer, AllocationCallbacks pAllocator = null)
+      {
+         return _CreateFramebuffer(device, ref pCreateInfo, pAllocator, out pFramebuffer);
+      }
 
       //void vkDestroyFramebuffer(VkDevice device, VkFramebuffer framebuffer, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyFramebuffer", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -481,8 +686,11 @@ namespace Vulkan
       #region Command pool commands
       //VkResult vkCreateCommandPool(VkDevice device, VkCommandPoolCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkCommandPool* pCommandPool);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateCommandPool", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateCommandPool(Device device, ref CommandPoolCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref CommandPool pCommandPool);
-
+      static extern Result _CreateCommandPool(Device device, ref CommandPoolCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out CommandPool pCommandPool);
+      public static Result CreateCommandPool(Device device, ref CommandPoolCreateInfo pCreateInfo, out CommandPool pCommandPool, AllocationCallbacks pAllocator = null)
+      {
+         return _CreateCommandPool(device, ref pCreateInfo, pAllocator, out pCommandPool);
+      }
 
       //void vkDestroyCommandPool(VkDevice device, VkCommandPool commandPool, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyCommandPool", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -498,13 +706,25 @@ namespace Vulkan
       #region Command buffer commands
       //VkResult vkAllocateCommandBuffers(VkDevice device, VkCommandBufferAllocateInfo* pAllocateInfo, VkCommandBuffer* pCommandBuffers);
       [DllImport(VulkanLibrary, EntryPoint = "vkAllocateCommandBuffers", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result AllocateCommandBuffers(Device device, ref CommandBufferAllocateInfo pAllocateInfo, ref CommandBuffer pCommandBuffers);
-
+      static extern Result _AllocateCommandBuffers(Device device, ref CommandBufferAllocateInfo pAllocateInfo, IntPtr pCommandBuffers);
+      public unsafe static Result AllocateCommandBuffers(Device device, ref CommandBufferAllocateInfo pAllocateInfo, CommandBuffer[] pCommandBuffers)
+      {
+         fixed (CommandBuffer* ptr = pCommandBuffers)
+         {
+            return _AllocateCommandBuffers(device, ref pAllocateInfo, (IntPtr)ptr);
+         }
+      }
 
       //void vkFreeCommandBuffers(VkDevice device, VkCommandPool commandPool, uint32_t commandBufferCount, VkCommandBuffer* pCommandBuffers);
       [DllImport(VulkanLibrary, EntryPoint = "vkFreeCommandBuffers", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void FreeCommandBuffers(Device device, CommandPool commandPool, UInt32 commandBufferCount, ref CommandBuffer pCommandBuffers);
-
+      static extern void _FreeCommandBuffers(Device device, CommandPool commandPool, UInt32 commandBufferCount, IntPtr pCommandBuffers);
+      public unsafe static void FreeCommandBuffers(Device device, CommandPool commandPool, UInt32 commandBufferCount, CommandBuffer[] pCommandBuffers)
+      {
+         fixed (CommandBuffer* ptr = pCommandBuffers)
+         {
+            _FreeCommandBuffers(device, commandPool, commandBufferCount, (IntPtr)ptr);
+         }
+      }
 
       //VkResult vkBeginCommandBuffer(VkCommandBuffer commandBuffer, VkCommandBufferBeginInfo* pBeginInfo);
       [DllImport(VulkanLibrary, EntryPoint = "vkBeginCommandBuffer", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -585,8 +805,14 @@ namespace Vulkan
 
       //void vkCmdBindVertexBuffers(VkCommandBuffer commandBuffer, uint32_t firstBinding, uint32_t bindingCount, VkBuffer* pBuffers, VkDeviceSize* pOffsets);
       [DllImport(VulkanLibrary, EntryPoint = "vkCmdBindVertexBuffers", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void CmdBindVertexBuffers(CommandBuffer commandBuffer, UInt32 firstBinding, UInt32 bindingCount, ref Buffer pBuffers, ref DeviceSize pOffsets);
-
+      static extern void _CmdBindVertexBuffers(CommandBuffer commandBuffer, UInt32 firstBinding, UInt32 bindingCount, IntPtr pBuffers, ref DeviceSize pOffsets);
+      public unsafe static void CmdBindVertexBuffers(CommandBuffer commandBuffer, UInt32 firstBinding, UInt32 bindingCount, Buffer[] pBuffers, ref DeviceSize pOffsets)
+      {
+         fixed (Buffer* ptr = pBuffers)
+         {
+            _CmdBindVertexBuffers(commandBuffer, firstBinding, bindingCount, (IntPtr)ptr, ref pOffsets);
+         }
+      }
 
       //void vkCmdDraw(VkCommandBuffer commandBuffer, uint32_t vertexCount, uint32_t instanceCount, uint32_t firstVertex, uint32_t firstInstance);
       [DllImport(VulkanLibrary, EntryPoint = "vkCmdDraw", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -620,28 +846,58 @@ namespace Vulkan
 
       //void vkCmdCopyBuffer(VkCommandBuffer commandBuffer, VkBuffer srcBuffer, VkBuffer dstBuffer, uint32_t regionCount, VkBufferCopy* pRegions);
       [DllImport(VulkanLibrary, EntryPoint = "vkCmdCopyBuffer", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void CmdCopyBuffer(CommandBuffer commandBuffer, Buffer srcBuffer, Buffer dstBuffer, UInt32 regionCount, ref BufferCopy pRegions);
-
+      static extern void _CmdCopyBuffer(CommandBuffer commandBuffer, Buffer srcBuffer, Buffer dstBuffer, UInt32 regionCount, IntPtr pRegions);
+      public unsafe static void CmdCopyBuffer(CommandBuffer commandBuffer, Buffer srcBuffer, Buffer dstBuffer, UInt32 regionCount, BufferCopy[] pRegions)
+      {
+         fixed (BufferCopy* ptr = pRegions)
+         {
+            _CmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, regionCount, (IntPtr)ptr);
+         }
+      }
 
       //void vkCmdCopyImage(VkCommandBuffer commandBuffer, VkImage srcImage, VkImageLayout srcImageLayout, VkImage dstImage, VkImageLayout dstImageLayout, uint32_t regionCount, VkImageCopy* pRegions);
       [DllImport(VulkanLibrary, EntryPoint = "vkCmdCopyImage", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void CmdCopyImage(CommandBuffer commandBuffer, Image srcImage, ImageLayout srcImageLayout, Image dstImage, ImageLayout dstImageLayout, UInt32 regionCount, ref ImageCopy pRegions);
-
+      static extern void _CmdCopyImage(CommandBuffer commandBuffer, Image srcImage, ImageLayout srcImageLayout, Image dstImage, ImageLayout dstImageLayout, UInt32 regionCount, IntPtr pRegions);
+      public unsafe static void CmdCopyImage(CommandBuffer commandBuffer, Image srcImage, ImageLayout srcImageLayout, Image dstImage, ImageLayout dstImageLayout, UInt32 regionCount, ImageCopy[] pRegions)
+      {
+         fixed (ImageCopy* ptr = pRegions)
+         {
+            _CmdCopyImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, (IntPtr)ptr);
+         }
+      }
 
       //void vkCmdBlitImage(VkCommandBuffer commandBuffer, VkImage srcImage, VkImageLayout srcImageLayout, VkImage dstImage, VkImageLayout dstImageLayout, uint32_t regionCount, VkImageBlit* pRegions, VkFilter filter);
       [DllImport(VulkanLibrary, EntryPoint = "vkCmdBlitImage", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void CmdBlitImage(CommandBuffer commandBuffer, Image srcImage, ImageLayout srcImageLayout, Image dstImage, ImageLayout dstImageLayout, UInt32 regionCount, ref ImageBlit pRegions, Filter filter);
-
+      static extern void _CmdBlitImage(CommandBuffer commandBuffer, Image srcImage, ImageLayout srcImageLayout, Image dstImage, ImageLayout dstImageLayout, UInt32 regionCount, IntPtr pRegions, Filter filter);
+      public unsafe static void CmdBlitImage(CommandBuffer commandBuffer, Image srcImage, ImageLayout srcImageLayout, Image dstImage, ImageLayout dstImageLayout, UInt32 regionCount, ImageBlit[] pRegions, Filter filter)
+      {
+         fixed (ImageBlit* ptr = pRegions)
+         {
+            _CmdBlitImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, (IntPtr)ptr, filter);
+         }
+      }
 
       //void vkCmdCopyBufferToImage(VkCommandBuffer commandBuffer, VkBuffer srcBuffer, VkImage dstImage, VkImageLayout dstImageLayout, uint32_t regionCount, VkBufferImageCopy* pRegions);
       [DllImport(VulkanLibrary, EntryPoint = "vkCmdCopyBufferToImage", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void CmdCopyBufferToImage(CommandBuffer commandBuffer, Buffer srcBuffer, Image dstImage, ImageLayout dstImageLayout, UInt32 regionCount, ref BufferImageCopy pRegions);
-
+      static extern void _CmdCopyBufferToImage(CommandBuffer commandBuffer, Buffer srcBuffer, Image dstImage, ImageLayout dstImageLayout, UInt32 regionCount, IntPtr pRegions);
+      public unsafe static void CmdCopyBufferToImage(CommandBuffer commandBuffer, Buffer srcBuffer, Image dstImage, ImageLayout dstImageLayout, UInt32 regionCount, BufferImageCopy[] pRegions)
+      {
+         fixed (BufferImageCopy* ptr = pRegions)
+         {
+            _CmdCopyBufferToImage(commandBuffer, srcBuffer, dstImage, dstImageLayout, regionCount, (IntPtr)ptr);
+         }
+      }
 
       //void vkCmdCopyImageToBuffer(VkCommandBuffer commandBuffer, VkImage srcImage, VkImageLayout srcImageLayout, VkBuffer dstBuffer, uint32_t regionCount, VkBufferImageCopy* pRegions);
       [DllImport(VulkanLibrary, EntryPoint = "vkCmdCopyImageToBuffer", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void CmdCopyImageToBuffer(CommandBuffer commandBuffer, Image srcImage, ImageLayout srcImageLayout, Buffer dstBuffer, UInt32 regionCount, ref BufferImageCopy pRegions);
-
+      static extern void _CmdCopyImageToBuffer(CommandBuffer commandBuffer, Image srcImage, ImageLayout srcImageLayout, Buffer dstBuffer, UInt32 regionCount, IntPtr pRegions);
+      public unsafe static void CmdCopyImageToBuffer(CommandBuffer commandBuffer, Image srcImage, ImageLayout srcImageLayout, Buffer dstBuffer, UInt32 regionCount, BufferImageCopy[] pRegions)
+      {
+         fixed (BufferImageCopy* ptr = pRegions)
+         {
+            _CmdCopyImageToBuffer(commandBuffer, srcImage, srcImageLayout, dstBuffer, regionCount, (IntPtr)ptr);
+         }
+      }
 
       //void vkCmdUpdateBuffer(VkCommandBuffer commandBuffer, VkBuffer dstBuffer, VkDeviceSize dstOffset, VkDeviceSize dataSize, void* pData);
       [DllImport(VulkanLibrary, EntryPoint = "vkCmdUpdateBuffer", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -655,23 +911,47 @@ namespace Vulkan
 
       //void vkCmdClearColorImage(VkCommandBuffer commandBuffer, VkImage image, VkImageLayout imageLayout, VkClearColorValue* pColor, uint32_t rangeCount, VkImageSubresourceRange* pRanges);
       [DllImport(VulkanLibrary, EntryPoint = "vkCmdClearColorImage", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void CmdClearColorImage(CommandBuffer commandBuffer, Image image, ImageLayout imageLayout, ref ClearColorValue pColor, UInt32 rangeCount, ref ImageSubresourceRange pRanges);
-
+      static extern void _CmdClearColorImage(CommandBuffer commandBuffer, Image image, ImageLayout imageLayout, ref ClearColorValue pColor, UInt32 rangeCount, IntPtr pRanges);
+      public unsafe static void CmdClearColorImage(CommandBuffer commandBuffer, Image image, ImageLayout imageLayout, ref ClearColorValue pColor, UInt32 rangeCount, ImageSubresourceRange[] pRanges)
+      {
+         fixed (ImageSubresourceRange* ptr = pRanges)
+         {
+            _CmdClearColorImage(commandBuffer, image, imageLayout, ref pColor, rangeCount, (IntPtr)ptr);
+         }
+      }
 
       //void vkCmdClearDepthStencilImage(VkCommandBuffer commandBuffer, VkImage image, VkImageLayout imageLayout, VkClearDepthStencilValue* pDepthStencil, uint32_t rangeCount, VkImageSubresourceRange* pRanges);
       [DllImport(VulkanLibrary, EntryPoint = "vkCmdClearDepthStencilImage", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void CmdClearDepthStencilImage(CommandBuffer commandBuffer, Image image, ImageLayout imageLayout, ref ClearDepthStencilValue pDepthStencil, UInt32 rangeCount, ref ImageSubresourceRange pRanges);
-
+      static extern void _CmdClearDepthStencilImage(CommandBuffer commandBuffer, Image image, ImageLayout imageLayout, ref ClearDepthStencilValue pDepthStencil, UInt32 rangeCount, IntPtr pRanges);
+      public unsafe static void CmdClearDepthStencilImage(CommandBuffer commandBuffer, Image image, ImageLayout imageLayout, ref ClearDepthStencilValue pDepthStencil, UInt32 rangeCount, ImageSubresourceRange[] pRanges)
+      {
+         fixed (ImageSubresourceRange* ptr = pRanges)
+         {
+            _CmdClearDepthStencilImage(commandBuffer, image, imageLayout, ref pDepthStencil, rangeCount, (IntPtr)ptr);
+         }
+      }
 
       //void vkCmdClearAttachments(VkCommandBuffer commandBuffer, uint32_t attachmentCount, VkClearAttachment* pAttachments, uint32_t rectCount, VkClearRect* pRects);
       [DllImport(VulkanLibrary, EntryPoint = "vkCmdClearAttachments", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void CmdClearAttachments(CommandBuffer commandBuffer, UInt32 attachmentCount, ref ClearAttachment pAttachments, UInt32 rectCount, ref ClearRect pRects);
-
+      static extern void _CmdClearAttachments(CommandBuffer commandBuffer, UInt32 attachmentCount, ref ClearAttachment pAttachments, UInt32 rectCount, IntPtr pRects);
+      public unsafe static void CmdClearAttachments(CommandBuffer commandBuffer, UInt32 attachmentCount, ref ClearAttachment pAttachments, UInt32 rectCount, ClearRect[] pRects)
+      {
+         fixed (ClearRect* ptr = pRects)
+         {
+            _CmdClearAttachments(commandBuffer, attachmentCount, ref pAttachments, rectCount, (IntPtr)ptr);
+         }
+      }
 
       //void vkCmdResolveImage(VkCommandBuffer commandBuffer, VkImage srcImage, VkImageLayout srcImageLayout, VkImage dstImage, VkImageLayout dstImageLayout, uint32_t regionCount, VkImageResolve* pRegions);
       [DllImport(VulkanLibrary, EntryPoint = "vkCmdResolveImage", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void CmdResolveImage(CommandBuffer commandBuffer, Image srcImage, ImageLayout srcImageLayout, Image dstImage, ImageLayout dstImageLayout, UInt32 regionCount, ref ImageResolve pRegions);
-
+      static extern void _CmdResolveImage(CommandBuffer commandBuffer, Image srcImage, ImageLayout srcImageLayout, Image dstImage, ImageLayout dstImageLayout, UInt32 regionCount, IntPtr pRegions);
+      public unsafe static void CmdResolveImage(CommandBuffer commandBuffer, Image srcImage, ImageLayout srcImageLayout, Image dstImage, ImageLayout dstImageLayout, UInt32 regionCount, ImageResolve[] pRegions)
+      {
+         fixed (ImageResolve* ptr = pRegions)
+         {
+            _CmdResolveImage(commandBuffer, srcImage, srcImageLayout, dstImage, dstImageLayout, regionCount, (IntPtr)ptr);
+         }
+      }
 
       //void vkCmdSetEvent(VkCommandBuffer commandBuffer, VkEvent event, VkPipelineStageFlags stageMask);
       [DllImport(VulkanLibrary, EntryPoint = "vkCmdSetEvent", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -685,13 +965,40 @@ namespace Vulkan
 
       //void vkCmdWaitEvents(VkCommandBuffer commandBuffer, uint32_t eventCount, VkEvent* pEvents, VkPipelineStageFlags srcStageMask, VkPipelineStageFlags dstStageMask, uint32_t memoryBarrierCount, VkMemoryBarrier* pMemoryBarriers, uint32_t bufferMemoryBarrierCount, VkBufferMemoryBarrier* pBufferMemoryBarriers, uint32_t imageMemoryBarrierCount, VkImageMemoryBarrier* pImageMemoryBarriers);
       [DllImport(VulkanLibrary, EntryPoint = "vkCmdWaitEvents", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void CmdWaitEvents(CommandBuffer commandBuffer, UInt32 eventCount, ref Event pEvents, PipelineStageFlags srcStageMask, PipelineStageFlags dstStageMask, UInt32 memoryBarrierCount, ref MemoryBarrier pMemoryBarriers, UInt32 bufferMemoryBarrierCount, ref BufferMemoryBarrier pBufferMemoryBarriers, UInt32 imageMemoryBarrierCount, ref ImageMemoryBarrier pImageMemoryBarriers);
-
+      static extern void _CmdWaitEvents(CommandBuffer commandBuffer, UInt32 eventCount, IntPtr pEvents, PipelineStageFlags srcStageMask, PipelineStageFlags dstStageMask, UInt32 memoryBarrierCount, IntPtr pMemoryBarriers, UInt32 bufferMemoryBarrierCount, IntPtr pBufferMemoryBarriers, UInt32 imageMemoryBarrierCount, IntPtr pImageMemoryBarriers);
+      public unsafe static void CmdWaitEvents(CommandBuffer commandBuffer, UInt32 eventCount, Event[] pEvents, PipelineStageFlags srcStageMask, PipelineStageFlags dstStageMask, UInt32 memoryBarrierCount, MemoryBarrier[] pMemoryBarriers, UInt32 bufferMemoryBarrierCount, BufferMemoryBarrier[] pBufferMemoryBarriers, UInt32 imageMemoryBarrierCount, ImageMemoryBarrier[] pImageMemoryBarriers)
+      {
+         fixed (Event* p1 = pEvents)
+         {
+            fixed (MemoryBarrier* p2 = pMemoryBarriers)
+            {
+               fixed (BufferMemoryBarrier* p3 = pBufferMemoryBarriers)
+               {
+                  fixed (ImageMemoryBarrier* p4 = pImageMemoryBarriers)
+                  {
+                     _CmdWaitEvents(commandBuffer, eventCount, (IntPtr)p1, srcStageMask, dstStageMask, memoryBarrierCount, (IntPtr)p2, bufferMemoryBarrierCount, (IntPtr)p3, imageMemoryBarrierCount, (IntPtr)p4);
+                  }
+               }
+            }
+         }
+      }
 
       //void vkCmdPipelineBarrier(VkCommandBuffer commandBuffer, VkPipelineStageFlags srcStageMask, VkPipelineStageFlags dstStageMask, VkDependencyFlags dependencyFlags, uint32_t memoryBarrierCount, VkMemoryBarrier* pMemoryBarriers, uint32_t bufferMemoryBarrierCount, VkBufferMemoryBarrier* pBufferMemoryBarriers, uint32_t imageMemoryBarrierCount, VkImageMemoryBarrier* pImageMemoryBarriers);
       [DllImport(VulkanLibrary, EntryPoint = "vkCmdPipelineBarrier", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void CmdPipelineBarrier(CommandBuffer commandBuffer, PipelineStageFlags srcStageMask, PipelineStageFlags dstStageMask, DependencyFlags dependencyFlags, UInt32 memoryBarrierCount, ref MemoryBarrier pMemoryBarriers, UInt32 bufferMemoryBarrierCount, ref BufferMemoryBarrier pBufferMemoryBarriers, UInt32 imageMemoryBarrierCount, ref ImageMemoryBarrier pImageMemoryBarriers);
-
+      static extern void _CmdPipelineBarrier(CommandBuffer commandBuffer, PipelineStageFlags srcStageMask, PipelineStageFlags dstStageMask, DependencyFlags dependencyFlags, UInt32 memoryBarrierCount, IntPtr pMemoryBarriers, UInt32 bufferMemoryBarrierCount, IntPtr pBufferMemoryBarriers, UInt32 imageMemoryBarrierCount, IntPtr pImageMemoryBarriers);
+      public unsafe static void CmdPipelineBarrier(CommandBuffer commandBuffer, PipelineStageFlags srcStageMask, PipelineStageFlags dstStageMask, DependencyFlags dependencyFlags, UInt32 memoryBarrierCount, MemoryBarrier[] pMemoryBarriers, UInt32 bufferMemoryBarrierCount, BufferMemoryBarrier[] pBufferMemoryBarriers, UInt32 imageMemoryBarrierCount, ImageMemoryBarrier[] pImageMemoryBarriers)
+      {
+         fixed (MemoryBarrier* p1 = pMemoryBarriers)
+         {
+            fixed (BufferMemoryBarrier* p2 = pBufferMemoryBarriers)
+            {
+               fixed (ImageMemoryBarrier* p3 = pImageMemoryBarriers)
+               {
+                  _CmdPipelineBarrier(commandBuffer, srcStageMask, dstStageMask, dependencyFlags, memoryBarrierCount, (IntPtr)p1, bufferMemoryBarrierCount, (IntPtr)p2, imageMemoryBarrierCount, (IntPtr)p3);
+               }
+            }
+         }
+      }
 
       //void vkCmdBeginQuery(VkCommandBuffer commandBuffer, VkQueryPool queryPool, uint32_t query, VkQueryControlFlags flags);
       [DllImport(VulkanLibrary, EntryPoint = "vkCmdBeginQuery", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -740,8 +1047,14 @@ namespace Vulkan
 
       //void vkCmdExecuteCommands(VkCommandBuffer commandBuffer, uint32_t commandBufferCount, VkCommandBuffer* pCommandBuffers);
       [DllImport(VulkanLibrary, EntryPoint = "vkCmdExecuteCommands", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void CmdExecuteCommands(CommandBuffer commandBuffer, UInt32 commandBufferCount, ref CommandBuffer pCommandBuffers);
-
+      static extern void _CmdExecuteCommands(CommandBuffer commandBuffer, UInt32 commandBufferCount, IntPtr pCommandBuffers);
+      public unsafe static void CmdExecuteCommands(CommandBuffer commandBuffer, UInt32 commandBufferCount, CommandBuffer[] pCommandBuffers)
+      {
+         fixed (CommandBuffer* ptr = pCommandBuffers)
+         {
+            _CmdExecuteCommands(commandBuffer, commandBufferCount, (IntPtr)ptr);
+         }
+      }
       #endregion
 
       #region Device Initialization

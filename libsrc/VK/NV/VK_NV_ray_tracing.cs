@@ -56,27 +56,27 @@ namespace Vulkan
       [Flags]
       public enum GeometryFlagsNV : int
       {  
-         GeometryOpaqueBitNv = 1 << 0,
-         GeometryNoDuplicateAnyHitInvocationBitNv = 1 << 1,
+         OpaqueBitNv = 1 << 0,
+         NoDuplicateAnyHitInvocationBitNv = 1 << 1,
       };
       
       [Flags]
       public enum GeometryInstanceFlagsNV : int
       {  
-         GeometryInstanceTriangleCullDisableBitNv = 1 << 0,
-         GeometryInstanceTriangleFrontCounterclockwiseBitNv = 1 << 1,
-         GeometryInstanceForceOpaqueBitNv = 1 << 2,
-         GeometryInstanceForceNoOpaqueBitNv = 1 << 3,
+         TriangleCullDisableBitNv = 1 << 0,
+         TriangleFrontCounterclockwiseBitNv = 1 << 1,
+         ForceOpaqueBitNv = 1 << 2,
+         ForceNoOpaqueBitNv = 1 << 3,
       };
       
       [Flags]
       public enum BuildAccelerationStructureFlagsNV : int
       {  
-         BuildAccelerationStructureAllowUpdateBitNv = 1 << 0,
-         BuildAccelerationStructureAllowCompactionBitNv = 1 << 1,
-         BuildAccelerationStructurePreferFastTraceBitNv = 1 << 2,
-         BuildAccelerationStructurePreferFastBuildBitNv = 1 << 3,
-         BuildAccelerationStructureLowMemoryBitNv = 1 << 4,
+         AllowUpdateBitNv = 1 << 0,
+         AllowCompactionBitNv = 1 << 1,
+         PreferFastTraceBitNv = 1 << 2,
+         PreferFastBuildBitNv = 1 << 3,
+         LowMemoryBitNv = 1 << 4,
       };
       
       #endregion
@@ -270,7 +270,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_NV_ray_tracing
+      public static class NV_ray_tracing
       {
          public static void init(VK.Device device)
          {

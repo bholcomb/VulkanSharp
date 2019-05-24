@@ -91,7 +91,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_transform_feedback
+      public static class EXT_transform_feedback
       {
          public static void init(VK.Device device)
          {

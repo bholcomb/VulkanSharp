@@ -90,7 +90,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_NV_cooperative_matrix
+      public static class NV_cooperative_matrix
       {
          public static void init(VK.Device device)
          {

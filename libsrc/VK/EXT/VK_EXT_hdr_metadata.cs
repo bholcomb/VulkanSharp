@@ -56,7 +56,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_hdr_metadata
+      public static class EXT_hdr_metadata
       {
          public static void init(VK.Device device)
          {

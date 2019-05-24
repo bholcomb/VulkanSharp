@@ -61,7 +61,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_KHR_get_surface_capabilities2
+      public static class KHR_get_surface_capabilities2
       {
          public static void init(VK.Instance instance)
          {

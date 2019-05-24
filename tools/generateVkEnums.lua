@@ -34,6 +34,7 @@ namespace Vulkan
          local b = types.bitmasks[name]
          local lastExtension = "Core"
          name = string.gsub(name, "Vk", "") --remove leading Vk from all name
+         local _, _, filterName = string.find(name, "(.-)Flags")
       }}
       [Flags]
       public enum {{= name}} : int
@@ -43,7 +44,7 @@ namespace Vulkan
                 lastExtension = (vv.extension or "Core")}}
           //{{= vv.extension}}
                {{end}}
-          {{= sanitizeEnumName(vv.name, name)}} =  1 << {{= vv.bitpos}},
+          {{= sanitizeEnumName(vv.name, filterName)}} =  1 << {{= vv.bitpos}},
           {{end}}
       };
       

@@ -76,7 +76,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_EXT_validation_cache
+      public static class EXT_validation_cache
       {
          public static void init(VK.Device device)
          {

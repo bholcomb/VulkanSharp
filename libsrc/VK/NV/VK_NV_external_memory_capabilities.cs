@@ -21,18 +21,18 @@ namespace Vulkan
       [Flags]
       public enum ExternalMemoryHandleTypeFlagsNV : int
       {  
-         ExternalMemoryHandleTypeOpaqueWin32BitNv = 1 << 0,
-         ExternalMemoryHandleTypeOpaqueWin32KmtBitNv = 1 << 1,
-         ExternalMemoryHandleTypeD3d11ImageBitNv = 1 << 2,
-         ExternalMemoryHandleTypeD3d11ImageKmtBitNv = 1 << 3,
+         OpaqueWin32BitNv = 1 << 0,
+         OpaqueWin32KmtBitNv = 1 << 1,
+         D3d11ImageBitNv = 1 << 2,
+         D3d11ImageKmtBitNv = 1 << 3,
       };
       
       [Flags]
       public enum ExternalMemoryFeatureFlagsNV : int
       {  
-         ExternalMemoryFeatureDedicatedOnlyBitNv = 1 << 0,
-         ExternalMemoryFeatureExportableBitNv = 1 << 1,
-         ExternalMemoryFeatureImportableBitNv = 1 << 2,
+         DedicatedOnlyBitNv = 1 << 0,
+         ExportableBitNv = 1 << 1,
+         ImportableBitNv = 1 << 2,
       };
       
       #endregion
@@ -62,7 +62,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_NV_external_memory_capabilities
+      public static class NV_external_memory_capabilities
       {
          public static void init(VK.Instance instance)
          {

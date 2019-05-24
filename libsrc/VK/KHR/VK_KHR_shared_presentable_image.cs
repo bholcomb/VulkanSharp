@@ -42,7 +42,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_KHR_shared_presentable_image
+      public static class KHR_shared_presentable_image
       {
          public static void init(VK.Device device)
          {

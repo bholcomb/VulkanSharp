@@ -50,7 +50,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_FUCHSIA_imagepipe_surface
+      public static class FUCHSIA_imagepipe_surface
       {
          public static void init(VK.Instance instance)
          {

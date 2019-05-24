@@ -54,7 +54,7 @@ namespace Vulkan
       #endregion
 
       #region interop
-      public static class VK_NV_device_diagnostic_checkpoints
+      public static class NV_device_diagnostic_checkpoints
       {
          public static void init(VK.Device device)
          {
