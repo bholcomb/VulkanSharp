@@ -43,7 +43,7 @@ namespace Vulkan
       //VkResult vkCreateStreamDescriptorSurfaceGGP(VkInstance instance, VkStreamDescriptorSurfaceCreateInfoGGP* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface);
       
       //delegate definitions
-      public delegate Result CreateStreamDescriptorSurfaceGGPDelegate(Instance instance, ref StreamDescriptorSurfaceCreateInfoGGP pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
+      public delegate Result CreateStreamDescriptorSurfaceGGPDelegate(Instance instance, ref StreamDescriptorSurfaceCreateInfoGGP pCreateInfo, AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
       
       //delegate instances
       public static CreateStreamDescriptorSurfaceGGPDelegate CreateStreamDescriptorSurfaceGGP;

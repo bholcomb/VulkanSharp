@@ -63,8 +63,8 @@ namespace Vulkan
       //VkResult vkGetValidationCacheDataEXT(VkDevice device, VkValidationCacheEXT validationCache, size_t* pDataSize, void* pData);
       
       //delegate definitions
-      public delegate Result CreateValidationCacheEXTDelegate(Device device, ref ValidationCacheCreateInfoEXT pCreateInfo, ref AllocationCallbacks pAllocator, ref ValidationCacheEXT pValidationCache);
-      public delegate void DestroyValidationCacheEXTDelegate(Device device, ValidationCacheEXT validationCache, ref AllocationCallbacks pAllocator);
+      public delegate Result CreateValidationCacheEXTDelegate(Device device, ref ValidationCacheCreateInfoEXT pCreateInfo, AllocationCallbacks pAllocator, ref ValidationCacheEXT pValidationCache);
+      public delegate void DestroyValidationCacheEXTDelegate(Device device, ValidationCacheEXT validationCache, AllocationCallbacks pAllocator);
       public delegate Result MergeValidationCachesEXTDelegate(Device device, ValidationCacheEXT dstCache, UInt32 srcCacheCount, ref ValidationCacheEXT pSrcCaches);
       public delegate Result GetValidationCacheDataEXTDelegate(Device device, ValidationCacheEXT validationCache, ref UInt32 pDataSize, IntPtr pData);
       

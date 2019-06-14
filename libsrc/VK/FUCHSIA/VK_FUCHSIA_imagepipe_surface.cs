@@ -43,7 +43,7 @@ namespace Vulkan
       //VkResult vkCreateImagePipeSurfaceFUCHSIA(VkInstance instance, VkImagePipeSurfaceCreateInfoFUCHSIA* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface);
       
       //delegate definitions
-      public delegate Result CreateImagePipeSurfaceFUCHSIADelegate(Instance instance, ref ImagePipeSurfaceCreateInfoFUCHSIA pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
+      public delegate Result CreateImagePipeSurfaceFUCHSIADelegate(Instance instance, ref ImagePipeSurfaceCreateInfoFUCHSIA pCreateInfo, AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
       
       //delegate instances
       public static CreateImagePipeSurfaceFUCHSIADelegate CreateImagePipeSurfaceFUCHSIA;

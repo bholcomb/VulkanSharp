@@ -43,7 +43,7 @@ namespace Vulkan
       //VkResult vkCreateAndroidSurfaceKHR(VkInstance instance, VkAndroidSurfaceCreateInfoKHR* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface);
       
       //delegate definitions
-      public delegate Result CreateAndroidSurfaceKHRDelegate(Instance instance, ref AndroidSurfaceCreateInfoKHR pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
+      public delegate Result CreateAndroidSurfaceKHRDelegate(Instance instance, ref AndroidSurfaceCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
       
       //delegate instances
       public static CreateAndroidSurfaceKHRDelegate CreateAndroidSurfaceKHR;

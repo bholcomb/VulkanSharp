@@ -43,7 +43,7 @@ namespace Vulkan
       //VkResult vkCreateMacOSSurfaceMVK(VkInstance instance, VkMacOSSurfaceCreateInfoMVK* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface);
       
       //delegate definitions
-      public delegate Result CreateMacOSSurfaceMVKDelegate(Instance instance, ref MacOSSurfaceCreateInfoMVK pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
+      public delegate Result CreateMacOSSurfaceMVKDelegate(Instance instance, ref MacOSSurfaceCreateInfoMVK pCreateInfo, AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
       
       //delegate instances
       public static CreateMacOSSurfaceMVKDelegate CreateMacOSSurfaceMVK;

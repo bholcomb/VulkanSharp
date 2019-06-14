@@ -120,7 +120,7 @@ namespace Vulkan
       //void vkCmdEndRenderPass2KHR(VkCommandBuffer commandBuffer, VkSubpassEndInfoKHR* pSubpassEndInfo);
       
       //delegate definitions
-      public delegate Result CreateRenderPass2KHRDelegate(Device device, ref RenderPassCreateInfo2KHR pCreateInfo, ref AllocationCallbacks pAllocator, ref RenderPass pRenderPass);
+      public delegate Result CreateRenderPass2KHRDelegate(Device device, ref RenderPassCreateInfo2KHR pCreateInfo, AllocationCallbacks pAllocator, ref RenderPass pRenderPass);
       public delegate void CmdBeginRenderPass2KHRDelegate(CommandBuffer commandBuffer, ref RenderPassBeginInfo pRenderPassBegin, ref SubpassBeginInfoKHR pSubpassBeginInfo);
       public delegate void CmdNextSubpass2KHRDelegate(CommandBuffer commandBuffer, ref SubpassBeginInfoKHR pSubpassBeginInfo, ref SubpassEndInfoKHR pSubpassEndInfo);
       public delegate void CmdEndRenderPass2KHRDelegate(CommandBuffer commandBuffer, ref SubpassEndInfoKHR pSubpassEndInfo);

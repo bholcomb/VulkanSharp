@@ -132,9 +132,9 @@ namespace Vulkan
       public delegate Result GetPhysicalDeviceDisplayPlanePropertiesKHRDelegate(PhysicalDevice physicalDevice, ref UInt32 pPropertyCount, ref DisplayPlanePropertiesKHR pProperties);
       public delegate Result GetDisplayPlaneSupportedDisplaysKHRDelegate(PhysicalDevice physicalDevice, UInt32 planeIndex, ref UInt32 pDisplayCount, ref DisplayKHR pDisplays);
       public delegate Result GetDisplayModePropertiesKHRDelegate(PhysicalDevice physicalDevice, DisplayKHR display, ref UInt32 pPropertyCount, ref DisplayModePropertiesKHR pProperties);
-      public delegate Result CreateDisplayModeKHRDelegate(PhysicalDevice physicalDevice, DisplayKHR display, ref DisplayModeCreateInfoKHR pCreateInfo, ref AllocationCallbacks pAllocator, ref DisplayModeKHR pMode);
+      public delegate Result CreateDisplayModeKHRDelegate(PhysicalDevice physicalDevice, DisplayKHR display, ref DisplayModeCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, ref DisplayModeKHR pMode);
       public delegate Result GetDisplayPlaneCapabilitiesKHRDelegate(PhysicalDevice physicalDevice, DisplayModeKHR mode, UInt32 planeIndex, ref DisplayPlaneCapabilitiesKHR pCapabilities);
-      public delegate Result CreateDisplayPlaneSurfaceKHRDelegate(Instance instance, ref DisplaySurfaceCreateInfoKHR pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
+      public delegate Result CreateDisplayPlaneSurfaceKHRDelegate(Instance instance, ref DisplaySurfaceCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
       
       //delegate instances
       public static GetPhysicalDeviceDisplayPropertiesKHRDelegate GetPhysicalDeviceDisplayPropertiesKHR;

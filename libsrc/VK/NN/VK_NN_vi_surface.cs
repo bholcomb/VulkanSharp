@@ -43,7 +43,7 @@ namespace Vulkan
       //VkResult vkCreateViSurfaceNN(VkInstance instance, VkViSurfaceCreateInfoNN* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSurfaceKHR* pSurface);
       
       //delegate definitions
-      public delegate Result CreateViSurfaceNNDelegate(Instance instance, ref ViSurfaceCreateInfoNN pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
+      public delegate Result CreateViSurfaceNNDelegate(Instance instance, ref ViSurfaceCreateInfoNN pCreateInfo, AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
       
       //delegate instances
       public static CreateViSurfaceNNDelegate CreateViSurfaceNN;

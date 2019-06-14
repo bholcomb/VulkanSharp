@@ -319,7 +319,8 @@ function parseExtensions()
                      if(type(r)=="table" and r:tag() == "enum" and r.offset ~= nil and r.extends ~= nil and r.alias == nil) then
                         local extEnum = {}
                         extEnum.name = r.name
-                        extEnum.value =  1000000000 + (ext.number * 1000) + r.offset
+                        extEnum.value =  1000000000 + ((ext.number - 1) * 1000) + r.offset
+                        if(r.dir == "-") then extEnum.value = -extEnum.value end
                         extEnum.extension = ext.name
                         table.insert(types.enums[r.extends].values, extEnum)
                      elseif(type(r) == "table" and r:tag() == "enum" and r.bitpos ~= nil) then
@@ -401,7 +402,8 @@ function parseApi()
                      end
                   elseif(type(r) == "table" and r:tag() == "enum") then
                      if(r.extends ~= nil and r.bitpos == nil and r.alias == nil) then
-                        local val = 1000000000 + (r.extnumber * 1000) + r.offset
+                        local val = 1000000000 + ((r.extnumber -1) * 1000) + r.offset
+                        if(r.dir == "-") then val = -val end
                         table.insert(types.enums[r.extends].values, {name = r.name, value = val})
                         refDataType(r.extends, "core", api)
                      elseif(r.extends ~= nil and r.bitpos ~= nil and r.alias == nil) then

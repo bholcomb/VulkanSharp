@@ -28,13 +28,13 @@ namespace Vulkan
 
       //void vkDestroyInstance(VkInstance instance, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyInstance", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroyInstance(Instance instance, ref AllocationCallbacks pAllocator);
+      public static extern void DestroyInstance(Instance instance, AllocationCallbacks pAllocator);
 
 
       //VkResult vkEnumeratePhysicalDevices(VkInstance instance, uint32_t* pPhysicalDeviceCount, VkPhysicalDevice* pPhysicalDevices);
       [DllImport(VulkanLibrary, EntryPoint = "vkEnumeratePhysicalDevices", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
       static extern Result _EnumeratePhysicalDevices(Instance instance, out UInt32 pPhysicalDeviceCount, IntPtr pPhysicalDevices);
-      public unsafe static Result EnumeratePhysicalDevices(Instance instance, ref UInt32 pPhysicalDeviceCount, PhysicalDevice[] pPhysicalDevices)
+      public unsafe static Result EnumeratePhysicalDevices(Instance instance, out UInt32 pPhysicalDeviceCount, PhysicalDevice[] pPhysicalDevices)
       {
          fixed (PhysicalDevice* ptr = pPhysicalDevices)
          {
@@ -44,22 +44,22 @@ namespace Vulkan
 
       //void vkGetPhysicalDeviceFeatures(VkPhysicalDevice physicalDevice, VkPhysicalDeviceFeatures* pFeatures);
       [DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceFeatures", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void GetPhysicalDeviceFeatures(PhysicalDevice physicalDevice, ref PhysicalDeviceFeatures pFeatures);
+      public static extern void GetPhysicalDeviceFeatures(PhysicalDevice physicalDevice, out PhysicalDeviceFeatures pFeatures);
 
 
       //void vkGetPhysicalDeviceFormatProperties(VkPhysicalDevice physicalDevice, VkFormat format, VkFormatProperties* pFormatProperties);
       [DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceFormatProperties", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void GetPhysicalDeviceFormatProperties(PhysicalDevice physicalDevice, Format format, ref FormatProperties pFormatProperties);
+      public static extern void GetPhysicalDeviceFormatProperties(PhysicalDevice physicalDevice, Format format, out FormatProperties pFormatProperties);
 
 
       //VkResult vkGetPhysicalDeviceImageFormatProperties(VkPhysicalDevice physicalDevice, VkFormat format, VkImageType type, VkImageTiling tiling, VkImageUsageFlags usage, VkImageCreateFlags flags, VkImageFormatProperties* pImageFormatProperties);
       [DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceImageFormatProperties", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result GetPhysicalDeviceImageFormatProperties(PhysicalDevice physicalDevice, Format format, ImageType type, ImageTiling tiling, ImageUsageFlags usage, ImageCreateFlags flags, ref ImageFormatProperties pImageFormatProperties);
+      public static extern Result GetPhysicalDeviceImageFormatProperties(PhysicalDevice physicalDevice, Format format, ImageType type, ImageTiling tiling, ImageUsageFlags usage, ImageCreateFlags flags, out ImageFormatProperties pImageFormatProperties);
 
 
       //void vkGetPhysicalDeviceProperties(VkPhysicalDevice physicalDevice, VkPhysicalDeviceProperties* pProperties);
       [DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceProperties", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void GetPhysicalDeviceProperties(PhysicalDevice physicalDevice, ref PhysicalDeviceProperties pProperties);
+      public static extern void GetPhysicalDeviceProperties(PhysicalDevice physicalDevice, out PhysicalDeviceProperties pProperties);
 
 
       //void vkGetPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice physicalDevice, uint32_t* pQueueFamilyPropertyCount, VkQueueFamilyProperties* pQueueFamilyProperties);
@@ -75,7 +75,7 @@ namespace Vulkan
 
       //void vkGetPhysicalDeviceMemoryProperties(VkPhysicalDevice physicalDevice, VkPhysicalDeviceMemoryProperties* pMemoryProperties);
       [DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceMemoryProperties", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void GetPhysicalDeviceMemoryProperties(PhysicalDevice physicalDevice, ref PhysicalDeviceMemoryProperties pMemoryProperties);
+      public static extern void GetPhysicalDeviceMemoryProperties(PhysicalDevice physicalDevice, out PhysicalDeviceMemoryProperties pMemoryProperties);
 
 
       //PFN_vkVoidFunction vkGetInstanceProcAddr(VkInstance instance, char* pName);
@@ -110,7 +110,7 @@ namespace Vulkan
 
       //void vkDestroyDevice(VkDevice device, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyDevice", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroyDevice(Device device, ref AllocationCallbacks pAllocator);
+      public static extern void DestroyDevice(Device device, AllocationCallbacks pAllocator = null);
 
       #endregion
 
@@ -166,7 +166,7 @@ namespace Vulkan
       #region queue commands
       //void vkGetDeviceQueue(VkDevice device, uint32_t queueFamilyIndex, uint32_t queueIndex, VkQueue* pQueue);
       [DllImport(VulkanLibrary, EntryPoint = "vkGetDeviceQueue", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void GetDeviceQueue(Device device, UInt32 queueFamilyIndex, UInt32 queueIndex, ref Queue pQueue);
+      public static extern void GetDeviceQueue(Device device, UInt32 queueFamilyIndex, UInt32 queueIndex, out Queue pQueue);
 
 
       //VkResult vkQueueSubmit(VkQueue queue, uint32_t submitCount, VkSubmitInfo* pSubmits, VkFence fence);
@@ -217,7 +217,7 @@ namespace Vulkan
 
       //void vkFreeMemory(VkDevice device, VkDeviceMemory memory, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkFreeMemory", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void FreeMemory(Device device, DeviceMemory memory, ref AllocationCallbacks pAllocator);
+      public static extern void FreeMemory(Device device, DeviceMemory memory, AllocationCallbacks pAllocator = null);
 
 
       //VkResult vkMapMemory(VkDevice device, VkDeviceMemory memory, VkDeviceSize offset, VkDeviceSize size, VkMemoryMapFlags flags, void** ppData);
@@ -330,7 +330,7 @@ namespace Vulkan
 
       //void vkDestroyFence(VkDevice device, VkFence fence, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyFence", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroyFence(Device device, Fence fence, ref AllocationCallbacks pAllocator);
+      public static extern void DestroyFence(Device device, Fence fence, AllocationCallbacks pAllocator);
 
 
       //VkResult vkResetFences(VkDevice device, uint32_t fenceCount, VkFence* pFences);
@@ -372,7 +372,7 @@ namespace Vulkan
 
       //void vkDestroySemaphore(VkDevice device, VkSemaphore semaphore, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroySemaphore", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroySemaphore(Device device, Semaphore semaphore, ref AllocationCallbacks pAllocator);
+      public static extern void DestroySemaphore(Device device, Semaphore semaphore, AllocationCallbacks pAllocator);
 
       #endregion
 
@@ -387,7 +387,7 @@ namespace Vulkan
 
       //void vkDestroyEvent(VkDevice device, VkEvent event, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyEvent", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroyEvent(Device device, Event _event, ref AllocationCallbacks pAllocator);
+      public static extern void DestroyEvent(Device device, Event _event, AllocationCallbacks pAllocator);
 
 
       //VkResult vkGetEventStatus(VkDevice device, VkEvent event);
@@ -417,7 +417,7 @@ namespace Vulkan
 
       //void vkDestroyQueryPool(VkDevice device, VkQueryPool queryPool, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyQueryPool", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroyQueryPool(Device device, QueryPool queryPool, ref AllocationCallbacks pAllocator);
+      public static extern void DestroyQueryPool(Device device, QueryPool queryPool, AllocationCallbacks pAllocator);
 
 
       //VkResult vkGetQueryPoolResults(VkDevice device, VkQueryPool queryPool, uint32_t firstQuery, uint32_t queryCount, size_t dataSize, void* pData, VkDeviceSize stride, VkQueryResultFlags flags);
@@ -437,7 +437,7 @@ namespace Vulkan
 
       //void vkDestroyBuffer(VkDevice device, VkBuffer buffer, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyBuffer", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroyBuffer(Device device, Buffer buffer, ref AllocationCallbacks pAllocator);
+      public static extern void DestroyBuffer(Device device, Buffer buffer, AllocationCallbacks pAllocator);
 
       #endregion
 
@@ -452,7 +452,7 @@ namespace Vulkan
 
       //void vkDestroyBufferView(VkDevice device, VkBufferView bufferView, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyBufferView", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroyBufferView(Device device, BufferView bufferView, ref AllocationCallbacks pAllocator);
+      public static extern void DestroyBufferView(Device device, BufferView bufferView, AllocationCallbacks pAllocator);
 
       #endregion
 
@@ -467,7 +467,7 @@ namespace Vulkan
 
       //void vkDestroyImage(VkDevice device, VkImage image, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyImage", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroyImage(Device device, Image image, ref AllocationCallbacks pAllocator);
+      public static extern void DestroyImage(Device device, Image image, AllocationCallbacks pAllocator);
 
 
       //void vkGetImageSubresourceLayout(VkDevice device, VkImage image, VkImageSubresource* pSubresource, VkSubresourceLayout* pLayout);
@@ -487,31 +487,31 @@ namespace Vulkan
 
       //void vkDestroyImageView(VkDevice device, VkImageView imageView, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyImageView", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroyImageView(Device device, ImageView imageView, ref AllocationCallbacks pAllocator);
+      public static extern void DestroyImageView(Device device, ImageView imageView, AllocationCallbacks pAllocator);
 
       #endregion
 
       #region Shader commands
       //VkResult vkCreateShaderModule(VkDevice device, VkShaderModuleCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkShaderModule* pShaderModule);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateShaderModule", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateShaderModule(Device device, ref ShaderModuleCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref ShaderModule pShaderModule);
+      public static extern Result CreateShaderModule(Device device, ref ShaderModuleCreateInfo pCreateInfo, AllocationCallbacks pAllocator, ref ShaderModule pShaderModule);
 
 
       //void vkDestroyShaderModule(VkDevice device, VkShaderModule shaderModule, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyShaderModule", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroyShaderModule(Device device, ShaderModule shaderModule, ref AllocationCallbacks pAllocator);
+      public static extern void DestroyShaderModule(Device device, ShaderModule shaderModule, AllocationCallbacks pAllocator);
 
       #endregion
 
       #region Pipeline Cache commands
       //VkResult vkCreatePipelineCache(VkDevice device, VkPipelineCacheCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkPipelineCache* pPipelineCache);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreatePipelineCache", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreatePipelineCache(Device device, ref PipelineCacheCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref PipelineCache pPipelineCache);
+      public static extern Result CreatePipelineCache(Device device, ref PipelineCacheCreateInfo pCreateInfo, AllocationCallbacks pAllocator, ref PipelineCache pPipelineCache);
 
 
       //void vkDestroyPipelineCache(VkDevice device, VkPipelineCache pipelineCache, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyPipelineCache", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroyPipelineCache(Device device, PipelineCache pipelineCache, ref AllocationCallbacks pAllocator);
+      public static extern void DestroyPipelineCache(Device device, PipelineCache pipelineCache, AllocationCallbacks pAllocator);
 
 
       //VkResult vkGetPipelineCacheData(VkDevice device, VkPipelineCache pipelineCache, size_t* pDataSize, void* pData);
@@ -562,43 +562,43 @@ namespace Vulkan
 
       //void vkDestroyPipeline(VkDevice device, VkPipeline pipeline, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyPipeline", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroyPipeline(Device device, Pipeline pipeline, ref AllocationCallbacks pAllocator);
+      public static extern void DestroyPipeline(Device device, Pipeline pipeline, AllocationCallbacks pAllocator);
 
       #endregion
 
       #region Pipeline layout commands
       //VkResult vkCreatePipelineLayout(VkDevice device, VkPipelineLayoutCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkPipelineLayout* pPipelineLayout);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreatePipelineLayout", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreatePipelineLayout(Device device, ref PipelineLayoutCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref PipelineLayout pPipelineLayout);
+      public static extern Result CreatePipelineLayout(Device device, ref PipelineLayoutCreateInfo pCreateInfo, AllocationCallbacks pAllocator, ref PipelineLayout pPipelineLayout);
 
 
       //void vkDestroyPipelineLayout(VkDevice device, VkPipelineLayout pipelineLayout, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyPipelineLayout", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroyPipelineLayout(Device device, PipelineLayout pipelineLayout, ref AllocationCallbacks pAllocator);
+      public static extern void DestroyPipelineLayout(Device device, PipelineLayout pipelineLayout, AllocationCallbacks pAllocator);
 
       #endregion
 
       #region Sampler commands
       //VkResult vkCreateSampler(VkDevice device, VkSamplerCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSampler* pSampler);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateSampler", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateSampler(Device device, ref SamplerCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref Sampler pSampler);
+      public static extern Result CreateSampler(Device device, ref SamplerCreateInfo pCreateInfo, AllocationCallbacks pAllocator, ref Sampler pSampler);
 
 
       //void vkDestroySampler(VkDevice device, VkSampler sampler, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroySampler", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroySampler(Device device, Sampler sampler, ref AllocationCallbacks pAllocator);
+      public static extern void DestroySampler(Device device, Sampler sampler, AllocationCallbacks pAllocator);
 
       #endregion
 
       #region Descriptor set commands
       //VkResult vkCreateDescriptorSetLayout(VkDevice device, VkDescriptorSetLayoutCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDescriptorSetLayout* pSetLayout);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateDescriptorSetLayout", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateDescriptorSetLayout(Device device, ref DescriptorSetLayoutCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref DescriptorSetLayout pSetLayout);
+      public static extern Result CreateDescriptorSetLayout(Device device, ref DescriptorSetLayoutCreateInfo pCreateInfo, AllocationCallbacks pAllocator, ref DescriptorSetLayout pSetLayout);
 
 
       //void vkDestroyDescriptorSetLayout(VkDevice device, VkDescriptorSetLayout descriptorSetLayout, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyDescriptorSetLayout", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroyDescriptorSetLayout(Device device, DescriptorSetLayout descriptorSetLayout, ref AllocationCallbacks pAllocator);
+      public static extern void DestroyDescriptorSetLayout(Device device, DescriptorSetLayout descriptorSetLayout, AllocationCallbacks pAllocator);
 
 
       //VkResult vkCreateDescriptorPool(VkDevice device, VkDescriptorPoolCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDescriptorPool* pDescriptorPool);
@@ -611,7 +611,7 @@ namespace Vulkan
 
       //void vkDestroyDescriptorPool(VkDevice device, VkDescriptorPool descriptorPool, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyDescriptorPool", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroyDescriptorPool(Device device, DescriptorPool descriptorPool, ref AllocationCallbacks pAllocator);
+      public static extern void DestroyDescriptorPool(Device device, DescriptorPool descriptorPool, AllocationCallbacks pAllocator);
 
 
       //VkResult vkResetDescriptorPool(VkDevice device, VkDescriptorPool descriptorPool, VkDescriptorPoolResetFlags flags);
@@ -664,17 +664,17 @@ namespace Vulkan
 
       //void vkDestroyFramebuffer(VkDevice device, VkFramebuffer framebuffer, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyFramebuffer", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroyFramebuffer(Device device, Framebuffer framebuffer, ref AllocationCallbacks pAllocator);
+      public static extern void DestroyFramebuffer(Device device, Framebuffer framebuffer, AllocationCallbacks pAllocator);
 
 
       //VkResult vkCreateRenderPass(VkDevice device, VkRenderPassCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkRenderPass* pRenderPass);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateRenderPass", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateRenderPass(Device device, ref RenderPassCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref RenderPass pRenderPass);
+      public static extern Result CreateRenderPass(Device device, ref RenderPassCreateInfo pCreateInfo, AllocationCallbacks pAllocator, ref RenderPass pRenderPass);
 
 
       //void vkDestroyRenderPass(VkDevice device, VkRenderPass renderPass, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyRenderPass", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroyRenderPass(Device device, RenderPass renderPass, ref AllocationCallbacks pAllocator);
+      public static extern void DestroyRenderPass(Device device, RenderPass renderPass, AllocationCallbacks pAllocator);
 
 
       //void vkGetRenderAreaGranularity(VkDevice device, VkRenderPass renderPass, VkExtent2D* pGranularity);
@@ -694,7 +694,7 @@ namespace Vulkan
 
       //void vkDestroyCommandPool(VkDevice device, VkCommandPool commandPool, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyCommandPool", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroyCommandPool(Device device, CommandPool commandPool, ref AllocationCallbacks pAllocator);
+      public static extern void DestroyCommandPool(Device device, CommandPool commandPool, AllocationCallbacks pAllocator);
 
 
       //VkResult vkResetCommandPool(VkDevice device, VkCommandPool commandPool, VkCommandPoolResetFlags flags);
@@ -1171,24 +1171,24 @@ namespace Vulkan
       #region Promoted from VK_KHR_sampler_ycbcr_conversion
       //VkResult vkCreateSamplerYcbcrConversion(VkDevice device, VkSamplerYcbcrConversionCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkSamplerYcbcrConversion* pYcbcrConversion);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateSamplerYcbcrConversion", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateSamplerYcbcrConversion(Device device, ref SamplerYcbcrConversionCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref SamplerYcbcrConversion pYcbcrConversion);
+      public static extern Result CreateSamplerYcbcrConversion(Device device, ref SamplerYcbcrConversionCreateInfo pCreateInfo, AllocationCallbacks pAllocator, ref SamplerYcbcrConversion pYcbcrConversion);
 
 
       //void vkDestroySamplerYcbcrConversion(VkDevice device, VkSamplerYcbcrConversion ycbcrConversion, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroySamplerYcbcrConversion", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroySamplerYcbcrConversion(Device device, SamplerYcbcrConversion ycbcrConversion, ref AllocationCallbacks pAllocator);
+      public static extern void DestroySamplerYcbcrConversion(Device device, SamplerYcbcrConversion ycbcrConversion, AllocationCallbacks pAllocator);
 
       #endregion
 
       #region Promoted from VK_KHR_descriptor_update_template
       //VkResult vkCreateDescriptorUpdateTemplate(VkDevice device, VkDescriptorUpdateTemplateCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDescriptorUpdateTemplate* pDescriptorUpdateTemplate);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateDescriptorUpdateTemplate", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateDescriptorUpdateTemplate(Device device, ref DescriptorUpdateTemplateCreateInfo pCreateInfo, ref AllocationCallbacks pAllocator, ref DescriptorUpdateTemplate pDescriptorUpdateTemplate);
+      public static extern Result CreateDescriptorUpdateTemplate(Device device, ref DescriptorUpdateTemplateCreateInfo pCreateInfo, AllocationCallbacks pAllocator, ref DescriptorUpdateTemplate pDescriptorUpdateTemplate);
 
 
       //void vkDestroyDescriptorUpdateTemplate(VkDevice device, VkDescriptorUpdateTemplate descriptorUpdateTemplate, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyDescriptorUpdateTemplate", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroyDescriptorUpdateTemplate(Device device, DescriptorUpdateTemplate descriptorUpdateTemplate, ref AllocationCallbacks pAllocator);
+      public static extern void DestroyDescriptorUpdateTemplate(Device device, DescriptorUpdateTemplate descriptorUpdateTemplate, AllocationCallbacks pAllocator);
 
 
       //void vkUpdateDescriptorSetWithTemplate(VkDevice device, VkDescriptorSet descriptorSet, VkDescriptorUpdateTemplate descriptorUpdateTemplate, void* pData);

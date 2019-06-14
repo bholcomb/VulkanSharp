@@ -45,7 +45,7 @@ namespace Vulkan
       //VkBool32 vkGetPhysicalDeviceWin32PresentationSupportKHR(VkPhysicalDevice physicalDevice, uint32_t queueFamilyIndex);
       
       //delegate definitions
-      public delegate Result CreateWin32SurfaceKHRDelegate(Instance instance, ref Win32SurfaceCreateInfoKHR pCreateInfo, ref AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
+      public delegate Result CreateWin32SurfaceKHRDelegate(Instance instance, ref Win32SurfaceCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, ref SurfaceKHR pSurface);
       public delegate Bool32 GetPhysicalDeviceWin32PresentationSupportKHRDelegate(PhysicalDevice physicalDevice, UInt32 queueFamilyIndex);
       
       //delegate instances

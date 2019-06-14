@@ -15,10 +15,11 @@ cfunc = [[
   end}}
 //{{= f.returnType}} {{= f.name}}({{= params}});]]
 
+--allocation callbacks are a class, so we don't need a ref modifier for them
 delegate = [[
 {{local params = ""
   for k,v in pairs(f.params) do
-    if(v.pointer == true) then 
+    if((v.pointer == true) and (v.type ~= "AllocationCallbacks")) then 
       params = params.."ref "..sanitizeType(v.type).." "..sanitizeTypeName(v.name)
     else
       params = params..sanitizeType(v.type).." "..sanitizeTypeName(v.name)

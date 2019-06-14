@@ -140,8 +140,8 @@ namespace Vulkan
       public delegate void CmdBeginDebugUtilsLabelEXTDelegate(CommandBuffer commandBuffer, ref DebugUtilsLabelEXT pLabelInfo);
       public delegate void CmdEndDebugUtilsLabelEXTDelegate(CommandBuffer commandBuffer);
       public delegate void CmdInsertDebugUtilsLabelEXTDelegate(CommandBuffer commandBuffer, ref DebugUtilsLabelEXT pLabelInfo);
-      public delegate Result CreateDebugUtilsMessengerEXTDelegate(Instance instance, ref DebugUtilsMessengerCreateInfoEXT pCreateInfo, ref AllocationCallbacks pAllocator, ref DebugUtilsMessengerEXT pMessenger);
-      public delegate void DestroyDebugUtilsMessengerEXTDelegate(Instance instance, DebugUtilsMessengerEXT messenger, ref AllocationCallbacks pAllocator);
+      public delegate Result CreateDebugUtilsMessengerEXTDelegate(Instance instance, ref DebugUtilsMessengerCreateInfoEXT pCreateInfo, AllocationCallbacks pAllocator, ref DebugUtilsMessengerEXT pMessenger);
+      public delegate void DestroyDebugUtilsMessengerEXTDelegate(Instance instance, DebugUtilsMessengerEXT messenger, AllocationCallbacks pAllocator);
       public delegate void SubmitDebugUtilsMessageEXTDelegate(Instance instance, DebugUtilsMessageSeverityFlagsEXT messageSeverity, DebugUtilsMessageTypeFlagsEXT messageTypes, ref DebugUtilsMessengerCallbackDataEXT pCallbackData);
       
       //delegate instances
