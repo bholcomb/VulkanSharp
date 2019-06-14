@@ -62,6 +62,8 @@ namespace VulkanTest
          public VK.CommandBuffer[] presentCommandBuffers;
 
          public VK.Device device;
+
+         public VK.DebugUtilsMessengerEXT debugMessenger;
       };
 
       Context context = new Context();
@@ -283,23 +285,43 @@ namespace VulkanTest
 
       void setupDebugCallback()
       {
-         //			Console.WriteLine("Initializing debug report extension");
-         // 			VK.EXT_debug_report.init(context.instance);
-         // 
-         //          VK.DebugReportCallbackCreateInfoEXT info = new VK.DebugReportCallbackCreateInfoEXT()
-         // 			{
-         // 				type = VK.StructureType.DebugReportCallbackCreateInfoExt,
-         // 				next = IntPtr.Zero,
-         // 				flags = VK.DebugReportFlagsEXT.ErrorBitExt | VK.DebugReportFlagsEXT.WarningBitExt,
-         // 				pfnCallback = debugCallback,
-         // 				pUserData = IntPtr.Zero
-         // 			};
-         // 
-         //          VK.Result res = VK.CreateDebugReportCallbackEXT(context.instance, ref info, null, out debugCallbackHandle);
-         // 			if (res != VK.Result.Success)
-         // 			{
-         // 				Console.WriteLine("Failed to install debug callback");
-         // 			}
+			Console.WriteLine("Initializing debug utils callback");
+
+         VK.DebugUtilsMessengerCreateInfoEXT info = new VK.DebugUtilsMessengerCreateInfoEXT()
+         {
+            type = VK.StructureType.DebugUtilsMessengerCreateInfoExt,
+            next = IntPtr.Zero,
+            flags = 0,
+            messageSeverity = VK.DebugUtilsMessageSeverityFlagsEXT.ErrorBitExt |
+                              VK.DebugUtilsMessageSeverityFlagsEXT.WarningBitExt,
+            messageType = VK.DebugUtilsMessageTypeFlagsEXT.GeneralBitExt | VK.DebugUtilsMessageTypeFlagsEXT.PerformanceBitExt | VK.DebugUtilsMessageTypeFlagsEXT.ValidationBitExt,
+            pfnUserCallback = debugCallback,
+            pUserData = IntPtr.Zero
+			};
+
+         VK.Result res = VK.CreateDebugUtilsMessengerEXT(context.instance, ref info, null, out context.debugMessenger);
+			if (res != VK.Result.Success)
+			{
+				Console.WriteLine("Failed to install debug utils callback");
+			}
+      }
+
+      Bool32 debugCallback(VK.DebugUtilsMessageSeverityFlagsEXT messageSeverity, VK.DebugUtilsMessageTypeFlagsEXT messageTypes, ref VK.DebugUtilsMessengerCallbackDataEXT pCallbackData, IntPtr pUserData)
+      {
+
+         if(messageSeverity.HasFlag(VK.DebugUtilsMessageSeverityFlagsEXT.VerboseBitExt)) Console.Write("VERBOSE: ");
+         if(messageSeverity.HasFlag(VK.DebugUtilsMessageSeverityFlagsEXT.InfoBitExt)) Console.Write("INFO: ");
+         if(messageSeverity.HasFlag(VK.DebugUtilsMessageSeverityFlagsEXT.WarningBitExt)) Console.Write("WARNING: ");
+         if(messageSeverity.HasFlag(VK.DebugUtilsMessageSeverityFlagsEXT.ErrorBitExt)) Console.Write("ERROR: ");
+
+         if(messageTypes.HasFlag(VK.DebugUtilsMessageTypeFlagsEXT.GeneralBitExt)) Console.Write("GENERAL ");
+         if(messageTypes.HasFlag(VK.DebugUtilsMessageTypeFlagsEXT.ValidationBitExt)) Console.Write("VALIDATION ");
+         if(messageTypes.HasFlag(VK.DebugUtilsMessageTypeFlagsEXT.PerformanceBitExt)) Console.Write("PERFORMANCE ");
+
+         Console.WriteLine(": ID: {0} Name: {1} \n\t {2}", pCallbackData.messageIdNumber, pCallbackData.pMessageIdName, pCallbackData.pMessage);
+
+         // Don't bail out, but keep going.
+         return false;
       }
 
       void createSurface()
@@ -878,7 +900,7 @@ namespace VulkanTest
       {
          Console.Write("Destroying Instance...");
          VK.DestroySurfaceKHR(context.instance, context.surface, null);
-         //VK.DestroyDebugReportCallbackEXT(context.instance, debugCallbackHandle, null);
+         VK.DestroyDebugUtilsMessengerEXT(context.instance, context.debugMessenger, null);
          VK.DestroyInstance(context.instance, null);
          Console.WriteLine("Success!");
       }
