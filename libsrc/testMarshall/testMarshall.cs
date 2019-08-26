@@ -17,10 +17,10 @@ namespace TestMarshall
    public struct Test
    {
       public UInt32 fCount;
-      [MarshalAs(UnmanagedType.ByValArray, SizeParamIndex = 0)]
+     // [MarshalAs(UnmanagedType.ByValArray, SizeParamIndex = 0)]
       public float[] floats;
       public UInt32 fooCount;
-      [MarshalAs(UnmanagedType.ByValArray, SizeParamIndex = 2)]
+    //  [MarshalAs(UnmanagedType.ByValArray, SizeParamIndex = 2)]
       public Foo[] foos;
    };
 

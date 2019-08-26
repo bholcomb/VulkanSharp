@@ -568,13 +568,27 @@ namespace Vulkan
       static extern Result _CreateComputePipelines(Device device, PipelineCache pipelineCache, UInt32 createInfoCount, IntPtr pCreateInfos, AllocationCallbacks pAllocator, IntPtr pPipelines);
       public unsafe static Result CreateComputePipelines(Device device, PipelineCache pipelineCache, UInt32 createInfoCount, ComputePipelineCreateInfo[] pCreateInfos, Pipeline[] pPipelines, AllocationCallbacks pAllocator = null)
       {
-         fixed (ComputePipelineCreateInfo* p1 = pCreateInfos)
+         _ComputePipelineCreateInfo[] infos = new _ComputePipelineCreateInfo[pCreateInfos.Length];
+         for(int i = 0; i < createInfoCount; i++)
+         {
+            infos[i] = new _ComputePipelineCreateInfo(pCreateInfos[i]);
+         }
+
+         Result res;
+         fixed (_ComputePipelineCreateInfo* p1 = infos)
          {
             fixed (Pipeline* p2 = pPipelines)
             {
-               return _CreateComputePipelines(device, pipelineCache, createInfoCount, (IntPtr)p1, pAllocator, (IntPtr)p2);
+               res = _CreateComputePipelines(device, pipelineCache, createInfoCount, (IntPtr)p1, pAllocator, (IntPtr)p2);
             }
          }
+
+         for(int i = 0; i < createInfoCount; i++)
+         {
+            infos[i].destroy();
+         }
+
+         return res;
       }
 
       //void vkDestroyPipeline(VkDevice device, VkPipeline pipeline, VkAllocationCallbacks* pAllocator);

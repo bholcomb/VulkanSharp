@@ -810,7 +810,7 @@ namespace Vulkan
          public SampleCountFlags rasterizationSamples;  //Number of samples used for rasterization 
          public Bool32 sampleShadingEnable;  //optional (GL45) 
          public float minSampleShading;  //optional (GL45) 
-         public List<UInt32>/*SampleMask*/ sampleMask;  //Array of sampleMask words 
+         public List<UInt32> sampleMask;  //Array of SampleMask words 
          public Bool32 alphaToCoverageEnable;
          public Bool32 alphaToOneEnable;
       };
@@ -875,8 +875,7 @@ namespace Vulkan
          public PipelineDynamicStateCreateFlags flags;
          public List<DynamicState> dynamicStates;
       };
-
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    
       public struct ComputePipelineCreateInfo
       {
          public StructureType type;

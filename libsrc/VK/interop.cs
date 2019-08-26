@@ -654,6 +654,33 @@ namespace Vulkan
       }
    };
 
+   [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+   public struct _ComputePipelineCreateInfo
+   {
+      public VK.StructureType type;
+      public IntPtr next;
+      public VK.PipelineCreateFlags flags;  //Pipeline creation flags 
+      public _PipelineShaderStageCreateInfo stage;
+      public VK.PipelineLayout layout;  //Interface layout of the pipeline 
+      public VK.Pipeline basePipelineHandle;  //If VK_PIPELINE_CREATE_DERIVATIVE_BIT is set and this value is nonzero, it specifies the handle of the base pipeline this is a derivative of 
+      public Int32 basePipelineIndex;  //If VK_PIPELINE_CREATE_DERIVATIVE_BIT is set and this value is not -1, it specifies an index into pCreateInfos of the base pipeline this is a derivative of 
+
+      public _ComputePipelineCreateInfo(VK.ComputePipelineCreateInfo info)
+      {
+         type = info.type;
+         next = info.next;
+         flags = info.flags;
+         stage = new _PipelineShaderStageCreateInfo(info.stage);
+         layout = info.layout;
+         basePipelineHandle = info.basePipelineHandle;
+         basePipelineIndex = info.basePipelineIndex;
+      }
+
+      public void destroy()
+      {
+         stage.destroy();
+      }
+   };
 
    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
    public struct _PipelineShaderStageCreateInfo
@@ -663,7 +690,7 @@ namespace Vulkan
       public VK.PipelineShaderStageCreateFlags flags;
       public VK.ShaderStageFlags stage;  //Shader stage 
       public VK.ShaderModule module;  //Module containing entry point
-      public string name;  //Null-terminated entry point name 
+      public IntPtr name;  //Null-terminated entry point name 
       public IntPtr specializationInfo;
 
       public _PipelineShaderStageCreateInfo(VK.PipelineShaderStageCreateInfo info)
@@ -673,12 +700,13 @@ namespace Vulkan
          flags = info.flags;
          stage = info.stage;
          module = info.module;
-         name = info.name;
+         name = Marshal.StringToHGlobalAnsi(info.name);
          specializationInfo = Alloc.alloc(new _SpecializationInfo(info.specializationInfo));
       }
 
       public void destroy()
       {
+         Marshal.FreeHGlobal(name);
          Alloc.free(specializationInfo);
       }
    };
