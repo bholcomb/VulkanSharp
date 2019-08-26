@@ -79,4 +79,20 @@ project "Test Vulkan"
 	namespace("VulkanTest")
     framework("4.7.2")
 
+project "TestMarshallC"
+   kind "SharedLib"
+	language "C++"
+   location "testMarshalC"
+	files{"../libsrc/testMarshall/**.cxx"}
+	targetdir "../bin"
    
+   project "TestMarshallCS"
+   kind "ConsoleApp"
+	language "C#"
+   location "testMarshalCS"
+	files{"../libsrc/testMarshall/**.cs"}
+	targetdir "../bin"
+   links("System")
+	namespace("Vulkan")
+    clr "Unsafe"
+    framework("4.7.2")
