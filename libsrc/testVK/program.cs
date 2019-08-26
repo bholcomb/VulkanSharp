@@ -64,6 +64,8 @@ namespace VulkanTest
          public VK.Device device;
 
          public VK.DebugUtilsMessengerEXT debugMessenger;
+
+         public VK.RenderPass renderPass;
       };
 
       Context context = new Context();
@@ -158,7 +160,7 @@ namespace VulkanTest
          createSemaphores();
          createCommandBuffers();
          recordCommandBuffers();
-
+         createRenderPass();
          createGraphicsPipeline();
          loadVbo();
          loadTexture();
@@ -686,7 +688,7 @@ namespace VulkanTest
             type = VK.StructureType.CommandBufferBeginInfo,
             next = IntPtr.Zero,
             flags = 0,
-            pInheritanceInfo = null
+            inheritanceInfo = null
          };
 
          VK.ClearColorValue clearColor = new VK.ClearColorValue() { r = 0.2f, g = 0.2f, b = 0.2f, a = 0.0f };
@@ -746,6 +748,52 @@ namespace VulkanTest
 
             Console.WriteLine("Success");
          }
+      }
+
+      unsafe void createRenderPass()
+      {
+         VK.AttachmentDescription attachments = new VK.AttachmentDescription()
+         {
+            flags = 0,
+            format = context.swapChainFormat,
+            samples = VK.SampleCountFlags._1Bit,
+            loadOp = VK.AttachmentLoadOp.Clear,
+            storeOp = VK.AttachmentStoreOp.Store,
+            stencilLoadOp = VK.AttachmentLoadOp.DontCare,
+            stencilStoreOp = VK.AttachmentStoreOp.DontCare,
+            initialLayout = VK.ImageLayout.PresentSrcKhr,
+            finalLayout = VK.ImageLayout.PresentSrcKhr
+         };
+
+         VK.AttachmentReference colorAttachment = new VK.AttachmentReference()
+         {
+            attachment = 0,
+            layout = VK.ImageLayout.ColorAttachmentOptimal
+         };
+
+         VK.SubpassDescription subpassDescription = new VK.SubpassDescription()
+         {
+            flags = 0,
+            pipelineBindPoint = VK.PipelineBindPoint.Graphics,
+            inputAttachments = null,
+            colorAttachments = new List<VK.AttachmentReference> { colorAttachment },
+            resolveAttachments = null,
+            depthStencilAttachment = null,
+            preserveAttachments = null
+         };
+
+         VK.RenderPassCreateInfo info = new VK.RenderPassCreateInfo()
+         {
+            type = VK.StructureType.RenderPassCreateInfo,
+            next = IntPtr.Zero,
+            flags = 0,
+            attachments = new List<VK.AttachmentDescription> { attachments },
+            subpasses = new List<VK.SubpassDescription> { subpassDescription },
+            dependencies = null
+         };
+
+         VK.Result res = VK.CreateRenderPass(context.device, ref info, out context.renderPass);
+         checkResult(res, "End command buffer");
       }
 
       void createGraphicsPipeline()

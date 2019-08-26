@@ -456,12 +456,10 @@ namespace Vulkan
          public List<Semaphore> pSignalSemaphores;
       }
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct SparseBufferMemoryBindInfo
+      public struct SparseBufferMemoryBindInfo
       {
          public Buffer buffer;
-         public UInt32 bindCount;
-         public SparseMemoryBind* pBinds;
+         public List<SparseMemoryBind> binds;
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -474,20 +472,16 @@ namespace Vulkan
          public SparseMemoryBindFlags flags;
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct SparseImageOpaqueMemoryBindInfo
+      public struct SparseImageOpaqueMemoryBindInfo
       {
          public Image image;
-         public UInt32 bindCount;
-         public SparseMemoryBind* pBinds;
+         public List<SparseMemoryBind> binds;
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct SparseImageMemoryBindInfo
+      public struct SparseImageMemoryBindInfo
       {
          public Image image;
-         public UInt32 bindCount;
-         public SparseImageMemoryBind* pBinds;
+         public List<SparseImageMemoryBind> binds;
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -552,8 +546,7 @@ namespace Vulkan
          public QueryPipelineStatisticFlags pipelineStatistics;  //Optional 
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct BufferCreateInfo
+      public struct BufferCreateInfo
       {
          public StructureType type;
          public IntPtr next;
@@ -561,8 +554,7 @@ namespace Vulkan
          public DeviceSize size;  //Specified in bytes 
          public BufferUsageFlags usage;  //Buffer usage flags 
          public SharingMode sharingMode;
-         public UInt32 queueFamilyIndexCount;
-         public UInt32* pQueueFamilyIndices;
+         public List<UInt32> queueFamilyIndices;
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -577,8 +569,7 @@ namespace Vulkan
          public DeviceSize range;  //View size specified in bytes 
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct ImageCreateInfo
+      public struct ImageCreateInfo
       {
          public StructureType type;
          public IntPtr next;
@@ -592,8 +583,7 @@ namespace Vulkan
          public ImageTiling tiling;
          public ImageUsageFlags usage;  //Image usage flags 
          public SharingMode sharingMode;  //Cross-queue-family sharing mode 
-         public UInt32 queueFamilyIndexCount;  //Number of queue families to share across 
-         public UInt32* pQueueFamilyIndices;  //Array of queue family indices to share across 
+         public List<UInt32> queueFamilyIndices;  //Array of queue family indices to share across 
          public ImageLayout initialLayout;  //Initial image layout for all subresources 
       };
 
@@ -659,23 +649,21 @@ namespace Vulkan
          public IntPtr pInitialData;  //Initial data to populate cache 
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct GraphicsPipelineCreateInfo
+      public class GraphicsPipelineCreateInfo
       {
          public StructureType type;
          public IntPtr next;
          public PipelineCreateFlags flags;  //Pipeline creation flags 
-         public UInt32 stageCount;
-         public IntPtr/*PipelineShaderStageCreateInfo**/ pStages;  //One entry for each active shader stage 
-         public PipelineVertexInputStateCreateInfo* pVertexInputState;
-         public PipelineInputAssemblyStateCreateInfo* pInputAssemblyState;
-         public PipelineTessellationStateCreateInfo* pTessellationState;
-         public PipelineViewportStateCreateInfo* pViewportState;
-         public PipelineRasterizationStateCreateInfo* pRasterizationState;
-         public PipelineMultisampleStateCreateInfo* pMultisampleState;
-         public PipelineDepthStencilStateCreateInfo* pDepthStencilState;
-         public PipelineColorBlendStateCreateInfo* pColorBlendState;
-         public PipelineDynamicStateCreateInfo* pDynamicState;
+         public List<PipelineShaderStageCreateInfo> stages;  //One entry for each active shader stage 
+         public PipelineVertexInputStateCreateInfo vertexInputState;
+         public PipelineInputAssemblyStateCreateInfo inputAssemblyState;
+         public PipelineTessellationStateCreateInfo tessellationState;
+         public PipelineViewportStateCreateInfo viewportState;
+         public PipelineRasterizationStateCreateInfo rasterizationState;
+         public PipelineMultisampleStateCreateInfo multisampleState;
+         public PipelineDepthStencilStateCreateInfo depthStencilState;
+         public PipelineColorBlendStateCreateInfo colorBlendState;
+         public PipelineDynamicStateCreateInfo dynamicState;
          public PipelineLayout layout;  //Interface layout of the pipeline 
          public RenderPass renderPass;
          public UInt32 subpass;
@@ -683,23 +671,20 @@ namespace Vulkan
          public Int32 basePipelineIndex;  //If VK_PIPELINE_CREATE_DERIVATIVE_BIT is set and this value is not -1, it specifies an index into pCreateInfos of the base pipeline this is a derivative of 
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct PipelineShaderStageCreateInfo
+      public struct PipelineShaderStageCreateInfo
       {
          public StructureType type;
          public IntPtr next;
          public PipelineShaderStageCreateFlags flags;
          public ShaderStageFlags stage;  //Shader stage 
          public ShaderModule module;  //Module containing entry point
-         public IntPtr pName;  //Null-terminated entry point name 
-         public IntPtr pSpecializationInfo;
+         public string name;  //Null-terminated entry point name 
+         public SpecializationInfo specializationInfo;
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct SpecializationInfo
+      public struct SpecializationInfo
       {
-         public UInt32 mapEntryCount;  //Number of entries in the map 
-         public SpecializationMapEntry* pMapEntries;  //Array of map entries 
+         public List<SpecializationMapEntry> mapEntries;  //Array of map entries 
          public UInt32 dataSize;  //Size in bytes of pData 
          public IntPtr pData;  //Pointer to SpecConstant data 
       };
@@ -712,16 +697,13 @@ namespace Vulkan
          public UInt32 size;  //Size in bytes of the SpecConstant 
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct PipelineVertexInputStateCreateInfo
+      public class PipelineVertexInputStateCreateInfo
       {
          public StructureType type;
          public IntPtr next;
          public PipelineVertexInputStateCreateFlags flags;
-         public UInt32 vertexBindingDescriptionCount;  //number of bindings 
-         public VertexInputBindingDescription* pVertexBindingDescriptions;
-         public UInt32 vertexAttributeDescriptionCount;  //number of attributes 
-         public VertexInputAttributeDescription* pVertexAttributeDescriptions;
+         public List<VertexInputBindingDescription> vertexBindingDescriptions;
+         public List<VertexInputAttributeDescription> vertexAttributeDescriptions;
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -742,7 +724,7 @@ namespace Vulkan
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PipelineInputAssemblyStateCreateInfo
+      public class PipelineInputAssemblyStateCreateInfo
       {
          public StructureType type;
          public IntPtr next;
@@ -752,7 +734,7 @@ namespace Vulkan
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PipelineTessellationStateCreateInfo
+      public class PipelineTessellationStateCreateInfo
       {
          public StructureType type;
          public IntPtr next;
@@ -760,16 +742,14 @@ namespace Vulkan
          public UInt32 patchControlPoints;
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct PipelineViewportStateCreateInfo
+      public class PipelineViewportStateCreateInfo
       {
          public StructureType type;
          public IntPtr next;
          public PipelineViewportStateCreateFlags flags;
          public UInt32 viewportCount;
-         public Viewport* pViewports;
-         public UInt32 scissorCount;
-         public Rect2D* pScissors;
+         public List<Viewport> viewports;
+         public List<Rect2D> scissors;
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -805,7 +785,7 @@ namespace Vulkan
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PipelineRasterizationStateCreateInfo
+      public class PipelineRasterizationStateCreateInfo
       {
          public StructureType type;
          public IntPtr next;
@@ -822,8 +802,7 @@ namespace Vulkan
          public float lineWidth;
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct PipelineMultisampleStateCreateInfo
+      public class PipelineMultisampleStateCreateInfo
       {
          public StructureType type;
          public IntPtr next;
@@ -831,13 +810,13 @@ namespace Vulkan
          public SampleCountFlags rasterizationSamples;  //Number of samples used for rasterization 
          public Bool32 sampleShadingEnable;  //optional (GL45) 
          public float minSampleShading;  //optional (GL45) 
-         public UInt32*/*SampleMask*/ pSampleMask;  //Array of sampleMask words 
+         public List<UInt32>/*SampleMask*/ sampleMask;  //Array of sampleMask words 
          public Bool32 alphaToCoverageEnable;
          public Bool32 alphaToOneEnable;
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct PipelineDepthStencilStateCreateInfo
+      public class PipelineDepthStencilStateCreateInfo
       {
          public StructureType type;
          public IntPtr next;
@@ -865,17 +844,15 @@ namespace Vulkan
          public UInt32 reference;
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct PipelineColorBlendStateCreateInfo
+      public class PipelineColorBlendStateCreateInfo
       {
          public StructureType type;
          public IntPtr next;
          public PipelineColorBlendStateCreateFlags flags;
          public Bool32 logicOpEnable;
          public LogicOp logicOp;
-         public UInt32 attachmentCount;  //# of pAttachments 
-         public PipelineColorBlendAttachmentState* pAttachments;
-         public fixed float blendConstants[4];
+         public List<PipelineColorBlendAttachmentState> attachments;
+         public List<float> blendConstants; //always 4 floats
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -891,14 +868,12 @@ namespace Vulkan
          public ColorComponentFlags colorWriteMask;
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct PipelineDynamicStateCreateInfo
+      public class PipelineDynamicStateCreateInfo
       {
          public StructureType type;
          public IntPtr next;
          public PipelineDynamicStateCreateFlags flags;
-         public UInt32 dynamicStateCount;
-         public DynamicState* pDynamicStates;
+         public List<DynamicState> dynamicStates;
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -913,16 +888,13 @@ namespace Vulkan
          public Int32 basePipelineIndex;  //If VK_PIPELINE_CREATE_DERIVATIVE_BIT is set and this value is not -1, it specifies an index into pCreateInfos of the base pipeline this is a derivative of 
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct PipelineLayoutCreateInfo
+      public struct PipelineLayoutCreateInfo
       {
          public StructureType type;
          public IntPtr next;
          public PipelineLayoutCreateFlags flags;
-         public UInt32 setLayoutCount;  //Number of descriptor sets interfaced by the pipeline 
-         public DescriptorSetLayout* pSetLayouts;  //Array of setCount number of descriptor set layout objects defining the layout of the 
-         public UInt32 pushConstantRangeCount;  //Number of push-constant ranges used by the pipeline 
-         public PushConstantRange* pPushConstantRanges;  //Array of pushConstantRangeCount number of ranges used by various shader stages 
+         public List<DescriptorSetLayout> setLayouts;  //Array of setCount number of descriptor set layout objects defining the layout of the 
+         public List<PushConstantRange> pushConstantRanges;  //Array of pushConstantRangeCount number of ranges used by various shader stages 
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -956,35 +928,30 @@ namespace Vulkan
          public Bool32 unnormalizedCoordinates;
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct DescriptorSetLayoutCreateInfo
+      public struct DescriptorSetLayoutCreateInfo
       {
          public StructureType type;
          public IntPtr next;
          public DescriptorSetLayoutCreateFlags flags;
-         public UInt32 bindingCount;  //Number of bindings in the descriptor set layout 
-         public DescriptorSetLayoutBinding* pBindings;  //Array of descriptor set layout bindings 
+         public List<DescriptorSetLayoutBinding> bindings;  //Array of descriptor set layout bindings 
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct DescriptorSetLayoutBinding
+      public struct DescriptorSetLayoutBinding
       {
          public UInt32 binding;  //Binding number for this entry 
          public DescriptorType descriptorType;  //Type of the descriptors in this binding 
          public UInt32 descriptorCount;  //Number of descriptors in this binding 
          public ShaderStageFlags stageFlags;  //Shader stages this binding is visible to 
-         public Sampler* pImmutableSamplers;  //Immutable samplers (used if descriptor type is SAMPLER or COMBINED_IMAGE_SAMPLER, is either NULL or contains count number of elements) 
+         public List<Sampler> immutableSamplers;  //Immutable samplers (used if descriptor type is SAMPLER or COMBINED_IMAGE_SAMPLER, is either NULL or contains count number of elements) 
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct DescriptorPoolCreateInfo
+      public struct DescriptorPoolCreateInfo
       {
          public StructureType type;
          public IntPtr next;
          public DescriptorPoolCreateFlags flags;
          public UInt32 maxSets;
-         public UInt32 poolSizeCount;
-         public DescriptorPoolSize* pPoolSizes;
+         public List<DescriptorPoolSize> poolSizes;
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -994,17 +961,14 @@ namespace Vulkan
          public UInt32 descriptorCount;
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct DescriptorSetAllocateInfo
+      public struct DescriptorSetAllocateInfo
       {
          public StructureType type;
          public IntPtr next;
          public DescriptorPool descriptorPool;
-         public UInt32 descriptorSetCount;
-         public DescriptorSetLayout* pSetLayouts;
+         public List<DescriptorSetLayout> setLayouts;
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
       public unsafe struct WriteDescriptorSet
       {
          public StructureType type;
@@ -1049,32 +1013,26 @@ namespace Vulkan
          public UInt32 descriptorCount;  //Number of descriptors to write (determines the size of the array pointed by pDescriptors) 
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct FramebufferCreateInfo
+      public class FramebufferCreateInfo
       {
          public StructureType type;
          public IntPtr next;
          public FramebufferCreateFlags flags;
          public RenderPass renderPass;
-         public UInt32 attachmentCount;
-         public ImageView* pAttachments;
+         public List<ImageView> attachments;
          public UInt32 width;
          public UInt32 height;
          public UInt32 layers;
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct RenderPassCreateInfo
+      public class RenderPassCreateInfo
       {
          public StructureType type;
          public IntPtr next;
          public RenderPassCreateFlags flags;
-         public UInt32 attachmentCount;
-         public AttachmentDescription* pAttachments;
-         public UInt32 subpassCount;
-         public SubpassDescription* pSubpasses;
-         public UInt32 dependencyCount;
-         public SubpassDependency* pDependencies;
+         public List<AttachmentDescription> attachments;
+         public List<SubpassDescription> subpasses;
+         public List<SubpassDependency> dependencies;
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -1091,19 +1049,15 @@ namespace Vulkan
          public ImageLayout finalLayout;
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct SubpassDescription
+      public class SubpassDescription
       {
          public SubpassDescriptionFlags flags;
          public PipelineBindPoint pipelineBindPoint;  //Must be VK_PIPELINE_BIND_POINT_GRAPHICS for now 
-         public UInt32 inputAttachmentCount;
-         public AttachmentReference* pInputAttachments;
-         public UInt32 colorAttachmentCount;
-         public AttachmentReference* pColorAttachments;
-         public AttachmentReference* pResolveAttachments;
-         public AttachmentReference* pDepthStencilAttachment;
-         public UInt32 preserveAttachmentCount;
-         public UInt32* pPreserveAttachments;
+         public List<AttachmentReference> inputAttachments;
+         public List<AttachmentReference> colorAttachments;
+         public List<AttachmentReference> resolveAttachments;
+         public List<AttachmentReference> depthStencilAttachment;
+         public List<UInt32> preserveAttachments;
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -1144,17 +1098,16 @@ namespace Vulkan
          public UInt32 commandBufferCount;
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct CommandBufferBeginInfo
+      public class CommandBufferBeginInfo
       {
          public StructureType type;
          public IntPtr next;
          public CommandBufferUsageFlags flags;  //Command buffer usage flags 
-         public CommandBufferInheritanceInfo* pInheritanceInfo;  //Pointer to inheritance info for secondary command buffers 
+         public CommandBufferInheritanceInfo inheritanceInfo;  //Pointer to inheritance info for secondary command buffers 
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public struct CommandBufferInheritanceInfo
+      public class CommandBufferInheritanceInfo
       {
          public StructureType type;
          public IntPtr next;
@@ -1295,7 +1248,8 @@ namespace Vulkan
          public Framebuffer framebuffer;
          public Rect2D renderArea;
          public UInt32 clearValueCount;
-         public ClearValue* pClearValues;
+         [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 5)]
+         public ClearValue[] pClearValues;
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -1408,14 +1362,12 @@ namespace Vulkan
          public UInt32 deviceMask;
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct DeviceGroupRenderPassBeginInfo
+      public class DeviceGroupRenderPassBeginInfo
       {
          public StructureType type;
          public IntPtr next;
          public UInt32 deviceMask;
-         public UInt32 deviceRenderAreaCount;
-         public Rect2D* pDeviceRenderAreas;
+         public List<Rect2D> deviceRenderAreas;
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -1426,17 +1378,13 @@ namespace Vulkan
          public UInt32 deviceMask;
       };
 
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-      public unsafe struct DeviceGroupSubmitInfo
+      public class DeviceGroupSubmitInfo
       {
          public StructureType type;
          public IntPtr next;
-         public UInt32 waitSemaphoreCount;
-         public UInt32* pWaitSemaphoreDeviceIndices;
-         public UInt32 commandBufferCount;
-         public UInt32* pCommandBufferDeviceMasks;
-         public UInt32 signalSemaphoreCount;
-         public UInt32* pSignalSemaphoreDeviceIndices;
+         public List<UInt32> waitSemaphoreDeviceIndices;
+         public List<UInt32> commandBufferDeviceMasks;
+         public List<UInt32> signalSemaphoreDeviceIndices;
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -1454,7 +1402,8 @@ namespace Vulkan
          public StructureType type;
          public IntPtr next;
          public UInt32 deviceIndexCount;
-         public UInt32* pDeviceIndices;
+         [MarshalAs(UnmanagedType.LPArray, SizeParamIndex =2)]
+         public UInt32[] deviceIndices;
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -1463,9 +1412,11 @@ namespace Vulkan
          public StructureType type;
          public IntPtr next;
          public UInt32 deviceIndexCount;
-         public UInt32* pDeviceIndices;
+         [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
+         public UInt32[] deviceIndices;
          public UInt32 splitInstanceBindRegionCount;
-         public Rect2D* pSplitInstanceBindRegions;
+         [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 4)]
+         public Rect2D[] splitInstanceBindRegions;
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -1485,7 +1436,8 @@ namespace Vulkan
          public StructureType type;
          public IntPtr next;
          public UInt32 physicalDeviceCount;
-         public PhysicalDevice* pPhysicalDevices;
+         [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
+         public PhysicalDevice[] physicalDevices;
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -1622,7 +1574,8 @@ namespace Vulkan
          public StructureType type;
          public IntPtr next;
          public UInt32 aspectReferenceCount;
-         public InputAttachmentAspectReference* pAspectReferences;
+         [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
+         public InputAttachmentAspectReference[] aspectReferences;
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -1655,11 +1608,14 @@ namespace Vulkan
          public StructureType type;
          public IntPtr next;
          public UInt32 subpassCount;
-         public UInt32* pViewMasks;
+         [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]
+         public UInt32[] viewMasks;
          public UInt32 dependencyCount;
-         public Int32* pViewOffsets;
+         [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 4)]
+         public Int32[] viewOffsets;
          public UInt32 correlationMaskCount;
-         public UInt32* pCorrelationMasks;
+         [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 6)]
+         public UInt32[] pCorrelationMasks;
       };
 
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
@@ -1786,7 +1742,8 @@ namespace Vulkan
          public IntPtr next;
          public DescriptorUpdateTemplateCreateFlags flags;
          public UInt32 descriptorUpdateEntryCount;  //Number of descriptor update entries to use for the update template 
-         public DescriptorUpdateTemplateEntry* pDescriptorUpdateEntries;  //Descriptor update entries for the template 
+         [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 3)]
+         public DescriptorUpdateTemplateEntry[] descriptorUpdateEntries;  //Descriptor update entries for the template 
          public DescriptorUpdateTemplateType templateType;
          public DescriptorSetLayout descriptorSetLayout;
          public PipelineBindPoint pipelineBindPoint;

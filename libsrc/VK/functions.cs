@@ -537,13 +537,27 @@ namespace Vulkan
       static extern Result _CreateGraphicsPipelines(Device device, PipelineCache pipelineCache, UInt32 createInfoCount, IntPtr pCreateInfos, AllocationCallbacks pAllocator, IntPtr pPipelines);
       public unsafe static Result CreateGraphicsPipelines(Device device, PipelineCache pipelineCache, UInt32 createInfoCount, GraphicsPipelineCreateInfo[] pCreateInfos, Pipeline[] pPipelines, AllocationCallbacks pAllocator = null)
       {
-         fixed (GraphicsPipelineCreateInfo* p1 = pCreateInfos)
+         _GraphicsPipelineCreateInfo[] infos = new _GraphicsPipelineCreateInfo[pCreateInfos.Length];
+         for(int i = 0; i< createInfoCount; i++)
+         {
+            infos[i] = new _GraphicsPipelineCreateInfo(pCreateInfos[i]);
+         }
+
+         Result res;
+         fixed (_GraphicsPipelineCreateInfo* p1 = infos)
          {
             fixed (Pipeline* p2 = pPipelines)
             {
-               return _CreateGraphicsPipelines(device, pipelineCache, createInfoCount, (IntPtr)p1, pAllocator, (IntPtr)p2);
+               res = _CreateGraphicsPipelines(device, pipelineCache, createInfoCount, (IntPtr)p1, pAllocator, (IntPtr)p2);
             }
          }
+
+         for(int i = 0; i < createInfoCount; i++)
+         {
+            infos[i].destroy();
+         }
+
+         return res;
       }
 
       //VkResult vkCreateComputePipelines(VkDevice device, VkPipelineCache pipelineCache, uint32_t createInfoCount, VkComputePipelineCreateInfo* pCreateInfos, VkAllocationCallbacks* pAllocator, VkPipeline* pPipelines);
@@ -669,8 +683,16 @@ namespace Vulkan
 
       //VkResult vkCreateRenderPass(VkDevice device, VkRenderPassCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkRenderPass* pRenderPass);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateRenderPass", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateRenderPass(Device device, ref RenderPassCreateInfo pCreateInfo, AllocationCallbacks pAllocator, ref RenderPass pRenderPass);
+      static extern Result _CreateRenderPass(Device device, ref _RenderPassCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out RenderPass pRenderPass);
+      public static Result CreateRenderPass(Device device, ref RenderPassCreateInfo pCreateInfo, out RenderPass pRenderPass, AllocationCallbacks pAllocator = null)
+      {
+         Result res;
+         _RenderPassCreateInfo info = new _RenderPassCreateInfo(pCreateInfo);
+         res = _CreateRenderPass(device, ref info, pAllocator, out pRenderPass);
+         info.destroy();
 
+         return res;
+      }
 
       //void vkDestroyRenderPass(VkDevice device, VkRenderPass renderPass, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyRenderPass", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
@@ -728,7 +750,16 @@ namespace Vulkan
 
       //VkResult vkBeginCommandBuffer(VkCommandBuffer commandBuffer, VkCommandBufferBeginInfo* pBeginInfo);
       [DllImport(VulkanLibrary, EntryPoint = "vkBeginCommandBuffer", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result BeginCommandBuffer(CommandBuffer commandBuffer, ref CommandBufferBeginInfo pBeginInfo);
+      static extern Result _BeginCommandBuffer(CommandBuffer commandBuffer, ref _CommandBufferBeginInfo pBeginInfo);
+      public static Result BeginCommandBuffer(CommandBuffer commandBuffer, ref CommandBufferBeginInfo pBeginInfo)
+      {
+         Result res;
+         _CommandBufferBeginInfo info = new _CommandBufferBeginInfo(pBeginInfo);
+         res = _BeginCommandBuffer(commandBuffer, ref info);
+         info.destroy();
+
+         return res;
+      }
 
 
       //VkResult vkEndCommandBuffer(VkCommandBuffer commandBuffer);
