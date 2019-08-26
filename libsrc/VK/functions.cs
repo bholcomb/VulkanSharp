@@ -494,8 +494,11 @@ namespace Vulkan
       #region Shader commands
       //VkResult vkCreateShaderModule(VkDevice device, VkShaderModuleCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkShaderModule* pShaderModule);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateShaderModule", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateShaderModule(Device device, ref ShaderModuleCreateInfo pCreateInfo, AllocationCallbacks pAllocator, ref ShaderModule pShaderModule);
-
+      static extern Result _CreateShaderModule(Device device, ref ShaderModuleCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out ShaderModule pShaderModule);
+      public static Result CreateShaderModule(Device device, ref ShaderModuleCreateInfo pCreateInfo, out ShaderModule pShaderModule, AllocationCallbacks pAllocator = null)
+      {
+         return _CreateShaderModule(device, ref pCreateInfo, pAllocator, out pShaderModule);
+      }
 
       //void vkDestroyShaderModule(VkDevice device, VkShaderModule shaderModule, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyShaderModule", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]

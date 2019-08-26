@@ -19,10 +19,10 @@ function generateSpirV(directory)
    for k,v in pairs(files) do
       local shaderFile = basePath..'/'..v
       local shaderType
-      if(shaderFile:find("vs.glsl") ~= nil) then shaderType = "vert" end
-      if(shaderFile:find("fs.glsl") ~= nil) then shaderType = "frag" end
-      if(shaderFile:find("gs.glsl") ~= nil) then shaderType = "geom" end
-      if(shaderFile:find("cs.glsl") ~= nil) then shaderType = "comp" end
+      if(shaderFile:find("vert.glsl") ~= nil) then shaderType = "vert" end
+      if(shaderFile:find("frag.glsl") ~= nil) then shaderType = "frag" end
+      if(shaderFile:find("geom.glsl") ~= nil) then shaderType = "geom" end
+      if(shaderFile:find("comp.glsl") ~= nil) then shaderType = "comp" end
       
       
       local cmd=_WORKING_DIR..'/../bin/glslangValidator.exe -V '..shaderFile.." -S "..shaderType.." -o " ..shaderFile..".spv"
@@ -73,10 +73,13 @@ project "Test Vulkan"
 	kind "ConsoleApp"
 	location "testVK"
 	files     { "../libsrc/testVK/**.cs", "../libsrc/testVK/shaders/**.glsl", "../libsrc/testVK/shaders/**.spv"}
-	vpaths { ["*"] = "../testVK" }
+	vpaths { ["source"] = ".**.cs",
+            ["shaders"] = "**.spv",
+            ["shader source"] = "**.glsl"}
+            
 	targetdir "../bin"
 	links     { "System", "VK", "System.Windows", "System.Windows.Forms", "System.Drawing", "System.Numerics"}
 	namespace("VulkanTest")
-    framework("4.7.2")
+         framework("4.7.2")
 
    

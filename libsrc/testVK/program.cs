@@ -70,8 +70,6 @@ namespace VulkanTest
 
       Context context = new Context();
 
-      //VK.DebugReportCallbackEXT debugCallbackHandle;
-
       IntPtr HInstance;
       IntPtr Hwnd;
 
@@ -813,42 +811,44 @@ namespace VulkanTest
 
       void loadShaders()
       {
-         /*
-         byte[] vsSpv = getEmbeddedResource("Test Vulkan.shaders.vs.glsl.spv");
+         byte[] vsSpv = getEmbeddedResource("Test Vulkan.shaders.simpleTri.vert.glsl.spv");
+         byte[] fsSpv = getEmbeddedResource("Test Vulkan.shaders.simpleTri.frag.glsl.spv");
 
          VK.ShaderModuleCreateInfo createInfo = new VK.ShaderModuleCreateInfo()
          {
             type = VK.StructureType.ShaderModuleCreateInfo,
-            CodeSize = 0,
-            Code = ,
-            Flags = 0
+            flags = 0,
+            code = vsSpv
          };
 
-         createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-         createInfo.codeSize = code.size();
-         createInfo.pCode = reinterpret_cast <const uint32_t*> (code.data());
-
-         VkShaderModule shaderModule;
-         if (vkCreateShaderModule(device, &createInfo, nullptr, &shaderModule) != VK_SUCCESS)
+         VK.ShaderModule vertShaderModule;
+         if (VK.CreateShaderModule(context.device, ref createInfo, out vertShaderModule) != VK.Result.Success)
          {
-            throw std::runtime_error("failed to create shader module!");
+            throw new Exception("failed to create shader module!");
          }
 
-         VkPipelineShaderStageCreateInfo vertShaderStageInfo = { };
-         vertShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-         vertShaderStageInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
+         VK.PipelineShaderStageCreateInfo vertShaderStageInfo = new VK.PipelineShaderStageCreateInfo {
+            type = VK.StructureType.PipelineShaderStageCreateInfo,
+            stage = VK.ShaderStageFlags.VertexBit,
+            module = vertShaderModule,
+            name = "main"
+         };
 
-         vertShaderStageInfo.module = vertShaderModule;
-         vertShaderStageInfo.pName = "main";
+         createInfo.code = fsSpv;
+         VK.ShaderModule fragShaderModule;
+         if (VK.CreateShaderModule(context.device, ref createInfo, out fragShaderModule) != VK.Result.Success)
+         {
+            throw new Exception("failed to create shader module!");
+         }
 
-         VkPipelineShaderStageCreateInfo fragShaderStageInfo = { };
-         fragShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
-         fragShaderStageInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
-         fragShaderStageInfo.module = fragShaderModule;
-         fragShaderStageInfo.pName = "main";
+         VK.PipelineShaderStageCreateInfo fragShaderStageInfo = new VK.PipelineShaderStageCreateInfo {
+            type = VK.StructureType.PipelineShaderStageCreateInfo,
+            stage = VK.ShaderStageFlags.FragmentBit,
+            module = fragShaderModule,
+            name = "main",
+         };
 
-         VkPipelineShaderStageCreateInfo shaderStages[] = { vertShaderStageInfo, fragShaderStageInfo };
-         */
+         //VK.PipelineShaderStageCreateInfo shaderStages[] { vertShaderStageInfo, fragShaderStageInfo };
       }
 
       byte[] getEmbeddedResource(string resourceName)

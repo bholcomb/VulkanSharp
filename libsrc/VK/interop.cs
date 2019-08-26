@@ -1010,4 +1010,242 @@ namespace Vulkan
          Alloc.free(pSignalSemaphoreDeviceIndices);
       }
    };
+
+   [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+   public struct _RenderPassBeginInfo
+   {
+      public VK.StructureType type;
+      public IntPtr next;
+      public VK.RenderPass renderPass;
+      public VK.Framebuffer framebuffer;
+      public VK.Rect2D renderArea;
+      public UInt32 clearValueCount;
+      public IntPtr pClearValues;
+
+      public _RenderPassBeginInfo(VK.RenderPassBeginInfo info)
+      {
+         type = info.type;
+         next = info.next;
+         renderPass = info.renderPass;
+         framebuffer = info.framebuffer;
+         renderArea = info.renderArea;
+         clearValueCount = (UInt32)(info.clearValues.Count);
+         pClearValues = Alloc.alloc(info.clearValues);
+      }
+
+      public void destroy()
+      {
+         Alloc.free(pClearValues);
+      }
+   };
+
+   [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+   public struct _BindBufferMemoryDeviceGroupInfo
+   {
+      public VK.StructureType type;
+      public IntPtr next;
+      public UInt32 deviceIndexCount;
+      public IntPtr deviceIndices;
+
+      public _BindBufferMemoryDeviceGroupInfo(VK.BindBufferMemoryDeviceGroupInfo info)
+      {
+         type = info.type;
+         next = info.next;
+         deviceIndexCount = (UInt32)info.deviceIndices.Count;
+         deviceIndices = Alloc.alloc(info.deviceIndices);
+      }
+
+      public void destroy()
+      {
+         Alloc.free(deviceIndices);
+      }
+   };
+
+   [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+   public struct _BindImageMemoryDeviceGroupInfo
+   {
+      public VK.StructureType type;
+      public IntPtr next;
+      public UInt32 deviceIndexCount;
+      public IntPtr deviceIndices;
+      public UInt32 splitInstanceBindRegionCount;
+      public IntPtr splitInstanceBindRegions;
+
+      public _BindImageMemoryDeviceGroupInfo(VK.BindImageMemoryDeviceGroupInfo info)
+      {
+         type = info.type;
+         next = info.next;
+         deviceIndexCount = (UInt32)info.deviceIndices.Count;
+         deviceIndices = Alloc.alloc(info.deviceIndices);
+         splitInstanceBindRegionCount = (UInt32)info.splitInstanceBindRegions.Count;
+         splitInstanceBindRegions = Alloc.alloc(info.splitInstanceBindRegions);
+      }
+
+      public void destroy()
+      {
+         Alloc.free(deviceIndices);
+         Alloc.free(splitInstanceBindRegions);
+      }
+   };
+
+
+   [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+   public struct _PhysicalDeviceGroupProperties
+   {
+      public VK.StructureType type;
+      public IntPtr next;
+      public UInt32 physicalDeviceCount;
+      public IntPtr physicalDevices;
+      public Bool32 subsetAllocation;
+
+      public _PhysicalDeviceGroupProperties(VK.PhysicalDeviceGroupProperties info)
+      {
+         type = info.type;
+         next = info.next;
+         physicalDeviceCount = (UInt32)info.physicalDevices.Count;
+         physicalDevices = Alloc.alloc(info.physicalDevices);
+         subsetAllocation = info.subsetAllocation;
+      }
+
+      public void destroy()
+      {
+         Alloc.free(physicalDevices);
+      }
+   };
+
+   [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+   public struct _DeviceGroupDeviceCreateInfo
+   {
+      public VK.StructureType type;
+      public IntPtr next;
+      public UInt32 physicalDeviceCount;
+      public IntPtr physicalDevices;
+
+      public _DeviceGroupDeviceCreateInfo(VK.DeviceGroupDeviceCreateInfo info)
+      {
+         type = info.type;
+         next = info.next;
+         physicalDeviceCount = (UInt32)info.physicalDevices.Count;
+         physicalDevices = Alloc.alloc(info.physicalDevices);
+      }
+
+      public void destroy()
+      {
+         Alloc.free(physicalDevices);
+      }
+   };
+
+   [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+   public struct _RenderPassInputAttachmentAspectCreateInfo
+   {
+      public VK.StructureType type;
+      public IntPtr next;
+      public UInt32 aspectReferenceCount;
+      public IntPtr aspectReferences;
+
+      public _RenderPassInputAttachmentAspectCreateInfo(VK.RenderPassInputAttachmentAspectCreateInfo info)
+      {
+         type = info.type;
+         next = info.next;
+         aspectReferenceCount = (UInt32)info.aspectReferences.Count;
+         aspectReferences = Alloc.alloc(info.aspectReferences);
+      }
+
+      public void destroy()
+      {
+         Alloc.free(aspectReferences);
+      }
+   };
+
+   [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+   public struct _RenderPassMultiviewCreateInfo
+   {
+      public VK.StructureType type;
+      public IntPtr next;
+      public UInt32 subpassCount;
+      public IntPtr viewMasks;
+      public UInt32 dependencyCount;
+      public IntPtr viewOffsets;
+      public UInt32 correlationMaskCount;
+      public IntPtr pCorrelationMasks;
+
+      public _RenderPassMultiviewCreateInfo(VK.RenderPassMultiviewCreateInfo info)
+      {
+         type = info.type;
+         next = info.next;
+         subpassCount = info.subpassCount;
+         viewMasks = Alloc.alloc(info.viewMasks);
+         dependencyCount = info.dependencyCount;
+         viewOffsets = Alloc.alloc(info.viewOffsets);
+         correlationMaskCount = info.correlationMaskCount;
+         pCorrelationMasks = Alloc.alloc(info.pCorrelationMasks);
+      }
+
+      public void destroy()
+      {
+         Alloc.free(viewMasks);
+         Alloc.free(viewOffsets);
+         Alloc.free(pCorrelationMasks);
+      }
+   };
+
+   [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+   public struct _DescriptorUpdateTemplateCreateInfo
+   {
+      public VK.StructureType type;
+      public IntPtr next;
+      public VK.DescriptorUpdateTemplateCreateFlags flags;
+      public UInt32 descriptorUpdateEntryCount;  //Number of descriptor update entries to use for the update template 
+      public IntPtr descriptorUpdateEntries;  //Descriptor update entries for the template 
+      public VK.DescriptorUpdateTemplateType templateType;
+      public VK.DescriptorSetLayout descriptorSetLayout;
+      public VK.PipelineBindPoint pipelineBindPoint;
+      public VK.PipelineLayout pipelineLayout;  //If used for push descriptors, this is the only allowed layout 
+      public UInt32 set;
+
+      public _DescriptorUpdateTemplateCreateInfo(VK.DescriptorUpdateTemplateCreateInfo info)
+      {
+         type = info.type;
+         next = info.next;
+         flags = info.flags;
+         descriptorUpdateEntryCount = (UInt32)info.descriptorUpdateEntries.Count;
+         descriptorUpdateEntries = Alloc.alloc(info.descriptorUpdateEntries);
+         templateType = info.templateType;
+         descriptorSetLayout = info.descriptorSetLayout;
+         pipelineBindPoint = info.pipelineBindPoint;
+         pipelineLayout = info.pipelineLayout;
+         set = info.set;
+      }
+
+      public void destroy()
+      {
+         Alloc.free(descriptorUpdateEntries);
+      }
+   };
+
+
+   [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+   public struct _ShaderModuleCreateInfo
+   {
+      public VK.StructureType type;
+      public IntPtr next;
+      public VK.ShaderModuleCreateFlags flags;
+      public UInt32 codeSize;
+      public IntPtr code;  //Binary code of size codeSize 
+
+      public _ShaderModuleCreateInfo(VK.ShaderModuleCreateInfo info)
+      {
+         type = info.type;
+         next = info.next;
+         flags = info.flags;
+         codeSize = (UInt32)info.code.Length;
+         code = Alloc.alloc(info.code);
+      }
+
+      public void destroy()
+      {
+         Alloc.free(code);
+      }
+   };
+
 }
