@@ -17,19 +17,19 @@ namespace Vulkan
 
       #region allocation callback functions
       [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-      public delegate IntPtr AllocationFunction(IntPtr userData, UInt32 size, UInt32 alignment, SystemAllocationScope allocationScope);
+      public delegate IntPtr AllocationFunction(IntPtr userData, UInt64 size, UInt64 alignment, SystemAllocationScope allocationScope);
 
       [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-      public delegate IntPtr ReallocationFunction(IntPtr userData, IntPtr original, UInt32 size, UInt32 alignment, SystemAllocationScope allocationScope);
+      public delegate IntPtr ReallocationFunction(IntPtr userData, IntPtr original, UInt64 size, UInt64 alignment, SystemAllocationScope allocationScope);
 
       [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
       public delegate IntPtr FreeFunction(IntPtr userData, IntPtr memory);
 
       [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-      public delegate IntPtr InternalAllocationNotification(IntPtr userData, UInt32 size, InternalAllocationType allocationType, SystemAllocationScope allocationScope);
+      public delegate IntPtr InternalAllocationNotification(IntPtr userData, UInt64 size, InternalAllocationType allocationType, SystemAllocationScope allocationScope);
 
       [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-      public delegate IntPtr InternalFreeNotification(IntPtr userData, UInt32 size, InternalAllocationType allocationType, SystemAllocationScope allocationScope);
+      public delegate IntPtr InternalFreeNotification(IntPtr userData, UInt64 size, InternalAllocationType allocationType, SystemAllocationScope allocationScope);
       #endregion
 
 		#region defines

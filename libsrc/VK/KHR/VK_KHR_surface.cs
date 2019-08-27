@@ -111,7 +111,7 @@ namespace Vulkan
       //VkResult vkGetPhysicalDeviceSurfacePresentModesKHR(VkPhysicalDevice physicalDevice, VkSurfaceKHR surface, uint32_t* pPresentModeCount, VkPresentModeKHR* pPresentModes);
       
       //delegate definitions
-      public delegate void DestroySurfaceKHRDelegate(Instance instance, SurfaceKHR surface, AllocationCallbacks pAllocator);
+      public delegate void DestroySurfaceKHRDelegate(Instance instance, SurfaceKHR surface, AllocationCallbacks pAllocator = null);
       public delegate Result GetPhysicalDeviceSurfaceSupportKHRDelegate(PhysicalDevice physicalDevice, UInt32 queueFamilyIndex, SurfaceKHR surface, out Bool32 pSupported);
       public delegate Result GetPhysicalDeviceSurfaceCapabilitiesKHRDelegate(PhysicalDevice physicalDevice, SurfaceKHR surface, out SurfaceCapabilitiesKHR pSurfaceCapabilities);
       delegate Result GetPhysicalDeviceSurfaceFormatsKHRDelegate(PhysicalDevice physicalDevice, SurfaceKHR surface, ref UInt32 pSurfaceFormatCount, IntPtr pSurfaceFormats);

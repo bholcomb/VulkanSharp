@@ -29,12 +29,12 @@ namespace VulkanTest
 
 		private void VulkanForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			vulkanApp.shutdown();
+			vulkanApp.cleanup();
 		}
 
 		private void VulkanForm_Paint(object sender, PaintEventArgs e)
 		{
-			vulkanApp.draw();
+			vulkanApp.drawFrame();
 		}
     }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -28,17 +29,17 @@ namespace Vulkan
 
       //void vkDestroyInstance(VkInstance instance, VkAllocationCallbacks* pAllocator);
       [DllImport(VulkanLibrary, EntryPoint = "vkDestroyInstance", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void DestroyInstance(Instance instance, AllocationCallbacks pAllocator);
+      public static extern void DestroyInstance(Instance instance, AllocationCallbacks pAllocator = null);
 
 
       //VkResult vkEnumeratePhysicalDevices(VkInstance instance, uint32_t* pPhysicalDeviceCount, VkPhysicalDevice* pPhysicalDevices);
       [DllImport(VulkanLibrary, EntryPoint = "vkEnumeratePhysicalDevices", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      static extern Result _EnumeratePhysicalDevices(Instance instance, out UInt32 pPhysicalDeviceCount, IntPtr pPhysicalDevices);
-      public unsafe static Result EnumeratePhysicalDevices(Instance instance, out UInt32 pPhysicalDeviceCount, PhysicalDevice[] pPhysicalDevices)
+      static extern Result _EnumeratePhysicalDevices(Instance instance, ref UInt32 pPhysicalDeviceCount, IntPtr pPhysicalDevices);
+      public unsafe static Result EnumeratePhysicalDevices(Instance instance, ref UInt32 pPhysicalDeviceCount, PhysicalDevice[] pPhysicalDevices)
       {
          fixed (PhysicalDevice* ptr = pPhysicalDevices)
          {
-            return _EnumeratePhysicalDevices(instance, out pPhysicalDeviceCount, (IntPtr)ptr);
+            return _EnumeratePhysicalDevices(instance, ref pPhysicalDeviceCount, (IntPtr)ptr);
          }
       }
 
@@ -64,12 +65,12 @@ namespace Vulkan
 
       //void vkGetPhysicalDeviceQueueFamilyProperties(VkPhysicalDevice physicalDevice, uint32_t* pQueueFamilyPropertyCount, VkQueueFamilyProperties* pQueueFamilyProperties);
       [DllImport(VulkanLibrary, EntryPoint = "vkGetPhysicalDeviceQueueFamilyProperties", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      static extern void _GetPhysicalDeviceQueueFamilyProperties(PhysicalDevice physicalDevice, out UInt32 pQueueFamilyPropertyCount, IntPtr pQueueFamilyProperties);
-      public unsafe static void GetPhysicalDeviceQueueFamilyProperties(PhysicalDevice physicalDevice, out UInt32 pQueueFamilyPropertyCount, QueueFamilyProperties[] pQueueFamilyProperties)
+      static extern void _GetPhysicalDeviceQueueFamilyProperties(PhysicalDevice physicalDevice, ref UInt32 pQueueFamilyPropertyCount, IntPtr pQueueFamilyProperties);
+      public unsafe static void GetPhysicalDeviceQueueFamilyProperties(PhysicalDevice physicalDevice, ref UInt32 pQueueFamilyPropertyCount, QueueFamilyProperties[] pQueueFamilyProperties)
       {
          fixed (QueueFamilyProperties* ptr = pQueueFamilyProperties)
          {
-            _GetPhysicalDeviceQueueFamilyProperties(physicalDevice, out pQueueFamilyPropertyCount, (IntPtr)ptr);
+            _GetPhysicalDeviceQueueFamilyProperties(physicalDevice, ref pQueueFamilyPropertyCount, (IntPtr)ptr);
          }
       }
 
@@ -128,12 +129,12 @@ namespace Vulkan
 
       //VkResult vkEnumerateDeviceExtensionProperties(VkPhysicalDevice physicalDevice, char* pLayerName, uint32_t* pPropertyCount, VkExtensionProperties* pProperties);
       [DllImport(VulkanLibrary, EntryPoint = "vkEnumerateDeviceExtensionProperties", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      static extern Result _EnumerateDeviceExtensionProperties(PhysicalDevice physicalDevice, string pLayerName, out UInt32 pPropertyCount, IntPtr pProperties);
-      public unsafe static Result EnumerateDeviceExtensionProperties(PhysicalDevice physicalDevice, string pLayerName, out UInt32 pPropertyCount, ExtensionProperties[] pProperties)
+      static extern Result _EnumerateDeviceExtensionProperties(PhysicalDevice physicalDevice, string pLayerName, ref UInt32 pPropertyCount, IntPtr pProperties);
+      public unsafe static Result EnumerateDeviceExtensionProperties(PhysicalDevice physicalDevice, string pLayerName, ref UInt32 pPropertyCount, ExtensionProperties[] pProperties)
       {
          fixed (ExtensionProperties* ptr = pProperties)
          {
-            return _EnumerateDeviceExtensionProperties(physicalDevice, pLayerName, out pPropertyCount, (IntPtr)ptr);
+            return _EnumerateDeviceExtensionProperties(physicalDevice, pLayerName, ref pPropertyCount, (IntPtr)ptr);
          }
       }
       #endregion
@@ -141,12 +142,12 @@ namespace Vulkan
       #region Layer discovery commands
       //VkResult vkEnumerateInstanceLayerProperties(uint32_t* pPropertyCount, VkLayerProperties* pProperties);
       [DllImport(VulkanLibrary, EntryPoint = "vkEnumerateInstanceLayerProperties", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      static extern Result _EnumerateInstanceLayerProperties(out UInt32 pPropertyCount, IntPtr pProperties);
-      public unsafe static Result EnumerateInstanceLayerProperties(out UInt32 pPropertyCount, LayerProperties[] pProperties)
+      static extern Result _EnumerateInstanceLayerProperties(ref UInt32 pPropertyCount, IntPtr pProperties);
+      public unsafe static Result EnumerateInstanceLayerProperties(ref UInt32 pPropertyCount, LayerProperties[] pProperties)
       {
          fixed (LayerProperties* ptr = pProperties)
          {
-            return _EnumerateInstanceLayerProperties(out pPropertyCount, (IntPtr)ptr);
+            return _EnumerateInstanceLayerProperties(ref pPropertyCount, (IntPtr)ptr);
          }
       }
 
@@ -701,10 +702,15 @@ namespace Vulkan
       #region Pass commands
       //VkResult vkCreateFramebuffer(VkDevice device, VkFramebufferCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkFramebuffer* pFramebuffer);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateFramebuffer", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      static extern Result _CreateFramebuffer(Device device, ref FramebufferCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out Framebuffer pFramebuffer);
-      public static Result CreateFramebuffer(Device device, ref FramebufferCreateInfo pCreateInfo, out Framebuffer pFramebuffer, AllocationCallbacks pAllocator = null)
+      static extern Result _CreateFramebuffer(Device device, ref _FramebufferCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out Framebuffer pFramebuffer);
+      public static Result CreateFramebuffer(Device device, FramebufferCreateInfo pCreateInfo, out Framebuffer pFramebuffer, AllocationCallbacks pAllocator = null)
       {
-         return _CreateFramebuffer(device, ref pCreateInfo, pAllocator, out pFramebuffer);
+         _FramebufferCreateInfo info = new _FramebufferCreateInfo(pCreateInfo);
+
+         Result res = _CreateFramebuffer(device, ref info, pAllocator, out pFramebuffer);
+
+         info.destroy();
+         return res;
       }
 
       //void vkDestroyFramebuffer(VkDevice device, VkFramebuffer framebuffer, VkAllocationCallbacks* pAllocator);
@@ -1094,7 +1100,12 @@ namespace Vulkan
 
       //void vkCmdBeginRenderPass(VkCommandBuffer commandBuffer, VkRenderPassBeginInfo* pRenderPassBegin, VkSubpassContents contents);
       [DllImport(VulkanLibrary, EntryPoint = "vkCmdBeginRenderPass", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern void CmdBeginRenderPass(CommandBuffer commandBuffer, ref RenderPassBeginInfo pRenderPassBegin, SubpassContents contents);
+      static extern void _CmdBeginRenderPass(CommandBuffer commandBuffer, ref _RenderPassBeginInfo pRenderPassBegin, SubpassContents contents);
+      public static void CmdBeginRenderPass(CommandBuffer commandBuffer, ref RenderPassBeginInfo pRenderPassBegin, SubpassContents contents)
+      {
+         _RenderPassBeginInfo info = new _RenderPassBeginInfo(pRenderPassBegin);
+         _CmdBeginRenderPass(commandBuffer, ref info, contents);
+      }
 
 
       //void vkCmdNextSubpass(VkCommandBuffer commandBuffer, VkSubpassContents contents);

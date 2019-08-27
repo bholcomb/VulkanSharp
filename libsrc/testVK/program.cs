@@ -9,239 +9,184 @@ using Vulkan;
 
 namespace VulkanTest
 {
-
-   public struct Vertex
+   class QueueFamilyIndices
    {
-      public Vector3 pos;
-      public Vector2 uv;
-   }
+      public Int32 graphicsFamily = -1;
+      public Int32 presentFamily = -1;
 
-   public struct TextureObject
+      public bool isComplete()
+      {
+         return (graphicsFamily != -1) && (presentFamily != -1);
+      }
+   };
+
+   class SwapChainSupportDetails
    {
-      public VK.Sampler sampler;
-      public VK.Image image;
-      public VK.ImageLayout imageLayout;
-      public VK.MemoryAllocateInfo memInfo;
-      public VK.DeviceMemory mem;
-      public VK.ImageView view;
-      public int width;
-      public int height;
-   }
+      public VK.SurfaceCapabilitiesKHR capabilities;
+      public VK.SurfaceFormatKHR[] formats;
+      public VK.PresentModeKHR[] presentModes;
+   };
+
    class VulkanApp
    {
-      class Context
-      {
-         public VK.Instance instance;
-         public VK.PhysicalDevice physicalDevice;
-         public VK.PhysicalDeviceProperties deviceProperties;
-         public VK.PhysicalDeviceFeatures deviceFeatures;
-         public VK.PhysicalDeviceMemoryProperties deviceMemoryProperties;
-         public int presentQueueIndex = -1;
-         public int graphicsQueueIndex = -1;
-         public int transferQueueIndex = -1;
-         public int computeQueueIndex = -1;
-         public int sparseQueueIndex = -1;
+      const int WIDTH = 800;
+      const int HEIGHT = 600;
+      const int MAX_FRAMES_IN_FLIGHT = 2;
 
-         public VK.Queue presentQueue;
-         public VK.Queue graphicsQueue;
-         public VK.Queue transferQueue;
-         public VK.Queue computeQueue;
-         public VK.Queue sparseQueue;
+      List<string> validationLayers = new List<string>() { InstanceLayers.VK_LAYER_LUNARG_standard_validation};
+      List<string> instanceExtensions = new List<string>() { InstanceExtensions.VK_KHR_surface,
+                                                                InstanceExtensions.VK_KHR_win32_surface,
+                                                                InstanceExtensions.VK_EXT_debug_utils};
+      List<string> deviceExtensions = new List<string>() { DeviceExtensions.VK_KHR_swapchain };
 
-         public VK.SurfaceKHR surface;
-         public VK.SurfaceCapabilitiesKHR surfaceCapabilities;
-         public VK.SwapchainKHR swapChain;
-         public VK.Image[] swapChainImages;
-         public VK.ImageView[] swapChainImageViews;
-         public VK.Format swapChainFormat;
-         public VK.Extent2D swapChainExtent;
-         public VK.Semaphore imageAvailable;
-         public VK.Semaphore renderingFinished;
+#if DEBUG
+      const bool enableValidationLayers = true;
+#else
+      const bool enableValidationLayers = false;
+#endif
 
-         public VK.CommandPool presentCommandPool;
-         public VK.CommandBuffer[] presentCommandBuffers;
-
-         public VK.Device device;
-
-         public VK.DebugUtilsMessengerEXT debugMessenger;
-
-         public VK.RenderPass renderPass;
-         public VK.PipelineLayout pipelineLayout;
-         public List<VK.PipelineShaderStageCreateInfo> shaderStages;
-         public VK.Pipeline graphicsPipeline;
-
-         public VK.Framebuffer[] swapChainFrameBuffers;
-      };
-
-      Context context = new Context();
 
       IntPtr HInstance;
       IntPtr Hwnd;
 
-      Vertex[] verts = new Vertex[]
-      {
-         new Vertex() {pos = new Vector3( 1, -1, -1), uv = new Vector2(0, 0)},
-         new Vertex() {pos = new Vector3(-1, -1, -1), uv = new Vector2(1, 0)},
-         new Vertex() {pos = new Vector3(-1,  1, -1), uv = new Vector2(1, 1)},
-         new Vertex() {pos = new Vector3( 1,  1, -1), uv = new Vector2(0, 1)},
+      VK.Instance instance;
+      VK.DebugUtilsMessengerEXT debugMessenger;
+      VK.SurfaceKHR surface;
 
-         new Vertex() {pos = new Vector3(-1, -1, -1), uv = new Vector2(0, 0)},
-         new Vertex() {pos = new Vector3(-1, -1,  1), uv = new Vector2(1, 0)},
-         new Vertex() {pos = new Vector3(-1,  1,  1), uv = new Vector2(1, 1)},
-         new Vertex() {pos = new Vector3(-1,  1, -1), uv = new Vector2(0, 1)},
+      VK.PhysicalDevice physicalDevice;
+      VK.Device device;
 
-         new Vertex() {pos = new Vector3( 1, -1,  1), uv = new Vector2(0, 0)},
-         new Vertex() {pos = new Vector3( 1, -1, -1), uv = new Vector2(1, 0)},
-         new Vertex() {pos = new Vector3( 1,  1, -1), uv = new Vector2(1, 1)},
-         new Vertex() {pos = new Vector3( 1,  1,  1), uv = new Vector2(0, 1)},
+      VK.Queue graphicsQueue;
+      VK.Queue presentQueue;
 
-         new Vertex() {pos = new Vector3(-1,  1,  1), uv = new Vector2(0, 0)},
-         new Vertex() {pos = new Vector3( 1,  1,  1), uv = new Vector2(1, 0)},
-         new Vertex() {pos = new Vector3( 1,  1, -1), uv = new Vector2(1, 1)},
-         new Vertex() {pos = new Vector3(-1,  1, -1), uv = new Vector2(0, 1)},
+      VK.SwapchainKHR swapChain;
+      VK.Image[] swapChainImages;
+      VK.Format swapChainImageFormat;
+      VK.Extent2D swapChainExtent;
+      VK.ImageView[] swapChainImageViews;
+      VK.Framebuffer[] swapChainFramebuffers;
 
-         new Vertex() {pos = new Vector3(-1, -1, -1), uv = new Vector2(0, 0)},
-         new Vertex() {pos = new Vector3( 1, -1, -1), uv = new Vector2(1, 0)},
-         new Vertex() {pos = new Vector3( 1, -1,  1), uv = new Vector2(1, 1)},
-         new Vertex() {pos = new Vector3(-1, -1,  1), uv = new Vector2(0, 1)},
+      VK.RenderPass renderPass;
+      VK.PipelineLayout pipelineLayout;
+      VK.Pipeline graphicsPipeline;
 
-         new Vertex() {pos = new Vector3(-1, -1,  1), uv = new Vector2(0, 0)},
-         new Vertex() {pos = new Vector3( 1, -1,  1), uv = new Vector2(1, 0)},
-         new Vertex() {pos = new Vector3( 1,  1,  1), uv = new Vector2(1, 1)},
-         new Vertex() {pos = new Vector3(-1,  1,  1), uv = new Vector2(0, 1)}
-      };
+      VK.CommandPool commandPool;
+      VK.CommandBuffer[] commandBuffers;
 
-      ushort[] index ={0, 1, 2,
-                        0, 2, 3, //front
-                        4, 5, 6,
-                        4,6, 7, //left
-                        8,9,10,
-                        8,10,11, //right
-                        12,13,14,
-                        12,14,15, // top 
-                        16,17,18,
-                        16,18,19, // bottom
-                        20,21,22,
-                        20,22,23  // back
-                        };
+      VK.Semaphore[] imageAvailableSemaphores;
+      VK.Semaphore[] renderFinishedSemaphores;
+      VK.Fence[] inFlightFences;
+      UInt64 currentFrame = 0;
 
-      Matrix4x4 projectionMat;
-      Matrix4x4 viewMatrix;
-      Matrix4x4 modelMatrix;
-
-      float spinAngle;
-      float spinIncrement;
-      bool pause;
-
-      VK.ShaderModule vertShader;
-      VK.ShaderModule fragShader;
-
-      VK.DescriptorPool descriptorPool;
-
-      TextureObject texture;
-
-      Int32 frameCount;
+      bool framebufferResized = false;
 
       public void init(IntPtr appHandle, IntPtr windowHandle)
       {
+         initWindow(appHandle, windowHandle);
+         initVulkan();
+      }
+
+      void initWindow(IntPtr appHandle, IntPtr windowHandle)
+      {
          HInstance = appHandle;
          Hwnd = windowHandle;
-
-         enumerateInstanceLayers();
-         enumerateInstanceExtensions();
-         initVulkan();
-         initInstanceExtensions();
-         setupDebugCallback();
-         createSurface();
-         getPhysicalDevice();
-         enumerateDeviceLayers();
-         enumerateDeviceExtensions();
-         getDevice();
-         initDeviceExtensions();
-         getQueues();
-         createSwapChain();
-         createSemaphores();
-         createCommandBuffers();
-         recordCommandBuffers();
-         createRenderPass();
-         loadShaders();
-         createGraphicsPipeline();
-         createFramebuffers();
-      }
-
-      public void shutdown()
-      {
-         destroyPipeline();
-         destroySwapChain();
-         destroyDevice();
-         destroyInstance();
-      }
-
-      void enumerateInstanceLayers()
-      {
-         Console.WriteLine("Enumerating Instance Layer Properties");
-         UInt32 count = 0;
-         VK.EnumerateInstanceLayerProperties(out count, null);
-
-         VK.LayerProperties[] props = new VK.LayerProperties[count];
-         VK.EnumerateInstanceLayerProperties(out count, props);
-
-         for(int i = 0; i < props.Length; i++)
-         {
-            Console.WriteLine("\tLayer Name: {0}", props[i].layerName);
-            Console.WriteLine("\t\tDescription: {0}", props[i].description);
-         }
-      }
-
-      void enumerateInstanceExtensions()
-      {
-         Console.WriteLine("Enumerating Instance Extensions");
-         UInt32 count = 0;
-         VK.EnumerateInstanceExtensionProperties(null, out count, null);
-
-         VK.ExtensionProperties[] props = new VK.ExtensionProperties[count];
-         VK.EnumerateInstanceExtensionProperties(null, out count, props);
-
-         for(int i = 0; i < props.Length; i++)
-         {
-            Console.WriteLine("\tExtensions Name: {0}", props[i].extensionName);
-         }
-      }
-
-      void enumerateDeviceLayers()
-      {
-         Console.WriteLine("Enumerating Device Layer Properties");
-         UInt32 count = 0;
-         VK.EnumerateDeviceLayerProperties(context.physicalDevice, out count, null);
-
-         VK.LayerProperties[] props = new VK.LayerProperties[count];
-         VK.EnumerateDeviceLayerProperties(context.physicalDevice, out count, props);
-
-         for(int i = 0; i < props.Length; i++)
-         {
-            Console.WriteLine("\tLayer Name: {0}", props[i].layerName);
-            Console.WriteLine("\t\tDescription: {0}", props[i].description);
-         }
-      }
-
-      void enumerateDeviceExtensions()
-      {
-         Console.WriteLine("Enumerating Device Extensions");
-         UInt32 count = 0;
-         VK.EnumerateDeviceExtensionProperties(context.physicalDevice, null, out count, null);
-
-         VK.ExtensionProperties[] props = new VK.ExtensionProperties[count];
-         VK.EnumerateDeviceExtensionProperties(context.physicalDevice, null, out count, props);
-
-         for(int i = 0; i < props.Length; i++)
-         {
-            Console.WriteLine("\tExtensions Name: {0}", props[i].extensionName);
-         }
       }
 
       void initVulkan()
       {
-         Console.Write("Creating Instance...");
+         createInstance();
+         setupDebugCallback();
+         createSurface();
+         pickPhysicalDevice();
+         createLogicalDevice();
+         createSwapChain();
+         createImageViews();
+         createRenderPass();
+         createGraphicsPipeline();
+         createFramebuffers();
+         createCommandPool();
+         createCommandBuffers();
+         createSyncObjects();
+      }
+
+      public void cleanup()
+      {
+         cleanupSwapChain();
+
+         for(int i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
+         {
+            VK.DestroySemaphore(device, renderFinishedSemaphores[i]);
+            VK.DestroySemaphore(device, imageAvailableSemaphores[i]);
+            VK.DestroyFence(device, inFlightFences[i]);
+         }
+
+         VK.DestroyCommandPool(device, commandPool);
+
+         VK.DestroyDevice(device);
+
+         if(enableValidationLayers)
+         {
+            VK.DestroyDebugUtilsMessengerEXT(instance, debugMessenger);
+         }
+
+         VK.DestroySurfaceKHR(instance, surface);
+         VK.DestroyInstance(instance);
+      }
+
+      void cleanupSwapChain()
+      {
+         foreach(VK.Framebuffer framebuffer in swapChainFramebuffers)
+         {
+            VK.DestroyFramebuffer(device, framebuffer);
+         }
+
+         VK.FreeCommandBuffers(device, commandPool, (UInt32)commandBuffers.Length, commandBuffers);
+
+         VK.DestroyPipeline(device, graphicsPipeline);
+         VK.DestroyPipelineLayout(device, pipelineLayout);
+         VK.DestroyRenderPass(device, renderPass);
+
+         foreach(VK.ImageView imageView in swapChainImageViews)
+         {
+            VK.DestroyImageView(device, imageView);
+         }
+
+         VK.DestroySwapchainKHR(device, swapChain);
+      }
+
+      void recreateSwapChain()
+      {
+         int width = 0, height = 0;
+         while(width == 0 || height == 0)
+         {
+            //                glfwGetFramebufferSize(window, &width, &height);
+            //                glfwWaitEvents();
+         }
+
+         VK.DeviceWaitIdle(device);
+
+         cleanupSwapChain();
+
+         createSwapChain();
+         createImageViews();
+         createRenderPass();
+         createGraphicsPipeline();
+         createFramebuffers();
+         createCommandBuffers();
+      }
+
+      void createInstance()
+      {
+         if(enableValidationLayers && !checkValidationLayerSupport())
+         {
+            throw new Exception("validation layers requested, but not available!");
+         }
+
+         if(enableValidationLayers)
+         {
+            instanceExtensions.Add(InstanceExtensions.VK_EXT_debug_utils);
+         }
+
          VK.InstanceCreateInfo info = new VK.InstanceCreateInfo()
          {
             type = VK.StructureType.InstanceCreateInfo,
@@ -251,40 +196,39 @@ namespace VulkanTest
             {
                type = VK.StructureType.ApplicationInfo,
                next = IntPtr.Zero,
-               applicationName = "Test VK Bindings",
+               applicationName = "Hello Triangle",
                applicationVersion = Vulkan.Version.Make(1, 0, 0),
                engineName = "Bobatron",
                engineVersion = 1,
                apiVersion = Vulkan.Version.Make(1, 1, 0)
             },
-            enabledLayerNames = new List<string>() {
-               InstanceLayers.VK_LAYER_LUNARG_standard_validation
-            },
-            enabledExtensionNames = new List<string>() {
-               InstanceExtensions.VK_KHR_surface,
-               InstanceExtensions.VK_KHR_win32_surface,
-               InstanceExtensions.VK_EXT_debug_utils
-            }
+            enabledLayerNames = validationLayers,
+            enabledExtensionNames = instanceExtensions
          };
 
-         VK.Result result = VK.CreateInstance(info, out context.instance);
+         VK.Result result = VK.CreateInstance(info, out instance);
+         if(result != VK.Result.Success)
+         {
+            throw new Exception("Failed to create Vulkan instance");
+         }
 
-         if(result == VK.Result.Success)
-            Console.WriteLine("Success");
-         else
-            Console.WriteLine("Failed");
+         initInstanceExtensions();
       }
 
       void initInstanceExtensions()
       {
-         VK.KHR_surface.init(context.instance);
-         VK.KHR_win32_surface.init(context.instance);
-         VK.EXT_debug_utils.init(context.instance);
+         VK.KHR_surface.init(instance);
+         VK.KHR_win32_surface.init(instance);
+
+         if(enableValidationLayers)
+         {
+            VK.EXT_debug_utils.init(instance);
+         }
       }
 
       void initDeviceExtensions()
       {
-         VK.KHR_swapchain.init(context.device);
+         VK.KHR_swapchain.init(device);
       }
 
       void setupDebugCallback()
@@ -303,7 +247,7 @@ namespace VulkanTest
             pUserData = IntPtr.Zero
          };
 
-         VK.Result res = VK.CreateDebugUtilsMessengerEXT(context.instance, ref info, null, out context.debugMessenger);
+         VK.Result res = VK.CreateDebugUtilsMessengerEXT(instance, ref info, null, out debugMessenger);
          if(res != VK.Result.Success)
          {
             Console.WriteLine("Failed to install debug utils callback");
@@ -340,141 +284,53 @@ namespace VulkanTest
             hwnd = Hwnd
          };
 
-         VK.Result res = VK.CreateWin32SurfaceKHR(context.instance, ref info, null, ref context.surface);
+         VK.Result res = VK.CreateWin32SurfaceKHR(instance, ref info, null, ref surface);
          if(res != VK.Result.Success)
          {
             Console.WriteLine("Failed to create surface");
          }
       }
 
-      void getPhysicalDevice()
+      void pickPhysicalDevice()
       {
-         Console.WriteLine("Getting physical devices...");
-
          UInt32 deviceCount = 0;
-         VK.Result result = VK.EnumeratePhysicalDevices(context.instance, out deviceCount, null);
-         Console.WriteLine("\tFound {0} devices", deviceCount);
+         VK.EnumeratePhysicalDevices(instance, ref deviceCount, null);
 
-         VK.PhysicalDevice[] physicalDevices = new VK.PhysicalDevice[deviceCount];
-         result = VK.EnumeratePhysicalDevices(context.instance, out deviceCount, physicalDevices);
-
-         for(int i = 0; i < physicalDevices.Length; i++)
+         if(deviceCount == 0)
          {
-            VK.PhysicalDeviceProperties props;
-            VK.GetPhysicalDeviceProperties(physicalDevices[i], out props);
+            throw new Exception("failed to find GPUs with Vulkan support!");
+         }
 
-            Console.WriteLine("\tFound Physical Device {0} of type {1}", props.deviceName, props.deviceType);
-            Console.WriteLine("\tWith Driver version {0}", Vulkan.Version.ToString(props.apiVersion));
+         VK.PhysicalDevice[] devices = new VK.PhysicalDevice[deviceCount];
+         VK.EnumeratePhysicalDevices(instance, ref deviceCount, devices);
 
-            VK.PhysicalDeviceFeatures supportedFeatures;
-            VK.GetPhysicalDeviceFeatures(physicalDevices[i], out supportedFeatures);
-
-            Console.WriteLine("\tDevice has Geometry Shader:{0}  Tesselation Shader:{1}", supportedFeatures.geometryShader, supportedFeatures.tessellationShader);
-
-            VK.PhysicalDeviceMemoryProperties memProps;
-            VK.GetPhysicalDeviceMemoryProperties(physicalDevices[i], out memProps);
-
-            Console.WriteLine("\tDevice has {0} memory types and {1} heaps", memProps.memoryTypeCount, memProps.memoryHeapCount);
-
-
-            UInt32 queueFamilyCount = 0;
-            VK.GetPhysicalDeviceQueueFamilyProperties(physicalDevices[i], out queueFamilyCount, null);
-            Console.WriteLine("\tFound {0} queue families", queueFamilyCount);
-
-            VK.QueueFamilyProperties[] queueFamilyProps = new VK.QueueFamilyProperties[queueFamilyCount];
-            VK.GetPhysicalDeviceQueueFamilyProperties(physicalDevices[i], out queueFamilyCount, queueFamilyProps);
-
-            bool presentFound = false;
-            bool graphicsFound = false;
-            bool computeFound = false;
-            bool transferFound = false;
-            bool sparseFound = false;
-
-            for(int j = 0; j < queueFamilyProps.Length; j++)
+         foreach(VK.PhysicalDevice device in devices)
+         {
+            if(isDeviceSuitable(device))
             {
-               Console.WriteLine("\t\tQueue Family {0} has {1} queues with flags {2}", j, queueFamilyProps[j].queueCount, queueFamilyProps[j].queueFlags);
-               Bool32 supportsPresent;
-               VK.GetPhysicalDeviceSurfaceSupportKHR(physicalDevices[i], (UInt32)j, context.surface, out supportsPresent);
-
-               if(!presentFound && supportsPresent == true)
-               {
-                  Console.WriteLine("\tFound queue family supporting present: {0}", j);
-                  context.presentQueueIndex = j;
-                  presentFound = true;
-               }
-
-               if(!graphicsFound && queueFamilyProps[j].queueFlags.HasFlag(VK.QueueFlags.GraphicsBit))
-               {
-                  context.graphicsQueueIndex = j;
-                  Console.WriteLine("\tFound queue family supporting graphics: {0}", j);
-                  graphicsFound = true;
-               }
-
-               if(!transferFound && queueFamilyProps[j].queueFlags.HasFlag(VK.QueueFlags.TransferBit))
-               {
-                  context.transferQueueIndex = j;
-                  Console.WriteLine("\tFound queue family supporting transfer: {0}", j);
-                  transferFound = true;
-               }
-
-               if(!computeFound && queueFamilyProps[j].queueFlags.HasFlag(VK.QueueFlags.ComputeBit))
-               {
-                  context.computeQueueIndex = j;
-                  Console.WriteLine("\tFound queue family supporting compute: {0}", j);
-                  computeFound = true;
-               }
-
-               if(!sparseFound && queueFamilyProps[j].queueFlags.HasFlag(VK.QueueFlags.SparseBindingBit))
-               {
-                  context.sparseQueueIndex = j;
-                  Console.WriteLine("\tFound queue family supporting sparse: {0}", j);
-                  sparseFound = true;
-               }
-            }
-
-            if(presentFound && graphicsFound && computeFound && transferFound /* && sparseFound */) //sparse really isn't needed
-            {
-               context.physicalDevice = physicalDevices[i];
-               context.deviceProperties = props;
-               context.deviceFeatures = supportedFeatures;
-               context.deviceMemoryProperties = memProps;
+               physicalDevice = device;
                break;
             }
          }
 
-         Console.WriteLine("\tSuccess.");
+         if(physicalDevice.native == IntPtr.Zero)
+         {
+            throw new Exception("failed to find a suitable GPU!");
+         }
       }
 
-      void getDevice()
+      void createLogicalDevice()
       {
-         Console.Write("Creating Logical Device...");
+         QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
 
-         SortedSet<UInt32> queueFamilies = new SortedSet<UInt32>();
-         if(context.presentQueueIndex != -1) queueFamilies.Add((UInt32)context.presentQueueIndex);
-         if(context.graphicsQueueIndex != -1) queueFamilies.Add((UInt32)context.graphicsQueueIndex);
-         if(context.computeQueueIndex != -1) queueFamilies.Add((UInt32)context.computeQueueIndex);
-         if(context.transferQueueIndex != -1) queueFamilies.Add((UInt32)context.transferQueueIndex);
-         if(context.sparseQueueIndex != -1) queueFamilies.Add((UInt32)context.sparseQueueIndex);
-
-
-
-         VK.DeviceCreateInfo info = new VK.DeviceCreateInfo()
-         {
-            type = VK.StructureType.DeviceCreateInfo,
-            next = IntPtr.Zero,
-            flags = 0,
-            queueCreateInfos = new List<VK.DeviceQueueCreateInfo>(),
-            enabledFeatures = context.deviceFeatures,
-            enabledExtensionNames = new List<string>()
-            {
-               DeviceExtensions.VK_KHR_swapchain
-            },
-            enabledLayerNames = new List<string>() { }
-         };
+         List<VK.DeviceQueueCreateInfo> queueCreateInfos = new List<VK.DeviceQueueCreateInfo>();
+         List<UInt32> queueFamilies = new List<UInt32>();
+         queueFamilies.Add((UInt32)indices.graphicsFamily);
+         queueFamilies.Add((UInt32)indices.presentFamily);
 
          foreach(UInt32 familyIndex in queueFamilies)
          {
-            info.queueCreateInfos.Add(
+            queueCreateInfos.Add(
                new VK.DeviceQueueCreateInfo()
                {
                   type = VK.StructureType.DeviceQueueCreateInfo,
@@ -487,521 +343,703 @@ namespace VulkanTest
             );
          }
 
-         VK.Result res = VK.CreateDevice(context.physicalDevice, info, out context.device);
 
-         if(res == VK.Result.Success)
-            Console.WriteLine("\tSuccess");
-         else
-            Console.WriteLine("\tFailed");
-      }
+         VK.PhysicalDeviceFeatures deviceFeatures = new VK.PhysicalDeviceFeatures();
 
-      void getQueues()
-      {
-         if(context.presentQueueIndex != -1) VK.GetDeviceQueue(context.device, (UInt32)context.presentQueueIndex, 0, out context.presentQueue);
-         if(context.graphicsQueueIndex != -1) VK.GetDeviceQueue(context.device, (UInt32)context.graphicsQueueIndex, 0, out context.graphicsQueue);
-         if(context.computeQueueIndex != -1) VK.GetDeviceQueue(context.device, (UInt32)context.computeQueueIndex, 0, out context.computeQueue);
-         if(context.transferQueueIndex != -1) VK.GetDeviceQueue(context.device, (UInt32)context.transferQueueIndex, 0, out context.transferQueue);
-         if(context.sparseQueueIndex != -1) VK.GetDeviceQueue(context.device, (UInt32)context.sparseQueueIndex, 0, out context.sparseQueue);
+         VK.DeviceCreateInfo info = new VK.DeviceCreateInfo()
+         {
+            type = VK.StructureType.DeviceCreateInfo,
+            next = IntPtr.Zero,
+            flags = 0,
+            queueCreateInfos = queueCreateInfos,
+            enabledFeatures = deviceFeatures,
+            enabledExtensionNames = deviceExtensions,
+            enabledLayerNames = new List<string>() { }
+         };
+
+
+         if(VK.CreateDevice(physicalDevice, info, out device) != VK.Result.Success)
+         {
+            throw new Exception("failed to create logical device!");
+         }
+
+         VK.GetDeviceQueue(device, (UInt32)indices.graphicsFamily, 0, out graphicsQueue);
+         VK.GetDeviceQueue(device, (UInt32)indices.presentFamily, 0, out presentQueue);
+
+         initDeviceExtensions();
       }
 
       void createSwapChain()
       {
-         Console.Write("Creating swapchain...");
+         SwapChainSupportDetails swapChainSupport = querySwapChainSupport(physicalDevice);
 
-         VK.Result res = VK.GetPhysicalDeviceSurfaceCapabilitiesKHR(context.physicalDevice, context.surface, out context.surfaceCapabilities);
-         checkResult(res, "Failed to get physical device surface capabilities");
+         VK.SurfaceFormatKHR surfaceFormat = chooseSwapSurfaceFormat(swapChainSupport.formats);
+         VK.PresentModeKHR presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
+         VK.Extent2D extent = chooseSwapExtent(swapChainSupport.capabilities);
 
-         UInt32 formatCount = 0;
-         res = VK.GetPhysicalDeviceSurfaceFormatsKHR(context.physicalDevice, context.surface, ref formatCount, null);
-         checkResult(res, "Failed to get physical device surface format count");
-
-         Console.WriteLine("Found {0} formats for display surface", formatCount);
-         VK.SurfaceFormatKHR[] surfaceFormats = new VK.SurfaceFormatKHR[formatCount];
-         res = VK.GetPhysicalDeviceSurfaceFormatsKHR(context.physicalDevice, context.surface, ref formatCount, surfaceFormats);
-         checkResult(res, "Failed to get physical device surface format values");
-
-         //just use the first format/colorspace
-         VK.Format bestFormat = surfaceFormats[0].format;
-         VK.ColorSpaceKHR bestColorspace = surfaceFormats[0].colorSpace;
-
-         UInt32 presentModeCount = 0;
-         res = VK.GetPhysicalDeviceSurfacePresentModesKHR(context.physicalDevice, context.surface, ref presentModeCount, null);
-         checkResult(res, "Failed to get physical device surface present mode count");
-
-         Console.WriteLine("Found {0} present modes for display surface", presentModeCount);
-         VK.PresentModeKHR[] presentModes = new VK.PresentModeKHR[presentModeCount];
-         res = VK.GetPhysicalDeviceSurfacePresentModesKHR(context.physicalDevice, context.surface, ref presentModeCount, presentModes);
-         checkResult(res, "Failed to get physical device surface present mode values");
-
-         //prefer mailbox, but use fifo as a fallback
-         VK.PresentModeKHR bestPresentMode = VK.PresentModeKHR.Fifo;
-         foreach(VK.PresentModeKHR availableMode in presentModes)
+         UInt32 imageCount = swapChainSupport.capabilities.minImageCount + 1;
+         if(swapChainSupport.capabilities.maxImageCount > 0 && imageCount > swapChainSupport.capabilities.maxImageCount)
          {
-            if(availableMode == VK.PresentModeKHR.Mailbox)
+            imageCount = swapChainSupport.capabilities.maxImageCount;
+         }
+
+         VK.SwapchainCreateInfoKHR createInfo = new VK.SwapchainCreateInfoKHR();
+         createInfo.type = VK.StructureType.SwapchainCreateInfoKhr;
+         createInfo.surface = surface;
+         createInfo.minImageCount = imageCount;
+         createInfo.imageFormat = surfaceFormat.format;
+         createInfo.imageColorSpace = surfaceFormat.colorSpace;
+         createInfo.imageExtent = extent;
+         createInfo.imageArrayLayers = 1;
+         createInfo.imageUsage = VK.ImageUsageFlags.ColorAttachmentBit;
+
+         QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
+         List<UInt32> queueFamilyIndices = new List<UInt32> { (UInt32)indices.graphicsFamily, (UInt32)indices.presentFamily };
+
+         if(indices.graphicsFamily != indices.presentFamily)
+         {
+            createInfo.imageSharingMode = VK.SharingMode.Concurrent;
+            createInfo.queueFamilyIndices = queueFamilyIndices;
+         }
+         else
+         {
+            createInfo.imageSharingMode = VK.SharingMode.Exclusive;
+            createInfo.queueFamilyIndices = null;
+         }
+
+         createInfo.preTransform = swapChainSupport.capabilities.currentTransform;
+         createInfo.compositeAlpha = VK.CompositeAlphaFlagsKHR.OpaqueBit;
+         createInfo.presentMode = presentMode;
+         createInfo.clipped = true;
+
+         if(VK.CreateSwapchainKHR(device, ref createInfo, ref swapChain) != VK.Result.Success)
+         {
+            throw new Exception("failed to create swap chain!");
+         }
+
+         VK.GetSwapchainImagesKHR(device, swapChain, ref imageCount, null);
+         swapChainImages = new VK.Image[imageCount];
+         VK.GetSwapchainImagesKHR(device, swapChain, ref imageCount, swapChainImages);
+
+         swapChainImageFormat = surfaceFormat.format;
+         swapChainExtent = extent;
+      }
+
+      void createImageViews()
+      {
+         swapChainImageViews = new VK.ImageView[swapChainImages.Length];
+
+         for(int i = 0; i < swapChainImages.Length; i++)
+         {
+            VK.ImageViewCreateInfo createInfo = new VK.ImageViewCreateInfo();
+            createInfo.type = VK.StructureType.ImageViewCreateInfo;
+            createInfo.image = swapChainImages[i];
+            createInfo.viewType = VK.ImageViewType._2d;
+            createInfo.format = swapChainImageFormat;
+            createInfo.components.r = VK.ComponentSwizzle.Identity;
+            createInfo.components.g = VK.ComponentSwizzle.Identity;
+            createInfo.components.b = VK.ComponentSwizzle.Identity;
+            createInfo.components.a = VK.ComponentSwizzle.Identity; ;
+            createInfo.subresourceRange.aspectMask = VK.ImageAspectFlags.ColorBit;
+            createInfo.subresourceRange.baseMipLevel = 0;
+            createInfo.subresourceRange.levelCount = 1;
+            createInfo.subresourceRange.baseArrayLayer = 0;
+            createInfo.subresourceRange.layerCount = 1;
+
+            if(VK.CreateImageView(device, ref createInfo, out swapChainImageViews[i]) != VK.Result.Success)
             {
-               bestPresentMode = availableMode;
-               break;
+               throw new Exception("failed to create image views!");
             }
-         }
-
-         VK.ImageUsageFlags usageFlags;
-         if(context.surfaceCapabilities.supportedUsageFlags.HasFlag(VK.ImageUsageFlags.TransferDstBit))
-            usageFlags = VK.ImageUsageFlags.ColorAttachmentBit | VK.ImageUsageFlags.TransferDstBit;
-         else
-            usageFlags = VK.ImageUsageFlags.ColorAttachmentBit;
-
-         VK.SwapchainCreateInfoKHR info = new VK.SwapchainCreateInfoKHR()
-         {
-            type = VK.StructureType.SwapchainCreateInfoKhr,
-            next = IntPtr.Zero,
-            flags = 0,
-            surface = context.surface,
-            minImageCount = context.surfaceCapabilities.minImageCount + 1,
-            imageFormat = bestFormat,
-            imageColorSpace = bestColorspace,
-            imageExtent = context.surfaceCapabilities.currentExtent,
-            imageArrayLayers = 1,
-            imageUsage = usageFlags,
-            presentMode = bestPresentMode,
-            preTransform = context.surfaceCapabilities.currentTransform,
-            compositeAlpha = VK.CompositeAlphaFlagsKHR.OpaqueBit,
-            clipped = true,
-            oldSwapchain = new VK.SwapchainKHR()
-         };
-
-         if(context.presentQueueIndex != context.graphicsQueueIndex)
-         {
-            info.imageSharingMode = VK.SharingMode.Concurrent;
-            info.queueFamilyIndices = new List<UInt32>() { (UInt32)context.presentQueueIndex, (UInt32)context.graphicsQueueIndex };
-         }
-         else
-         {
-            info.imageSharingMode = VK.SharingMode.Exclusive;
-            info.queueFamilyIndices = new List<UInt32>() { 0 };
-         }
-
-         res = VK.CreateSwapchainKHR(context.device, ref info, ref context.swapChain);
-         checkResult(res, "Failed to create swap chain");
-
-         UInt32 imageCount = 0;
-         res = VK.GetSwapchainImagesKHR(context.device, context.swapChain, ref imageCount, null);
-         checkResult(res, "Failed to get swamp chain image count");
-
-         Console.WriteLine("Found {0} swapchain  images", imageCount);
-         context.swapChainImages = new VK.Image[imageCount];
-
-         res = VK.GetSwapchainImagesKHR(context.device, context.swapChain, ref imageCount, context.swapChainImages);
-         checkResult(res, "Failed to get swap chain images");
-
-
-         context.swapChainExtent = context.surfaceCapabilities.currentExtent;
-         context.swapChainFormat = bestFormat;
-
-         context.swapChainImageViews = new VK.ImageView[context.swapChainImages.Length];
-         for(int i = 0; i < context.swapChainImages.Length; i++)
-         {
-            VK.ImageViewCreateInfo viewInfo = new VK.ImageViewCreateInfo()
-            {
-               type = VK.StructureType.ImageViewCreateInfo,
-               next = IntPtr.Zero,
-               flags = 0,
-               image = context.swapChainImages[i],
-               viewType = VK.ImageViewType._2d,
-               format = context.swapChainFormat,
-               components = new VK.ComponentMapping()
-               {
-                  r = VK.ComponentSwizzle.Identity,
-                  g = VK.ComponentSwizzle.Identity,
-                  b = VK.ComponentSwizzle.Identity,
-                  a = VK.ComponentSwizzle.Identity
-               },
-               subresourceRange = new VK.ImageSubresourceRange()
-               {
-                  aspectMask = VK.ImageAspectFlags.ColorBit,
-                  baseMipLevel = 0,
-                  levelCount = 1,
-                  baseArrayLayer = 0,
-                  layerCount = 1
-               }
-            };
-
-            res = VK.CreateImageView(context.device, ref viewInfo, out context.swapChainImageViews[i]);
-            checkResult(res, "Failed to create swap chain image view");
-         }
-
-         Console.WriteLine("Success");
-      }
-
-      void createSemaphores()
-      {
-         Console.Write("Creating semaphores...");
-         VK.SemaphoreCreateInfo info = new VK.SemaphoreCreateInfo()
-         {
-            type = VK.StructureType.SemaphoreCreateInfo,
-            next = IntPtr.Zero,
-            flags = 0
-         };
-
-         VK.Result res = VK.CreateSemaphore(context.device, ref info, out context.imageAvailable);
-         checkResult(res, "Creating image available semaphore");
-
-         res = VK.CreateSemaphore(context.device, ref info, out context.renderingFinished);
-         checkResult(res, "Creating rendering finished semaphore");
-
-         Console.WriteLine("Success");
-      }
-
-      void createCommandBuffers()
-      {
-         Console.Write("Creating command buffers...");
-         VK.CommandPoolCreateInfo info = new VK.CommandPoolCreateInfo()
-         {
-            type = VK.StructureType.CommandPoolCreateInfo,
-            next = IntPtr.Zero,
-            flags = 0,
-            queueFamilyIndex = (UInt32)context.presentQueueIndex
-         };
-
-         VK.Result res = VK.CreateCommandPool(context.device, ref info, out context.presentCommandPool);
-         checkResult(res, "Creating present command pool");
-
-         context.presentCommandBuffers = new VK.CommandBuffer[context.swapChainImages.Length];
-
-         VK.CommandBufferAllocateInfo allocInfo = new VK.CommandBufferAllocateInfo()
-         {
-            type = VK.StructureType.CommandBufferAllocateInfo,
-            next = IntPtr.Zero,
-            commandPool = context.presentCommandPool,
-            level = VK.CommandBufferLevel.Primary,
-            commandBufferCount = (UInt32)context.swapChainImages.Length
-         };
-
-         res = VK.AllocateCommandBuffers(context.device, ref allocInfo, context.presentCommandBuffers);
-         checkResult(res, "Create present command buffers");
-
-         Console.WriteLine("Success");
-      }
-
-      void recordCommandBuffers()
-      {
-         Console.Write("Record command buffers...");
-         VK.CommandBufferBeginInfo beginInfo = new VK.CommandBufferBeginInfo()
-         {
-            type = VK.StructureType.CommandBufferBeginInfo,
-            next = IntPtr.Zero,
-            flags = 0,
-            inheritanceInfo = null
-         };
-
-         VK.ClearColorValue clearColor = new VK.ClearColorValue() { r = 0.2f, g = 0.2f, b = 0.2f, a = 0.0f };
-
-         VK.ImageSubresourceRange imageSubresourceRange = new VK.ImageSubresourceRange()
-         {
-            aspectMask = VK.ImageAspectFlags.ColorBit,
-            baseMipLevel = 0,
-            levelCount = 1,
-            baseArrayLayer = 0,
-            layerCount = 1
-         };
-
-         for(int i = 0; i < context.swapChainImages.Length; i++)
-         {
-            VK.ImageMemoryBarrier barrierFromPresentToClear = new VK.ImageMemoryBarrier()
-            {
-               type = VK.StructureType.ImageMemoryBarrier,
-               next = IntPtr.Zero,
-               srcAccessMask = VK.AccessFlags.MemoryReadBit,
-               dstAccessMask = VK.AccessFlags.TransferWriteBit,
-               oldLayout = VK.ImageLayout.Undefined,
-               newLayout = VK.ImageLayout.TransferDstOptimal,
-               srcQueueFamilyIndex = VK.QUEUE_FAMILY_IGNORED,
-               dstQueueFamilyIndex = VK.QUEUE_FAMILY_IGNORED,
-               image = context.swapChainImages[i],
-               subresourceRange = imageSubresourceRange
-            };
-
-            VK.ImageMemoryBarrier barrierFromClearToPresent =
-               new VK.ImageMemoryBarrier()
-               {
-                  type = VK.StructureType.ImageMemoryBarrier,
-                  next = IntPtr.Zero,
-                  srcAccessMask = VK.AccessFlags.TransferWriteBit,
-                  dstAccessMask = VK.AccessFlags.MemoryReadBit,
-                  oldLayout = VK.ImageLayout.TransferDstOptimal,
-                  newLayout = VK.ImageLayout.PresentSrcKhr,
-                  srcQueueFamilyIndex = VK.QUEUE_FAMILY_IGNORED,
-                  dstQueueFamilyIndex = VK.QUEUE_FAMILY_IGNORED,
-                  image = context.swapChainImages[i],
-                  subresourceRange = imageSubresourceRange
-               };
-
-
-            VK.Result res = VK.BeginCommandBuffer(context.presentCommandBuffers[i], ref beginInfo);
-            checkResult(res, "Begin command buffer");
-
-            VK.CmdPipelineBarrier(context.presentCommandBuffers[i], VK.PipelineStageFlags.TransferBit, VK.PipelineStageFlags.TransferBit, 0, 0, null, 0, null, 1, new VK.ImageMemoryBarrier[] { barrierFromPresentToClear });
-
-            VK.CmdClearColorImage(context.presentCommandBuffers[i], context.swapChainImages[i], VK.ImageLayout.TransferDstOptimal, ref clearColor, 1, new VK.ImageSubresourceRange[] { imageSubresourceRange });
-
-            VK.CmdPipelineBarrier(context.presentCommandBuffers[i], VK.PipelineStageFlags.TransferBit, VK.PipelineStageFlags.BottomOfPipeBit, 0, 0, null, 0, null, 1, new VK.ImageMemoryBarrier[] { barrierFromClearToPresent });
-
-            res = VK.EndCommandBuffer(context.presentCommandBuffers[i]);
-            checkResult(res, "End command buffer");
-
-            Console.WriteLine("Success");
          }
       }
 
       void createRenderPass()
       {
-         VK.AttachmentDescription attachments = new VK.AttachmentDescription()
+         VK.AttachmentDescription colorAttachment = new VK.AttachmentDescription();
+         colorAttachment.format = swapChainImageFormat;
+         colorAttachment.samples = VK.SampleCountFlags._1Bit;
+         colorAttachment.loadOp = VK.AttachmentLoadOp.Clear;
+         colorAttachment.storeOp = VK.AttachmentStoreOp.Store;
+         colorAttachment.stencilLoadOp = VK.AttachmentLoadOp.DontCare;
+         colorAttachment.stencilStoreOp = VK.AttachmentStoreOp.DontCare;
+         colorAttachment.initialLayout = VK.ImageLayout.Undefined;
+         colorAttachment.finalLayout = VK.ImageLayout.PresentSrcKhr;
+
+         VK.AttachmentReference colorAttachmentRef = new VK.AttachmentReference();
+         colorAttachmentRef.attachment = 0;
+         colorAttachmentRef.layout = VK.ImageLayout.ColorAttachmentOptimal;
+
+         VK.SubpassDescription subpass = new VK.SubpassDescription();
+         subpass.pipelineBindPoint = VK.PipelineBindPoint.Graphics;
+         subpass.colorAttachments = new List<VK.AttachmentReference> { colorAttachmentRef };
+
+         VK.SubpassDependency dependency = new VK.SubpassDependency();
+         dependency.srcSubpass = VK.SUBPASS_EXTERNAL;
+         dependency.dstSubpass = 0;
+         dependency.srcStageMask = VK.PipelineStageFlags.ColorAttachmentOutputBit;
+         dependency.srcAccessMask = 0;
+         dependency.dstStageMask = VK.PipelineStageFlags.ColorAttachmentOutputBit;
+         dependency.dstAccessMask = VK.AccessFlags.ColorAttachmentReadBit | VK.AccessFlags.ColorAttachmentWriteBit;
+
+         VK.RenderPassCreateInfo renderPassInfo = new VK.RenderPassCreateInfo();
+         renderPassInfo.type = VK.StructureType.RenderPassCreateInfo;
+         renderPassInfo.attachments = new List<VK.AttachmentDescription> { colorAttachment };
+         renderPassInfo.subpasses = new List<VK.SubpassDescription> { subpass };
+         renderPassInfo.dependencies = new List<VK.SubpassDependency> { dependency };
+
+         if(VK.CreateRenderPass(device, ref renderPassInfo, out renderPass) != VK.Result.Success)
          {
-            flags = 0,
-            format = context.swapChainFormat,
-            samples = VK.SampleCountFlags._1Bit,
-            loadOp = VK.AttachmentLoadOp.Clear,
-            storeOp = VK.AttachmentStoreOp.Store,
-            stencilLoadOp = VK.AttachmentLoadOp.DontCare,
-            stencilStoreOp = VK.AttachmentStoreOp.DontCare,
-            initialLayout = VK.ImageLayout.PresentSrcKhr,
-            finalLayout = VK.ImageLayout.PresentSrcKhr
-         };
-
-         VK.AttachmentReference colorAttachment = new VK.AttachmentReference()
-         {
-            attachment = 0,
-            layout = VK.ImageLayout.ColorAttachmentOptimal
-         };
-
-         VK.SubpassDescription subpassDescription = new VK.SubpassDescription()
-         {
-            flags = 0,
-            pipelineBindPoint = VK.PipelineBindPoint.Graphics,
-            inputAttachments = null,
-            colorAttachments = new List<VK.AttachmentReference> { colorAttachment },
-            resolveAttachments = null,
-            depthStencilAttachment = null,
-            preserveAttachments = null
-         };
-
-         VK.RenderPassCreateInfo info = new VK.RenderPassCreateInfo()
-         {
-            type = VK.StructureType.RenderPassCreateInfo,
-            next = IntPtr.Zero,
-            flags = 0,
-            attachments = new List<VK.AttachmentDescription> { attachments },
-            subpasses = new List<VK.SubpassDescription> { subpassDescription },
-            dependencies = null
-         };
-
-         VK.Result res = VK.CreateRenderPass(context.device, ref info, out context.renderPass);
-         checkResult(res, "Create render pass");
-      }
-
-      void loadVbo()
-      {
-
-      }
-
-      void loadTexture()
-      {
-
-      }
-
-      void loadShaders()
-      {
-         byte[] vsSpv = getEmbeddedResource("VulkanTest.libsrc.testVK.shaders.simpleTri.vert.glsl.spv");
-         byte[] fsSpv = getEmbeddedResource("VulkanTest.libsrc.testVK.shaders.simpleTri.frag.glsl.spv");
-
-         VK.ShaderModuleCreateInfo createInfo = new VK.ShaderModuleCreateInfo()
-         {
-            type = VK.StructureType.ShaderModuleCreateInfo,
-            flags = 0,
-            code = vsSpv
-         };
-
-         VK.ShaderModule vertShaderModule;
-         if(VK.CreateShaderModule(context.device, ref createInfo, out vertShaderModule) != VK.Result.Success)
-         {
-            throw new Exception("failed to create shader module!");
+            throw new Exception("failed to create render pass!");
          }
-
-         VK.PipelineShaderStageCreateInfo vertShaderStageInfo = new VK.PipelineShaderStageCreateInfo
-         {
-            type = VK.StructureType.PipelineShaderStageCreateInfo,
-            stage = VK.ShaderStageFlags.VertexBit,
-            module = vertShaderModule,
-            name = "main",
-            specializationInfo = null
-         };
-
-         createInfo.code = fsSpv;
-         VK.ShaderModule fragShaderModule;
-         if(VK.CreateShaderModule(context.device, ref createInfo, out fragShaderModule) != VK.Result.Success)
-         {
-            throw new Exception("failed to create shader module!");
-         }
-
-         VK.PipelineShaderStageCreateInfo fragShaderStageInfo = new VK.PipelineShaderStageCreateInfo
-         {
-            type = VK.StructureType.PipelineShaderStageCreateInfo,
-            stage = VK.ShaderStageFlags.FragmentBit,
-            module = fragShaderModule,
-            name = "main",
-            specializationInfo = null
-         };
-
-         context.shaderStages = new List<VK.PipelineShaderStageCreateInfo> { vertShaderStageInfo, fragShaderStageInfo };
       }
 
       void createGraphicsPipeline()
       {
-         VK.PipelineVertexInputStateCreateInfo vertexInputInfo = new VK.PipelineVertexInputStateCreateInfo
-         {
-            type = VK.StructureType.PipelineVertexInputStateCreateInfo,
-            vertexBindingDescriptions = null,
-            vertexAttributeDescriptions = null
-         };
+         byte[] vertShaderCode = getEmbeddedResource("VulkanTest.libsrc.testVK.shaders.simpleTri.vert.glsl.spv");
+         byte[] fragShaderCode = getEmbeddedResource("VulkanTest.libsrc.testVK.shaders.simpleTri.frag.glsl.spv");
 
-         VK.PipelineInputAssemblyStateCreateInfo inputAssembly = new VK.PipelineInputAssemblyStateCreateInfo
-         {
-            type = VK.StructureType.PipelineInputAssemblyStateCreateInfo,
-            topology = VK.PrimitiveTopology.TriangleList,
-            primitiveRestartEnable = false
-         };
+         VK.ShaderModule vertShaderModule = createShaderModule(vertShaderCode);
+         VK.ShaderModule fragShaderModule = createShaderModule(fragShaderCode);
 
-         VK.Viewport viewport = new VK.Viewport
-         {
-            x = 0.0f,
-            y = 0.0f,
-            width = context.swapChainExtent.width,
-            height = context.swapChainExtent.height,
-            minDepth = 0.0f,
-            maxDepth = 1.0f
-         };
+         VK.PipelineShaderStageCreateInfo vertShaderStageInfo = new VK.PipelineShaderStageCreateInfo();
+         vertShaderStageInfo.type = VK.StructureType.PipelineShaderStageCreateInfo;
+         vertShaderStageInfo.stage = VK.ShaderStageFlags.VertexBit;
+         vertShaderStageInfo.module = vertShaderModule;
+         vertShaderStageInfo.name = "main";
 
-         VK.Rect2D scissor = new VK.Rect2D
-         {
-            offset = new VK.Offset2D { x = 0, y = 0 },
-            extent = context.swapChainExtent
-         };
+         VK.PipelineShaderStageCreateInfo fragShaderStageInfo = new VK.PipelineShaderStageCreateInfo();
+         fragShaderStageInfo.type = VK.StructureType.PipelineShaderStageCreateInfo;
+         fragShaderStageInfo.stage = VK.ShaderStageFlags.FragmentBit;
+         fragShaderStageInfo.module = fragShaderModule;
+         fragShaderStageInfo.name = "main";
 
-         VK.PipelineViewportStateCreateInfo viewportState = new VK.PipelineViewportStateCreateInfo
-         {
-            type = VK.StructureType.PipelineViewportStateCreateInfo,
-            viewports = new List<VK.Viewport> { viewport },
-            scissors = new List<VK.Rect2D> { scissor }
-         };
+         List<VK.PipelineShaderStageCreateInfo> shaderStages = new List<VK.PipelineShaderStageCreateInfo> { vertShaderStageInfo, fragShaderStageInfo };
 
-         VK.PipelineRasterizationStateCreateInfo rasterize = new VK.PipelineRasterizationStateCreateInfo
-         {
-            type = VK.StructureType.PipelineRasterizationStateCreateInfo,
-            depthClampEnable = false,
-            rasterizerDiscardEnable = false,
-            polygonMode = VK.PolygonMode.Fill,
-            lineWidth = 1.0f,
-            cullMode = VK.CullModeFlags.BackBit,
-            frontFace = VK.FrontFace.Clockwise,
-            depthBiasEnable = false,
-            depthBiasConstantFactor = 0.0f,
-            depthBiasClamp = 0.0f,
-            depthBiasSlopeFactor = 0.0f
-         };
+         VK.PipelineVertexInputStateCreateInfo vertexInputInfo = new VK.PipelineVertexInputStateCreateInfo();
+         vertexInputInfo.type = VK.StructureType.PipelineVertexInputStateCreateInfo;
+         vertexInputInfo.vertexBindingDescriptions = null;
+         vertexInputInfo.vertexAttributeDescriptions = null;
 
-         VK.PipelineMultisampleStateCreateInfo multisampling = new VK.PipelineMultisampleStateCreateInfo
-         {
-            type = VK.StructureType.PipelineMultisampleStateCreateInfo,
-            sampleShadingEnable = false,
-            rasterizationSamples = VK.SampleCountFlags._1Bit,
-            minSampleShading = 1.0f,
-            sampleMask = null,
-            alphaToCoverageEnable = false,
-            alphaToOneEnable = false
-         };
+         VK.PipelineInputAssemblyStateCreateInfo inputAssembly = new VK.PipelineInputAssemblyStateCreateInfo();
+         inputAssembly.type = VK.StructureType.PipelineInputAssemblyStateCreateInfo;
+         inputAssembly.topology = VK.PrimitiveTopology.TriangleList;
+         inputAssembly.primitiveRestartEnable = false;
 
-         VK.PipelineColorBlendAttachmentState colorBlendAttachment = new VK.PipelineColorBlendAttachmentState
-         {
-            colorWriteMask = VK.ColorComponentFlags.RBit | VK.ColorComponentFlags.GBit | VK.ColorComponentFlags.BBit | VK.ColorComponentFlags.ABit,
-            blendEnable = false,
-            srcColorBlendFactor = VK.BlendFactor.One,
-            dstColorBlendFactor = VK.BlendFactor.Zero,
-            colorBlendOp = VK.BlendOp.Add,
-            srcAlphaBlendFactor = VK.BlendFactor.One,
-            dstAlphaBlendFactor = VK.BlendFactor.Zero,
-            alphaBlendOp = VK.BlendOp.Add
-         };
+         VK.Viewport viewport = new VK.Viewport();
+         viewport.x = 0.0f;
+         viewport.y = 0.0f;
+         viewport.width = (float)swapChainExtent.width;
+         viewport.height = (float)swapChainExtent.height;
+         viewport.minDepth = 0.0f;
+         viewport.maxDepth = 1.0f;
 
-         VK.PipelineColorBlendStateCreateInfo colorBlending = new VK.PipelineColorBlendStateCreateInfo
-         {
-            type = VK.StructureType.PipelineColorBlendStateCreateInfo,
-            logicOpEnable = false,
-            logicOp = VK.LogicOp.Copy,
-            attachments = new List<VK.PipelineColorBlendAttachmentState> { colorBlendAttachment },
-            blendConstants = new List<float> { 0, 0, 0, 0 }
-         };
+         VK.Rect2D scissor = new VK.Rect2D();
+         scissor.offset = new VK.Offset2D { x = 0, y = 0 };
+         scissor.extent = swapChainExtent;
 
+         VK.PipelineViewportStateCreateInfo viewportState = new VK.PipelineViewportStateCreateInfo();
+         viewportState.type = VK.StructureType.PipelineViewportStateCreateInfo;
+         viewportState.viewports = new List<VK.Viewport> { viewport };
+         viewportState.scissors = new List<VK.Rect2D> { scissor };
 
-         VK.PipelineLayoutCreateInfo pipelineLayoutInfo = new VK.PipelineLayoutCreateInfo
-         {
-            type = VK.StructureType.PipelineLayoutCreateInfo,
-            setLayouts = null,
-            pushConstantRanges = null,
-         };
+         VK.PipelineRasterizationStateCreateInfo rasterizer = new VK.PipelineRasterizationStateCreateInfo();
+         rasterizer.type = VK.StructureType.PipelineRasterizationStateCreateInfo;
+         rasterizer.depthClampEnable = false;
+         rasterizer.rasterizerDiscardEnable = false;
+         rasterizer.polygonMode = VK.PolygonMode.Fill;
+         rasterizer.lineWidth = 1.0f;
+         rasterizer.cullMode = VK.CullModeFlags.BackBit;
+         rasterizer.frontFace = VK.FrontFace.Clockwise;
+         rasterizer.depthBiasEnable = false;
 
-         if(VK.CreatePipelineLayout(context.device, ref pipelineLayoutInfo, out context.pipelineLayout) != VK.Result.Success)
+         VK.PipelineMultisampleStateCreateInfo multisampling = new VK.PipelineMultisampleStateCreateInfo();
+         multisampling.type = VK.StructureType.PipelineMultisampleStateCreateInfo;
+         multisampling.sampleShadingEnable = false;
+         multisampling.rasterizationSamples = VK.SampleCountFlags._1Bit;
+
+         VK.PipelineColorBlendAttachmentState colorBlendAttachment = new VK.PipelineColorBlendAttachmentState();
+         colorBlendAttachment.colorWriteMask = VK.ColorComponentFlags.RBit | VK.ColorComponentFlags.GBit | VK.ColorComponentFlags.BBit | VK.ColorComponentFlags.ABit;
+         colorBlendAttachment.blendEnable = false;
+
+         VK.PipelineColorBlendStateCreateInfo colorBlending = new VK.PipelineColorBlendStateCreateInfo();
+         colorBlending.type = VK.StructureType.PipelineColorBlendStateCreateInfo;
+         colorBlending.logicOpEnable = false;
+         colorBlending.logicOp = VK.LogicOp.Copy;
+         colorBlending.attachments = new List<VK.PipelineColorBlendAttachmentState> { colorBlendAttachment };
+         colorBlending.blendConstants = new List<float> { 0.0f, 0.0f, 0.0f, 0.0f };
+
+         VK.PipelineLayoutCreateInfo pipelineLayoutInfo = new VK.PipelineLayoutCreateInfo();
+         pipelineLayoutInfo.type = VK.StructureType.PipelineLayoutCreateInfo;
+         pipelineLayoutInfo.setLayouts = null;
+         pipelineLayoutInfo.pushConstantRanges = null;
+
+         if(VK.CreatePipelineLayout(device, ref pipelineLayoutInfo, out pipelineLayout) != VK.Result.Success)
          {
-            throw new Exception("Failed to create pipeline layout");
+            throw new Exception("failed to create pipeline layout!");
          }
 
-         VK.GraphicsPipelineCreateInfo pipelineInfo = new VK.GraphicsPipelineCreateInfo
-         {
-            type = VK.StructureType.GraphicsPipelineCreateInfo,
-            stages = context.shaderStages,
-            vertexInputState = vertexInputInfo,
-            inputAssemblyState = inputAssembly,
-            viewportState = viewportState,
-            rasterizationState = rasterize,
-            multisampleState = multisampling,
-            depthStencilState = null,
-            colorBlendState = colorBlending,
-            dynamicState = null,
-            layout = context.pipelineLayout,
-            renderPass = context.renderPass,
-            subpass = 0,
-            basePipelineHandle = VK.NullPipeline,
-            basePipelineIndex = -1
-         };
+         VK.GraphicsPipelineCreateInfo pipelineInfo = new VK.GraphicsPipelineCreateInfo();
+         pipelineInfo.type = VK.StructureType.GraphicsPipelineCreateInfo;
+         pipelineInfo.stages = shaderStages;
+         pipelineInfo.vertexInputState = vertexInputInfo;
+         pipelineInfo.inputAssemblyState = inputAssembly;
+         pipelineInfo.viewportState = viewportState;
+         pipelineInfo.rasterizationState = rasterizer;
+         pipelineInfo.multisampleState = multisampling;
+         pipelineInfo.colorBlendState = colorBlending;
+         pipelineInfo.layout = pipelineLayout;
+         pipelineInfo.renderPass = renderPass;
+         pipelineInfo.subpass = 0;
+         pipelineInfo.basePipelineHandle = VK.NullPipeline;
 
-         if(VK.CreateGraphicsPipelines(context.device, VK.NullPipelineCache, 1, new VK.GraphicsPipelineCreateInfo[] { pipelineInfo }, new VK.Pipeline[] { context.graphicsPipeline }) != VK.Result.Success)
+         if(VK.CreateGraphicsPipelines(device, VK.NullPipelineCache, 1, new VK.GraphicsPipelineCreateInfo[] { pipelineInfo }, new VK.Pipeline[] { graphicsPipeline }) != VK.Result.Success)
          {
-            throw new Exception("Failed to create graphics pipeline");
+            throw new Exception("failed to create graphics pipeline!");
          }
 
-         //          VK.DestroyShaderModule(context.device, vertShaderModule);
-         //          VK.DestroyShaderModule(context.device, fragShaderModule);
+         VK.DestroyShaderModule(device, fragShaderModule);
+         VK.DestroyShaderModule(device, vertShaderModule);
       }
 
       void createFramebuffers()
       {
-         context.swapChainFrameBuffers = new VK.Framebuffer[context.swapChainImageViews.Length];
+         swapChainFramebuffers = new VK.Framebuffer[swapChainImageViews.Length];
 
-         for(int i = 0; i < context.swapChainImageViews.Length; i++)
+         for(int i = 0; i < swapChainImageViews.Length; i++)
          {
-            VK.ImageView attachments = context.swapChainImageViews[i];
-            VK.FramebufferCreateInfo framebufferInfo = new VK.FramebufferCreateInfo
-            {
-               type = VK.StructureType.FramebufferCreateInfo,
-               renderPass = context.renderPass,
-               attachments = new List<VK.ImageView> { context.swapChainImageViews[i] },
-               width = context.swapChainExtent.width,
-               height = context.swapChainExtent.height,
-               layers = 1
-            };
+            List<VK.ImageView> attachments = new List<VK.ImageView> { swapChainImageViews[i] };
 
-            if(VK.CreateFramebuffer(context.device, ref framebufferInfo, out context.swapChainFrameBuffers[i]) != VK.Result.Success)
+            VK.FramebufferCreateInfo framebufferInfo = new VK.FramebufferCreateInfo();
+            framebufferInfo.type = VK.StructureType.FramebufferCreateInfo;
+            framebufferInfo.renderPass = renderPass;
+            framebufferInfo.attachments = attachments;
+            framebufferInfo.width = swapChainExtent.width;
+            framebufferInfo.height = swapChainExtent.height;
+            framebufferInfo.layers = 1;
+
+            if(VK.CreateFramebuffer(device, framebufferInfo, out swapChainFramebuffers[i]) != VK.Result.Success)
             {
-               throw new Exception("Failed to create framebuffer");
+               throw new Exception("failed to create framebuffer!");
             }
+         }
+      }
+
+      void createCommandPool()
+      {
+         QueueFamilyIndices queueFamilyIndices = findQueueFamilies(physicalDevice);
+
+         VK.CommandPoolCreateInfo poolInfo = new VK.CommandPoolCreateInfo();
+         poolInfo.type = VK.StructureType.CommandPoolCreateInfo;
+         poolInfo.queueFamilyIndex = (UInt32)queueFamilyIndices.graphicsFamily;
+
+         if(VK.CreateCommandPool(device, ref poolInfo, out commandPool) != VK.Result.Success)
+         {
+            throw new Exception("failed to create command pool!");
+         }
+      }
+
+      void createCommandBuffers()
+      {
+         commandBuffers = new VK.CommandBuffer[swapChainFramebuffers.Length];
+
+         VK.CommandBufferAllocateInfo allocInfo = new VK.CommandBufferAllocateInfo();
+         allocInfo.type = VK.StructureType.CommandBufferAllocateInfo;
+         allocInfo.commandPool = commandPool;
+         allocInfo.level = VK.CommandBufferLevel.Primary;
+         allocInfo.commandBufferCount = (UInt32)commandBuffers.Length;
+
+         if(VK.AllocateCommandBuffers(device, ref allocInfo, commandBuffers) != VK.Result.Success)
+         {
+            throw new Exception("failed to allocate command buffers!");
+         }
+
+         for(int i = 0; i < commandBuffers.Length; i++)
+         {
+            VK.CommandBufferBeginInfo beginInfo = new VK.CommandBufferBeginInfo();
+            beginInfo.type = VK.StructureType.CommandBufferBeginInfo;
+
+            if(VK.BeginCommandBuffer(commandBuffers[i], ref beginInfo) != VK.Result.Success)
+            {
+               throw new Exception("failed to begin recording command buffer!");
+            }
+
+            VK.RenderPassBeginInfo renderPassInfo = new VK.RenderPassBeginInfo();
+            renderPassInfo.type = VK.StructureType.RenderPassBeginInfo;
+            renderPassInfo.renderPass = renderPass;
+            renderPassInfo.framebuffer = swapChainFramebuffers[i];
+            renderPassInfo.renderArea.offset = new VK.Offset2D() { x = 0, y = 0 };
+            renderPassInfo.renderArea.extent = swapChainExtent;
+
+            VK.ClearValue clearColor = new VK.ClearValue();
+            clearColor.color.r = 0.0f;
+            clearColor.color.g = 0.0f;
+            clearColor.color.b = 0.0f;
+            clearColor.color.a = 1.0f;
+            renderPassInfo.clearValues = new List<VK.ClearValue> { clearColor };
+
+            VK.CmdBeginRenderPass(commandBuffers[i], ref renderPassInfo, VK.SubpassContents.Inline);
+
+            VK.CmdBindPipeline(commandBuffers[i], VK.PipelineBindPoint.Graphics, graphicsPipeline);
+
+            VK.CmdDraw(commandBuffers[i], 3, 1, 0, 0);
+
+            VK.CmdEndRenderPass(commandBuffers[i]);
+
+            if(VK.EndCommandBuffer(commandBuffers[i]) != VK.Result.Success)
+            {
+               throw new Exception("failed to record command buffer!");
+            }
+         }
+      }
+
+      void createSyncObjects()
+      {
+         imageAvailableSemaphores = new VK.Semaphore[MAX_FRAMES_IN_FLIGHT];
+         renderFinishedSemaphores = new VK.Semaphore[MAX_FRAMES_IN_FLIGHT];
+         inFlightFences = new VK.Fence[MAX_FRAMES_IN_FLIGHT];
+
+         VK.SemaphoreCreateInfo semaphoreInfo = new VK.SemaphoreCreateInfo();
+         semaphoreInfo.type = VK.StructureType.SemaphoreCreateInfo;
+
+         VK.FenceCreateInfo fenceInfo = new VK.FenceCreateInfo();
+         fenceInfo.type = VK.StructureType.FenceCreateInfo;
+         fenceInfo.flags = VK.FenceCreateFlags.SignaledBit;
+
+         for(int i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
+         {
+            if(VK.CreateSemaphore(device, ref semaphoreInfo, out imageAvailableSemaphores[i]) != VK.Result.Success ||
+                VK.CreateSemaphore(device, ref semaphoreInfo, out renderFinishedSemaphores[i]) != VK.Result.Success ||
+                VK.CreateFence(device, ref fenceInfo, out inFlightFences[i]) != VK.Result.Success)
+            {
+               throw new Exception("failed to create synchronization objects for a frame!");
+            }
+         }
+      }
+
+      public void drawFrame()
+      {
+         VK.WaitForFences(device, 1, new VK.Fence[] { inFlightFences[currentFrame] }, true, UInt64.MaxValue);
+
+         UInt32 imageIndex = 0;
+         VK.Result result = VK.AcquireNextImageKHR(device, swapChain, UInt64.MaxValue, imageAvailableSemaphores[currentFrame], VK.NULL_FENCE, ref imageIndex);
+
+         if(result == VK.Result.ErrorOutOfDateKhr)
+         {
+            recreateSwapChain();
+            return;
+         }
+         else if(result != VK.Result.Success && result != VK.Result.SuboptimalKhr)
+         {
+            throw new Exception("failed to acquire swap chain image!");
+         }
+
+         List<VK.Semaphore> signalSemaphores = new List<VK.Semaphore> { renderFinishedSemaphores[currentFrame] };
+         VK.SubmitInfo submitInfo = new VK.SubmitInfo();
+         submitInfo.type = VK.StructureType.SubmitInfo;
+         submitInfo.waitSemaphores = new List<VK.Semaphore> { imageAvailableSemaphores[currentFrame] };
+         submitInfo.waitDstStageMask = new List<VK.PipelineStageFlags> { VK.PipelineStageFlags.ColorAttachmentOutputBit };
+         submitInfo.commandBuffers = new List<VK.CommandBuffer> { commandBuffers[imageIndex] };
+         submitInfo.signalSemaphores = signalSemaphores;
+
+         VK.ResetFences(device, 1, new VK.Fence[] { inFlightFences[currentFrame] });
+
+         if(VK.QueueSubmit(graphicsQueue, 1, new VK.SubmitInfo[] { submitInfo }, inFlightFences[currentFrame]) != VK.Result.Success)
+         {
+            throw new Exception("failed to submit draw command buffer!");
+         }
+
+         VK.PresentInfoKHR presentInfo = new VK.PresentInfoKHR();
+         presentInfo.type = VK.StructureType.PresentInfoKhr;
+         presentInfo.waitSemaphores = signalSemaphores;
+         presentInfo.swapchains = new List<VK.SwapchainKHR> { swapChain };
+         presentInfo.indices = new List<UInt32>() { imageIndex };
+
+         result = VK.QueuePresentKHR(presentQueue, ref presentInfo);
+
+         if(result == VK.Result.ErrorOutOfDateKhr || result == VK.Result.SuboptimalKhr || framebufferResized)
+         {
+            framebufferResized = false;
+            recreateSwapChain();
+         }
+         else if(result != VK.Result.Success)
+         {
+            throw new Exception("failed to present swap chain image!");
+         }
+
+         currentFrame = (currentFrame + 1) % MAX_FRAMES_IN_FLIGHT;
+      }
+
+      VK.ShaderModule createShaderModule(byte[] code)
+      {
+         VK.ShaderModuleCreateInfo createInfo = new VK.ShaderModuleCreateInfo();
+         createInfo.type = VK.StructureType.ShaderModuleCreateInfo;
+         createInfo.code = code;
+
+         VK.ShaderModule shaderModule;
+         if(VK.CreateShaderModule(device, ref createInfo, out shaderModule) != VK.Result.Success)
+         {
+            throw new Exception("failed to create shader module!");
+         }
+
+         return shaderModule;
+      }
+
+      VK.SurfaceFormatKHR chooseSwapSurfaceFormat(VK.SurfaceFormatKHR[] availableFormats)
+      {
+         foreach(VK.SurfaceFormatKHR availableFormat in availableFormats)
+         {
+            if(availableFormat.format == VK.Format.B8g8r8a8Unorm && availableFormat.colorSpace == VK.ColorSpaceKHR.SrgbNonlinear)
+            {
+               return availableFormat;
+            }
+         }
+
+         return availableFormats[0];
+      }
+
+      VK.PresentModeKHR chooseSwapPresentMode(VK.PresentModeKHR[] availablePresentModes)
+      {
+         foreach(VK.PresentModeKHR availablePresentMode in availablePresentModes)
+         {
+            if(availablePresentMode == VK.PresentModeKHR.Mailbox)
+            {
+               return availablePresentMode;
+            }
+         }
+
+         return VK.PresentModeKHR.Fifo;
+      }
+
+      VK.Extent2D chooseSwapExtent(VK.SurfaceCapabilitiesKHR capabilities)
+      {
+         if(capabilities.currentExtent.width != UInt32.MaxValue)
+         {
+            return capabilities.currentExtent;
+         }
+         else
+         {
+            int width = WIDTH;
+            int height = HEIGHT;
+            //glfwGetFramebufferSize(window, &width, &height);
+
+            VK.Extent2D actualExtent = new VK.Extent2D();
+            actualExtent.width = (UInt32)width;
+            actualExtent.height = (UInt32)height;
+
+            actualExtent.width = Math.Max(capabilities.minImageExtent.width, Math.Min(capabilities.maxImageExtent.width, actualExtent.width));
+            actualExtent.height = Math.Max(capabilities.minImageExtent.height, Math.Min(capabilities.maxImageExtent.height, actualExtent.height));
+
+            return actualExtent;
+         }
+      }
+
+      SwapChainSupportDetails querySwapChainSupport(VK.PhysicalDevice device)
+      {
+         SwapChainSupportDetails details = new SwapChainSupportDetails();
+
+         VK.GetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface, out details.capabilities);
+
+         UInt32 formatCount = 0;
+         VK.GetPhysicalDeviceSurfaceFormatsKHR(device, surface, ref formatCount, null);
+
+         if(formatCount != 0)
+         {
+            details.formats = new VK.SurfaceFormatKHR[formatCount];
+            VK.GetPhysicalDeviceSurfaceFormatsKHR(device, surface, ref formatCount, details.formats);
+         }
+
+         UInt32 presentModeCount = 0;
+         VK.GetPhysicalDeviceSurfacePresentModesKHR(device, surface, ref presentModeCount, null);
+
+         if(presentModeCount != 0)
+         {
+            details.presentModes = new VK.PresentModeKHR[presentModeCount];
+            VK.GetPhysicalDeviceSurfacePresentModesKHR(device, surface, ref presentModeCount, details.presentModes);
+         }
+
+         return details;
+      }
+
+      bool isDeviceSuitable(VK.PhysicalDevice device)
+      {
+         QueueFamilyIndices indices = findQueueFamilies(device);
+         bool extensionsSupported = checkDeviceExtensionSupport(device);
+
+         bool swapChainAdequate = false;
+         if(extensionsSupported)
+         {
+            SwapChainSupportDetails swapChainSupport = querySwapChainSupport(device);
+            swapChainAdequate = (swapChainSupport.formats.Length > 0) && (swapChainSupport.presentModes.Length > 0);
+         }
+
+         VK.PhysicalDeviceProperties props;
+         VK.GetPhysicalDeviceProperties(device, out props);
+
+         VK.PhysicalDeviceFeatures supportedFeatures;
+         VK.GetPhysicalDeviceFeatures(device, out supportedFeatures);
+
+         if(props.deviceType != VK.PhysicalDeviceType.DiscreteGpu)
+         {
+            return false;
+         }
+
+         return indices.isComplete() && extensionsSupported && swapChainAdequate;
+      }
+
+      bool checkDeviceExtensionSupport(VK.PhysicalDevice device)
+      {
+         UInt32 extensionCount = 0;
+         VK.EnumerateDeviceExtensionProperties(device, null, ref extensionCount, null);
+
+         VK.ExtensionProperties[] availableExtensions = new VK.ExtensionProperties[extensionCount];
+         VK.EnumerateDeviceExtensionProperties(device, null, ref extensionCount, availableExtensions);
+
+         bool allFound = true;
+         foreach(string extension in deviceExtensions)
+         {
+            bool found = false;
+            foreach(VK.ExtensionProperties ext in availableExtensions)
+            {
+               if(ext.extensionName == extension)
+               {
+                  found = true;
+                  break;
+               }
+            }
+
+            allFound = allFound && found;
+         }
+
+         return allFound;
+      }
+
+
+      QueueFamilyIndices findQueueFamilies(VK.PhysicalDevice device)
+      {
+         QueueFamilyIndices indices = new QueueFamilyIndices();
+
+         UInt32 queueFamilyCount = 0;
+         VK.GetPhysicalDeviceQueueFamilyProperties(device, ref queueFamilyCount, null);
+
+         VK.QueueFamilyProperties[] queueFamilies = new VK.QueueFamilyProperties[queueFamilyCount];
+         VK.GetPhysicalDeviceQueueFamilyProperties(device, ref queueFamilyCount, queueFamilies);
+
+         Int32 i = 0;
+         foreach(VK.QueueFamilyProperties queueFamily in queueFamilies)
+         {
+            if((queueFamily.queueCount > 0) && queueFamily.queueFlags.HasFlag(VK.QueueFlags.GraphicsBit))
+            {
+               indices.graphicsFamily = i;
+            }
+
+            Bool32 presentSupport = false;
+            VK.GetPhysicalDeviceSurfaceSupportKHR(device, (UInt32)i, surface, out presentSupport);
+
+            if(queueFamily.queueCount > 0 && presentSupport)
+            {
+               indices.presentFamily = i;
+            }
+
+            if(indices.isComplete())
+            {
+               break;
+            }
+
+            i++;
+         }
+
+         return indices;
+      }
+
+      bool checkValidationLayerSupport()
+      {
+         UInt32 layerCount = 0;
+         VK.EnumerateInstanceLayerProperties(ref layerCount, null);
+
+         VK.LayerProperties[] availableLayers = new VK.LayerProperties[layerCount];
+         VK.EnumerateInstanceLayerProperties(ref layerCount, availableLayers);
+
+         foreach(String layerName in validationLayers)
+         {
+            bool layerFound = false;
+
+            foreach(VK.LayerProperties layerProperties in availableLayers)
+            {
+               if(layerName == layerProperties.layerName)
+               {
+                  layerFound = true;
+                  break;
+               }
+            }
+
+            if(!layerFound)
+            {
+               return false;
+            }
+         }
+
+         return true;
+      }
+
+      void enumerateInstanceLayers()
+      {
+         Console.WriteLine("Enumerating Instance Layer Properties");
+         UInt32 count = 0;
+         VK.EnumerateInstanceLayerProperties(ref count, null);
+
+         VK.LayerProperties[] props = new VK.LayerProperties[count];
+         VK.EnumerateInstanceLayerProperties(ref count, props);
+
+         for(int i = 0; i < props.Length; i++)
+         {
+            Console.WriteLine("\tLayer Name: {0}", props[i].layerName);
+            Console.WriteLine("\t\tDescription: {0}", props[i].description);
+         }
+      }
+
+      void enumerateInstanceExtensions()
+      {
+         Console.WriteLine("Enumerating Instance Extensions");
+         UInt32 count = 0;
+         VK.EnumerateInstanceExtensionProperties(null, out count, null);
+
+         VK.ExtensionProperties[] props = new VK.ExtensionProperties[count];
+         VK.EnumerateInstanceExtensionProperties(null, out count, props);
+
+         for(int i = 0; i < props.Length; i++)
+         {
+            Console.WriteLine("\tExtensions Name: {0}", props[i].extensionName);
+         }
+      }
+
+      void enumerateDeviceLayers()
+      {
+         Console.WriteLine("Enumerating Device Layer Properties");
+         UInt32 count = 0;
+         VK.EnumerateDeviceLayerProperties(physicalDevice, out count, null);
+
+         VK.LayerProperties[] props = new VK.LayerProperties[count];
+         VK.EnumerateDeviceLayerProperties(physicalDevice, out count, props);
+
+         for(int i = 0; i < props.Length; i++)
+         {
+            Console.WriteLine("\tLayer Name: {0}", props[i].layerName);
+            Console.WriteLine("\t\tDescription: {0}", props[i].description);
+         }
+      }
+
+      void enumerateDeviceExtensions()
+      {
+         Console.WriteLine("Enumerating Device Extensions");
+         UInt32 count = 0;
+         VK.EnumerateDeviceExtensionProperties(physicalDevice, null, ref count, null);
+
+         VK.ExtensionProperties[] props = new VK.ExtensionProperties[count];
+         VK.EnumerateDeviceExtensionProperties(physicalDevice, null, ref count, props);
+
+         for(int i = 0; i < props.Length; i++)
+         {
+            Console.WriteLine("\tExtensions Name: {0}", props[i].extensionName);
          }
       }
 
@@ -1033,97 +1071,5 @@ namespace VulkanTest
 
          return null;
       }
-
-      public void draw()
-      {
-         UInt32 index = 0;
-         VK.Result res = VK.AcquireNextImageKHR(context.device, context.swapChain, UInt64.MaxValue, context.imageAvailable, VK.NULL_FENCE, ref index);
-         checkResult(res, "Acquire next image");
-
-         VK.SubmitInfo submitInfo = new VK.SubmitInfo()
-         {
-            type = VK.StructureType.SubmitInfo,
-            next = IntPtr.Zero,
-            waitSemaphores = new List<VK.Semaphore>() { context.imageAvailable },
-            waitDstStageMask = VK.PipelineStageFlags.TransferBit,
-            commandBuffers = new List<VK.CommandBuffer>() { context.presentCommandBuffers[index] },
-            signalSemaphores = new List<VK.Semaphore>() { context.renderingFinished }
-         };
-
-         res = VK.QueueSubmit(context.presentQueue, 1, new VK.SubmitInfo[] { submitInfo }, VK.NULL_FENCE);
-         checkResult(res, "submit queue");
-
-         VK.PresentInfoKHR presentInfo = new VK.PresentInfoKHR()
-         {
-            type = VK.StructureType.PresentInfoKhr,
-            next = IntPtr.Zero,
-            waitSemaphores = new List<VK.Semaphore>() { context.renderingFinished },
-            swapchains = new List<VK.SwapchainKHR>() { context.swapChain },
-            indices = new List<uint>() { index },
-            results = new List<VK.Result>() { VK.Result.NotReady }
-         };
-
-         res = VK.QueuePresentKHR(context.presentQueue, ref presentInfo);
-         checkResult(res, "Queue present");
-      }
-
-      void destroyPipeline()
-      {
-         for(int i = 0; i < context.swapChainFrameBuffers.Length; i++)
-         {
-            VK.DestroyFramebuffer(context.device, context.swapChainFrameBuffers[i]);
-         }
-         VK.DestroyPipeline(context.device, context.graphicsPipeline);
-         VK.DestroyPipelineLayout(context.device, context.pipelineLayout);
-         VK.DestroyRenderPass(context.device, context.renderPass);
-      }
-
-      void destroySwapChain()
-      {
-         Console.Write("Destroying SwapChain...");
-
-         VK.DeviceWaitIdle(context.device);
-
-         VK.FreeCommandBuffers(context.device, context.presentCommandPool, (UInt32)context.presentCommandBuffers.Length, context.presentCommandBuffers);
-         VK.DestroyCommandPool(context.device, context.presentCommandPool, null);
-
-         VK.DestroySemaphore(context.device, context.imageAvailable, null);
-         VK.DestroySemaphore(context.device, context.renderingFinished, null);
-
-
-         for(int i = 0; i < context.swapChainImageViews.Length; i++)
-         {
-            VK.DestroyImageView(context.device, context.swapChainImageViews[i], null);
-         }
-
-         VK.DestroySwapchainKHR(context.device, context.swapChain, null);
-
-         Console.WriteLine("Success");
-      }
-
-      void destroyDevice()
-      {
-         Console.Write("Destroying Logical Device...");
-         VK.DeviceWaitIdle(context.device);
-         VK.DestroyDevice(context.device, null);
-         Console.WriteLine("Success!");
-      }
-
-      void destroyInstance()
-      {
-         Console.Write("Destroying Instance...");
-         VK.DestroySurfaceKHR(context.instance, context.surface, null);
-         VK.DestroyDebugUtilsMessengerEXT(context.instance, context.debugMessenger, null);
-         VK.DestroyInstance(context.instance, null);
-         Console.WriteLine("Success!");
-      }
-
-      void checkResult(VK.Result res, String msg)
-      {
-         if(res != VK.Result.Success)
-         {
-            Console.WriteLine("Result Failed-{0}: {1}", res, msg);
-         }
-      }
-   }
+   };
 }

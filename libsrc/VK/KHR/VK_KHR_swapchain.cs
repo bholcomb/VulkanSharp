@@ -146,7 +146,7 @@ namespace Vulkan
 
       //delegate definitions
       delegate Result CreateSwapchainKHRDelegate(Device device, ref _SwapchainCreateInfoKHR pCreateInfo, AllocationCallbacks pAllocator, out SwapchainKHR pSwapchain);
-      public delegate void DestroySwapchainKHRDelegate(Device device, SwapchainKHR swapchain, AllocationCallbacks pAllocator);
+      public delegate void DestroySwapchainKHRDelegate(Device device, SwapchainKHR swapchain, AllocationCallbacks pAllocator = null);
       delegate Result GetSwapchainImagesKHRDelegate(Device device, SwapchainKHR swapchain, ref UInt32 pSwapchainImageCount, IntPtr pSwapchainImages);
       public delegate Result AcquireNextImageKHRDelegate(Device device, SwapchainKHR swapchain, UInt64 timeout, Semaphore semaphore, Fence fence, ref UInt32 pImageIndex);
       delegate Result QueuePresentKHRDelegate(Queue queue, ref _PresentInfoKHR pPresentInfo);
@@ -256,8 +256,8 @@ namespace Vulkan
             ImageArrayLayers = info.imageArrayLayers;
             ImageUsage = info.imageUsage;
             ImageSharingMode = info.imageSharingMode;
-            QueueFamilyIndexCount = (UInt32)info.queueFamilyIndices.Count;
-            QueueFamilyIndices = Alloc.alloc(info.queueFamilyIndices);
+            QueueFamilyIndexCount = (UInt32)(info.queueFamilyIndices?.Count ?? 0);
+            QueueFamilyIndices = info.queueFamilyIndices != null ? Alloc.alloc(info.queueFamilyIndices) : IntPtr.Zero;
             PreTransform = info.preTransform;
             CompositeAlpha = info.compositeAlpha;
             PresentMode = info.presentMode;

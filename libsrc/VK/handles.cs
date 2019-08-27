@@ -12,8 +12,10 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential)] public struct PhysicalDevice { public IntPtr native; }
       [StructLayout(LayoutKind.Sequential)] public struct Device { public IntPtr native; }
       [StructLayout(LayoutKind.Sequential)] public struct Queue { public IntPtr native; }
-      [StructLayout(LayoutKind.Sequential)] public struct Semaphore { public UInt64 native; }
       [StructLayout(LayoutKind.Sequential)] public struct CommandBuffer { public IntPtr native; }
+
+
+      [StructLayout(LayoutKind.Sequential)] public struct Semaphore { public UInt64 native; }
       [StructLayout(LayoutKind.Sequential)] public struct Fence { public UInt64 native; }
       [StructLayout(LayoutKind.Sequential)] public struct DeviceMemory { public UInt64 native; }
       [StructLayout(LayoutKind.Sequential)] public struct Buffer { public UInt64 native; }

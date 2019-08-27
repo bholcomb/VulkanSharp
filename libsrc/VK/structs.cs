@@ -8,7 +8,6 @@ namespace Vulkan
    public static partial class VK
    {
       #region structs
-      //public instance of object, there is an internal version used in the function
       public struct InstanceCreateInfo
       {
          public StructureType type;
@@ -395,7 +394,7 @@ namespace Vulkan
          public StructureType type;
          public IntPtr next;
          public List<Semaphore> waitSemaphores;
-         public PipelineStageFlags waitDstStageMask;
+         public List<PipelineStageFlags> waitDstStageMask;
          public List<CommandBuffer> commandBuffers;
          public List<Semaphore> signalSemaphores;
       }

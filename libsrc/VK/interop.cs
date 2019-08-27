@@ -56,13 +56,24 @@ namespace Vulkan
             return IntPtr.Zero;
          }
 
-         IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(T)) * data.Count);
+         bool isEnum = typeof(T).IsEnum;
+         Type outputType = isEnum ? Enum.GetUnderlyingType(typeof(T)) : typeof(T);
+
+         IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(outputType) * data.Count);
          Int64 addr = ptr.ToInt64();
          for(int i = 0; i < data.Count; i++)
          {
             IntPtr anItem = new IntPtr(addr);
-            Marshal.StructureToPtr(data[i], anItem, false);
-            addr += Marshal.SizeOf(typeof(T));
+            if(isEnum)
+            {
+               int val = Convert.ToInt32(data[i]);
+               Marshal.StructureToPtr(val, anItem, false);
+            }
+            else
+            {
+               Marshal.StructureToPtr(data[i], anItem, false);
+            }
+            addr += Marshal.SizeOf(outputType);
          }
 
          return ptr;
@@ -399,7 +410,7 @@ namespace Vulkan
          CommandBufferCount = (UInt32)info.commandBuffers.Count;
          SignalSemaphoreCount = (UInt32)info.signalSemaphores.Count;
 
-         WaitDstStageMask = Alloc.alloc((UInt32)info.waitDstStageMask);
+         WaitDstStageMask = Alloc.alloc(info.waitDstStageMask);
          WaitSemaphores = Alloc.alloc(info.waitSemaphores);
          CommandBuffers = Alloc.alloc(info.commandBuffers);
          SignalSemaphores = Alloc.alloc(info.signalSemaphores);
@@ -617,10 +628,10 @@ namespace Vulkan
          next = info.next;
          flags = info.flags;
          stageCount = (UInt32)info.stages.Count;
-         List<_PipelineShaderStageCreateInfo> stages = new List<_PipelineShaderStageCreateInfo>(info.stages.Count);
-         for(int i=0; i< stages.Count; i++)
+         List<_PipelineShaderStageCreateInfo> stages = new List<_PipelineShaderStageCreateInfo>();
+         for(int i=0; i< info.stages.Count; i++)
          {
-            stages[i] = new _PipelineShaderStageCreateInfo(info.stages[i]);
+            stages.Add(new _PipelineShaderStageCreateInfo(info.stages[i]));
          }
          pStages = Alloc.alloc(stages);
          pVertexInputState = info.vertexInputState == null ? IntPtr.Zero : Alloc.alloc(new _PipelineVertexInputStateCreateInfo(info.vertexInputState));
@@ -872,7 +883,7 @@ namespace Vulkan
    {
       public UInt32 mapEntryCount;  //Number of entries in the map 
       public IntPtr pMapEntries;  //Array of map entries 
-      public UInt32 dataSize;  //Size in bytes of pData 
+      public UInt64 dataSize;  //Size in bytes of pData 
       public IntPtr pData;  //Pointer to SpecConstant data 
 
       public _SpecializationInfo(VK.SpecializationInfo info)
