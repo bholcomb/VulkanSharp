@@ -233,7 +233,7 @@ namespace Vulkan
          public fixed UInt32 maxViewportDimensions[2];  //max viewport dimensions (x,y) 
          public fixed float viewportBoundsRange[2];  //viewport bounds range (min,max) 
          public UInt32 viewportSubPixelBits;  //number bits of subpixel precision for viewport 
-         public UInt32 minMemoryMapAlignment;  //min required alignment of pointers returned by MapMemory (bytes) 
+         public UInt64 minMemoryMapAlignment;  //min required alignment of pointers returned by MapMemory (bytes) 
          public DeviceSize minTexelBufferOffsetAlignment;  //min required alignment for texel buffer offsets (bytes) 
          public DeviceSize minUniformBufferOffsetAlignment;  //min required alignment for uniform buffer sizes and offsets (bytes) 
          public DeviceSize minStorageBufferOffsetAlignment;  //min required alignment for storage buffer offsets (bytes) 
@@ -643,7 +643,7 @@ namespace Vulkan
          public StructureType type;
          public IntPtr next;
          public PipelineCacheCreateFlags flags;
-         public UInt32 initialDataSize;  //Size of initial data to populate cache, in bytes 
+         public UInt64 initialDataSize;  //Size of initial data to populate cache, in bytes 
          public IntPtr pInitialData;  //Initial data to populate cache 
       };
 
@@ -685,7 +685,7 @@ namespace Vulkan
       public class SpecializationInfo
       {
          public List<SpecializationMapEntry> mapEntries;  //Array of map entries 
-         public UInt32 dataSize;  //Size in bytes of pData 
+         public UInt64 dataSize;  //Size in bytes of pData 
          public IntPtr pData;  //Pointer to SpecConstant data 
       };
 
@@ -694,7 +694,7 @@ namespace Vulkan
       {
          public UInt32 constantID;  //The SpecConstant ID specified in the BIL 
          public UInt32 offset;  //Offset of the value in the data block 
-         public UInt32 size;  //Size in bytes of the SpecConstant 
+         public UInt64 size;  //Size in bytes of the SpecConstant 
       };
 
       public class PipelineVertexInputStateCreateInfo
