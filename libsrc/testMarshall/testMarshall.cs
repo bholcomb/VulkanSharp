@@ -5,54 +5,48 @@ using System.Security;
 namespace TestMarshall
 {
    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-   public struct Foo
+   public struct _ShaderModuleCreateInfo
    {
-      public UInt32 a;
-      public UInt32 b;
-      public UInt32 c;
-   };
+      public int type;
+      public IntPtr next;
+      public int flags;
+      public UInt64 codeSize;
+      public IntPtr code;  //Binary code of size codeSize 
 
+      public _ShaderModuleCreateInfo(int size)
+      {
+         byte[] bytes = new byte[size];
+         for(int i=0; i< size; i++)
+         {
+            bytes[i] = (byte)i;
+         }
 
-   [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-   public struct Test
-   {
-      public UInt32 fCount;
-     // [MarshalAs(UnmanagedType.ByValArray, SizeParamIndex = 0)]
-      public float[] floats;
-      public UInt32 fooCount;
-    //  [MarshalAs(UnmanagedType.ByValArray, SizeParamIndex = 2)]
-      public Foo[] foos;
+         type = 1;
+         next = IntPtr.Zero;
+         flags = 2;
+         codeSize = 10;
+         code = Marshal.AllocHGlobal(size);
+         Marshal.Copy(bytes, 0, code, size);
+      }
+
+      public void destroy()
+      {
+         Marshal.FreeHGlobal(code);
+      }
    };
 
    static class TestFoo
    {
-      [DllImport("TestmarshallC.dll", EntryPoint = "callFoo", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      static unsafe extern int callFoo(ref Test t);
+      [DllImport("TestmarshallC.dll", EntryPoint = "vkCreateShaderModule", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
+      static unsafe extern int vkCreateShaderModule(int device, ref _ShaderModuleCreateInfo pCreateInfo, IntPtr pAllocator, ref int pShaderModule);
 
 
       static void Main(string[] args)
       {
-         Test t;
-         t.fCount = 3;
-         t.floats = new float[3];
-         t.floats[0] = 42.0f;
-         t.floats[1] = 42.1f;
-         t.floats[2] = 42.2f;
+         int ret = 0;
+         _ShaderModuleCreateInfo info = new _ShaderModuleCreateInfo(16);
 
-         t.fooCount = 3;
-         t.foos = new Foo[3];
-         t.foos[0].a = 1;
-         t.foos[0].b = 2;
-         t.foos[0].c = 3;
-         t.foos[1].a = 1;
-         t.foos[1].b = 2;
-         t.foos[1].c = 3;
-         t.foos[2].a = 1;
-         t.foos[2].b = 2;
-         t.foos[2].c = 3;
-
-
-         TestFoo.callFoo(ref t);
+         TestFoo.vkCreateShaderModule(1, ref info, IntPtr.Zero, ref ret );
       }
    }
 }

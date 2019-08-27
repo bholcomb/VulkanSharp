@@ -573,11 +573,11 @@ namespace Vulkan
          next = info.next;
          flags = info.flags;
 
-         vertexBindingDescriptionCount = (UInt32)info.vertexBindingDescriptions.Count;
-         vertexBindingDescriptions = Alloc.alloc(info.vertexBindingDescriptions);
+         vertexBindingDescriptionCount = (UInt32)(info.vertexBindingDescriptions?.Count ?? 0);
+         vertexBindingDescriptions = info.vertexBindingDescriptions != null ? Alloc.alloc(info.vertexBindingDescriptions) : IntPtr.Zero;
 
-         vertexAttributeDescriptionCount = (UInt32)(info.vertexAttributeDescriptions.Count);
-         vertexAttributeDescriptions = Alloc.alloc(info.vertexAttributeDescriptions);
+         vertexAttributeDescriptionCount = (UInt32)(info.vertexAttributeDescriptions?.Count ?? 0);
+         vertexAttributeDescriptions = info.vertexAttributeDescriptions != null ? Alloc.alloc(info.vertexAttributeDescriptions) : IntPtr.Zero;
       }
 
       public void destroy()
@@ -617,8 +617,8 @@ namespace Vulkan
          next = info.next;
          flags = info.flags;
          stageCount = (UInt32)info.stages.Count;
-         _PipelineShaderStageCreateInfo[] stages = new _PipelineShaderStageCreateInfo[info.stages.Count];
-         for(int i=0; i< stages.Length; i++)
+         List<_PipelineShaderStageCreateInfo> stages = new List<_PipelineShaderStageCreateInfo>(info.stages.Count);
+         for(int i=0; i< stages.Count; i++)
          {
             stages[i] = new _PipelineShaderStageCreateInfo(info.stages[i]);
          }
@@ -701,7 +701,14 @@ namespace Vulkan
          stage = info.stage;
          module = info.module;
          name = Marshal.StringToHGlobalAnsi(info.name);
-         specializationInfo = Alloc.alloc(new _SpecializationInfo(info.specializationInfo));
+         if(info.specializationInfo != null)
+         {
+            specializationInfo = Alloc.alloc(new _SpecializationInfo(info.specializationInfo));
+         }
+         else
+         {
+            specializationInfo = IntPtr.Zero;
+         }
       }
 
       public void destroy()
@@ -847,9 +854,9 @@ namespace Vulkan
          type = info.type;
          next = info.next;
          flags = info.flags;
-         setLayoutCount = (UInt32)info.setLayouts.Count;
+         setLayoutCount = (UInt32)(info.setLayouts?.Count ?? 0);
          setLayouts = Alloc.alloc(info.setLayouts);
-         pushConstantRangeCount = (UInt32)info.pushConstantRanges.Count;
+         pushConstantRangeCount = (UInt32)(info.pushConstantRanges?.Count ?? 0);
          pushConstantRanges = Alloc.alloc(info.pushConstantRanges);
       }
 
@@ -1258,7 +1265,7 @@ namespace Vulkan
       public VK.StructureType type;
       public IntPtr next;
       public VK.ShaderModuleCreateFlags flags;
-      public UInt32 codeSize;
+      public UInt64 codeSize;
       public IntPtr code;  //Binary code of size codeSize 
 
       public _ShaderModuleCreateInfo(VK.ShaderModuleCreateInfo info)
@@ -1267,12 +1274,13 @@ namespace Vulkan
          next = info.next;
          flags = info.flags;
          codeSize = (UInt32)info.code.Length;
-         code = Alloc.alloc(info.code);
+         code = Marshal.AllocHGlobal(info.code.Length);
+         Marshal.Copy(info.code, 0, code, info.code.Length);
       }
 
       public void destroy()
       {
-         Alloc.free(code);
+         Marshal.FreeHGlobal(code);
       }
    };
 

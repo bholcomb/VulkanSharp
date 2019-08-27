@@ -35,6 +35,7 @@ namespace Vulkan
 		#region defines
 		public static Semaphore NULL_SEMAPHORE = new Semaphore();
 		public static Fence NULL_FENCE = new Fence();
+      public static int NULL_HANDLE = 0;
 
 		public const float LOD_CLAMP_NONE = 1000.0f;
 		public const UInt32 REMAINING_MIP_LEVELS = (~0U);

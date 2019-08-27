@@ -66,6 +66,11 @@ namespace VulkanTest
          public VK.DebugUtilsMessengerEXT debugMessenger;
 
          public VK.RenderPass renderPass;
+         public VK.PipelineLayout pipelineLayout;
+         public List<VK.PipelineShaderStageCreateInfo> shaderStages;
+         public VK.Pipeline graphicsPipeline;
+
+         public VK.Framebuffer[] swapChainFrameBuffers;
       };
 
       Context context = new Context();
@@ -159,15 +164,14 @@ namespace VulkanTest
          createCommandBuffers();
          recordCommandBuffers();
          createRenderPass();
-         createGraphicsPipeline();
-         loadVbo();
-         loadTexture();
          loadShaders();
-
+         createGraphicsPipeline();
+         createFramebuffers();
       }
 
       public void shutdown()
       {
+         destroyPipeline();
          destroySwapChain();
          destroyDevice();
          destroyInstance();
@@ -285,7 +289,7 @@ namespace VulkanTest
 
       void setupDebugCallback()
       {
-			Console.WriteLine("Initializing debug utils callback");
+         Console.WriteLine("Initializing debug utils callback");
 
          VK.DebugUtilsMessengerCreateInfoEXT info = new VK.DebugUtilsMessengerCreateInfoEXT()
          {
@@ -297,13 +301,13 @@ namespace VulkanTest
             messageType = VK.DebugUtilsMessageTypeFlagsEXT.GeneralBitExt | VK.DebugUtilsMessageTypeFlagsEXT.PerformanceBitExt | VK.DebugUtilsMessageTypeFlagsEXT.ValidationBitExt,
             pfnUserCallback = debugCallback,
             pUserData = IntPtr.Zero
-			};
+         };
 
          VK.Result res = VK.CreateDebugUtilsMessengerEXT(context.instance, ref info, null, out context.debugMessenger);
-			if (res != VK.Result.Success)
-			{
-				Console.WriteLine("Failed to install debug utils callback");
-			}
+         if(res != VK.Result.Success)
+         {
+            Console.WriteLine("Failed to install debug utils callback");
+         }
       }
 
       Bool32 debugCallback(VK.DebugUtilsMessageSeverityFlagsEXT messageSeverity, VK.DebugUtilsMessageTypeFlagsEXT messageTypes, ref VK.DebugUtilsMessengerCallbackDataEXT pCallbackData, IntPtr pUserData)
@@ -748,7 +752,7 @@ namespace VulkanTest
          }
       }
 
-      unsafe void createRenderPass()
+      void createRenderPass()
       {
          VK.AttachmentDescription attachments = new VK.AttachmentDescription()
          {
@@ -791,12 +795,7 @@ namespace VulkanTest
          };
 
          VK.Result res = VK.CreateRenderPass(context.device, ref info, out context.renderPass);
-         checkResult(res, "End command buffer");
-      }
-
-      void createGraphicsPipeline()
-      {
-
+         checkResult(res, "Create render pass");
       }
 
       void loadVbo()
@@ -811,8 +810,8 @@ namespace VulkanTest
 
       void loadShaders()
       {
-         byte[] vsSpv = getEmbeddedResource("Test Vulkan.shaders.simpleTri.vert.glsl.spv");
-         byte[] fsSpv = getEmbeddedResource("Test Vulkan.shaders.simpleTri.frag.glsl.spv");
+         byte[] vsSpv = getEmbeddedResource("VulkanTest.libsrc.testVK.shaders.simpleTri.vert.glsl.spv");
+         byte[] fsSpv = getEmbeddedResource("VulkanTest.libsrc.testVK.shaders.simpleTri.frag.glsl.spv");
 
          VK.ShaderModuleCreateInfo createInfo = new VK.ShaderModuleCreateInfo()
          {
@@ -822,33 +821,188 @@ namespace VulkanTest
          };
 
          VK.ShaderModule vertShaderModule;
-         if (VK.CreateShaderModule(context.device, ref createInfo, out vertShaderModule) != VK.Result.Success)
+         if(VK.CreateShaderModule(context.device, ref createInfo, out vertShaderModule) != VK.Result.Success)
          {
             throw new Exception("failed to create shader module!");
          }
 
-         VK.PipelineShaderStageCreateInfo vertShaderStageInfo = new VK.PipelineShaderStageCreateInfo {
+         VK.PipelineShaderStageCreateInfo vertShaderStageInfo = new VK.PipelineShaderStageCreateInfo
+         {
             type = VK.StructureType.PipelineShaderStageCreateInfo,
             stage = VK.ShaderStageFlags.VertexBit,
             module = vertShaderModule,
-            name = "main"
+            name = "main",
+            specializationInfo = null
          };
 
          createInfo.code = fsSpv;
          VK.ShaderModule fragShaderModule;
-         if (VK.CreateShaderModule(context.device, ref createInfo, out fragShaderModule) != VK.Result.Success)
+         if(VK.CreateShaderModule(context.device, ref createInfo, out fragShaderModule) != VK.Result.Success)
          {
             throw new Exception("failed to create shader module!");
          }
 
-         VK.PipelineShaderStageCreateInfo fragShaderStageInfo = new VK.PipelineShaderStageCreateInfo {
+         VK.PipelineShaderStageCreateInfo fragShaderStageInfo = new VK.PipelineShaderStageCreateInfo
+         {
             type = VK.StructureType.PipelineShaderStageCreateInfo,
             stage = VK.ShaderStageFlags.FragmentBit,
             module = fragShaderModule,
             name = "main",
+            specializationInfo = null
          };
 
-         //VK.PipelineShaderStageCreateInfo shaderStages[] { vertShaderStageInfo, fragShaderStageInfo };
+         context.shaderStages = new List<VK.PipelineShaderStageCreateInfo> { vertShaderStageInfo, fragShaderStageInfo };
+      }
+
+      void createGraphicsPipeline()
+      {
+         VK.PipelineVertexInputStateCreateInfo vertexInputInfo = new VK.PipelineVertexInputStateCreateInfo
+         {
+            type = VK.StructureType.PipelineVertexInputStateCreateInfo,
+            vertexBindingDescriptions = null,
+            vertexAttributeDescriptions = null
+         };
+
+         VK.PipelineInputAssemblyStateCreateInfo inputAssembly = new VK.PipelineInputAssemblyStateCreateInfo
+         {
+            type = VK.StructureType.PipelineInputAssemblyStateCreateInfo,
+            topology = VK.PrimitiveTopology.TriangleList,
+            primitiveRestartEnable = false
+         };
+
+         VK.Viewport viewport = new VK.Viewport
+         {
+            x = 0.0f,
+            y = 0.0f,
+            width = context.swapChainExtent.width,
+            height = context.swapChainExtent.height,
+            minDepth = 0.0f,
+            maxDepth = 1.0f
+         };
+
+         VK.Rect2D scissor = new VK.Rect2D
+         {
+            offset = new VK.Offset2D { x = 0, y = 0 },
+            extent = context.swapChainExtent
+         };
+
+         VK.PipelineViewportStateCreateInfo viewportState = new VK.PipelineViewportStateCreateInfo
+         {
+            type = VK.StructureType.PipelineViewportStateCreateInfo,
+            viewports = new List<VK.Viewport> { viewport },
+            scissors = new List<VK.Rect2D> { scissor }
+         };
+
+         VK.PipelineRasterizationStateCreateInfo rasterize = new VK.PipelineRasterizationStateCreateInfo
+         {
+            type = VK.StructureType.PipelineRasterizationStateCreateInfo,
+            depthClampEnable = false,
+            rasterizerDiscardEnable = false,
+            polygonMode = VK.PolygonMode.Fill,
+            lineWidth = 1.0f,
+            cullMode = VK.CullModeFlags.BackBit,
+            frontFace = VK.FrontFace.Clockwise,
+            depthBiasEnable = false,
+            depthBiasConstantFactor = 0.0f,
+            depthBiasClamp = 0.0f,
+            depthBiasSlopeFactor = 0.0f
+         };
+
+         VK.PipelineMultisampleStateCreateInfo multisampling = new VK.PipelineMultisampleStateCreateInfo
+         {
+            type = VK.StructureType.PipelineMultisampleStateCreateInfo,
+            sampleShadingEnable = false,
+            rasterizationSamples = VK.SampleCountFlags._1Bit,
+            minSampleShading = 1.0f,
+            sampleMask = null,
+            alphaToCoverageEnable = false,
+            alphaToOneEnable = false
+         };
+
+         VK.PipelineColorBlendAttachmentState colorBlendAttachment = new VK.PipelineColorBlendAttachmentState
+         {
+            colorWriteMask = VK.ColorComponentFlags.RBit | VK.ColorComponentFlags.GBit | VK.ColorComponentFlags.BBit | VK.ColorComponentFlags.ABit,
+            blendEnable = false,
+            srcColorBlendFactor = VK.BlendFactor.One,
+            dstColorBlendFactor = VK.BlendFactor.Zero,
+            colorBlendOp = VK.BlendOp.Add,
+            srcAlphaBlendFactor = VK.BlendFactor.One,
+            dstAlphaBlendFactor = VK.BlendFactor.Zero,
+            alphaBlendOp = VK.BlendOp.Add
+         };
+
+         VK.PipelineColorBlendStateCreateInfo colorBlending = new VK.PipelineColorBlendStateCreateInfo
+         {
+            type = VK.StructureType.PipelineColorBlendStateCreateInfo,
+            logicOpEnable = false,
+            logicOp = VK.LogicOp.Copy,
+            attachments = new List<VK.PipelineColorBlendAttachmentState> { colorBlendAttachment },
+            blendConstants = new List<float> { 0, 0, 0, 0 }
+         };
+
+
+         VK.PipelineLayoutCreateInfo pipelineLayoutInfo = new VK.PipelineLayoutCreateInfo
+         {
+            type = VK.StructureType.PipelineLayoutCreateInfo,
+            setLayouts = null,
+            pushConstantRanges = null,
+         };
+
+         if(VK.CreatePipelineLayout(context.device, ref pipelineLayoutInfo, out context.pipelineLayout) != VK.Result.Success)
+         {
+            throw new Exception("Failed to create pipeline layout");
+         }
+
+         VK.GraphicsPipelineCreateInfo pipelineInfo = new VK.GraphicsPipelineCreateInfo
+         {
+            type = VK.StructureType.GraphicsPipelineCreateInfo,
+            stages = context.shaderStages,
+            vertexInputState = vertexInputInfo,
+            inputAssemblyState = inputAssembly,
+            viewportState = viewportState,
+            rasterizationState = rasterize,
+            multisampleState = multisampling,
+            depthStencilState = null,
+            colorBlendState = colorBlending,
+            dynamicState = null,
+            layout = context.pipelineLayout,
+            renderPass = context.renderPass,
+            subpass = 0,
+            basePipelineHandle = VK.NullPipeline,
+            basePipelineIndex = -1
+         };
+
+         if(VK.CreateGraphicsPipelines(context.device, VK.NullPipelineCache, 1, new VK.GraphicsPipelineCreateInfo[] { pipelineInfo }, new VK.Pipeline[] { context.graphicsPipeline }) != VK.Result.Success)
+         {
+            throw new Exception("Failed to create graphics pipeline");
+         }
+
+         //          VK.DestroyShaderModule(context.device, vertShaderModule);
+         //          VK.DestroyShaderModule(context.device, fragShaderModule);
+      }
+
+      void createFramebuffers()
+      {
+         context.swapChainFrameBuffers = new VK.Framebuffer[context.swapChainImageViews.Length];
+
+         for(int i = 0; i < context.swapChainImageViews.Length; i++)
+         {
+            VK.ImageView attachments = context.swapChainImageViews[i];
+            VK.FramebufferCreateInfo framebufferInfo = new VK.FramebufferCreateInfo
+            {
+               type = VK.StructureType.FramebufferCreateInfo,
+               renderPass = context.renderPass,
+               attachments = new List<VK.ImageView> { context.swapChainImageViews[i] },
+               width = context.swapChainExtent.width,
+               height = context.swapChainExtent.height,
+               layers = 1
+            };
+
+            if(VK.CreateFramebuffer(context.device, ref framebufferInfo, out context.swapChainFrameBuffers[i]) != VK.Result.Success)
+            {
+               throw new Exception("Failed to create framebuffer");
+            }
+         }
       }
 
       byte[] getEmbeddedResource(string resourceName)
@@ -911,6 +1065,17 @@ namespace VulkanTest
 
          res = VK.QueuePresentKHR(context.presentQueue, ref presentInfo);
          checkResult(res, "Queue present");
+      }
+
+      void destroyPipeline()
+      {
+         for(int i = 0; i < context.swapChainFrameBuffers.Length; i++)
+         {
+            VK.DestroyFramebuffer(context.device, context.swapChainFrameBuffers[i]);
+         }
+         VK.DestroyPipeline(context.device, context.graphicsPipeline);
+         VK.DestroyPipelineLayout(context.device, context.pipelineLayout);
+         VK.DestroyRenderPass(context.device, context.renderPass);
       }
 
       void destroySwapChain()

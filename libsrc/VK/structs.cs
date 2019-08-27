@@ -682,7 +682,7 @@ namespace Vulkan
          public SpecializationInfo specializationInfo;
       };
 
-      public struct SpecializationInfo
+      public class SpecializationInfo
       {
          public List<SpecializationMapEntry> mapEntries;  //Array of map entries 
          public UInt32 dataSize;  //Size in bytes of pData 
@@ -747,7 +747,6 @@ namespace Vulkan
          public StructureType type;
          public IntPtr next;
          public PipelineViewportStateCreateFlags flags;
-         public UInt32 viewportCount;
          public List<Viewport> viewports;
          public List<Rect2D> scissors;
       };

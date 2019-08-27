@@ -36,5 +36,8 @@ namespace Vulkan
       [StructLayout(LayoutKind.Sequential)] public struct SamplerYcbcrConversion { public UInt64 native; }
       [StructLayout(LayoutKind.Sequential)] public struct DescriptorUpdateTemplate { public UInt64 native; }
       #endregion 
+
+      public static Pipeline NullPipeline = new Pipeline { native = 0 };
+      public static PipelineCache NullPipelineCache = new PipelineCache { native = 0 };
    }
 }
