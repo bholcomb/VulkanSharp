@@ -79,6 +79,36 @@ namespace Vulkan
          return ptr;
       }
 
+      internal static IntPtr alloc<T>(T[] data) where T : struct
+      {
+         if(data == null)
+         {
+            return IntPtr.Zero;
+         }
+
+         bool isEnum = typeof(T).IsEnum;
+         Type outputType = isEnum ? Enum.GetUnderlyingType(typeof(T)) : typeof(T);
+
+         IntPtr ptr = Marshal.AllocHGlobal(Marshal.SizeOf(outputType) * data.Length);
+         Int64 addr = ptr.ToInt64();
+         for(int i = 0; i < data.Length; i++)
+         {
+            IntPtr anItem = new IntPtr(addr);
+            if(isEnum)
+            {
+               int val = Convert.ToInt32(data[i]);
+               Marshal.StructureToPtr(val, anItem, false);
+            }
+            else
+            {
+               Marshal.StructureToPtr(data[i], anItem, false);
+            }
+            addr += Marshal.SizeOf(outputType);
+         }
+
+         return ptr;
+      }
+
       internal static void free(IntPtr data)
       {
          if(data != IntPtr.Zero)
@@ -335,7 +365,7 @@ namespace Vulkan
          size = info.size;
          usage = info.usage;
          sharingMode = info.sharingMode;
-         queueFamilyIndexCount = (UInt32)info.queueFamilyIndices.Count;
+         queueFamilyIndexCount = (UInt32)(info.queueFamilyIndices?.Count ?? 0);
          queueFamilyIndices = Alloc.alloc(info.queueFamilyIndices);
       }
 
@@ -406,9 +436,9 @@ namespace Vulkan
       {
          SType = info.type;
          Next = info.next;
-         WaitSemaphoreCount = (UInt32)info.waitSemaphores.Count;
-         CommandBufferCount = (UInt32)info.commandBuffers.Count;
-         SignalSemaphoreCount = (UInt32)info.signalSemaphores.Count;
+         WaitSemaphoreCount = (UInt32)(info.waitSemaphores?.Count ?? 0);
+         CommandBufferCount = (UInt32)(info.commandBuffers?.Count ?? 0);
+         SignalSemaphoreCount = (UInt32)(info.signalSemaphores?.Count ?? 0);
 
          WaitDstStageMask = Alloc.alloc(info.waitDstStageMask);
          WaitSemaphores = Alloc.alloc(info.waitSemaphores);
@@ -584,10 +614,10 @@ namespace Vulkan
          next = info.next;
          flags = info.flags;
 
-         vertexBindingDescriptionCount = (UInt32)(info.vertexBindingDescriptions?.Count ?? 0);
+         vertexBindingDescriptionCount = (UInt32)(info.vertexBindingDescriptions?.Length ?? 0);
          vertexBindingDescriptions = info.vertexBindingDescriptions != null ? Alloc.alloc(info.vertexBindingDescriptions) : IntPtr.Zero;
 
-         vertexAttributeDescriptionCount = (UInt32)(info.vertexAttributeDescriptions?.Count ?? 0);
+         vertexAttributeDescriptionCount = (UInt32)(info.vertexAttributeDescriptions?.Length ?? 0);
          vertexAttributeDescriptions = info.vertexAttributeDescriptions != null ? Alloc.alloc(info.vertexAttributeDescriptions) : IntPtr.Zero;
       }
 
@@ -915,7 +945,13 @@ namespace Vulkan
          next = info.next;
          flags = info.flags;
          bindingCount = (UInt32)info.bindings.Count;
-         pBindings = Alloc.alloc(info.bindings);
+         List<_DescriptorSetLayoutBinding> bindings = new List<_DescriptorSetLayoutBinding>();
+         for(int i=0; i < info.bindings.Count; i++)
+         {
+            bindings.Add(new _DescriptorSetLayoutBinding(info.bindings[i]));
+         }
+
+         pBindings = Alloc.alloc(bindings);
       }
 
       public void destroy()
@@ -1292,6 +1328,85 @@ namespace Vulkan
       public void destroy()
       {
          Marshal.FreeHGlobal(code);
+      }
+   };
+
+   [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+   public struct _WriteDescriptorSet
+   {
+      public VK.StructureType type;
+      public IntPtr next;
+      public VK.DescriptorSet dstSet;  //Destination descriptor set 
+      public UInt32 dstBinding;  //Binding within the destination descriptor set to write 
+      public UInt32 dstArrayElement;  //Array element within the destination binding to write 
+      public UInt32 descriptorCount;  //Number of descriptors to write (determines the size of the array pointed by pDescriptors) 
+      public VK.DescriptorType descriptorType;  //Descriptor type to write (determines which members of the array pointed by pDescriptors are going to be used) 
+      public IntPtr pImageInfo;  //Sampler, image view, and layout for SAMPLER, COMBINED_IMAGE_SAMPLER, {SAMPLED,STORAGE}_IMAGE, and INPUT_ATTACHMENT descriptor types. 
+      public IntPtr pBufferInfo;  //Raw buffer, size, and offset for {UNIFORM,STORAGE}_BUFFER[_DYNAMIC] descriptor types. 
+      public IntPtr pTexelBufferView;  //Buffer view to write to the descriptor for {UNIFORM,STORAGE}_TEXEL_BUFFER descriptor types. 
+
+      public _WriteDescriptorSet(VK.WriteDescriptorSet set)
+      {
+         type = set.type;
+         next = set.next;
+         dstSet = set.dstSet;
+         dstBinding = set.dstBinding;
+         dstArrayElement = set.dstArrayElement;
+         descriptorCount = set.descriptorCount;
+         descriptorType = set.descriptorType;
+         pImageInfo = IntPtr.Zero;
+         pBufferInfo = IntPtr.Zero;
+         pTexelBufferView = IntPtr.Zero;
+
+         switch(descriptorType)
+         {
+            case VK.DescriptorType.AccelerationStructureNv:
+               throw new Exception("Not Supported yet");
+               break;
+            case VK.DescriptorType.CombinedImageSampler:
+               pImageInfo = Alloc.alloc(set.imageInfo);
+               break;
+            case VK.DescriptorType.InlineUniformBlockExt:
+               pBufferInfo = Alloc.alloc(set.bufferInfo);
+               break;
+            case VK.DescriptorType.InputAttachment:
+               pImageInfo = Alloc.alloc(set.imageInfo);
+               break;
+            case VK.DescriptorType.SampledImage:
+               pImageInfo = Alloc.alloc(set.imageInfo);
+               break;
+            case VK.DescriptorType.Sampler:
+               pImageInfo = Alloc.alloc(set.imageInfo);
+               break;
+            case VK.DescriptorType.StorageBuffer:
+               pBufferInfo = Alloc.alloc(set.bufferInfo);
+               break;
+            case VK.DescriptorType.StorageBufferDynamic:
+               pBufferInfo = Alloc.alloc(set.bufferInfo);
+               break;
+            case VK.DescriptorType.StorageImage:
+               pImageInfo = Alloc.alloc(set.imageInfo);
+               break;
+            case VK.DescriptorType.StorageTexelBuffer:
+               pTexelBufferView = Alloc.alloc(set.texelBufferView);
+               break;
+            case VK.DescriptorType.UniformBuffer:
+               pBufferInfo = Alloc.alloc(set.bufferInfo);
+               break;
+            case VK.DescriptorType.UniformBufferDynamic:
+               pBufferInfo = Alloc.alloc(set.bufferInfo);
+               break;
+            case VK.DescriptorType.UniformTexelBuffer:
+               pTexelBufferView = Alloc.alloc(set.texelBufferView);
+               break;
+         }
+      }
+
+      public void destory()
+      {
+         Alloc.free(pImageInfo);
+         Alloc.free(pBufferInfo);
+         Alloc.free(pTexelBufferView);
       }
    };
 

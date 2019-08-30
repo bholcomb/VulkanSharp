@@ -57,6 +57,8 @@ namespace Vulkan
       public const UInt32 LUID_SIZE = 8;
       public const UInt32 QUEUE_FAMILY_EXTERNAL = (~0U - 1);
       #endregion
+
+      
    }
    
 	#region Extension and Layer Names

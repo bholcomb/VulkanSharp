@@ -4,11 +4,64 @@ using System.Windows.Forms;
 using System.Numerics;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 using Vulkan;
 
 namespace VulkanTest
 {
+   [StructLayout(LayoutKind.Sequential, Pack = 1)]
+   struct Vertex
+   {
+      public Vector2 pos;
+      public Vector3 color;
+
+      public Vertex(float px, float py, float cr, float cg, float cb)
+      {
+         pos.X = px;
+         pos.Y = py;
+         color.X = cr;
+         color.Y = cg;
+         color.Z = cb;
+      }
+
+      public static VK.VertexInputBindingDescription getBindingDescription()
+      {
+         VK.VertexInputBindingDescription bindingDescription = new VK.VertexInputBindingDescription();
+         bindingDescription.binding = 0;
+         bindingDescription.stride = (UInt32)Marshal.SizeOf(default(Vertex));
+         bindingDescription.inputRate = VK.VertexInputRate.Vertex;
+
+         return bindingDescription;
+      }
+
+      public static VK.VertexInputAttributeDescription[] getAttributeDescriptions()
+      {
+         VK.VertexInputAttributeDescription[] attributeDescriptions = new VK.VertexInputAttributeDescription[2];
+         attributeDescriptions[0].binding = 0;
+         attributeDescriptions[0].location = 0;
+         attributeDescriptions[0].format = VK.Format.R32g32Sfloat;
+         attributeDescriptions[0].offset = 0;
+
+         attributeDescriptions[1].binding = 0;
+         attributeDescriptions[1].location = 1;
+         attributeDescriptions[1].format = VK.Format.R32g32b32Sfloat;
+         attributeDescriptions[1].offset = 8;
+
+         return attributeDescriptions;
+      }
+   };
+
+   [StructLayout(LayoutKind.Sequential, Pack = 1)]
+   struct UniformBufferObject
+   {
+      public Matrix4x4 model;
+      public Matrix4x4 view;
+      public Matrix4x4 proj;
+   };
+
+
    class QueueFamilyIndices
    {
       public Int32 graphicsFamily = -1;
@@ -33,7 +86,7 @@ namespace VulkanTest
       const int HEIGHT = 600;
       const int MAX_FRAMES_IN_FLIGHT = 2;
 
-      List<string> validationLayers = new List<string>() { InstanceLayers.VK_LAYER_LUNARG_standard_validation};
+      List<string> validationLayers = new List<string>() { InstanceLayers.VK_LAYER_LUNARG_standard_validation };
       List<string> instanceExtensions = new List<string>() { InstanceExtensions.VK_KHR_surface,
                                                                 InstanceExtensions.VK_KHR_win32_surface,
                                                                 InstanceExtensions.VK_EXT_debug_utils};
@@ -67,10 +120,23 @@ namespace VulkanTest
       VK.Framebuffer[] swapChainFramebuffers;
 
       VK.RenderPass renderPass;
+      VK.DescriptorSetLayout descriptorSetLayout;
       VK.PipelineLayout pipelineLayout;
       VK.Pipeline graphicsPipeline;
 
       VK.CommandPool commandPool;
+
+      VK.Buffer vertexBuffer;
+      VK.DeviceMemory vertexBufferMemory;
+      VK.Buffer indexBuffer;
+      VK.DeviceMemory indexBufferMemory;
+
+      VK.Buffer[] uniformBuffers;
+      VK.DeviceMemory[] uniformBuffersMemory;
+
+      VK.DescriptorPool descriptorPool;
+      VK.DescriptorSet[] descriptorSets;
+
       VK.CommandBuffer[] commandBuffers;
 
       VK.Semaphore[] imageAvailableSemaphores;
@@ -79,6 +145,17 @@ namespace VulkanTest
       UInt64 currentFrame = 0;
 
       bool framebufferResized = false;
+
+
+      Vertex[] verts = new Vertex[]
+      {
+         new Vertex(-0.5f, -0.5f, 1.0f, 0.0f, 0.0f),
+         new Vertex(0.5f, -0.5f, 0.0f, 1.0f, 0.0f),
+         new Vertex(0.5f, 0.5f, 0.0f, 0.0f, 1.0f),
+         new Vertex(-0.5f, 0.5f, 1.0f, 1.0f, 1.0f)
+      };
+
+      UInt16[] indices = new ushort[] { 0, 1, 2, 2, 3, 0 };
 
       public void init(IntPtr appHandle, IntPtr windowHandle)
       {
@@ -102,9 +179,15 @@ namespace VulkanTest
          createSwapChain();
          createImageViews();
          createRenderPass();
+         createDescriptorSetLayout();
          createGraphicsPipeline();
          createFramebuffers();
          createCommandPool();
+         createVertexBuffer();
+         createIndexBuffer();
+         createUniformBuffers();
+         createDescriptorPool();
+         createDescriptorSets();
          createCommandBuffers();
          createSyncObjects();
       }
@@ -112,6 +195,14 @@ namespace VulkanTest
       public void cleanup()
       {
          cleanupSwapChain();
+
+         VK.DestroyDescriptorSetLayout(device, descriptorSetLayout);
+
+         VK.DestroyBuffer(device, indexBuffer);
+         VK.FreeMemory(device, indexBufferMemory);
+
+         VK.DestroyBuffer(device, vertexBuffer);
+         VK.FreeMemory(device, vertexBufferMemory);
 
          for(int i = 0; i < MAX_FRAMES_IN_FLIGHT; i++)
          {
@@ -149,6 +240,12 @@ namespace VulkanTest
          foreach(VK.ImageView imageView in swapChainImageViews)
          {
             VK.DestroyImageView(device, imageView);
+         }
+
+         for(int i = 0; i < uniformBuffers.Length; i++)
+         {
+            VK.DestroyBuffer(device, uniformBuffers[i]);
+            VK.FreeMemory(device, uniformBuffersMemory[i]);
          }
 
          VK.DestroySwapchainKHR(device, swapChain);
@@ -493,6 +590,25 @@ namespace VulkanTest
          }
       }
 
+      void createDescriptorSetLayout()
+      {
+         VK.DescriptorSetLayoutBinding uboLayoutBinding = new VK.DescriptorSetLayoutBinding();
+         uboLayoutBinding.binding = 0;
+         uboLayoutBinding.descriptorCount = 1;
+         uboLayoutBinding.descriptorType = VK.DescriptorType.UniformBuffer;
+         uboLayoutBinding.immutableSamplers = null;
+         uboLayoutBinding.stageFlags = VK.ShaderStageFlags.VertexBit;
+
+         VK.DescriptorSetLayoutCreateInfo layoutInfo = new VK.DescriptorSetLayoutCreateInfo();
+         layoutInfo.type = VK.StructureType.DescriptorSetLayoutCreateInfo;
+         layoutInfo.bindings = new List<VK.DescriptorSetLayoutBinding> { uboLayoutBinding };
+
+         if(VK.CreateDescriptorSetLayout(device, ref layoutInfo, out descriptorSetLayout) != VK.Result.Success)
+         {
+            throw new Exception("failed to create descriptor set layout!");
+         }
+      }
+
       void createGraphicsPipeline()
       {
          byte[] vertShaderCode = getEmbeddedResource("VulkanTest.libsrc.testVK.shaders.simpleTri.vert.glsl.spv");
@@ -517,8 +633,8 @@ namespace VulkanTest
 
          VK.PipelineVertexInputStateCreateInfo vertexInputInfo = new VK.PipelineVertexInputStateCreateInfo();
          vertexInputInfo.type = VK.StructureType.PipelineVertexInputStateCreateInfo;
-         vertexInputInfo.vertexBindingDescriptions = null;
-         vertexInputInfo.vertexAttributeDescriptions = null;
+         vertexInputInfo.vertexBindingDescriptions = new VK.VertexInputBindingDescription[] { Vertex.getBindingDescription() };
+         vertexInputInfo.vertexAttributeDescriptions = Vertex.getAttributeDescriptions();
 
          VK.PipelineInputAssemblyStateCreateInfo inputAssembly = new VK.PipelineInputAssemblyStateCreateInfo();
          inputAssembly.type = VK.StructureType.PipelineInputAssemblyStateCreateInfo;
@@ -570,7 +686,7 @@ namespace VulkanTest
 
          VK.PipelineLayoutCreateInfo pipelineLayoutInfo = new VK.PipelineLayoutCreateInfo();
          pipelineLayoutInfo.type = VK.StructureType.PipelineLayoutCreateInfo;
-         pipelineLayoutInfo.setLayouts = null;
+         pipelineLayoutInfo.setLayouts = new List<VK.DescriptorSetLayout> { descriptorSetLayout };
          pipelineLayoutInfo.pushConstantRanges = null;
 
          if(VK.CreatePipelineLayout(device, ref pipelineLayoutInfo, out pipelineLayout) != VK.Result.Success)
@@ -592,10 +708,12 @@ namespace VulkanTest
          pipelineInfo.subpass = 0;
          pipelineInfo.basePipelineHandle = VK.NullPipeline;
 
-         if(VK.CreateGraphicsPipelines(device, VK.NullPipelineCache, 1, new VK.GraphicsPipelineCreateInfo[] { pipelineInfo }, new VK.Pipeline[] { graphicsPipeline }) != VK.Result.Success)
+         VK.Pipeline[] pipelines = new VK.Pipeline[1];
+         if(VK.CreateGraphicsPipelines(device, VK.NullPipelineCache, 1, new VK.GraphicsPipelineCreateInfo[] { pipelineInfo }, pipelines) != VK.Result.Success)
          {
             throw new Exception("failed to create graphics pipeline!");
          }
+         graphicsPipeline = pipelines[0];
 
          VK.DestroyShaderModule(device, fragShaderModule);
          VK.DestroyShaderModule(device, vertShaderModule);
@@ -636,6 +754,199 @@ namespace VulkanTest
          {
             throw new Exception("failed to create command pool!");
          }
+      }
+
+      unsafe void createVertexBuffer()
+      {
+         Vulkan.DeviceSize bufferSize = Marshal.SizeOf(typeof(Vertex)) * verts.Length;
+
+         VK.Buffer stagingBuffer = new VK.Buffer();
+         VK.DeviceMemory stagingBufferMemory = new VK.DeviceMemory();
+         createBuffer(bufferSize, VK.BufferUsageFlags.TransferSrcBit, VK.MemoryPropertyFlags.HostVisibleBit | VK.MemoryPropertyFlags.HostCoherentBit, ref stagingBuffer, ref stagingBufferMemory);
+
+         IntPtr data = IntPtr.Zero;
+         VK.MapMemory(device, stagingBufferMemory, 0, bufferSize, 0, ref data);
+         fixed (Vertex* v = &verts[0])
+         {
+            Util.memcpy(data, (IntPtr)v, (int)((UInt64)bufferSize));
+         }
+         VK.UnmapMemory(device, stagingBufferMemory);
+
+         createBuffer(bufferSize, VK.BufferUsageFlags.TransferDstBit | VK.BufferUsageFlags.VertexBufferBit, VK.MemoryPropertyFlags.DeviceLocalBit, ref vertexBuffer, ref vertexBufferMemory);
+
+         copyBuffer(stagingBuffer, vertexBuffer, bufferSize);
+
+         VK.DestroyBuffer(device, stagingBuffer);
+         VK.FreeMemory(device, stagingBufferMemory);
+      }
+
+      unsafe void createIndexBuffer()
+      {
+         Vulkan.DeviceSize bufferSize = Marshal.SizeOf(typeof(UInt32)) * indices.Length;
+
+         VK.Buffer stagingBuffer = new VK.Buffer();
+         VK.DeviceMemory stagingBufferMemory = new VK.DeviceMemory();
+         createBuffer(bufferSize, VK.BufferUsageFlags.TransferSrcBit, VK.MemoryPropertyFlags.HostVisibleBit | VK.MemoryPropertyFlags.HostCoherentBit, ref stagingBuffer, ref stagingBufferMemory);
+
+         IntPtr data = IntPtr.Zero;
+         VK.MapMemory(device, stagingBufferMemory, 0, bufferSize, 0, ref data);
+         fixed (UInt16* v = &indices[0])
+         {
+            Util.memcpy(data, (IntPtr)v, (int)((UInt64)bufferSize));
+         }
+         VK.UnmapMemory(device, stagingBufferMemory);
+
+         createBuffer(bufferSize, VK.BufferUsageFlags.TransferDstBit | VK.BufferUsageFlags.IndexBufferBit, VK.MemoryPropertyFlags.DeviceLocalBit, ref indexBuffer, ref indexBufferMemory);
+
+         copyBuffer(stagingBuffer, indexBuffer, bufferSize);
+
+         VK.DestroyBuffer(device, stagingBuffer);
+         VK.FreeMemory(device, stagingBufferMemory);
+      }
+
+      void createUniformBuffers()
+      {
+         Vulkan.DeviceSize bufferSize = Marshal.SizeOf(typeof(UniformBufferObject));
+
+         uniformBuffers = new VK.Buffer[swapChainImages.Length];
+         uniformBuffersMemory = new VK.DeviceMemory[swapChainImages.Length];
+
+         for(int i = 0; i < swapChainImages.Length; i++)
+         {
+            createBuffer(bufferSize, VK.BufferUsageFlags.UniformBufferBit, VK.MemoryPropertyFlags.HostVisibleBit | VK.MemoryPropertyFlags.HostCoherentBit, ref uniformBuffers[i], ref uniformBuffersMemory[i]);
+         }
+      }
+
+      void createDescriptorPool()
+      {
+         VK.DescriptorPoolSize poolSize = new VK.DescriptorPoolSize();
+         poolSize.type = VK.DescriptorType.UniformBuffer;
+         poolSize.descriptorCount = (UInt32)swapChainImages.Length;
+
+         VK.DescriptorPoolCreateInfo poolInfo = new VK.DescriptorPoolCreateInfo();
+         poolInfo.type = VK.StructureType.DescriptorPoolCreateInfo;
+         poolInfo.poolSizes = new List<VK.DescriptorPoolSize>() { poolSize };
+         poolInfo.maxSets = (UInt32)swapChainImages.Length;
+
+         if(VK.CreateDescriptorPool(device, ref poolInfo, out descriptorPool) != VK.Result.Success)
+         {
+            throw new Exception("failed to create descriptor pool!");
+         }
+      }
+
+      void createDescriptorSets()
+      {
+         List<VK.DescriptorSetLayout> layouts = new List<VK.DescriptorSetLayout>() { descriptorSetLayout, descriptorSetLayout, descriptorSetLayout };
+         VK.DescriptorSetAllocateInfo allocInfo = new VK.DescriptorSetAllocateInfo();
+         allocInfo.type = VK.StructureType.DescriptorSetAllocateInfo;
+         allocInfo.descriptorPool = descriptorPool;
+         allocInfo.setLayouts = layouts;
+
+         descriptorSets = new VK.DescriptorSet[swapChainImages.Length];
+         if(VK.AllocateDescriptorSets(device, ref allocInfo, descriptorSets) != VK.Result.Success)
+         {
+            throw new Exception("failed to allocate descriptor sets!");
+         }
+
+         for(int i = 0; i < swapChainImages.Length; i++)
+         {
+            VK.DescriptorBufferInfo bufferInfo = new VK.DescriptorBufferInfo();
+            bufferInfo.buffer = uniformBuffers[i];
+            bufferInfo.offset = 0;
+            bufferInfo.range = Marshal.SizeOf(typeof(UniformBufferObject));
+
+            VK.WriteDescriptorSet descriptorWrite = new VK.WriteDescriptorSet();
+            descriptorWrite.type = VK.StructureType.WriteDescriptorSet;
+            descriptorWrite.dstSet = descriptorSets[i];
+            descriptorWrite.dstBinding = 0;
+            descriptorWrite.dstArrayElement = 0;
+            descriptorWrite.descriptorType = VK.DescriptorType.UniformBuffer;
+            descriptorWrite.descriptorCount = 1;
+            descriptorWrite.bufferInfo = bufferInfo;
+
+            VK.UpdateDescriptorSets(device, 1, new VK.WriteDescriptorSet[] { descriptorWrite }, 0, null);
+         }
+      }
+
+      void createBuffer(Vulkan.DeviceSize size, VK.BufferUsageFlags usage, VK.MemoryPropertyFlags properties, ref VK.Buffer buffer, ref VK.DeviceMemory bufferMemory)
+      {
+         VK.BufferCreateInfo bufferInfo = new VK.BufferCreateInfo();
+         bufferInfo.type = VK.StructureType.BufferCreateInfo;
+         bufferInfo.size = size;
+         bufferInfo.usage = usage;
+         bufferInfo.sharingMode = VK.SharingMode.Exclusive;
+
+         if(VK.CreateBuffer(device, ref bufferInfo, out buffer) != VK.Result.Success)
+         {
+            throw new Exception("failed to create buffer!");
+         }
+
+         VK.MemoryRequirements memRequirements = new VK.MemoryRequirements();
+         VK.GetBufferMemoryRequirements(device, buffer, ref memRequirements);
+
+         VK.MemoryAllocateInfo allocInfo = new VK.MemoryAllocateInfo();
+         allocInfo.type = VK.StructureType.MemoryAllocateInfo;
+         allocInfo.allocationSize = memRequirements.size;
+         allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, properties);
+
+         if(VK.AllocateMemory(device, ref allocInfo, out bufferMemory) != VK.Result.Success)
+         {
+            throw new Exception("failed to allocate buffer memory!");
+         }
+
+         VK.BindBufferMemory(device, buffer, bufferMemory, 0);
+      }
+
+      void copyBuffer(VK.Buffer srcBuffer, VK.Buffer dstBuffer, Vulkan.DeviceSize size)
+      {
+         VK.CommandBufferAllocateInfo allocInfo = new VK.CommandBufferAllocateInfo();
+         allocInfo.type = VK.StructureType.CommandBufferAllocateInfo;
+         allocInfo.level = VK.CommandBufferLevel.Primary;
+         allocInfo.commandPool = commandPool;
+         allocInfo.commandBufferCount = 1;
+
+         VK.CommandBuffer commandBuffer = new VK.CommandBuffer();
+         VK.CommandBuffer[] buffers = new VK.CommandBuffer[1];
+         VK.AllocateCommandBuffers(device, ref allocInfo, buffers);
+         commandBuffer = buffers[0];
+
+         VK.CommandBufferBeginInfo beginInfo = new VK.CommandBufferBeginInfo();
+         beginInfo.type = VK.StructureType.CommandBufferBeginInfo;
+         beginInfo.flags = VK.CommandBufferUsageFlags.OneTimeSubmitBit;
+
+         VK.BeginCommandBuffer(commandBuffer, ref beginInfo);
+
+         VK.BufferCopy copyRegion = new VK.BufferCopy();
+         copyRegion.size = size;
+         VK.CmdCopyBuffer(commandBuffer, srcBuffer, dstBuffer, 1, new VK.BufferCopy[] { copyRegion });
+
+
+         VK.EndCommandBuffer(commandBuffer);
+
+         VK.SubmitInfo submitInfo = new VK.SubmitInfo();
+         submitInfo.type = VK.StructureType.SubmitInfo;
+         submitInfo.commandBuffers = new List<VK.CommandBuffer>() { commandBuffer };
+
+         VK.QueueSubmit(graphicsQueue, 1, new VK.SubmitInfo[] { submitInfo }, VK.NULL_FENCE);
+         VK.QueueWaitIdle(graphicsQueue);
+
+         VK.FreeCommandBuffers(device, commandPool, 1, buffers);
+      }
+
+      UInt32 findMemoryType(UInt32 typeFilter, VK.MemoryPropertyFlags properties)
+      {
+         VK.PhysicalDeviceMemoryProperties memProperties;
+         VK.GetPhysicalDeviceMemoryProperties(physicalDevice, out memProperties);
+
+         for(int i = 0; i < memProperties.memoryTypeCount; i++)
+         {
+            if(((typeFilter & (1 << i)) != 0) && ((memProperties.memoryTypes[i].propertyFlags & properties) == properties))
+            {
+               return (UInt32)i;
+            }
+         }
+
+         throw new Exception("failed to find suitable memory type!");
       }
 
       void createCommandBuffers()
@@ -681,7 +992,16 @@ namespace VulkanTest
 
             VK.CmdBindPipeline(commandBuffers[i], VK.PipelineBindPoint.Graphics, graphicsPipeline);
 
-            VK.CmdDraw(commandBuffers[i], 3, 1, 0, 0);
+            VK.Buffer[] vertexBuffers = new VK.Buffer[] { vertexBuffer };
+            Vulkan.DeviceSize[] offsets = new DeviceSize[] { 0 };
+            VK.CmdBindVertexBuffers(commandBuffers[i], 0, 1, vertexBuffers, offsets);
+
+            VK.CmdBindIndexBuffer(commandBuffers[i], indexBuffer, 0, VK.IndexType.Uint16);
+
+            UInt32 dynamicOffsets = 0;
+            VK.CmdBindDescriptorSets(commandBuffers[i], VK.PipelineBindPoint.Graphics, pipelineLayout, 0, 1, ref descriptorSets[i], 0, ref dynamicOffsets);
+
+            VK.CmdDrawIndexed(commandBuffers[i], (UInt32)indices.Length, 1, 0, 0, 0);
 
             VK.CmdEndRenderPass(commandBuffers[i]);
 
@@ -716,6 +1036,30 @@ namespace VulkanTest
          }
       }
 
+      Stopwatch timesrc = new Stopwatch();
+      unsafe void updateUniformBuffer(UInt32 currentImage)
+      {
+         if(timesrc.IsRunning == false)
+         {
+            timesrc.Start();
+         }
+
+         float time = (float)timesrc.Elapsed.TotalSeconds;
+
+         UniformBufferObject ubo = new UniformBufferObject();
+         ubo.model = Matrix4x4.CreateRotationY(time * (float)(90.0 * Math.PI / 180.0));
+         ubo.view = Matrix4x4.CreateLookAt(new Vector3(2.0f, 2.0f, 2.0f), new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0.0f, 0.0f, 1.0f));
+         ubo.proj = Matrix4x4.CreatePerspectiveFieldOfView((float)(45.0 * Math.PI / 180.0), swapChainExtent.width / (float)swapChainExtent.height, 0.1f, 10.0f);
+         //ubo.proj[1][1] *= -1;
+
+         IntPtr data = IntPtr.Zero;
+         Vulkan.DeviceSize bufferSize = Marshal.SizeOf(typeof(UniformBufferObject));
+         VK.MapMemory(device, uniformBuffersMemory[currentImage], 0, bufferSize, 0, ref data);
+         UniformBufferObject* u = &ubo;
+         Util.memcpy(data, (IntPtr)u, (int)((UInt64)bufferSize));
+         VK.UnmapMemory(device, uniformBuffersMemory[currentImage]);
+      }
+
       public void drawFrame()
       {
          VK.WaitForFences(device, 1, new VK.Fence[] { inFlightFences[currentFrame] }, true, UInt64.MaxValue);
@@ -732,6 +1076,8 @@ namespace VulkanTest
          {
             throw new Exception("failed to acquire swap chain image!");
          }
+
+         updateUniformBuffer(imageIndex);
 
          List<VK.Semaphore> signalSemaphores = new List<VK.Semaphore> { renderFinishedSemaphores[currentFrame] };
          VK.SubmitInfo submitInfo = new VK.SubmitInfo();

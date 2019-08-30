@@ -430,10 +430,15 @@ namespace Vulkan
       #region Buffer commands
       //VkResult vkCreateBuffer(VkDevice device, VkBufferCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkBuffer* pBuffer);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateBuffer", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      static extern Result _CreateBuffer(Device device, ref BufferCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out Buffer pBuffer);
+      static extern Result _CreateBuffer(Device device, ref _BufferCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out Buffer pBuffer);
       public static Result CreateBuffer(Device device, ref BufferCreateInfo pCreateInfo, out Buffer pBuffer, AllocationCallbacks pAllocator = null)
       {
-         return _CreateBuffer(device, ref pCreateInfo, pAllocator, out pBuffer);
+         _BufferCreateInfo info = new _BufferCreateInfo(pCreateInfo);
+         Result res;
+         res = _CreateBuffer(device, ref info, pAllocator, out pBuffer);
+
+         info.destroy();
+         return res;
       }
 
       //void vkDestroyBuffer(VkDevice device, VkBuffer buffer, VkAllocationCallbacks* pAllocator);
@@ -639,7 +644,17 @@ namespace Vulkan
       #region Descriptor set commands
       //VkResult vkCreateDescriptorSetLayout(VkDevice device, VkDescriptorSetLayoutCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDescriptorSetLayout* pSetLayout);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateDescriptorSetLayout", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      public static extern Result CreateDescriptorSetLayout(Device device, ref DescriptorSetLayoutCreateInfo pCreateInfo, AllocationCallbacks pAllocator, ref DescriptorSetLayout pSetLayout);
+      static extern Result _CreateDescriptorSetLayout(Device device, ref _DescriptorSetLayoutCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out DescriptorSetLayout pSetLayout);
+      public static Result CreateDescriptorSetLayout(Device device, ref DescriptorSetLayoutCreateInfo pCreateInfo, out DescriptorSetLayout pSetLayout, AllocationCallbacks pAllocator = null)
+      {
+         _DescriptorSetLayoutCreateInfo info = new _DescriptorSetLayoutCreateInfo(pCreateInfo);
+
+         VK.Result res;
+         res = _CreateDescriptorSetLayout(device, ref info, pAllocator, out pSetLayout);
+
+         info.destroy();
+         return res;
+      }
 
 
       //void vkDestroyDescriptorSetLayout(VkDevice device, VkDescriptorSetLayout descriptorSetLayout, VkAllocationCallbacks* pAllocator);
@@ -649,10 +664,15 @@ namespace Vulkan
 
       //VkResult vkCreateDescriptorPool(VkDevice device, VkDescriptorPoolCreateInfo* pCreateInfo, VkAllocationCallbacks* pAllocator, VkDescriptorPool* pDescriptorPool);
       [DllImport(VulkanLibrary, EntryPoint = "vkCreateDescriptorPool", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      static extern Result _CreateDescriptorPool(Device device, ref DescriptorPoolCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out DescriptorPool pDescriptorPool);
+      static extern Result _CreateDescriptorPool(Device device, ref _DescriptorPoolCreateInfo pCreateInfo, AllocationCallbacks pAllocator, out DescriptorPool pDescriptorPool);
       public static Result CreateDescriptorPool(Device device, ref DescriptorPoolCreateInfo pCreateInfo, out DescriptorPool pDescriptorPool, AllocationCallbacks pAllocator = null)
       {
-         return _CreateDescriptorPool(device, ref pCreateInfo, pAllocator, out pDescriptorPool);
+         _DescriptorPoolCreateInfo info = new _DescriptorPoolCreateInfo(pCreateInfo);
+         Result res;
+         res = _CreateDescriptorPool(device, ref info, pAllocator, out pDescriptorPool);
+
+         info.destroy();
+         return res;
       }
 
       //void vkDestroyDescriptorPool(VkDevice device, VkDescriptorPool descriptorPool, VkAllocationCallbacks* pAllocator);
@@ -667,13 +687,18 @@ namespace Vulkan
 
       //VkResult vkAllocateDescriptorSets(VkDevice device, VkDescriptorSetAllocateInfo* pAllocateInfo, VkDescriptorSet* pDescriptorSets);
       [DllImport(VulkanLibrary, EntryPoint = "vkAllocateDescriptorSets", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      static extern Result _AllocateDescriptorSets(Device device, ref DescriptorSetAllocateInfo pAllocateInfo, IntPtr pDescriptorSets);
+      static extern Result _AllocateDescriptorSets(Device device, ref _DescriptorSetAllocateInfo pAllocateInfo, IntPtr pDescriptorSets);
       public unsafe static Result AllocateDescriptorSets(Device device, ref DescriptorSetAllocateInfo pAllocateInfo, DescriptorSet[] pDescriptorSets)
       {
+         _DescriptorSetAllocateInfo info = new _DescriptorSetAllocateInfo(pAllocateInfo);
+         Result res;
          fixed (DescriptorSet* ptr = pDescriptorSets)
          {
-            return _AllocateDescriptorSets(device, ref pAllocateInfo, (IntPtr)ptr);
+            res = _AllocateDescriptorSets(device, ref info, (IntPtr)ptr);
          }
+
+         info.destroy();
+         return res;
       }
 
       //VkResult vkFreeDescriptorSets(VkDevice device, VkDescriptorPool descriptorPool, uint32_t descriptorSetCount, VkDescriptorSet* pDescriptorSets);
@@ -689,12 +714,27 @@ namespace Vulkan
 
       //void vkUpdateDescriptorSets(VkDevice device, uint32_t descriptorWriteCount, VkWriteDescriptorSet* pDescriptorWrites, uint32_t descriptorCopyCount, VkCopyDescriptorSet* pDescriptorCopies);
       [DllImport(VulkanLibrary, EntryPoint = "vkUpdateDescriptorSets", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      static extern void _UpdateDescriptorSets(Device device, UInt32 descriptorWriteCount, ref WriteDescriptorSet pDescriptorWrites, UInt32 descriptorCopyCount, IntPtr pDescriptorCopies);
-      public unsafe static void UpdateDescriptorSets(Device device, UInt32 descriptorWriteCount, ref WriteDescriptorSet pDescriptorWrites, UInt32 descriptorCopyCount, CopyDescriptorSet[] pDescriptorCopies)
+      static extern void _UpdateDescriptorSets(Device device, UInt32 descriptorWriteCount, IntPtr pDescriptorWrites, UInt32 descriptorCopyCount, IntPtr pDescriptorCopies);
+      public unsafe static void UpdateDescriptorSets(Device device, UInt32 descriptorWriteCount, WriteDescriptorSet[] pDescriptorWrites, UInt32 descriptorCopyCount, CopyDescriptorSet[] pDescriptorCopies)
       {
+         
+         _WriteDescriptorSet[] sets = new _WriteDescriptorSet[pDescriptorWrites.Length];
+         for(int i=0; i<sets.Length; i++)
+         {
+            sets[i] = new _WriteDescriptorSet(pDescriptorWrites[i]);
+         }
+
          fixed (CopyDescriptorSet* ptr = pDescriptorCopies)
          {
-            _UpdateDescriptorSets(device, descriptorWriteCount, ref pDescriptorWrites, descriptorCopyCount, (IntPtr)ptr);
+            fixed (_WriteDescriptorSet* ptr2 = sets)
+            {
+               _UpdateDescriptorSets(device, descriptorWriteCount, (IntPtr)ptr2, descriptorCopyCount, (IntPtr)ptr);
+            }
+         }
+
+         for(int i = 0; i < sets.Length; i++)
+         {
+            sets[i].destory();
          }
       }
       #endregion
@@ -873,12 +913,15 @@ namespace Vulkan
 
       //void vkCmdBindVertexBuffers(VkCommandBuffer commandBuffer, uint32_t firstBinding, uint32_t bindingCount, VkBuffer* pBuffers, VkDeviceSize* pOffsets);
       [DllImport(VulkanLibrary, EntryPoint = "vkCmdBindVertexBuffers", CallingConvention = CallingConvention.Cdecl), SuppressUnmanagedCodeSecurity]
-      static extern void _CmdBindVertexBuffers(CommandBuffer commandBuffer, UInt32 firstBinding, UInt32 bindingCount, IntPtr pBuffers, ref DeviceSize pOffsets);
-      public unsafe static void CmdBindVertexBuffers(CommandBuffer commandBuffer, UInt32 firstBinding, UInt32 bindingCount, Buffer[] pBuffers, ref DeviceSize pOffsets)
+      static extern void _CmdBindVertexBuffers(CommandBuffer commandBuffer, UInt32 firstBinding, UInt32 bindingCount, IntPtr pBuffers, IntPtr pOffsets);
+      public unsafe static void CmdBindVertexBuffers(CommandBuffer commandBuffer, UInt32 firstBinding, UInt32 bindingCount, Buffer[] pBuffers, DeviceSize[] pOffsets)
       {
          fixed (Buffer* ptr = pBuffers)
          {
-            _CmdBindVertexBuffers(commandBuffer, firstBinding, bindingCount, (IntPtr)ptr, ref pOffsets);
+            fixed (DeviceSize* ptr2 = pOffsets)
+            {
+               _CmdBindVertexBuffers(commandBuffer, firstBinding, bindingCount, (IntPtr)ptr, (IntPtr)ptr2);
+            }
          }
       }
 
