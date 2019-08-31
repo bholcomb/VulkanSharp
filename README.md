@@ -18,3 +18,8 @@ I don't have a lot of use for the allocator struct at the moment.  In vulkan fun
 ## Coverage
 I'm slowely working through the functions and extensions as I use them.  I'm still working through the tutorials, but the goal is to have 100% coverage of the base API, plus all extensions that I'm using (currently the windows platform swapchain/display and EXT debug extensions).  If there is an extension that you want, please let me know and I'll prioritize it.
 
+## Current Status
+I'm using the 1.1.107 vk.xml spec to generate the structs, enums, fuctions, and extensions.  I then lovingly, hand massage them so they work.  
+
+![Image of Rotating Quad](images/image1.png "The Quad life chose me")
+
