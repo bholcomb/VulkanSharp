@@ -1,7 +1,7 @@
 # VulkanSharp
 This is my pet project C# Vulkan Bindings.  Originally built just for me to get a better understanding of PInvoke and the Vulkan API.  Intended to be as close to the C API as possible to keep things simple, easy to maintain, and make it easier to use existing tutorials.
 
-These bindings are very heavily derived from VulkanSharp (https://github.com/mono/VulkanSharp) and VulkanCore (https://github.com/discosultan/VulkanCore).  Both are great projects.
+These bindings originally were very heavily derived from VulkanSharp (https://github.com/mono/VulkanSharp) and VulkanCore (https://github.com/discosultan/VulkanCore).  Both are great projects and probably perform better than these.  Currently I'm using a code generator to generate a framework for most of the bindings that are then hand editied to handle any interop issues the code generator doesn't handle.
 
 ## API usage
 Everything is in the Vulkan namespace.  All functions are in the static VK class so that using them looks like: VK.CreateInstance(...).  Instance and device extension string names are defined in the static classes InstanceExtensions and DeviceExtensions respectively.
