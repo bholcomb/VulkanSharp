@@ -20,7 +20,7 @@ namespace VulkanTest
 		public VulkanForm()
 		{
 			InitializeComponent();
-         timer = new System.Timers.Timer(10.0);
+         timer = new System.Timers.Timer(16.6);
          timer.Elapsed += timerElapsed;
          timer.Start();
 
