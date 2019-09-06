@@ -1,18 +1,18 @@
 # VulkanSharp
 This is my pet project C# Vulkan Bindings.  Originally built just for me to get a better understanding of PInvoke and the Vulkan API.  Intended to be as close to the C API as possible to keep things simple, easy to maintain, and make it easier to use existing tutorials.
 
-These bindings originally were very heavily derived from VulkanSharp (https://github.com/mono/VulkanSharp) and VulkanCore (https://github.com/discosultan/VulkanCore).  Both are great projects and probably perform better than these.  Currently I'm using a code generator to generate a framework for most of the bindings that are then hand editied to handle any interop issues the code generator doesn't handle.
+These bindings originally were very heavily derived from VulkanSharp (https://github.com/mono/VulkanSharp) and VulkanCore (https://github.com/discosultan/VulkanCore).  Both are great projects and probably perform better than these.  Currently I'm using a code generator to generate a framework for most of the bindings that are then hand edited to handle any interop issues the code generator doesn't handle.
 
 ## API usage
 Everything is in the Vulkan namespace.  All functions are in the static VK class so that using them looks like: VK.CreateInstance(...).  Instance and device extension string names are defined in the static classes InstanceExtensions and DeviceExtensions respectively.
 
 
 ## Extensions
-In the case of extensions that need to have thier function pointers loaded from the runtime (some of the platform KHR extensions are provided by the loader), there is a static extension class with a single init() function. It is up to the user to check that the extension exists prior to calling the init function to get the function pointers and setup the delgates.  For example: VK_EXT_debug_report.init(instance) will set VK.CreateDebugReportCallbackEXT if it exists.  If the extension isn't present and the init fuction is called an exception will be thrown.
+In the case of extensions that need to have thier function pointers loaded from the runtime, there is a static extensio class for each extension with a single init() function. It is up to the user to check that the extension exists prior to calling the init function to get the function pointers and setup the delgates.  For example: VK_EXT_debug_report.init(instance) will setup VK.CreateDebugReportCallbackEXT if it exists.  If the extension isn't present and the init fuction is called an exception will be thrown.
 
 
 ## API deviation
-I don't have a lot of use for the allocator struct at the moment.  In vulkan functions that takes an allocator struct where it wasn't the last parameter, I reorded the parameters it in the public function so that I could have a default value of null.  This is mostly just an athestics thing, that and custom allocators don't really make much sense at the moment.  We're really not pushing for performance in this project. 
+I don't have a lot of use for the allocator struct at the moment and prefer to just use the default.  In vulkan functions that takes an allocator struct where it wasn't the last parameter, I reorded the parameters it in the public function so that I could have a default value of null.  This is mostly just an athestics thing.  Custom allocators don't really make much sense at the moment.  We're really not pushing for performance in this project. 
 
 
 ## Coverage
